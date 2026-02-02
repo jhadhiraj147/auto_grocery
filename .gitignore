@@ -7,11 +7,11 @@ inventory/.env
 pricing/.env
 
 # Ignore compiled binaries (the "Ignition" builds)
-/ordering/cmd/ordering
-/inventory/cmd/inventory
+/ordering/cmd/ordering/ordering/exe
+/inventory/cmd/inventory/inventory_exe
 /robots/cmd/robots
-/pricing/cmd/pricing
-/analytics/cmd/analytics
+/pricing/cmd/pricing/pricing_exe
+/analytics/cmd/analytics/analytics_exe
 
 # OS files
 .DS_Store

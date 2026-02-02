@@ -90,3 +90,28 @@ func (s *CatalogStore) UpsertItem(ctx context.Context, item Item) (int, error) {
 
 	return id, nil
 }
+
+// GetItemsBySKUs fetches multiple items at once for bulk price calculation
+func (s *CatalogStore) GetItemsBySKUs(ctx context.Context, skus []string) (map[string]Item, error) {
+	query := `
+		SELECT id, sku, name, brand, unit_price, created_at
+		FROM catalog
+		WHERE sku = ANY($1)
+	`
+	rows, err := s.db.QueryContext(ctx, query, skus)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	items := make(map[string]Item)
+	for rows.Next() {
+		var i Item
+		err := rows.Scan(&i.ID, &i.Sku, &i.Name, &i.Brand, &i.UnitPrice, &i.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
+		items[i.Sku] = i
+	}
+	return items, nil
+}
