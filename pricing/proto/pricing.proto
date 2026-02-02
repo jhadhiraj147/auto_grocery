@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package pricing;
+
+option go_package = "./proto";
+
+service PricingService {
+  rpc GetPrice (GetPriceRequest) returns (GetPriceResponse);
+  rpc CreateItem (CreateItemRequest) returns (CreateItemResponse);
+  rpc CalculateBill (CalculateBillRequest) returns (CalculateBillResponse);
+}
+
+message GetPriceRequest {
+  string sku = 1;
+}
+
+message GetPriceResponse {
+  int32 id = 1;
+  string sku = 2;
+  string name = 3;
+  string brand = 4;
+  double unit_price = 5; // Changed to double
+}
+
+message CreateItemRequest {
+  string sku = 1;
+  string name = 2;
+  string brand = 3;
+  double unit_price = 4; // Changed to double
+}
+
+message CreateItemResponse {
+  int32 id = 1;
+}
+
+message CartItem {
+    string sku = 1;
+    int32 quantity = 2;
+}
+
+message CalculateBillRequest {
+    repeated CartItem items = 1;
+}
+
+message LineItem {
+    string sku = 1;
+    string name = 2;
+    double unit_price = 3; // Changed to double
+    int32 quantity = 4;
+    double total_price = 5; // Changed to double
+}
+
+message CalculateBillResponse {
+    repeated LineItem items = 1;
+    double grand_total = 2; // Changed to double
+}
