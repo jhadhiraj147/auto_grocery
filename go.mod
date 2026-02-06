@@ -1,4 +1,4 @@
-module auto-grocery
+module auto_grocery
 
 go 1.25.4
 
