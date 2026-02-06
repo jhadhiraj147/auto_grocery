@@ -2,8 +2,8 @@ package handler
 
 import (
 	"context"
-	"auto-grocery/pricing/internal/store"
-	pb "auto-grocery/pricing/proto"
+	"auto_grocery/pricing/internal/store"
+	pb "auto_grocery/pricing/proto"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

@@ -7,9 +7,9 @@ import (
 	"net"
 	"os"
 
-	"auto-grocery/pricing/internal/handler"
-	"auto-grocery/pricing/internal/store"
-	pb "auto-grocery/pricing/proto"
+	"auto_grocery/pricing/internal/handler"
+	"auto_grocery/pricing/internal/store"
+	pb "auto_grocery/pricing/proto"
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
@@ -19,7 +19,7 @@ import (
 func main() {
 	// 1. Load the .env file from the microservice folder
 	// If you run this from pricing/cmd/pricing, the path is ../../.env
-	err := godotenv.Load("../../.env")
+	err := godotenv.Load("pricing/.env")
 	if err != nil {
 		log.Println("Note: .env file not found, using system environment variables")
 	}
