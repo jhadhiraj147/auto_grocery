@@ -3,7 +3,7 @@ syntax = "proto3";
 package inventory;
 
 // Go Namespace: Matches your module name "auto_grocery"
-option go_package = "auto_grocery/inventory/proto";
+option go_package = "auto_grocery/pricing/proto";
 
 // ---------------------------------------------------------------------
 // THE INVENTORY SERVICE

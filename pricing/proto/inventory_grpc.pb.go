@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.1
 // - protoc             v6.33.4
-// source: inventory/proto/inventory.proto
+// source: pricing/proto/inventory.proto
 
 package proto
 
@@ -19,12 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	InventoryService_CheckAvailability_FullMethodName = "/inventory.InventoryService/CheckAvailability"
-	InventoryService_ReserveItems_FullMethodName      = "/inventory.InventoryService/ReserveItems"
-	InventoryService_ReleaseItems_FullMethodName      = "/inventory.InventoryService/ReleaseItems"
-	InventoryService_RestockItems_FullMethodName      = "/inventory.InventoryService/RestockItems"
-	InventoryService_ReportJobStatus_FullMethodName   = "/inventory.InventoryService/ReportJobStatus"
-	InventoryService_Checkout_FullMethodName          = "/inventory.InventoryService/Checkout"
+	InventoryService_CheckAvailability_FullMethodName   = "/inventory.InventoryService/CheckAvailability"
+	InventoryService_ReserveItems_FullMethodName        = "/inventory.InventoryService/ReserveItems"
+	InventoryService_ReleaseItems_FullMethodName        = "/inventory.InventoryService/ReleaseItems"
+	InventoryService_RestockItems_FullMethodName        = "/inventory.InventoryService/RestockItems"
+	InventoryService_ReportJobStatus_FullMethodName     = "/inventory.InventoryService/ReportJobStatus"
+	InventoryService_Checkout_FullMethodName            = "/inventory.InventoryService/Checkout"
+	InventoryService_GetInventoryMetrics_FullMethodName = "/inventory.InventoryService/GetInventoryMetrics"
 )
 
 // InventoryServiceClient is the client API for InventoryService service.
@@ -59,6 +60,9 @@ type InventoryServiceClient interface {
 	// Logic: Reserve Stock -> Calculate Bill
 	// Output: Order ID + Items Reserved + Total Price + Success Flag
 	Checkout(ctx context.Context, in *CheckoutRequest, opts ...grpc.CallOption) (*CheckoutResponse, error)
+	// 7. GET INVENTORY METRICS (NEW for Milestone 2)
+	// Logic: Allows Pricing Service to fetch latest Cost Price and Quantities
+	GetInventoryMetrics(ctx context.Context, in *GetInventoryMetricsRequest, opts ...grpc.CallOption) (*GetInventoryMetricsResponse, error)
 }
 
 type inventoryServiceClient struct {
@@ -129,6 +133,16 @@ func (c *inventoryServiceClient) Checkout(ctx context.Context, in *CheckoutReque
 	return out, nil
 }
 
+func (c *inventoryServiceClient) GetInventoryMetrics(ctx context.Context, in *GetInventoryMetricsRequest, opts ...grpc.CallOption) (*GetInventoryMetricsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetInventoryMetricsResponse)
+	err := c.cc.Invoke(ctx, InventoryService_GetInventoryMetrics_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InventoryServiceServer is the server API for InventoryService service.
 // All implementations must embed UnimplementedInventoryServiceServer
 // for forward compatibility.
@@ -161,6 +175,9 @@ type InventoryServiceServer interface {
 	// Logic: Reserve Stock -> Calculate Bill
 	// Output: Order ID + Items Reserved + Total Price + Success Flag
 	Checkout(context.Context, *CheckoutRequest) (*CheckoutResponse, error)
+	// 7. GET INVENTORY METRICS (NEW for Milestone 2)
+	// Logic: Allows Pricing Service to fetch latest Cost Price and Quantities
+	GetInventoryMetrics(context.Context, *GetInventoryMetricsRequest) (*GetInventoryMetricsResponse, error)
 	mustEmbedUnimplementedInventoryServiceServer()
 }
 
@@ -188,6 +205,9 @@ func (UnimplementedInventoryServiceServer) ReportJobStatus(context.Context, *Rep
 }
 func (UnimplementedInventoryServiceServer) Checkout(context.Context, *CheckoutRequest) (*CheckoutResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Checkout not implemented")
+}
+func (UnimplementedInventoryServiceServer) GetInventoryMetrics(context.Context, *GetInventoryMetricsRequest) (*GetInventoryMetricsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetInventoryMetrics not implemented")
 }
 func (UnimplementedInventoryServiceServer) mustEmbedUnimplementedInventoryServiceServer() {}
 func (UnimplementedInventoryServiceServer) testEmbeddedByValue()                          {}
@@ -318,6 +338,24 @@ func _InventoryService_Checkout_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InventoryService_GetInventoryMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetInventoryMetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InventoryServiceServer).GetInventoryMetrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InventoryService_GetInventoryMetrics_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InventoryServiceServer).GetInventoryMetrics(ctx, req.(*GetInventoryMetricsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // InventoryService_ServiceDesc is the grpc.ServiceDesc for InventoryService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -349,7 +387,11 @@ var InventoryService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "Checkout",
 			Handler:    _InventoryService_Checkout_Handler,
 		},
+		{
+			MethodName: "GetInventoryMetrics",
+			Handler:    _InventoryService_GetInventoryMetrics_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "inventory/proto/inventory.proto",
+	Metadata: "pricing/proto/inventory.proto",
 }

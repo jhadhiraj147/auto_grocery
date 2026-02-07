@@ -6,20 +6,20 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/lib/pq" // Ensure you have this imported for pq.Array
+	"github.com/lib/pq" // Required for pq.Array
 )
 
-// 1. THE DATA STRUCTURE
-// Represents a row in the 'available_stock' table.
+// 1. DATA MODEL
 type StockItem struct {
-	ID          int
-	Sku         string
-	Name        string
-	AisleType   string
-	Quantity    int32
-	MfdDate     time.Time
-	ExpiryDate  time.Time
-	LastUpdated time.Time
+	ID         int64     `json:"id"`
+	SKU        string    `json:"sku"`
+	Name       string    `json:"name"`
+	AisleType  string    `json:"aisle_type"`
+	Quantity   int       `json:"quantity"`
+	UnitCost   float64   `json:"unit_cost"` // Added for Milestone 2
+	MfdDate    time.Time `json:"mfd_date"`
+	ExpiryDate time.Time `json:"expiry_date"`
+	UpdatedAt  time.Time `json:"updated_at"`
 }
 
 // 2. THE STORE OBJECT
@@ -31,12 +31,11 @@ func NewStore(db *sql.DB) *Store {
 	return &Store{db: db}
 }
 
-// 3. GET BATCH (Read Only - For UI)
-// Usage: UI wants to see if items exist.
-// Output: Full details (Name, Price, etc.) because the UI needs them.
+// 3. GET BATCH (Updated to include unit_cost)
 func (s *Store) GetBatchItems(ctx context.Context, skus []string) (map[string]*StockItem, error) {
+	// Added unit_cost to the SELECT statement
 	query := `
-        SELECT id, sku, name, aisle_type, quantity, mfd_date, expiry_date, last_updated
+        SELECT id, sku, name, aisle_type, quantity, unit_cost, mfd_date, expiry_date, last_updated
         FROM available_stock
         WHERE sku = ANY($1)
     `
@@ -49,23 +48,20 @@ func (s *Store) GetBatchItems(ctx context.Context, skus []string) (map[string]*S
 	items := make(map[string]*StockItem)
 	for rows.Next() {
 		var i StockItem
+		// Scan unit_cost into the struct field
 		if err := rows.Scan(
-			&i.ID, &i.Sku, &i.Name, &i.AisleType, &i.Quantity,
-			&i.MfdDate, &i.ExpiryDate, &i.LastUpdated,
+			&i.ID, &i.SKU, &i.Name, &i.AisleType, &i.Quantity, &i.UnitCost,
+			&i.MfdDate, &i.ExpiryDate, &i.UpdatedAt,
 		); err != nil {
 			return nil, err
 		}
-		items[i.Sku] = &i
+		items[i.SKU] = &i
 	}
 	return items, nil
 }
 
-// 4. RESERVE STOCK (The "Checkout" - Updated for Symmetry)
-// Logic: Locks rows, calculates partial fill (LEAST), and subtracts stock.
-// Input:  {"apple": 5, "banana": 10}
-// Output: {"apple": 5, "banana": 3}  <-- Simple Map of what was actually taken
+// 4. RESERVE STOCK (Logic remains the same - handles quantity)
 func (s *Store) ReserveStock(ctx context.Context, requests map[string]int32) (map[string]int32, error) {
-	// Prepare Arrays for Bulk Query
 	var skus []string
 	var counts []int32
 	for sku, count := range requests {
@@ -81,7 +77,7 @@ func (s *Store) ReserveStock(ctx context.Context, requests map[string]int32) (ma
             SELECT s.id, s.sku, s.quantity as old_qty, r.count as req_count
             FROM available_stock s
             JOIN request_batch r ON s.sku = r.sku
-            WHERE s.quantity > 0 -- Optimization: Ignore if already empty
+            WHERE s.quantity > 0 
             FOR UPDATE
         )
         UPDATE available_stock s
@@ -98,7 +94,6 @@ func (s *Store) ReserveStock(ctx context.Context, requests map[string]int32) (ma
 	}
 	defer rows.Close()
 
-	// Fill the simple map result
 	results := make(map[string]int32)
 	for rows.Next() {
 		var sku string
@@ -108,13 +103,10 @@ func (s *Store) ReserveStock(ctx context.Context, requests map[string]int32) (ma
 		}
 		results[sku] = taken
 	}
-
 	return results, nil
 }
 
-// 5. RELEASE STOCK (The "Undo" Button)
-// Usage: If User cancels, or Payment fails, call this with the map you got from ReserveStock.
-// Input: {"apple": 5, "banana": 3} -> Adds exactly this amount back.
+// 5. RELEASE STOCK (Logic remains same - restores quantity)
 func (s *Store) ReleaseStock(ctx context.Context, returns map[string]int32) error {
 	var skus []string
 	var counts []int32
@@ -139,20 +131,28 @@ func (s *Store) ReleaseStock(ctx context.Context, returns map[string]int32) erro
 	return nil
 }
 
-// 6. UPSERT STOCK (The "Truck" Delivery)
-// Usage: Only used when new stock arrives (requires Name, Dates, Aisle).
+// 6. UPSERT STOCK (Updated to save unit_cost from the Truck)
 func (s *Store) UpsertStock(ctx context.Context, item StockItem) error {
+	// 1. Added unit_cost to the column list and values ($7)
+	// 2. Updated unit_cost in the DO UPDATE clause to capture latest delivery cost
 	query := `
-        INSERT INTO available_stock (sku, name, aisle_type, quantity, mfd_date, expiry_date, last_updated)
-        VALUES ($1, $2, $3, $4, $5, $6, NOW())
+        INSERT INTO available_stock (sku, name, aisle_type, quantity, unit_cost, mfd_date, expiry_date, last_updated)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
         ON CONFLICT (sku) 
         DO UPDATE SET 
-            quantity = available_stock.quantity + EXCLUDED.quantity, -- Add to existing
+            quantity = available_stock.quantity + EXCLUDED.quantity, 
+            unit_cost = EXCLUDED.unit_cost, -- Keep the most recent cost price
             name = EXCLUDED.name,
             last_updated = NOW()
     `
 	_, err := s.db.ExecContext(ctx, query,
-		item.Sku, item.Name, item.AisleType, item.Quantity, item.MfdDate, item.ExpiryDate,
+		item.SKU,      // $1
+		item.Name,     // $2
+		item.AisleType, // $3
+		item.Quantity, // $4
+		item.UnitCost, // $5 (New)
+		item.MfdDate,  // $6
+		item.ExpiryDate, // $7
 	)
 	if err != nil {
 		return fmt.Errorf("failed to upsert stock: %w", err)
@@ -160,26 +160,17 @@ func (s *Store) UpsertStock(ctx context.Context, item StockItem) error {
 	return nil
 }
 
-// 7. CLEAR EXPIRED STOCK (Housekeeping)
-// Usage: Cron job to remove spoiled items.
+// 7. CLEAR EXPIRED STOCK (Logic remains same)
 func (s *Store) ClearExpiredStock(ctx context.Context) (int64, error) {
 	query := `
         UPDATE available_stock
         SET quantity = 0, 
-            expiry_date = '0001-01-01 00:00:00', 
             last_updated = NOW()
         WHERE expiry_date < NOW() AND quantity > 0
     `
-
 	result, err := s.db.ExecContext(ctx, query)
 	if err != nil {
 		return 0, fmt.Errorf("failed to clear expired stock: %w", err)
 	}
-
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		return 0, fmt.Errorf("failed to get rows affected: %w", err)
-	}
-
-	return rowsAffected, nil
+	return result.RowsAffected()
 }
