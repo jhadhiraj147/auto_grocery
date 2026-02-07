@@ -36,9 +36,13 @@ service InventoryService {
   rpc ReportJobStatus (ReportJobStatusRequest) returns (ReportJobStatusResponse);
 
   // 6. CHECKOUT (The "Master" Function)
-  // Logic: Reserve Stock -> [Future Broadcast] -> Calculate Bill
+  // Logic: Reserve Stock -> Calculate Bill
   // Output: Order ID + Items Reserved + Total Price + Success Flag
   rpc Checkout (CheckoutRequest) returns (CheckoutResponse);
+
+  // 7. GET INVENTORY METRICS (NEW for Milestone 2)
+  // Logic: Allows Pricing Service to fetch latest Cost Price and Quantities
+  rpc GetInventoryMetrics (GetInventoryMetricsRequest) returns (GetInventoryMetricsResponse);
 }
 
 
@@ -74,7 +78,7 @@ message ReserveItemsRequest {
 message ReserveItemsResponse {
   string order_id = 1;
   map<string, int32> items = 2; 
-  bool success = 3; // True if operation succeeded (even partial), False if DB error
+  bool success = 3; 
 }
 
 
@@ -86,7 +90,7 @@ message ReleaseItemsRequest {
 }
 
 message ReleaseItemsResponse {
-  bool success = 1; // True if items were successfully returned to DB
+  bool success = 1; 
 }
 
 
@@ -104,10 +108,11 @@ message RestockItem {
   int32 quantity = 4;
   string mfd_date = 5;
   string expiry_date = 6;
+  double unit_cost = 7; // Captured from truck delivery
 }
 
 message RestockItemsResponse {
-  bool success = 1; // True if all items were processed
+  bool success = 1; 
 }
 
 
@@ -116,12 +121,12 @@ message RestockItemsResponse {
 message ReportJobStatusRequest {
   string order_id = 1;
   string robot_id = 2;
-  string status = 3; // "SUCCESS", "NO_OP", "FAILED"
+  string status = 3; 
   map<string, int32> items = 4;
 }
 
 message ReportJobStatusResponse {
-  bool success = 1; // True if the report was received and logged
+  bool success = 1; 
 }
 
 
@@ -129,18 +134,28 @@ message ReportJobStatusResponse {
 
 message CheckoutRequest {
   string order_id = 1;
-  map<string, int32> items = 2; // Matches ReserveItemsRequest exactly
+  map<string, int32> items = 2; 
 }
 
 message CheckoutResponse {
   string order_id = 1;
-  
-  // Consistency: Matches ReserveItemsResponse exactly.
-  // Use this map to call ReleaseItems if the user cancels.
   map<string, int32> items = 2; 
-  
   bool success = 3;
-  
-  // The Bill (From Pricing Service)
   double total_price = 4; 
+}
+
+// --- 7. Get Inventory Metrics (NEW) ---
+
+message GetInventoryMetricsRequest {
+  repeated string skus = 1; // Optional filter
+}
+
+message InventoryMetric {
+  string sku = 1;
+  int32 quantity = 2;
+  double unit_cost = 3; // This is the "cost_price" used by the Pricing Service
+}
+
+message GetInventoryMetricsResponse {
+  repeated InventoryMetric metrics = 1;
 }
