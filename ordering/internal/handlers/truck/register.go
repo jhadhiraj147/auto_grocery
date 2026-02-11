@@ -21,7 +21,7 @@ func (h *RegisterHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	truck := store.SmartTruck{
 		TruckID: req.TruckID, PlateNumber: req.PlateNumber, DriverName: req.DriverName,
 	}
-	// Using Upsert here allows re-registration without error
+	
 	_, err := h.TruckStore.UpsertSmartTruck(r.Context(), truck)
 	if err != nil {
 		http.Error(w, "DB Error", http.StatusInternalServerError)

@@ -12,11 +12,11 @@ var jwtKey = []byte("super_secret_access_key_123")
 type Claims struct {
 	UserID    int    `json:"user_id"`
 	Role      string `json:"role"`
-	TokenType string `json:"token_type"` // <--- CRITICAL: "ACCESS" or "REFRESH"
+	TokenType string `json:"token_type"` 
 	jwt.RegisteredClaims
 }
 
-// 1. Generate Access Token (Short Lived: 15 mins)
+
 func GenerateAccessToken(userID int, role string) (string, error) {
 	expirationTime := time.Now().Add(15 * time.Minute)
 	claims := &Claims{
@@ -32,7 +32,6 @@ func GenerateAccessToken(userID int, role string) (string, error) {
 	return token.SignedString(jwtKey)
 }
 
-// 2. Generate Refresh Token (Long Lived: 7 Days)
 func GenerateRefreshToken(userID int, role string) (string, error) {
 	expirationTime := time.Now().Add(7 * 24 * time.Hour)
 	claims := &Claims{
@@ -48,7 +47,7 @@ func GenerateRefreshToken(userID int, role string) (string, error) {
 	return token.SignedString(jwtKey)
 }
 
-// 3. Validate Token Signature
+
 func ValidateToken(tokenString string) (*Claims, error) {
 	claims := &Claims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {

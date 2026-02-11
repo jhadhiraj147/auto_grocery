@@ -2,55 +2,33 @@ syntax = "proto3";
 
 package inventory;
 
-// Go Namespace: Matches your module name "auto_grocery"
+
 option go_package = "auto_grocery/inventory/proto";
 
-// ---------------------------------------------------------------------
-// THE INVENTORY SERVICE
-// ---------------------------------------------------------------------
+
 service InventoryService {
   
-  // 1. CHECK AVAILABILITY
-  // Input: List of SKUs
-  // Output: Map of Item Details
   rpc CheckAvailability (CheckAvailabilityRequest) returns (CheckAvailabilityResponse);
 
-  // 2. RESERVE ITEMS (Buying)
-  // Input: Order ID + Items Wanted
-  // Output: Order ID + Items Got + Success Flag
+
   rpc ReserveItems (ReserveItemsRequest) returns (ReserveItemsResponse);
 
-  // 3. RELEASE ITEMS (Undo)
-  // Input: Order ID + Items to Return
-  // Output: Success Flag
+  
   rpc ReleaseItems (ReleaseItemsRequest) returns (ReleaseItemsResponse);
 
-  // 4. RESTOCK ITEMS (Truck)
-  // Input: Supplier ID + List of New Items
-  // Output: Success Flag
+  
   rpc RestockItems (RestockItemsRequest) returns (RestockItemsResponse);
 
-  // 5. ROBOT REPORTING
-  // Input: Robot Status + Items Fetched
-  // Output: Success Flag (Acknowledgement)
+  
   rpc ReportJobStatus (ReportJobStatusRequest) returns (ReportJobStatusResponse);
 
-  // 6. CHECKOUT (The "Master" Function)
-  // Logic: Reserve Stock -> Calculate Bill
-  // Output: Order ID + Items Reserved + Total Price + Success Flag
+  
   rpc Checkout (CheckoutRequest) returns (CheckoutResponse);
 
-  // 7. GET INVENTORY METRICS (NEW for Milestone 2)
-  // Logic: Allows Pricing Service to fetch latest Cost Price and Quantities
+  
   rpc GetInventoryMetrics (GetInventoryMetricsRequest) returns (GetInventoryMetricsResponse);
 }
 
-
-// ---------------------------------------------------------------------
-// MESSAGE DEFINITIONS
-// ---------------------------------------------------------------------
-
-// --- 1. Check Availability ---
 
 message CheckAvailabilityRequest {
   repeated string skus = 1; 
@@ -68,8 +46,6 @@ message ItemDetail {
 }
 
 
-// --- 2. Reserve Items ---
-
 message ReserveItemsRequest {
   string order_id = 1;
   map<string, int32> items = 2; 
@@ -82,8 +58,6 @@ message ReserveItemsResponse {
 }
 
 
-// --- 3. Release Items ---
-
 message ReleaseItemsRequest {
   string order_id = 1;
   map<string, int32> items = 2; 
@@ -93,8 +67,6 @@ message ReleaseItemsResponse {
   bool success = 1; 
 }
 
-
-// --- 4. Restock Items ---
 
 message RestockItemsRequest {
   string supplier_id = 1;
@@ -108,15 +80,13 @@ message RestockItem {
   int32 quantity = 4;
   string mfd_date = 5;
   string expiry_date = 6;
-  double unit_cost = 7; // Captured from truck delivery
+  double unit_cost = 7; 
 }
 
 message RestockItemsResponse {
   bool success = 1; 
 }
 
-
-// --- 5. Robot Status ---
 
 message ReportJobStatusRequest {
   string order_id = 1;
@@ -130,8 +100,6 @@ message ReportJobStatusResponse {
 }
 
 
-// --- 6. Checkout (Combined Logic) ---
-
 message CheckoutRequest {
   string order_id = 1;
   map<string, int32> items = 2; 
@@ -144,16 +112,15 @@ message CheckoutResponse {
   double total_price = 4; 
 }
 
-// --- 7. Get Inventory Metrics (NEW) ---
 
 message GetInventoryMetricsRequest {
-  repeated string skus = 1; // Optional filter
+  repeated string skus = 1; 
 }
 
 message InventoryMetric {
   string sku = 1;
   int32 quantity = 2;
-  double unit_cost = 3; // This is the "cost_price" used by the Pricing Service
+  double unit_cost = 3; 
 }
 
 message GetInventoryMetricsResponse {

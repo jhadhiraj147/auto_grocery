@@ -57,6 +57,6 @@ func (h *ConfirmOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		"status":      "completed",
 		"order_id":    req.OrderID,
 		"total_price": grpcResp.TotalPrice,
-		"timestamp":   order.CreatedAt, // <--- ADDED
+		"timestamp":   order.CreatedAt, 
 	})
 }

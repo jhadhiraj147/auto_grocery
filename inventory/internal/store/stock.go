@@ -6,23 +6,23 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/lib/pq" // Required for pq.Array
+	"github.com/lib/pq" 
 )
 
-// 1. DATA MODEL
+
 type StockItem struct {
 	ID         int64     `json:"id"`
 	SKU        string    `json:"sku"`
 	Name       string    `json:"name"`
 	AisleType  string    `json:"aisle_type"`
 	Quantity   int       `json:"quantity"`
-	UnitCost   float64   `json:"unit_cost"` // Added for Milestone 2
+	UnitCost   float64   `json:"unit_cost"` 
 	MfdDate    time.Time `json:"mfd_date"`
 	ExpiryDate time.Time `json:"expiry_date"`
 	UpdatedAt  time.Time `json:"updated_at"`
 }
 
-// 2. THE STORE OBJECT
+
 type Store struct {
 	db *sql.DB
 }
@@ -31,9 +31,9 @@ func NewStore(db *sql.DB) *Store {
 	return &Store{db: db}
 }
 
-// 3. GET BATCH (Updated to include unit_cost)
+
 func (s *Store) GetBatchItems(ctx context.Context, skus []string) (map[string]*StockItem, error) {
-	// Added unit_cost to the SELECT statement
+
 	query := `
         SELECT id, sku, name, aisle_type, quantity, unit_cost, mfd_date, expiry_date, last_updated
         FROM available_stock
@@ -48,7 +48,6 @@ func (s *Store) GetBatchItems(ctx context.Context, skus []string) (map[string]*S
 	items := make(map[string]*StockItem)
 	for rows.Next() {
 		var i StockItem
-		// Scan unit_cost into the struct field
 		if err := rows.Scan(
 			&i.ID, &i.SKU, &i.Name, &i.AisleType, &i.Quantity, &i.UnitCost,
 			&i.MfdDate, &i.ExpiryDate, &i.UpdatedAt,
@@ -60,7 +59,6 @@ func (s *Store) GetBatchItems(ctx context.Context, skus []string) (map[string]*S
 	return items, nil
 }
 
-// 4. RESERVE STOCK (Logic remains the same - handles quantity)
 func (s *Store) ReserveStock(ctx context.Context, requests map[string]int32) (map[string]int32, error) {
 	var skus []string
 	var counts []int32
@@ -106,7 +104,6 @@ func (s *Store) ReserveStock(ctx context.Context, requests map[string]int32) (ma
 	return results, nil
 }
 
-// 5. RELEASE STOCK (Logic remains same - restores quantity)
 func (s *Store) ReleaseStock(ctx context.Context, returns map[string]int32) error {
 	var skus []string
 	var counts []int32
@@ -131,10 +128,8 @@ func (s *Store) ReleaseStock(ctx context.Context, returns map[string]int32) erro
 	return nil
 }
 
-// 6. UPSERT STOCK (Updated to save unit_cost from the Truck)
+
 func (s *Store) UpsertStock(ctx context.Context, item StockItem) error {
-	// 1. Added unit_cost to the column list and values ($7)
-	// 2. Updated unit_cost in the DO UPDATE clause to capture latest delivery cost
 	query := `
         INSERT INTO available_stock (sku, name, aisle_type, quantity, unit_cost, mfd_date, expiry_date, last_updated)
         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
@@ -146,13 +141,13 @@ func (s *Store) UpsertStock(ctx context.Context, item StockItem) error {
             last_updated = NOW()
     `
 	_, err := s.db.ExecContext(ctx, query,
-		item.SKU,      // $1
-		item.Name,     // $2
-		item.AisleType, // $3
-		item.Quantity, // $4
-		item.UnitCost, // $5 (New)
-		item.MfdDate,  // $6
-		item.ExpiryDate, // $7
+		item.SKU,     
+		item.Name,     
+		item.AisleType, 
+		item.Quantity, 
+		item.UnitCost, 
+		item.MfdDate,  
+		item.ExpiryDate, 
 	)
 	if err != nil {
 		return fmt.Errorf("failed to upsert stock: %w", err)
@@ -160,7 +155,7 @@ func (s *Store) UpsertStock(ctx context.Context, item StockItem) error {
 	return nil
 }
 
-// 7. CLEAR EXPIRED STOCK (Logic remains same)
+
 func (s *Store) ClearExpiredStock(ctx context.Context) (int64, error) {
 	query := `
         UPDATE available_stock
@@ -173,4 +168,24 @@ func (s *Store) ClearExpiredStock(ctx context.Context) (int64, error) {
 		return 0, fmt.Errorf("failed to clear expired stock: %w", err)
 	}
 	return result.RowsAffected()
+}
+
+
+func (s *Store) GetAllStock(ctx context.Context) ([]StockItem, error) {
+	query := `SELECT sku, quantity, unit_cost FROM available_stock`
+	rows, err := s.db.QueryContext(ctx, query)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get all stock: %w", err)
+	}
+	defer rows.Close()
+
+	var items []StockItem
+	for rows.Next() {
+		var i StockItem
+		if err := rows.Scan(&i.SKU, &i.Quantity, &i.UnitCost); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	return items, nil
 }

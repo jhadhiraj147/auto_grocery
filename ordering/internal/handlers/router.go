@@ -10,7 +10,6 @@ import (
 	pb "auto_grocery/ordering/proto"
 )
 
-// NewRouter assembles the Mux using the specialized handler structs
 func NewRouter(
 	clientStore *store.ClientStore,
 	truckStore *store.TruckStore,
@@ -21,11 +20,14 @@ func NewRouter(
 
 	mux := http.NewServeMux()
 
-	// --- Public Routes ---
+
 	mux.Handle("POST /api/client/register", &client.RegisterHandler{Store: clientStore})
 	mux.Handle("POST /api/client/login",    &client.LoginHandler{Store: clientStore})
+	
+	
+	mux.Handle("POST /api/client/refresh",  &client.RefreshHandler{Store: clientStore})
 
-	// --- Truck Routes ---
+	
 	mux.Handle("POST /api/truck/register", &truck.RegisterHandler{TruckStore: truckStore})
 	mux.Handle("POST /api/truck/restock",  &truck.RestockHandler{
 		TruckStore:      truckStore,
@@ -33,12 +35,12 @@ func NewRouter(
 		InventoryClient: inventoryClient,
 	})
 
-	// --- Protected Routes Helper ---
+	
 	protected := func(h http.Handler) http.Handler {
 		return auth.AuthMiddleware(h)
 	}
 
-	// --- Client Orders ---
+	
 	mux.Handle("POST /api/client/order/preview", protected(&client.PreviewOrderHandler{
 		OrderStore:      orderStore,
 		InventoryClient: inventoryClient,

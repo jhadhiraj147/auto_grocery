@@ -19,14 +19,14 @@ message GetPriceResponse {
   string sku = 2;
   string name = 3;
   string brand = 4;
-  double unit_price = 5; // Changed to double
+  double unit_price = 5; 
 }
 
 message CreateItemRequest {
   string sku = 1;
   string name = 2;
   string brand = 3;
-  double unit_price = 4; // Changed to double
+  double unit_price = 4;
 }
 
 message CreateItemResponse {
@@ -45,12 +45,12 @@ message CalculateBillRequest {
 message LineItem {
     string sku = 1;
     string name = 2;
-    double unit_price = 3; // Changed to double
+    double unit_price = 3; 
     int32 quantity = 4;
-    double total_price = 5; // Changed to double
+    double total_price = 5; 
 }
 
 message CalculateBillResponse {
     repeated LineItem items = 1;
-    double grand_total = 2; // Changed to double
+    double grand_total = 2; 
 }
