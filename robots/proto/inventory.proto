@@ -2,51 +2,32 @@ syntax = "proto3";
 
 package inventory;
 
-// Go Namespace: Matches your module name "auto_grocery"
+
 option go_package = "auto_grocery/robots/proto";
 
-// ---------------------------------------------------------------------
-// THE INVENTORY SERVICE
-// ---------------------------------------------------------------------
+
 service InventoryService {
   
-  // 1. CHECK AVAILABILITY
-  // Input: List of SKUs
-  // Output: Map of Item Details
+  
   rpc CheckAvailability (CheckAvailabilityRequest) returns (CheckAvailabilityResponse);
 
-  // 2. RESERVE ITEMS (Buying)
-  // Input: Order ID + Items Wanted
-  // Output: Order ID + Items Got + Success Flag
+  
   rpc ReserveItems (ReserveItemsRequest) returns (ReserveItemsResponse);
 
-  // 3. RELEASE ITEMS (Undo)
-  // Input: Order ID + Items to Return
-  // Output: Success Flag
+ 
   rpc ReleaseItems (ReleaseItemsRequest) returns (ReleaseItemsResponse);
 
-  // 4. RESTOCK ITEMS (Truck)
-  // Input: Supplier ID + List of New Items
-  // Output: Success Flag
+  
   rpc RestockItems (RestockItemsRequest) returns (RestockItemsResponse);
 
-  // 5. ROBOT REPORTING
-  // Input: Robot Status + Items Fetched
-  // Output: Success Flag (Acknowledgement)
+  
   rpc ReportJobStatus (ReportJobStatusRequest) returns (ReportJobStatusResponse);
 
-  // 6. CHECKOUT (The "Master" Function)
-  // Logic: Reserve Stock -> [Future Broadcast] -> Calculate Bill
-  // Output: Order ID + Items Reserved + Total Price + Success Flag
+  
   rpc Checkout (CheckoutRequest) returns (CheckoutResponse);
 }
 
 
-// ---------------------------------------------------------------------
-// MESSAGE DEFINITIONS
-// ---------------------------------------------------------------------
-
-// --- 1. Check Availability ---
 
 message CheckAvailabilityRequest {
   repeated string skus = 1; 
@@ -64,8 +45,6 @@ message ItemDetail {
 }
 
 
-// --- 2. Reserve Items ---
-
 message ReserveItemsRequest {
   string order_id = 1;
   map<string, int32> items = 2; 
@@ -74,11 +53,11 @@ message ReserveItemsRequest {
 message ReserveItemsResponse {
   string order_id = 1;
   map<string, int32> items = 2; 
-  bool success = 3; // True if operation succeeded (even partial), False if DB error
+  bool success = 3; 
 }
 
 
-// --- 3. Release Items ---
+
 
 message ReleaseItemsRequest {
   string order_id = 1;
@@ -86,11 +65,11 @@ message ReleaseItemsRequest {
 }
 
 message ReleaseItemsResponse {
-  bool success = 1; // True if items were successfully returned to DB
+  bool success = 1; 
 }
 
 
-// --- 4. Restock Items ---
+
 
 message RestockItemsRequest {
   string supplier_id = 1;
@@ -107,40 +86,39 @@ message RestockItem {
 }
 
 message RestockItemsResponse {
-  bool success = 1; // True if all items were processed
+  bool success = 1; 
 }
 
 
-// --- 5. Robot Status ---
+
 
 message ReportJobStatusRequest {
   string order_id = 1;
   string robot_id = 2;
-  string status = 3; // "SUCCESS", "NO_OP", "FAILED"
+  string status = 3; 
   map<string, int32> items = 4;
 }
 
 message ReportJobStatusResponse {
-  bool success = 1; // True if the report was received and logged
+  bool success = 1; 
 }
 
 
-// --- 6. Checkout (Combined Logic) ---
+
 
 message CheckoutRequest {
   string order_id = 1;
-  map<string, int32> items = 2; // Matches ReserveItemsRequest exactly
+  map<string, int32> items = 2; 
 }
 
 message CheckoutResponse {
   string order_id = 1;
   
-  // Consistency: Matches ReserveItemsResponse exactly.
-  // Use this map to call ReleaseItems if the user cancels.
+  
   map<string, int32> items = 2; 
   
   bool success = 3;
   
-  // The Bill (From Pricing Service)
+  
   double total_price = 4; 
 }

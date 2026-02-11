@@ -445,7 +445,7 @@ type RestockItem struct {
 	Quantity      int32                  `protobuf:"varint,4,opt,name=quantity,proto3" json:"quantity,omitempty"`
 	MfdDate       string                 `protobuf:"bytes,5,opt,name=mfd_date,json=mfdDate,proto3" json:"mfd_date,omitempty"`
 	ExpiryDate    string                 `protobuf:"bytes,6,opt,name=expiry_date,json=expiryDate,proto3" json:"expiry_date,omitempty"`
-	UnitCost      float64                `protobuf:"fixed64,7,opt,name=unit_cost,json=unitCost,proto3" json:"unit_cost,omitempty"` // <--- NEW FIELD: Captures the cost price from the truck
+	UnitCost      float64                `protobuf:"fixed64,7,opt,name=unit_cost,json=unitCost,proto3" json:"unit_cost,omitempty"` // Captured from truck delivery
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -805,6 +805,154 @@ func (x *CheckoutResponse) GetTotalPrice() float64 {
 	return 0
 }
 
+type GetInventoryMetricsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Skus          []string               `protobuf:"bytes,1,rep,name=skus,proto3" json:"skus,omitempty"` // Optional filter
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetInventoryMetricsRequest) Reset() {
+	*x = GetInventoryMetricsRequest{}
+	mi := &file_inventory_proto_inventory_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInventoryMetricsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInventoryMetricsRequest) ProtoMessage() {}
+
+func (x *GetInventoryMetricsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_inventory_proto_inventory_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInventoryMetricsRequest.ProtoReflect.Descriptor instead.
+func (*GetInventoryMetricsRequest) Descriptor() ([]byte, []int) {
+	return file_inventory_proto_inventory_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GetInventoryMetricsRequest) GetSkus() []string {
+	if x != nil {
+		return x.Skus
+	}
+	return nil
+}
+
+type InventoryMetric struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Sku           string                 `protobuf:"bytes,1,opt,name=sku,proto3" json:"sku,omitempty"`
+	Quantity      int32                  `protobuf:"varint,2,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	UnitCost      float64                `protobuf:"fixed64,3,opt,name=unit_cost,json=unitCost,proto3" json:"unit_cost,omitempty"` // This is the "cost_price" used by the Pricing Service
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InventoryMetric) Reset() {
+	*x = InventoryMetric{}
+	mi := &file_inventory_proto_inventory_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InventoryMetric) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InventoryMetric) ProtoMessage() {}
+
+func (x *InventoryMetric) ProtoReflect() protoreflect.Message {
+	mi := &file_inventory_proto_inventory_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InventoryMetric.ProtoReflect.Descriptor instead.
+func (*InventoryMetric) Descriptor() ([]byte, []int) {
+	return file_inventory_proto_inventory_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *InventoryMetric) GetSku() string {
+	if x != nil {
+		return x.Sku
+	}
+	return ""
+}
+
+func (x *InventoryMetric) GetQuantity() int32 {
+	if x != nil {
+		return x.Quantity
+	}
+	return 0
+}
+
+func (x *InventoryMetric) GetUnitCost() float64 {
+	if x != nil {
+		return x.UnitCost
+	}
+	return 0
+}
+
+type GetInventoryMetricsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Metrics       []*InventoryMetric     `protobuf:"bytes,1,rep,name=metrics,proto3" json:"metrics,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetInventoryMetricsResponse) Reset() {
+	*x = GetInventoryMetricsResponse{}
+	mi := &file_inventory_proto_inventory_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetInventoryMetricsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetInventoryMetricsResponse) ProtoMessage() {}
+
+func (x *GetInventoryMetricsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_inventory_proto_inventory_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetInventoryMetricsResponse.ProtoReflect.Descriptor instead.
+func (*GetInventoryMetricsResponse) Descriptor() ([]byte, []int) {
+	return file_inventory_proto_inventory_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GetInventoryMetricsResponse) GetMetrics() []*InventoryMetric {
+	if x != nil {
+		return x.Metrics
+	}
+	return nil
+}
+
 var File_inventory_proto_inventory_proto protoreflect.FileDescriptor
 
 const file_inventory_proto_inventory_proto_rawDesc = "" +
@@ -892,14 +1040,23 @@ const file_inventory_proto_inventory_proto_rawDesc = "" +
 	"\n" +
 	"ItemsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x012\x84\x04\n" +
+	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\"0\n" +
+	"\x1aGetInventoryMetricsRequest\x12\x12\n" +
+	"\x04skus\x18\x01 \x03(\tR\x04skus\"\\\n" +
+	"\x0fInventoryMetric\x12\x10\n" +
+	"\x03sku\x18\x01 \x01(\tR\x03sku\x12\x1a\n" +
+	"\bquantity\x18\x02 \x01(\x05R\bquantity\x12\x1b\n" +
+	"\tunit_cost\x18\x03 \x01(\x01R\bunitCost\"S\n" +
+	"\x1bGetInventoryMetricsResponse\x124\n" +
+	"\ametrics\x18\x01 \x03(\v2\x1a.inventory.InventoryMetricR\ametrics2\xea\x04\n" +
 	"\x10InventoryService\x12^\n" +
 	"\x11CheckAvailability\x12#.inventory.CheckAvailabilityRequest\x1a$.inventory.CheckAvailabilityResponse\x12O\n" +
 	"\fReserveItems\x12\x1e.inventory.ReserveItemsRequest\x1a\x1f.inventory.ReserveItemsResponse\x12O\n" +
 	"\fReleaseItems\x12\x1e.inventory.ReleaseItemsRequest\x1a\x1f.inventory.ReleaseItemsResponse\x12O\n" +
 	"\fRestockItems\x12\x1e.inventory.RestockItemsRequest\x1a\x1f.inventory.RestockItemsResponse\x12X\n" +
 	"\x0fReportJobStatus\x12!.inventory.ReportJobStatusRequest\x1a\".inventory.ReportJobStatusResponse\x12C\n" +
-	"\bCheckout\x12\x1a.inventory.CheckoutRequest\x1a\x1b.inventory.CheckoutResponseB\x1eZ\x1cauto_grocery/inventory/protob\x06proto3"
+	"\bCheckout\x12\x1a.inventory.CheckoutRequest\x1a\x1b.inventory.CheckoutResponse\x12d\n" +
+	"\x13GetInventoryMetrics\x12%.inventory.GetInventoryMetricsRequest\x1a&.inventory.GetInventoryMetricsResponseB\x1eZ\x1cauto_grocery/inventory/protob\x06proto3"
 
 var (
 	file_inventory_proto_inventory_proto_rawDescOnce sync.Once
@@ -913,57 +1070,63 @@ func file_inventory_proto_inventory_proto_rawDescGZIP() []byte {
 	return file_inventory_proto_inventory_proto_rawDescData
 }
 
-var file_inventory_proto_inventory_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_inventory_proto_inventory_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
 var file_inventory_proto_inventory_proto_goTypes = []any{
-	(*CheckAvailabilityRequest)(nil),  // 0: inventory.CheckAvailabilityRequest
-	(*CheckAvailabilityResponse)(nil), // 1: inventory.CheckAvailabilityResponse
-	(*ItemDetail)(nil),                // 2: inventory.ItemDetail
-	(*ReserveItemsRequest)(nil),       // 3: inventory.ReserveItemsRequest
-	(*ReserveItemsResponse)(nil),      // 4: inventory.ReserveItemsResponse
-	(*ReleaseItemsRequest)(nil),       // 5: inventory.ReleaseItemsRequest
-	(*ReleaseItemsResponse)(nil),      // 6: inventory.ReleaseItemsResponse
-	(*RestockItemsRequest)(nil),       // 7: inventory.RestockItemsRequest
-	(*RestockItem)(nil),               // 8: inventory.RestockItem
-	(*RestockItemsResponse)(nil),      // 9: inventory.RestockItemsResponse
-	(*ReportJobStatusRequest)(nil),    // 10: inventory.ReportJobStatusRequest
-	(*ReportJobStatusResponse)(nil),   // 11: inventory.ReportJobStatusResponse
-	(*CheckoutRequest)(nil),           // 12: inventory.CheckoutRequest
-	(*CheckoutResponse)(nil),          // 13: inventory.CheckoutResponse
-	nil,                               // 14: inventory.CheckAvailabilityResponse.ItemsEntry
-	nil,                               // 15: inventory.ReserveItemsRequest.ItemsEntry
-	nil,                               // 16: inventory.ReserveItemsResponse.ItemsEntry
-	nil,                               // 17: inventory.ReleaseItemsRequest.ItemsEntry
-	nil,                               // 18: inventory.ReportJobStatusRequest.ItemsEntry
-	nil,                               // 19: inventory.CheckoutRequest.ItemsEntry
-	nil,                               // 20: inventory.CheckoutResponse.ItemsEntry
+	(*CheckAvailabilityRequest)(nil),    // 0: inventory.CheckAvailabilityRequest
+	(*CheckAvailabilityResponse)(nil),   // 1: inventory.CheckAvailabilityResponse
+	(*ItemDetail)(nil),                  // 2: inventory.ItemDetail
+	(*ReserveItemsRequest)(nil),         // 3: inventory.ReserveItemsRequest
+	(*ReserveItemsResponse)(nil),        // 4: inventory.ReserveItemsResponse
+	(*ReleaseItemsRequest)(nil),         // 5: inventory.ReleaseItemsRequest
+	(*ReleaseItemsResponse)(nil),        // 6: inventory.ReleaseItemsResponse
+	(*RestockItemsRequest)(nil),         // 7: inventory.RestockItemsRequest
+	(*RestockItem)(nil),                 // 8: inventory.RestockItem
+	(*RestockItemsResponse)(nil),        // 9: inventory.RestockItemsResponse
+	(*ReportJobStatusRequest)(nil),      // 10: inventory.ReportJobStatusRequest
+	(*ReportJobStatusResponse)(nil),     // 11: inventory.ReportJobStatusResponse
+	(*CheckoutRequest)(nil),             // 12: inventory.CheckoutRequest
+	(*CheckoutResponse)(nil),            // 13: inventory.CheckoutResponse
+	(*GetInventoryMetricsRequest)(nil),  // 14: inventory.GetInventoryMetricsRequest
+	(*InventoryMetric)(nil),             // 15: inventory.InventoryMetric
+	(*GetInventoryMetricsResponse)(nil), // 16: inventory.GetInventoryMetricsResponse
+	nil,                                 // 17: inventory.CheckAvailabilityResponse.ItemsEntry
+	nil,                                 // 18: inventory.ReserveItemsRequest.ItemsEntry
+	nil,                                 // 19: inventory.ReserveItemsResponse.ItemsEntry
+	nil,                                 // 20: inventory.ReleaseItemsRequest.ItemsEntry
+	nil,                                 // 21: inventory.ReportJobStatusRequest.ItemsEntry
+	nil,                                 // 22: inventory.CheckoutRequest.ItemsEntry
+	nil,                                 // 23: inventory.CheckoutResponse.ItemsEntry
 }
 var file_inventory_proto_inventory_proto_depIdxs = []int32{
-	14, // 0: inventory.CheckAvailabilityResponse.items:type_name -> inventory.CheckAvailabilityResponse.ItemsEntry
-	15, // 1: inventory.ReserveItemsRequest.items:type_name -> inventory.ReserveItemsRequest.ItemsEntry
-	16, // 2: inventory.ReserveItemsResponse.items:type_name -> inventory.ReserveItemsResponse.ItemsEntry
-	17, // 3: inventory.ReleaseItemsRequest.items:type_name -> inventory.ReleaseItemsRequest.ItemsEntry
+	17, // 0: inventory.CheckAvailabilityResponse.items:type_name -> inventory.CheckAvailabilityResponse.ItemsEntry
+	18, // 1: inventory.ReserveItemsRequest.items:type_name -> inventory.ReserveItemsRequest.ItemsEntry
+	19, // 2: inventory.ReserveItemsResponse.items:type_name -> inventory.ReserveItemsResponse.ItemsEntry
+	20, // 3: inventory.ReleaseItemsRequest.items:type_name -> inventory.ReleaseItemsRequest.ItemsEntry
 	8,  // 4: inventory.RestockItemsRequest.items:type_name -> inventory.RestockItem
-	18, // 5: inventory.ReportJobStatusRequest.items:type_name -> inventory.ReportJobStatusRequest.ItemsEntry
-	19, // 6: inventory.CheckoutRequest.items:type_name -> inventory.CheckoutRequest.ItemsEntry
-	20, // 7: inventory.CheckoutResponse.items:type_name -> inventory.CheckoutResponse.ItemsEntry
-	2,  // 8: inventory.CheckAvailabilityResponse.ItemsEntry.value:type_name -> inventory.ItemDetail
-	0,  // 9: inventory.InventoryService.CheckAvailability:input_type -> inventory.CheckAvailabilityRequest
-	3,  // 10: inventory.InventoryService.ReserveItems:input_type -> inventory.ReserveItemsRequest
-	5,  // 11: inventory.InventoryService.ReleaseItems:input_type -> inventory.ReleaseItemsRequest
-	7,  // 12: inventory.InventoryService.RestockItems:input_type -> inventory.RestockItemsRequest
-	10, // 13: inventory.InventoryService.ReportJobStatus:input_type -> inventory.ReportJobStatusRequest
-	12, // 14: inventory.InventoryService.Checkout:input_type -> inventory.CheckoutRequest
-	1,  // 15: inventory.InventoryService.CheckAvailability:output_type -> inventory.CheckAvailabilityResponse
-	4,  // 16: inventory.InventoryService.ReserveItems:output_type -> inventory.ReserveItemsResponse
-	6,  // 17: inventory.InventoryService.ReleaseItems:output_type -> inventory.ReleaseItemsResponse
-	9,  // 18: inventory.InventoryService.RestockItems:output_type -> inventory.RestockItemsResponse
-	11, // 19: inventory.InventoryService.ReportJobStatus:output_type -> inventory.ReportJobStatusResponse
-	13, // 20: inventory.InventoryService.Checkout:output_type -> inventory.CheckoutResponse
-	15, // [15:21] is the sub-list for method output_type
-	9,  // [9:15] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	21, // 5: inventory.ReportJobStatusRequest.items:type_name -> inventory.ReportJobStatusRequest.ItemsEntry
+	22, // 6: inventory.CheckoutRequest.items:type_name -> inventory.CheckoutRequest.ItemsEntry
+	23, // 7: inventory.CheckoutResponse.items:type_name -> inventory.CheckoutResponse.ItemsEntry
+	15, // 8: inventory.GetInventoryMetricsResponse.metrics:type_name -> inventory.InventoryMetric
+	2,  // 9: inventory.CheckAvailabilityResponse.ItemsEntry.value:type_name -> inventory.ItemDetail
+	0,  // 10: inventory.InventoryService.CheckAvailability:input_type -> inventory.CheckAvailabilityRequest
+	3,  // 11: inventory.InventoryService.ReserveItems:input_type -> inventory.ReserveItemsRequest
+	5,  // 12: inventory.InventoryService.ReleaseItems:input_type -> inventory.ReleaseItemsRequest
+	7,  // 13: inventory.InventoryService.RestockItems:input_type -> inventory.RestockItemsRequest
+	10, // 14: inventory.InventoryService.ReportJobStatus:input_type -> inventory.ReportJobStatusRequest
+	12, // 15: inventory.InventoryService.Checkout:input_type -> inventory.CheckoutRequest
+	14, // 16: inventory.InventoryService.GetInventoryMetrics:input_type -> inventory.GetInventoryMetricsRequest
+	1,  // 17: inventory.InventoryService.CheckAvailability:output_type -> inventory.CheckAvailabilityResponse
+	4,  // 18: inventory.InventoryService.ReserveItems:output_type -> inventory.ReserveItemsResponse
+	6,  // 19: inventory.InventoryService.ReleaseItems:output_type -> inventory.ReleaseItemsResponse
+	9,  // 20: inventory.InventoryService.RestockItems:output_type -> inventory.RestockItemsResponse
+	11, // 21: inventory.InventoryService.ReportJobStatus:output_type -> inventory.ReportJobStatusResponse
+	13, // 22: inventory.InventoryService.Checkout:output_type -> inventory.CheckoutResponse
+	16, // 23: inventory.InventoryService.GetInventoryMetrics:output_type -> inventory.GetInventoryMetricsResponse
+	17, // [17:24] is the sub-list for method output_type
+	10, // [10:17] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_inventory_proto_inventory_proto_init() }
@@ -977,7 +1140,7 @@ func file_inventory_proto_inventory_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_inventory_proto_inventory_proto_rawDesc), len(file_inventory_proto_inventory_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   21,
+			NumMessages:   24,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

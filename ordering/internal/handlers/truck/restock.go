@@ -17,14 +17,14 @@ type RestockHandler struct {
 
 func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var req struct {
-		// Truck Info (Auto-Register)
+
 		TruckID     string `json:"truck_id"`
 		PlateNumber string `json:"plate_number"`
 		DriverName  string `json:"driver_name"`
 		ContactInfo string `json:"contact_info"`
 		Location    string `json:"location"`
 		
-		// Stock Info
+		
 		SupplierID string `json:"supplier_id"`
 		Items      []struct {
 			Sku        string  `json:"sku"`
@@ -41,7 +41,6 @@ func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 1. AUTO-REGISTER / UPDATE TRUCK
 	truck := store.SmartTruck{
 		TruckID:     req.TruckID,
 		PlateNumber: req.PlateNumber,
@@ -56,7 +55,6 @@ func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 2. Prepare gRPC Request
 	restockUUID := uuid.New().String()
 	var protoItems []*pb.RestockItem
 	for _, item := range req.Items {
@@ -66,7 +64,6 @@ func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
-	// 3. Call Inventory
 	grpcResp, err := h.InventoryClient.RestockItems(r.Context(), &pb.RestockItemsRequest{
 		SupplierId: req.SupplierID, Items: protoItems,
 	})
@@ -75,7 +72,6 @@ func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 4. Save History (Using the DB ID we got from Upsert)
 	var dbItems []store.RestockOrderItem
 	for _, item := range req.Items {
 		dbItems = append(dbItems, store.RestockOrderItem{Sku: item.Sku, Quantity: int(item.Quantity)})

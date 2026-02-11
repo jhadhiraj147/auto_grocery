@@ -19,9 +19,6 @@ func NewPricingHandler(s *store.CatalogStore) *PricingHandler {
 	return &PricingHandler{store: s}
 }
 
-// ---------------------------------------------------------------------
-// 1. CALCULATE BILL
-// ---------------------------------------------------------------------
 func (h *PricingHandler) CalculateBill(ctx context.Context, req *pb.CalculateBillRequest) (*pb.CalculateBillResponse, error) {
 	var skus []string
 	for _, item := range req.GetItems() {
@@ -45,7 +42,6 @@ func (h *PricingHandler) CalculateBill(ctx context.Context, req *pb.CalculateBil
 		totalPrice := dbItem.UnitPrice * float64(cartItem.GetQuantity())
 		grandTotal += totalPrice
 
-		// FIXED: Removed 'Name' reference as store.Item no longer has it
 		lineItems = append(lineItems, &pb.LineItem{
 			Sku:        dbItem.Sku,
 			UnitPrice:  dbItem.UnitPrice,
@@ -60,11 +56,7 @@ func (h *PricingHandler) CalculateBill(ctx context.Context, req *pb.CalculateBil
 	}, nil
 }
 
-// ---------------------------------------------------------------------
-// 2. CREATE ITEM
-// ---------------------------------------------------------------------
 func (h *PricingHandler) CreateItem(ctx context.Context, req *pb.CreateItemRequest) (*pb.CreateItemResponse, error) {
-	// FIXED: Store only accepts Sku and UnitPrice now
 	item := store.Item{
 		Sku:       req.GetSku(),
 		UnitPrice: req.GetUnitPrice(),
@@ -80,16 +72,13 @@ func (h *PricingHandler) CreateItem(ctx context.Context, req *pb.CreateItemReque
 	}, nil
 }
 
-// ---------------------------------------------------------------------
-// 3. GET PRICE
-// ---------------------------------------------------------------------
+
 func (h *PricingHandler) GetPrice(ctx context.Context, req *pb.GetPriceRequest) (*pb.GetPriceResponse, error) {
 	item, err := h.store.GetItem(ctx, req.GetSku())
 	if err != nil {
 		return nil, status.Errorf(codes.NotFound, "item with SKU %s not found", req.GetSku())
 	}
 
-	// FIXED: Return only existing fields and ensure two return values (response, nil)
 	return &pb.GetPriceResponse{
 		Id:        int32(item.ID),
 		Sku:       item.Sku,

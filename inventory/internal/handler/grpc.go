@@ -9,14 +9,13 @@ import (
     pb "auto_grocery/inventory/proto" 
 )
 
-// InventoryHandler implements the gRPC server interface
 type InventoryHandler struct {
     pb.UnimplementedInventoryServiceServer
     store         *store.Store
-    pricingClient pb.PricingServiceClient // Client to talk to Pricing Service
+    pricingClient pb.PricingServiceClient 
 }
 
-// NewInventoryHandler creates a new handler with Store AND Pricing Client
+
 func NewInventoryHandler(s *store.Store, p pb.PricingServiceClient) *InventoryHandler {
     return &InventoryHandler{
         store:         s,
@@ -24,17 +23,14 @@ func NewInventoryHandler(s *store.Store, p pb.PricingServiceClient) *InventoryHa
     }
 }
 
-// ---------------------------------------------------------------------
-// 1. CHECK AVAILABILITY
-// ---------------------------------------------------------------------
+
 func (h *InventoryHandler) CheckAvailability(ctx context.Context, req *pb.CheckAvailabilityRequest) (*pb.CheckAvailabilityResponse, error) {
-    // 1. Call the Store
+   
     dbItems, err := h.store.GetBatchItems(ctx, req.GetSkus())
     if err != nil {
         return nil, err
     }
 
-    // 2. Convert Store Model -> Proto Model
     protoItems := make(map[string]*pb.ItemDetail)
     for sku, item := range dbItems {
         protoItems[sku] = &pb.ItemDetail{
@@ -50,11 +46,9 @@ func (h *InventoryHandler) CheckAvailability(ctx context.Context, req *pb.CheckA
     }, nil
 }
 
-// ---------------------------------------------------------------------
-// 2. RESERVE ITEMS (Buying)
-// ---------------------------------------------------------------------
+
 func (h *InventoryHandler) ReserveItems(ctx context.Context, req *pb.ReserveItemsRequest) (*pb.ReserveItemsResponse, error) {
-    // 1. Call the Store
+   
     reservedItems, err := h.store.ReserveStock(ctx, req.GetItems())
     
     if err != nil {
@@ -72,9 +66,7 @@ func (h *InventoryHandler) ReserveItems(ctx context.Context, req *pb.ReserveItem
     }, nil
 }
 
-// ---------------------------------------------------------------------
-// 3. RELEASE ITEMS (Undo)
-// ---------------------------------------------------------------------
+
 func (h *InventoryHandler) ReleaseItems(ctx context.Context, req *pb.ReleaseItemsRequest) (*pb.ReleaseItemsResponse, error) {
     err := h.store.ReleaseStock(ctx, req.GetItems())
     if err != nil {
@@ -83,22 +75,20 @@ func (h *InventoryHandler) ReleaseItems(ctx context.Context, req *pb.ReleaseItem
     return &pb.ReleaseItemsResponse{Success: true}, nil
 }
 
-// ---------------------------------------------------------------------
-// 4. RESTOCK ITEMS (Truck) - UPDATED FOR UNIT COST
-// ---------------------------------------------------------------------
+
 func (h *InventoryHandler) RestockItems(ctx context.Context, req *pb.RestockItemsRequest) (*pb.RestockItemsResponse, error) {
     for _, protoItem := range req.GetItems() {
         layout := "2006-01-02" 
         mfd, _ := time.Parse(layout, protoItem.GetMfdDate())
         expiry, _ := time.Parse(layout, protoItem.GetExpiryDate())
 
-        // MAPPING: Convert gRPC Proto Item -> Database Store Item
+    
         item := store.StockItem{
             SKU:        protoItem.GetSku(),
             Name:       protoItem.GetName(),
             AisleType:  protoItem.GetAisleType(),
             Quantity:   int(protoItem.GetQuantity()),
-            UnitCost:   protoItem.GetUnitCost(), // <--- NEW: Captured from truck
+            UnitCost:   protoItem.GetUnitCost(),
             MfdDate:    mfd,
             ExpiryDate: expiry,
         }
@@ -113,22 +103,16 @@ func (h *InventoryHandler) RestockItems(ctx context.Context, req *pb.RestockItem
     return &pb.RestockItemsResponse{Success: true}, nil
 }
 
-// ---------------------------------------------------------------------
-// 5. ROBOT REPORTING
-// ---------------------------------------------------------------------
 func (h *InventoryHandler) ReportJobStatus(ctx context.Context, req *pb.ReportJobStatusRequest) (*pb.ReportJobStatusResponse, error) {
     fmt.Printf("🤖 Robot Report: Order=%s Robot=%s Status=%s\n", 
         req.GetOrderId(), req.GetRobotId(), req.GetStatus())
     return &pb.ReportJobStatusResponse{Success: true}, nil
 }
 
-// ---------------------------------------------------------------------
-// 6. CHECKOUT (The New Orchestrator)
-// ---------------------------------------------------------------------
+
 func (h *InventoryHandler) Checkout(ctx context.Context, req *pb.CheckoutRequest) (*pb.CheckoutResponse, error) {
     fmt.Printf("🛒 Processing Checkout for Order %s...\n", req.GetOrderId())
 
-    // STEP 1: RESERVE STOCK (Local DB)
     reservedItems, err := h.store.ReserveStock(ctx, req.GetItems())
     if err != nil {
         return &pb.CheckoutResponse{
@@ -137,7 +121,7 @@ func (h *InventoryHandler) Checkout(ctx context.Context, req *pb.CheckoutRequest
         }, nil
     }
 
-    // If nothing was reserved (out of stock), return early
+
     if len(reservedItems) == 0 {
         return &pb.CheckoutResponse{
             OrderId:    req.GetOrderId(),
@@ -147,7 +131,7 @@ func (h *InventoryHandler) Checkout(ctx context.Context, req *pb.CheckoutRequest
         }, nil
     }
 
-    // STEP 2: CALCULATE BILL (Call Pricing Service)
+    
     var pricingItems []*pb.CartItem
     for sku, qty := range reservedItems {
         pricingItems = append(pricingItems, &pb.CartItem{
@@ -156,7 +140,7 @@ func (h *InventoryHandler) Checkout(ctx context.Context, req *pb.CheckoutRequest
         })
     }
 
-    // Call the remote Pricing Service
+
     priceReq := &pb.CalculateBillRequest{Items: pricingItems}
     priceResp, err := h.pricingClient.CalculateBill(ctx, priceReq)
     
@@ -173,4 +157,27 @@ func (h *InventoryHandler) Checkout(ctx context.Context, req *pb.CheckoutRequest
         Success:     true,
         TotalPrice:  finalPrice,
     }, nil
+}
+
+
+func (h *InventoryHandler) GetInventoryMetrics(ctx context.Context, req *pb.GetInventoryMetricsRequest) (*pb.GetInventoryMetricsResponse, error) {
+	
+	items, err := h.store.GetAllStock(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	
+	var metrics []*pb.InventoryMetric
+	for _, item := range items {
+		metrics = append(metrics, &pb.InventoryMetric{
+			Sku:      item.SKU,
+			Quantity: int32(item.Quantity),
+			UnitCost: item.UnitCost,
+		})
+	}
+
+	return &pb.GetInventoryMetricsResponse{
+		Metrics: metrics,
+	}, nil
 }

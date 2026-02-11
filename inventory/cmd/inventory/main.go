@@ -22,13 +22,13 @@ import (
 )
 
 func main() {
-	// 1. Load Environment Variables (Single source)
+	
 	err := godotenv.Load("inventory/.env")
 	if err != nil {
 		log.Println("Note: inventory/.env file not found, using system vars")
 	}
 
-	// 2. Connect to Inventory Database
+	
 	dbConnString := os.Getenv("DATABASE_URL")
 	if dbConnString == "" {
 		log.Fatal("DATABASE_URL is not set")
@@ -45,10 +45,8 @@ func main() {
 	}
 	fmt.Println("Connected to Inventory Database")
 
-	// 3. Initialize Store
 	inventoryStore := store.NewStore(db)
 
-	// 4. Connect to Pricing Service (BLOCKING WAIT)
 	pricingAddr := "localhost:50052"
 	
 	conn, err := grpc.NewClient(pricingAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -57,10 +55,9 @@ func main() {
 	}
 	defer conn.Close()
 
-	// --- STRICT DEPENDENCY CHECK ---
 	fmt.Printf("Waiting for Pricing Service at %s to be online...\n", pricingAddr)
 	
-	conn.Connect() // Force connection
+	conn.Connect()
 	
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -80,14 +77,11 @@ func main() {
 			log.Fatalf("TIMEOUT: Pricing Service at %s is not reachable.", pricingAddr)
 		}
 	}
-	// -------------------------------
-
+	
 	pricingClient := pb.NewPricingServiceClient(conn)
 
-	// 5. Initialize Handler
 	inventoryHandler := handler.NewInventoryHandler(inventoryStore, pricingClient)
 
-	// 6. Start Inventory Server
 	port := "50051"
 	lis, err := net.Listen("tcp", ":"+port)
 	if err != nil {

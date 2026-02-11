@@ -21,22 +21,20 @@ func (h *RefreshHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	tokenString := strings.Split(authHeader, " ")[1]
 
-	// 1. Validate Signature
+
 	claims, err := auth.ValidateToken(tokenString)
 	if err != nil {
 		http.Error(w, "Invalid Token", http.StatusUnauthorized)
 		return
 	}
 
-	// 2. Validate Type (MUST be Refresh)
+
 	if claims.TokenType != "REFRESH" {
 		http.Error(w, "Invalid Token Type", http.StatusUnauthorized)
 		return
 	}
 
-	// 3. TODO: Check DB for revocation (omitted for brevity, but recommended)
-
-	// 4. Issue New Access Token
+	
 	newAccessToken, _ := auth.GenerateAccessToken(claims.UserID, claims.Role)
 
 	json.NewEncoder(w).Encode(map[string]string{
