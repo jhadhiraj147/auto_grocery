@@ -25,7 +25,8 @@ struct Item FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   typedef ItemBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_SKU = 4,
-    VT_QUANTITY = 6
+    VT_QUANTITY = 6,
+    VT_AISLE = 8
   };
   const ::flatbuffers::String *sku() const {
     return GetPointer<const ::flatbuffers::String *>(VT_SKU);
@@ -33,12 +34,17 @@ struct Item FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   int32_t quantity() const {
     return GetField<int32_t>(VT_QUANTITY, 0);
   }
+  const ::flatbuffers::String *aisle() const {
+    return GetPointer<const ::flatbuffers::String *>(VT_AISLE);
+  }
   template <bool B = false>
   bool Verify(::flatbuffers::VerifierTemplate<B> &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_SKU) &&
            verifier.VerifyString(sku()) &&
            VerifyField<int32_t>(verifier, VT_QUANTITY, 4) &&
+           VerifyOffset(verifier, VT_AISLE) &&
+           verifier.VerifyString(aisle()) &&
            verifier.EndTable();
   }
 };
@@ -52,6 +58,9 @@ struct ItemBuilder {
   }
   void add_quantity(int32_t quantity) {
     fbb_.AddElement<int32_t>(Item::VT_QUANTITY, quantity, 0);
+  }
+  void add_aisle(::flatbuffers::Offset<::flatbuffers::String> aisle) {
+    fbb_.AddOffset(Item::VT_AISLE, aisle);
   }
   explicit ItemBuilder(::flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -67,8 +76,10 @@ struct ItemBuilder {
 inline ::flatbuffers::Offset<Item> CreateItem(
     ::flatbuffers::FlatBufferBuilder &_fbb,
     ::flatbuffers::Offset<::flatbuffers::String> sku = 0,
-    int32_t quantity = 0) {
+    int32_t quantity = 0,
+    ::flatbuffers::Offset<::flatbuffers::String> aisle = 0) {
   ItemBuilder builder_(_fbb);
+  builder_.add_aisle(aisle);
   builder_.add_quantity(quantity);
   builder_.add_sku(sku);
   return builder_.Finish();
@@ -77,12 +88,15 @@ inline ::flatbuffers::Offset<Item> CreateItem(
 inline ::flatbuffers::Offset<Item> CreateItemDirect(
     ::flatbuffers::FlatBufferBuilder &_fbb,
     const char *sku = nullptr,
-    int32_t quantity = 0) {
+    int32_t quantity = 0,
+    const char *aisle = nullptr) {
   auto sku__ = sku ? _fbb.CreateString(sku) : 0;
+  auto aisle__ = aisle ? _fbb.CreateString(aisle) : 0;
   return RobotMessages::CreateItem(
       _fbb,
       sku__,
-      quantity);
+      quantity,
+      aisle__);
 }
 
 struct OrderBroadcast FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {

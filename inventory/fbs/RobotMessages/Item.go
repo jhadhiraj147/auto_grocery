@@ -61,14 +61,25 @@ func (rcv *Item) MutateQuantity(n int32) bool {
 	return rcv._tab.MutateInt32Slot(6, n)
 }
 
+func (rcv *Item) Aisle() []byte {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
+	if o != 0 {
+		return rcv._tab.ByteVector(o + rcv._tab.Pos)
+	}
+	return nil
+}
+
 func ItemStart(builder *flatbuffers.Builder) {
-	builder.StartObject(2)
+	builder.StartObject(3)
 }
 func ItemAddSku(builder *flatbuffers.Builder, sku flatbuffers.UOffsetT) {
 	builder.PrependUOffsetTSlot(0, flatbuffers.UOffsetT(sku), 0)
 }
 func ItemAddQuantity(builder *flatbuffers.Builder, quantity int32) {
 	builder.PrependInt32Slot(1, quantity, 0)
+}
+func ItemAddAisle(builder *flatbuffers.Builder, aisle flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(2, flatbuffers.UOffsetT(aisle), 0)
 }
 func ItemEnd(builder *flatbuffers.Builder) flatbuffers.UOffsetT {
 	return builder.EndObject()

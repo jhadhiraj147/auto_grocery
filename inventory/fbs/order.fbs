@@ -1,12 +1,11 @@
 namespace RobotMessages;
 
-// Individual item details for the robot to fetch
 table Item {
   sku:string;
   quantity:int;
+  aisle:string; // <--- Add this field
 }
 
-// The main broadcast structure
 table OrderBroadcast {
   order_id:string;
   items:[Item];
