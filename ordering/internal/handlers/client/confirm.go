@@ -42,7 +42,7 @@ func (h *ConfirmOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		protoItems[item.Sku] = int32(item.Quantity)
 	}
 
-	grpcResp, err := h.InventoryClient.Checkout(r.Context(), &pb.CheckoutRequest{
+	grpcResp, err := h.InventoryClient.BillAndPay(r.Context(), &pb.BillRequest{
 		OrderId: req.OrderID, Items: protoItems,
 	})
 	if err != nil || !grpcResp.Success {

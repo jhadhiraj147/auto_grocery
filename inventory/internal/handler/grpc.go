@@ -110,36 +110,16 @@ func (h *InventoryHandler) ReportJobStatus(ctx context.Context, req *pb.ReportJo
 }
 
 
-func (h *InventoryHandler) Checkout(ctx context.Context, req *pb.CheckoutRequest) (*pb.CheckoutResponse, error) {
-    fmt.Printf("🛒 Processing Checkout for Order %s...\n", req.GetOrderId())
+func (h *InventoryHandler) BillAndPay(ctx context.Context, req *pb.BillRequest) (*pb.BillResponse, error) {
+    fmt.Printf("🛒 Processing Bill & Pay for Order %s...\n", req.GetOrderId())
 
-    reservedItems, err := h.store.ReserveStock(ctx, req.GetItems())
-    if err != nil {
-        return &pb.CheckoutResponse{
-            OrderId: req.GetOrderId(),
-            Success: false,
-        }, nil
-    }
-
-
-    if len(reservedItems) == 0 {
-        return &pb.CheckoutResponse{
-            OrderId:    req.GetOrderId(),
-            Items:      reservedItems,
-            Success:    true,
-            TotalPrice: 0.0,
-        }, nil
-    }
-
-    
     var pricingItems []*pb.CartItem
-    for sku, qty := range reservedItems {
+    for sku, qty := range req.GetItems() {
         pricingItems = append(pricingItems, &pb.CartItem{
             Sku:      sku,
             Quantity: qty,
         })
     }
-
 
     priceReq := &pb.CalculateBillRequest{Items: pricingItems}
     priceResp, err := h.pricingClient.CalculateBill(ctx, priceReq)
@@ -150,10 +130,9 @@ func (h *InventoryHandler) Checkout(ctx context.Context, req *pb.CheckoutRequest
     } else {
         finalPrice = priceResp.GetGrandTotal()
     }
-
-    return &pb.CheckoutResponse{
+    return &pb.BillResponse{
         OrderId:     req.GetOrderId(),
-        Items:       reservedItems, 
+        Items:       req.GetItems(), 
         Success:     true,
         TotalPrice:  finalPrice,
     }, nil
