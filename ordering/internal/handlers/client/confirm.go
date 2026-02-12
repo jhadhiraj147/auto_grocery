@@ -1,10 +1,11 @@
 package client
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
+	"time"
 
-	"auto_grocery/ordering/internal/auth"
 	"auto_grocery/ordering/internal/store"
 	pb "auto_grocery/ordering/proto"
 )
@@ -14,49 +15,67 @@ type ConfirmOrderHandler struct {
 	InventoryClient pb.InventoryServiceClient
 }
 
+// Request payload from the Frontend
+type ConfirmRequest struct {
+	ClientID int              `json:"client_id"`
+	Items    map[string]int32 `json:"items"` // SKU -> Quantity
+}
+
 func (h *ConfirmOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	userID, ok := r.Context().Value(auth.UserKey).(int)
-	if !ok {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+	// 1. Parse Request
+	var reqBody ConfirmRequest
+	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
 
-	var req struct {
-		OrderID string `json:"order_id"`
-	}
-	json.NewDecoder(r.Body).Decode(&req)
+	// 2. Create Order ID
+	// In a real app, you might save to DB first to get an ID. 
+	// Here we generate one based on time.
+	orderID := "ORD-" + time.Now().Format("150405")
 
-	order, _ := h.OrderStore.GetOrderByID(r.Context(), req.OrderID)
-	if order == nil || order.ClientID != userID {
-		http.Error(w, "Order not found", http.StatusNotFound)
-		return
+	// 3. Save "PENDING" Order to Database
+	// We create a dummy order structure for now
+	order := store.GroceryOrder{
+		OrderID:  orderID,
+		ClientID: reqBody.ClientID,
+		Status:   "PENDING",
 	}
-	if order.Status == "COMPLETED" {
-		http.Error(w, "Already completed", http.StatusConflict)
-		return
-	}
-
-	dbItems, _ := h.OrderStore.GetOrderItems(r.Context(), req.OrderID)
-	protoItems := make(map[string]int32)
-	for _, item := range dbItems {
-		protoItems[item.Sku] = int32(item.Quantity)
-	}
-
-	grpcResp, err := h.InventoryClient.BillAndPay(r.Context(), &pb.BillRequest{
-		OrderId: req.OrderID, Items: protoItems,
-	})
-	if err != nil || !grpcResp.Success {
-		http.Error(w, "Checkout failed", http.StatusConflict)
-		return
-	}
-
-	h.OrderStore.UpdateOrderStatus(r.Context(), req.OrderID, "COMPLETED", grpcResp.TotalPrice)
 	
-	// Return Full Receipt Data
-	json.NewEncoder(w).Encode(map[string]interface{}{
-		"status":      "completed",
-		"order_id":    req.OrderID,
-		"total_price": grpcResp.TotalPrice,
-		"timestamp":   order.CreatedAt, 
+	// Convert map to slice for the store method
+	var orderItems []store.GroceryOrderItem
+	for sku, qty := range reqBody.Items {
+		orderItems = append(orderItems, store.GroceryOrderItem{
+			Sku:      sku,
+			Quantity: int(qty),
+		})
+	}
+
+	if err := h.OrderStore.CreateGroceryOrder(r.Context(), order, orderItems); err != nil {
+		http.Error(w, "Failed to create order: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	grpcReq := &pb.AssignRequest{
+		OrderId: orderID,
+		Items:   reqBody.Items,
+	}
+
+	// This is now an ASYNC trigger. We don't get the price back yet.
+	resp, err := h.InventoryClient.AssignRobots(context.Background(), grpcReq)
+	if err != nil {
+		http.Error(w, "Failed to assign robots: "+err.Error(), http.StatusInternalServerError)
+		// Optional: Mark order as FAILED in DB here
+		return
+	}
+
+	// 5. Respond to User
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{
+		"message":  "Order placed successfully! Robots are working.",
+		"order_id": orderID,
+		"status":   "PROCESSING", 
+		"details":  resp.Message,
 	})
 }

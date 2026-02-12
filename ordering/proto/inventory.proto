@@ -21,7 +21,7 @@ service InventoryService {
   rpc ReportJobStatus (ReportJobStatusRequest) returns (ReportJobStatusResponse);
 
   
-  rpc BillAndPay (BillRequest) returns (BillResponse);
+  rpc AssignRobots (AssignRequest) returns (AssignResponse);
 
   
   rpc GetInventoryMetrics (GetInventoryMetricsRequest) returns (GetInventoryMetricsResponse);
@@ -98,16 +98,15 @@ message ReportJobStatusResponse {
 }
 
 
-message BillRequest {
+message AssignRequest {
   string order_id = 1;
   map<string, int32> items = 2; 
 }
 
-message BillResponse {
-  string order_id = 1;
-  map<string, int32> items = 2; 
-  bool success = 3;
-  double total_price = 4; 
+// UPDATED: Renamed from BillResponse
+message AssignResponse {
+  bool success = 1;
+  string message = 2; // e.g. "Robots started"
 }
 
 

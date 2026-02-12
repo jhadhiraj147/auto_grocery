@@ -24,7 +24,7 @@ const (
 	InventoryService_ReleaseItems_FullMethodName        = "/inventory.InventoryService/ReleaseItems"
 	InventoryService_RestockItems_FullMethodName        = "/inventory.InventoryService/RestockItems"
 	InventoryService_ReportJobStatus_FullMethodName     = "/inventory.InventoryService/ReportJobStatus"
-	InventoryService_BillAndPay_FullMethodName          = "/inventory.InventoryService/BillAndPay"
+	InventoryService_AssignRobots_FullMethodName        = "/inventory.InventoryService/AssignRobots"
 	InventoryService_GetInventoryMetrics_FullMethodName = "/inventory.InventoryService/GetInventoryMetrics"
 )
 
@@ -37,7 +37,7 @@ type InventoryServiceClient interface {
 	ReleaseItems(ctx context.Context, in *ReleaseItemsRequest, opts ...grpc.CallOption) (*ReleaseItemsResponse, error)
 	RestockItems(ctx context.Context, in *RestockItemsRequest, opts ...grpc.CallOption) (*RestockItemsResponse, error)
 	ReportJobStatus(ctx context.Context, in *ReportJobStatusRequest, opts ...grpc.CallOption) (*ReportJobStatusResponse, error)
-	BillAndPay(ctx context.Context, in *BillRequest, opts ...grpc.CallOption) (*BillResponse, error)
+	AssignRobots(ctx context.Context, in *AssignRequest, opts ...grpc.CallOption) (*AssignResponse, error)
 	GetInventoryMetrics(ctx context.Context, in *GetInventoryMetricsRequest, opts ...grpc.CallOption) (*GetInventoryMetricsResponse, error)
 }
 
@@ -99,10 +99,10 @@ func (c *inventoryServiceClient) ReportJobStatus(ctx context.Context, in *Report
 	return out, nil
 }
 
-func (c *inventoryServiceClient) BillAndPay(ctx context.Context, in *BillRequest, opts ...grpc.CallOption) (*BillResponse, error) {
+func (c *inventoryServiceClient) AssignRobots(ctx context.Context, in *AssignRequest, opts ...grpc.CallOption) (*AssignResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BillResponse)
-	err := c.cc.Invoke(ctx, InventoryService_BillAndPay_FullMethodName, in, out, cOpts...)
+	out := new(AssignResponse)
+	err := c.cc.Invoke(ctx, InventoryService_AssignRobots_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +128,7 @@ type InventoryServiceServer interface {
 	ReleaseItems(context.Context, *ReleaseItemsRequest) (*ReleaseItemsResponse, error)
 	RestockItems(context.Context, *RestockItemsRequest) (*RestockItemsResponse, error)
 	ReportJobStatus(context.Context, *ReportJobStatusRequest) (*ReportJobStatusResponse, error)
-	BillAndPay(context.Context, *BillRequest) (*BillResponse, error)
+	AssignRobots(context.Context, *AssignRequest) (*AssignResponse, error)
 	GetInventoryMetrics(context.Context, *GetInventoryMetricsRequest) (*GetInventoryMetricsResponse, error)
 	mustEmbedUnimplementedInventoryServiceServer()
 }
@@ -155,8 +155,8 @@ func (UnimplementedInventoryServiceServer) RestockItems(context.Context, *Restoc
 func (UnimplementedInventoryServiceServer) ReportJobStatus(context.Context, *ReportJobStatusRequest) (*ReportJobStatusResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ReportJobStatus not implemented")
 }
-func (UnimplementedInventoryServiceServer) BillAndPay(context.Context, *BillRequest) (*BillResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method BillAndPay not implemented")
+func (UnimplementedInventoryServiceServer) AssignRobots(context.Context, *AssignRequest) (*AssignResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method AssignRobots not implemented")
 }
 func (UnimplementedInventoryServiceServer) GetInventoryMetrics(context.Context, *GetInventoryMetricsRequest) (*GetInventoryMetricsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetInventoryMetrics not implemented")
@@ -272,20 +272,20 @@ func _InventoryService_ReportJobStatus_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _InventoryService_BillAndPay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BillRequest)
+func _InventoryService_AssignRobots_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssignRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InventoryServiceServer).BillAndPay(ctx, in)
+		return srv.(InventoryServiceServer).AssignRobots(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InventoryService_BillAndPay_FullMethodName,
+		FullMethod: InventoryService_AssignRobots_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InventoryServiceServer).BillAndPay(ctx, req.(*BillRequest))
+		return srv.(InventoryServiceServer).AssignRobots(ctx, req.(*AssignRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -336,8 +336,8 @@ var InventoryService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _InventoryService_ReportJobStatus_Handler,
 		},
 		{
-			MethodName: "BillAndPay",
-			Handler:    _InventoryService_BillAndPay_Handler,
+			MethodName: "AssignRobots",
+			Handler:    _InventoryService_AssignRobots_Handler,
 		},
 		{
 			MethodName: "GetInventoryMetrics",

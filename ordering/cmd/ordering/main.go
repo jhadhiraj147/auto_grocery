@@ -1,13 +1,11 @@
 package main
 
 import (
-	"context" // <--- ADDED THIS
 	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
-	"time"    // <--- ADDED THIS
 
 	handlers "auto_grocery/ordering/internal/handlers"
 	"auto_grocery/ordering/internal/store"
@@ -23,7 +21,10 @@ func main() {
 	// ---------------------------------------------------------
 	// 1. CONFIGURATION
 	// ---------------------------------------------------------
-	_ = godotenv.Load("ordering/.env")
+	if err := godotenv.Load("ordering/.env"); err != nil {
+		// It's okay if .env doesn't exist, we might be using system env vars
+		log.Println("Note: No ordering/.env file found (or failed to load)")
+	}
 
 	// ---------------------------------------------------------
 	// 2. DATABASE CONNECTION
@@ -51,21 +52,15 @@ func main() {
 	inventoryAddr := "localhost:50051"
 	fmt.Printf("⏳ Connecting to Inventory Service at %s...\n", inventoryAddr)
 
-	// --- FIX: ADD TIMEOUT ---
-	// We give it exactly 5 seconds to find the Inventory Service.
-	// If it takes longer, we assume it's down and crash.
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	invConn, err := grpc.DialContext(ctx, inventoryAddr,
+	// UPDATED: Standard non-blocking dial (Lazy Connection)
+	invConn, err := grpc.Dial(inventoryAddr,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithBlock(), // Still blocks, but respects the 5s timeout above
 	)
 	if err != nil {
 		log.Fatalf("❌ Could not connect to Inventory Service: %v", err)
 	}
 	defer invConn.Close()
-	fmt.Println("✅ Connected to Inventory Service")
+	fmt.Println("✅ Inventory Service Client Initialized")
 
 	// Create the gRPC Client
 	inventoryClient := pb.NewInventoryServiceClient(invConn)

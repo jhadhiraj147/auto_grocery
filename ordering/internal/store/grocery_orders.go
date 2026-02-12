@@ -244,3 +244,9 @@ func (s *OrderStore) GetOrderByID(ctx context.Context, orderID string) (*Grocery
 	}
 	return &o, nil
 }
+
+func (s *OrderStore) UpdateStatus(ctx context.Context, orderID string, status string) error {
+    query := `UPDATE grocery_orders SET status = $1 WHERE order_id = $2`
+    _, err := s.db.ExecContext(ctx, query, status, orderID)
+    return err
+}

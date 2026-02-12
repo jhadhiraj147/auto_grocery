@@ -1,0 +1,15 @@
+namespace RobotMessages;
+
+// Individual item details for the robot to fetch
+table Item {
+  sku:string;
+  quantity:int;
+}
+
+// The main broadcast structure
+table OrderBroadcast {
+  order_id:string;
+  items:[Item];
+}
+
+root_type OrderBroadcast;
