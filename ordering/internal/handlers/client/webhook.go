@@ -35,7 +35,7 @@ func (h *WebhookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// (Ensure UpdateStatus exists in your store/grocery_orders.go)
 	err := h.OrderStore.UpdateStatus(r.Context(), payload.OrderID, payload.Status)
 	if err != nil {
-		log.Printf("❌ Failed to update DB: %v", err)
+		log.Printf("Failed to update DB: %v", err)
 		http.Error(w, "Database error", http.StatusInternalServerError)
 		return
 	}
