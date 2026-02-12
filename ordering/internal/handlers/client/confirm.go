@@ -4,8 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
-	"time"
-
+	
 	"auto_grocery/ordering/internal/store"
 	pb "auto_grocery/ordering/proto"
 )
@@ -17,8 +16,9 @@ type ConfirmOrderHandler struct {
 
 // Request payload from the Frontend
 type ConfirmRequest struct {
+	OrderID  string           `json:"order_id"` // <--- NEW: Use the ID from Preview!
 	ClientID int              `json:"client_id"`
-	Items    map[string]int32 `json:"items"` // SKU -> Quantity
+	Items    map[string]int32 `json:"items"`    // SKU -> Quantity
 }
 
 func (h *ConfirmOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -29,52 +29,44 @@ func (h *ConfirmOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	// 2. Create Order ID
-	// In a real app, you might save to DB first to get an ID. 
-	// Here we generate one based on time.
-	orderID := "ORD-" + time.Now().Format("150405")
-
-	// 3. Save "PENDING" Order to Database
-	// We create a dummy order structure for now
-	order := store.GroceryOrder{
-		OrderID:  orderID,
-		ClientID: reqBody.ClientID,
-		Status:   "PENDING",
-	}
-	
-	// Convert map to slice for the store method
-	var orderItems []store.GroceryOrderItem
-	for sku, qty := range reqBody.Items {
-		orderItems = append(orderItems, store.GroceryOrderItem{
-			Sku:      sku,
-			Quantity: int(qty),
-		})
-	}
-
-	if err := h.OrderStore.CreateGroceryOrder(r.Context(), order, orderItems); err != nil {
-		http.Error(w, "Failed to create order: "+err.Error(), http.StatusInternalServerError)
+	if reqBody.OrderID == "" {
+		http.Error(w, "Missing order_id", http.StatusBadRequest)
 		return
 	}
 
+	// 2. Validate & Update the EXISTING Order
+	// We do NOT create a new order here. We find the "PENDING" order created by Preview
+	// and flip it to "PROCESSING".
+	// Note: We assume the items in the DB match reqBody.Items because of the Preview/Reservation flow.
+	
+	err := h.OrderStore.UpdateStatus(r.Context(), reqBody.OrderID, "PROCESSING")
+	if err != nil {
+		// If error (e.g. order not found), fail immediately
+		http.Error(w, "Order not found or update failed: "+err.Error(), http.StatusNotFound)
+		return
+	}
+
+	// 3. Dispatch Robots (gRPC)
+	// We pass the SAME Order ID so the Inventory service knows which reservation to use.
 	grpcReq := &pb.AssignRequest{
-		OrderId: orderID,
+		OrderId: reqBody.OrderID,
 		Items:   reqBody.Items,
 	}
 
-	// This is now an ASYNC trigger. We don't get the price back yet.
 	resp, err := h.InventoryClient.AssignRobots(context.Background(), grpcReq)
 	if err != nil {
+		// If dispatch fails, you might want to revert status to PENDING or mark FAILED
+		h.OrderStore.UpdateStatus(r.Context(), reqBody.OrderID, "FAILED_DISPATCH")
 		http.Error(w, "Failed to assign robots: "+err.Error(), http.StatusInternalServerError)
-		// Optional: Mark order as FAILED in DB here
 		return
 	}
 
-	// 5. Respond to User
+	// 4. Respond to User
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{
-		"message":  "Order placed successfully! Robots are working.",
-		"order_id": orderID,
+		"message":  "Order confirmed. Robots dispatched.",
+		"order_id": reqBody.OrderID,
 		"status":   "PROCESSING", 
 		"details":  resp.Message,
 	})
