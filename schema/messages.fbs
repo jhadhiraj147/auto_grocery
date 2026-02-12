@@ -1,0 +1,23 @@
+namespace auto_grocery.fb;
+
+enum MessageType : int8 { 
+    FETCH_TASK = 0, 
+    RESTOCK_TASK = 1, 
+    ANALYTICS_DATA = 2 
+}
+
+table Item {
+    sku: string;
+    aisle: string;
+    quantity: int32;
+}
+
+table TaskMessage {
+    order_id: string;
+    type: MessageType;
+    items: [Item];        // Used by Robots
+    latency_ms: float64;  // Used by Analytics
+    success: bool;        // Used by Analytics
+}
+
+root_type TaskMessage;
