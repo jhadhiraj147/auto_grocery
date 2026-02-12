@@ -37,29 +37,56 @@ func NewInventoryHandler(
 	}
 }
 
-// --- NEW ASYNC LOGIC: ASSIGN ROBOTS ---
 func (h *InventoryHandler) AssignRobots(ctx context.Context, req *pb.AssignRequest) (*pb.AssignResponse, error) {
-	fmt.Printf("🤖 Dispatching Robots for Order %s...\n", req.GetOrderId())
+    fmt.Printf("🤖 Dispatching Robots for Order %s...\n", req.GetOrderId())
 
-	// 1. Save items to Redis so we can fetch them for billing after robots finish
-	err := h.memoryStore.SaveOrderItems(ctx, req.GetOrderId(), req.GetItems())
-	if err != nil {
-		log.Printf("❌ Redis Save Failed: %v", err)
-		return nil, err
-	}
+    // 1. Save items to Redis for later billing
+    err := h.memoryStore.SaveOrderItems(ctx, req.GetOrderId(), req.GetItems())
+    if err != nil {
+        log.Printf("Redis Save Failed: %v", err)
+        return nil, err
+    }
 
-	// 2. Broadcast Binary Flatbuffer message to Robots via ZeroMQ
-	err = h.publisher.SendRobotCommand(req.GetOrderId(), req.GetItems())
-	if err != nil {
-		log.Printf("❌ ZMQ Broadcast Failed: %v", err)
-		return nil, err
-	}
+    // --- NEW LOGIC: FETCH AISLES ---
+    // Extract SKUs from the request map to query the database
+    skus := make([]string, 0, len(req.GetItems()))
+    for sku := range req.GetItems() {
+        skus = append(skus, sku)
+    }
 
-	// 3. Respond instantly to Ordering Service
-	return &pb.AssignResponse{
-		Success: true,
-		Message: "Robots dispatched. Order state cached in Redis.",
-	}, nil
+    // Get item details (including AisleType) from the SQL store
+    dbItems, err := h.store.GetBatchItems(ctx, skus)
+    if err != nil {
+        log.Printf(" DB Lookup Failed: %v", err)
+        return nil, err
+    }
+
+    // Create the new map that includes the Aisle information
+    robotItems := make(map[string]mq.ItemDetails)
+    for sku, qty := range req.GetItems() {
+        aisle := "Unknown" // Default if not found
+        if item, exists := dbItems[sku]; exists {
+            aisle = item.AisleType
+        }
+        
+        robotItems[sku] = mq.ItemDetails{
+            Quantity: qty,
+            Aisle:    aisle,
+        }
+    }
+
+    // 2. Broadcast Binary Flatbuffer message to Robots via ZeroMQ (with Aisle!)
+    err = h.publisher.SendRobotCommand(req.GetOrderId(), robotItems)
+    if err != nil {
+        log.Printf("ZMQ Broadcast Failed: %v", err)
+        return nil, err
+    }
+
+    // 3. Respond instantly to Ordering Service
+    return &pb.AssignResponse{
+        Success: true,
+        Message: "Robots dispatched with aisle info. Order cached.",
+    }, nil
 }
 
 // --- PRESERVED ORIGINAL METHODS (UNTOUCHED) ---
@@ -166,7 +193,7 @@ func (h *InventoryHandler) ReportJobStatus(ctx context.Context, req *pb.ReportJo
 	// This returns the new count after the increment
 	count, err := h.memoryStore.IncrementRobotCount(ctx, orderID)
 	if err != nil {
-		log.Printf("❌ Failed to increment robot count in Redis: %v", err)
+		log.Printf("Failed to increment robot count in Redis: %v", err)
 		return nil, err
 	}
 
@@ -191,7 +218,7 @@ func (h *InventoryHandler) finalizeOrder(orderID string) {
 	// 1. Fetch original items from Redis
 	items, err := h.memoryStore.GetOrderItems(ctx, orderID)
 	if err != nil {
-		log.Printf("❌ Finalize Error: Could not find items for %s in Redis: %v", orderID, err)
+		log.Printf("Finalize Error: Could not find items for %s in Redis: %v", orderID, err)
 		return
 	}
 
@@ -209,7 +236,7 @@ func (h *InventoryHandler) finalizeOrder(orderID string) {
 	
 	finalPrice := 0.0
 	if err != nil {
-		log.Printf("⚠️ Pricing Service failed for %s, setting price to 0: %v", orderID, err)
+		log.Printf("Pricing Service failed for %s, setting price to 0: %v", orderID, err)
 	} else {
 		finalPrice = priceResp.GetGrandTotal()
 	}
@@ -238,7 +265,7 @@ func (h *InventoryHandler) callOrderingWebhook(orderID string, price float64) {
 	
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonBytes))
 	if err != nil {
-		log.Printf("❌ Failed to create webhook request: %v", err)
+		log.Printf("Failed to create webhook request: %v", err)
 		return
 	}
 	
@@ -252,15 +279,15 @@ func (h *InventoryHandler) callOrderingWebhook(orderID string, price float64) {
 	resp, err := client.Do(req)
 	
 	if err != nil {
-		log.Printf("❌ Webhook call failed for %s: %v", orderID, err)
+		log.Printf("Webhook call failed for %s: %v", orderID, err)
 		return
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		log.Printf("❌ Webhook returned error %d for %s", resp.StatusCode, orderID)
+		log.Printf("Webhook returned error %d for %s", resp.StatusCode, orderID)
 		return
 	}
 
-	log.Printf("✅ Webhook Success: Order %s is now officially COMPLETED", orderID)
+	log.Printf("Webhook Success: Order %s is now officially COMPLETED", orderID)
 }
