@@ -1,4 +1,4 @@
-package truck  
+package truck
 
 import (
 	"encoding/json"
@@ -6,6 +6,7 @@ import (
 
 	"auto_grocery/ordering/internal/store"
 	pb "auto_grocery/ordering/proto"
+
 	"github.com/google/uuid"
 )
 
@@ -17,18 +18,17 @@ type RestockHandler struct {
 
 func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var req struct {
-
 		TruckID     string `json:"truck_id"`
 		PlateNumber string `json:"plate_number"`
 		DriverName  string `json:"driver_name"`
 		ContactInfo string `json:"contact_info"`
 		Location    string `json:"location"`
-		
-		
+
 		SupplierID string `json:"supplier_id"`
 		Items      []struct {
 			Sku        string  `json:"sku"`
 			Name       string  `json:"name"`
+			AisleType  string  `json:"aisle_type"`
 			Quantity   int32   `json:"quantity"`
 			MfdDate    string  `json:"mfd_date"`
 			ExpiryDate string  `json:"expiry_date"`
@@ -59,7 +59,7 @@ func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var protoItems []*pb.RestockItem
 	for _, item := range req.Items {
 		protoItems = append(protoItems, &pb.RestockItem{
-			Sku: item.Sku, Name: item.Name, Quantity: item.Quantity,
+			Sku: item.Sku, Name: item.Name, AisleType: item.AisleType, Quantity: item.Quantity,
 			MfdDate: item.MfdDate, ExpiryDate: item.ExpiryDate, UnitCost: item.UnitCost,
 		})
 	}
