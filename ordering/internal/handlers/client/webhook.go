@@ -14,7 +14,7 @@ import (
 // WebhookHandler receives updates from Inventory Service
 type WebhookHandler struct {
 	OrderStore *store.OrderStore
-	Analytics  *mq.AnalyticsPublisher // <--- Field added here
+	Analytics  *mq.AnalyticsPublisher
 }
 
 type WebhookPayload struct {
@@ -50,7 +50,7 @@ func (h *WebhookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// 4. Update Price (if provided)
 	if payload.TotalPrice > 0 {
-		// Assuming you have a method to update price, or you can ignore if not needed yet
+		// If you have a price update method, call it here.
 		// h.OrderStore.UpdatePrice(payload.OrderID, payload.TotalPrice)
 	}
 
