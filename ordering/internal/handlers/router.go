@@ -6,6 +6,7 @@ import (
 	"auto_grocery/ordering/internal/auth"
 	"auto_grocery/ordering/internal/handlers/client"
 	"auto_grocery/ordering/internal/handlers/truck"
+	"auto_grocery/ordering/internal/mq"
 	"auto_grocery/ordering/internal/store"
 	pb "auto_grocery/ordering/proto"
 )
@@ -16,6 +17,7 @@ func NewRouter(
 	orderStore *store.OrderStore,
 	restockStore *store.RestockStore,
 	inventoryClient pb.InventoryServiceClient,
+	analyticsPub *mq.AnalyticsPublisher,
 ) *http.ServeMux {
 
 	mux := http.NewServeMux()
@@ -37,6 +39,7 @@ func NewRouter(
 	// UPDATED: We wrap the handler with InternalMiddleware
 	webhookHandler := &client.WebhookHandler{
 		OrderStore: orderStore,
+		Analytics:  analyticsPub,
 	}
 	mux.Handle("POST /internal/webhook/update-order", auth.InternalMiddleware(webhookHandler))
 
