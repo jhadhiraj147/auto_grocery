@@ -34,6 +34,10 @@ func main() {
 	}
 	defer db.Close()
 
+	if err := db.Ping(); err != nil {
+		log.Fatalf("failed to ping database: %v", err)
+	}
+
 	catalogStore := store.NewCatalogStore(db)
 	pricingHandler := handler.NewPricingHandler(catalogStore)
 
@@ -47,18 +51,16 @@ func main() {
 	grpcServer := grpc.NewServer()
 	pb.RegisterPricingServiceServer(grpcServer, pricingHandler)
 
-	fmt.Println("🚀 Pricing Service running on :50052...")
+	fmt.Println("Pricing Service running on :50052...")
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
 }
 
 func startInventoryPriceRefresher(catalogStore *store.CatalogStore) {
-	time.Sleep(5 * time.Second)
-
 	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Printf("⚠️ Could not setup Inventory client: %v", err)
+		log.Printf("Could not setup Inventory client: %v", err)
 		return
 	}
 	defer conn.Close()
@@ -67,16 +69,15 @@ func startInventoryPriceRefresher(catalogStore *store.CatalogStore) {
 	ticker := time.NewTicker(1 * time.Hour)
 	defer ticker.Stop()
 
-	fmt.Println("🔄 Hourly Background Re-Pricer is active")
+	fmt.Println("Hourly Background Re-Pricer is active")
 
 	updatePrices := func() {
-		fmt.Println("🔍 Polling Inventory for price updates...")
 		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
 
 		resp, err := inventoryClient.GetInventoryMetrics(ctx, &pb.GetInventoryMetricsRequest{})
 		if err != nil {
-			log.Printf("❌ Metrics fetch failed: %v", err)
+			log.Printf("Metrics fetch failed: %v", err)
 			return
 		}
 
@@ -88,9 +89,9 @@ func startInventoryPriceRefresher(catalogStore *store.CatalogStore) {
 				UnitPrice: newPrice,
 			})
 			if err != nil {
-				log.Printf("❌ Update failed for %s: %v", metric.Sku, err)
+				log.Printf("Update failed for %s: %v", metric.Sku, err)
 			} else {
-				fmt.Printf("✅ Re-Priced %s: $%.2f (Cost: $%.2f, Stock: %d)\n",
+				fmt.Printf("Re-Priced %s: %.2f (Cost: %.2f, Stock: %d)\n",
 					metric.Sku, newPrice, metric.UnitCost, metric.Quantity)
 			}
 		}

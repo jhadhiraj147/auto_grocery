@@ -1,34 +1,29 @@
 package main
 
 import (
-	"context"
 	"database/sql"
 	"fmt"
 	"log"
 	"net"
 	"os"
-	"time"
 
 	"auto_grocery/inventory/internal/handler"
 	"auto_grocery/inventory/internal/store"
-	
+
 	pb "auto_grocery/inventory/proto"
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
-	
 	err := godotenv.Load("inventory/.env")
 	if err != nil {
 		log.Println("Note: inventory/.env file not found, using system vars")
 	}
 
-	
 	dbConnString := os.Getenv("DATABASE_URL")
 	if dbConnString == "" {
 		log.Fatal("DATABASE_URL is not set")
@@ -48,36 +43,13 @@ func main() {
 	inventoryStore := store.NewStore(db)
 
 	pricingAddr := "localhost:50052"
-	
+
 	conn, err := grpc.NewClient(pricingAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Failed to create Pricing client: %v", err)
 	}
 	defer conn.Close()
 
-	fmt.Printf("Waiting for Pricing Service at %s to be online...\n", pricingAddr)
-	
-	conn.Connect()
-	
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	for {
-		state := conn.GetState()
-		if state == connectivity.Ready {
-			fmt.Println("Successfully connected to Pricing Service!")
-			break
-		}
-		
-		if state == connectivity.Shutdown {
-			log.Fatalf("Connection to Pricing Service shut down")
-		}
-
-		if !conn.WaitForStateChange(ctx, state) {
-			log.Fatalf("TIMEOUT: Pricing Service at %s is not reachable.", pricingAddr)
-		}
-	}
-	
 	pricingClient := pb.NewPricingServiceClient(conn)
 
 	inventoryHandler := handler.NewInventoryHandler(inventoryStore, pricingClient)
@@ -92,7 +64,7 @@ func main() {
 	pb.RegisterInventoryServiceServer(grpcServer, inventoryHandler)
 
 	fmt.Printf("Inventory Service running on port :%s...\n", port)
-	
+
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve gRPC: %v", err)
 	}

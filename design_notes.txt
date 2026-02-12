@@ -1,0 +1,29 @@
+add a go routine to be run in the ordering service,,, it will run every minute to ensure
+pending stocks are cleared off. 
+
+or 
+
+can we do one thing, when the user clicks preview, 
+it only holds the item for 30 seconds and then 
+if they quit the tab or does not confirm nor cancels, 
+it will automatically cancel after 30 seconds  
+
+
+
+security feature for truck! may be admin panel! 
+
+later changing passwords for users features 
+
+
+use redis for caching the timer data, it has this subscriber thing called 
+keyspace notification! if our inventory is subscribed to that port, it will notify it
+that this pending order is expired, and then our background worker can simply execute
+cancel order on the order id.. instead of creating a worker that scans through our orders 
+continuosly 
+
+
+
+currently the db of pricing microservice syncs with the db of inventory service 
+every one hour, we need to use webhooks or may be add a grpc method in the inventory service 
+that will notify the pricing microservice that the inventory db has been changed so they will run this
+sync db function! that will reduce load 
