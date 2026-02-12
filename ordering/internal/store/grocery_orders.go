@@ -7,10 +7,9 @@ import (
 	"time"
 )
 
-// 1. THE STRUCTS (Matching the DB Tables)
 type GroceryOrder struct {
 	ID         int
-	OrderID    string // Public ID (ORD-101)
+	OrderID    string
 	ClientID   int
 	Status     string
 	TotalPrice float64
@@ -19,13 +18,11 @@ type GroceryOrder struct {
 
 type GroceryOrderItem struct {
 	ID       int
-	OrderID  int // Links back to GroceryOrder.ID
+	OrderID  int
 	Sku      string
 	Quantity int
 }
 
-// Note: We use the same 'ClientStore' struct to hang these methods on,
-// or we can make a new 'OrderStore'. Let's keep it simple and make a new one.
 type OrderStore struct {
 	db *sql.DB
 }
@@ -34,31 +31,23 @@ func NewOrderStore(db *sql.DB) *OrderStore {
 	return &OrderStore{db: db}
 }
 
-// ---------------------------------------------------------
-// 2. CREATE ORDER (The "Shopping Cart" -> DB)
-// ---------------------------------------------------------
 func (s *OrderStore) CreateGroceryOrder(ctx context.Context, order GroceryOrder, items []GroceryOrderItem) error {
-	// A Transaction (Tx) ensures EITHER everything saves OR nothing saves.
-	// We don't want an Order Header without Items!
 	tx, err := s.db.BeginTx(ctx, nil)
 	if err != nil {
 		return err
 	}
-	defer tx.Rollback() // Safety switch: Undo everything if we panic
+	defer tx.Rollback()
 
-	// A. Save the Header (grocery_orders)
 	queryHeader := `
 		INSERT INTO grocery_orders (order_id, client_id, status, total_price)
 		VALUES ($1, $2, $3, $4)
 		RETURNING id
 	`
-	// We need the database ID (e.g. Row #5) to link the items
 	err = tx.QueryRowContext(ctx, queryHeader, order.OrderID, order.ClientID, "PENDING", 0.0).Scan(&order.ID)
 	if err != nil {
 		return fmt.Errorf("failed to save order header: %w", err)
 	}
 
-	// B. Save the Items (grocery_order_items)
 	queryItems := `
 		INSERT INTO grocery_order_items (order_id, sku, quantity)
 		VALUES ($1, $2, $3)
@@ -76,13 +65,9 @@ func (s *OrderStore) CreateGroceryOrder(ctx context.Context, order GroceryOrder,
 		}
 	}
 
-	// C. Commit (Save for real)
 	return tx.Commit()
 }
 
-// ---------------------------------------------------------
-// 3. GET ORDER HISTORY (For a specific User)
-// ---------------------------------------------------------
 func (s *OrderStore) GetOrdersByClientID(ctx context.Context, clientID int) ([]GroceryOrder, error) {
 	query := `
 		SELECT id, order_id, status, total_price, created_at
@@ -99,8 +84,6 @@ func (s *OrderStore) GetOrdersByClientID(ctx context.Context, clientID int) ([]G
 	var history []GroceryOrder
 	for rows.Next() {
 		var o GroceryOrder
-		// Note: 'total_price' in DB is Numeric, here we scan to float64
-		// If total_price is NULL, we might need sql.NullFloat64, but let's assume 0.00 for now.
 		if err := rows.Scan(&o.ID, &o.OrderID, &o.Status, &o.TotalPrice, &o.CreatedAt); err != nil {
 			return nil, err
 		}
@@ -111,9 +94,6 @@ func (s *OrderStore) GetOrdersByClientID(ctx context.Context, clientID int) ([]G
 	return history, nil
 }
 
-// ---------------------------------------------------------
-// 4. GET LAST ORDER (Fast Lookup for "Receipt" screen)
-// ---------------------------------------------------------
 func (s *OrderStore) GetLastOrderByClientID(ctx context.Context, clientID int) (*GroceryOrder, error) {
 	query := `
 		SELECT id, order_id, status, total_price, created_at
@@ -123,14 +103,13 @@ func (s *OrderStore) GetLastOrderByClientID(ctx context.Context, clientID int) (
 		LIMIT 1
 	`
 	var o GroceryOrder
-	
-	// QueryRow is perfect here because we expect exactly one (or zero) results
+
 	err := s.db.QueryRowContext(ctx, query, clientID).Scan(
 		&o.ID, &o.OrderID, &o.Status, &o.TotalPrice, &o.CreatedAt,
 	)
 
 	if err == sql.ErrNoRows {
-		return nil, nil // No error, just no history yet
+		return nil, nil
 	} else if err != nil {
 		return nil, fmt.Errorf("failed to get last order: %w", err)
 	}
@@ -139,12 +118,7 @@ func (s *OrderStore) GetLastOrderByClientID(ctx context.Context, clientID int) (
 	return &o, nil
 }
 
-// ---------------------------------------------------------
-// 5. UPDATE ORDER STATUS (For Confirm/Cancel)
-// ---------------------------------------------------------
 func (s *OrderStore) UpdateOrderStatus(ctx context.Context, orderID string, status string, totalPrice float64) error {
-	// If totalPrice is 0, we assume we just want to update status (like for Cancel)
-	// If it's > 0, we update price too (like for Confirm)
 	query := `
 		UPDATE grocery_orders
 		SET status = $1, total_price = CASE WHEN $2 > 0 THEN $2 ELSE total_price END
@@ -154,20 +128,14 @@ func (s *OrderStore) UpdateOrderStatus(ctx context.Context, orderID string, stat
 	if err != nil {
 		return fmt.Errorf("failed to update order status: %w", err)
 	}
-	
+
 	rows, _ := result.RowsAffected()
 	if rows == 0 {
 		return fmt.Errorf("order not found: %s", orderID)
 	}
 	return nil
 }
-
-
-// ---------------------------------------------------------
-// 6. GET ITEMS FOR AN ORDER (Needed for Cancel/Release)
-// ---------------------------------------------------------
 func (s *OrderStore) GetOrderItems(ctx context.Context, orderID string) ([]GroceryOrderItem, error) {
-	// First get the integer ID of the order
 	var dbID int
 	err := s.db.QueryRowContext(ctx, "SELECT id FROM grocery_orders WHERE order_id = $1", orderID).Scan(&dbID)
 	if err != nil {
@@ -192,9 +160,6 @@ func (s *OrderStore) GetOrderItems(ctx context.Context, orderID string) ([]Groce
 	return items, nil
 }
 
-// ---------------------------------------------------------
-// 7. DELETE ORDER (Hard Delete for Cancel)
-// ---------------------------------------------------------
 func (s *OrderStore) DeleteOrder(ctx context.Context, orderID string) error {
 	tx, err := s.db.BeginTx(ctx, nil)
 	if err != nil {
@@ -202,20 +167,17 @@ func (s *OrderStore) DeleteOrder(ctx context.Context, orderID string) error {
 	}
 	defer tx.Rollback()
 
-	// 1. Get the DB ID
 	var dbID int
 	err = tx.QueryRowContext(ctx, "SELECT id FROM grocery_orders WHERE order_id = $1", orderID).Scan(&dbID)
 	if err != nil {
 		return fmt.Errorf("order not found: %w", err)
 	}
 
-	// 2. Delete Items first (Foreign Key constraint)
 	_, err = tx.ExecContext(ctx, "DELETE FROM grocery_order_items WHERE order_id = $1", dbID)
 	if err != nil {
 		return fmt.Errorf("failed to delete items: %w", err)
 	}
 
-	// 3. Delete Header
 	_, err = tx.ExecContext(ctx, "DELETE FROM grocery_orders WHERE id = $1", dbID)
 	if err != nil {
 		return fmt.Errorf("failed to delete order: %w", err)
@@ -224,9 +186,6 @@ func (s *OrderStore) DeleteOrder(ctx context.Context, orderID string) error {
 	return tx.Commit()
 }
 
-// ---------------------------------------------------------
-// 8. GET ORDER HEADER (For Security Checks)
-// ---------------------------------------------------------
 func (s *OrderStore) GetOrderByID(ctx context.Context, orderID string) (*GroceryOrder, error) {
 	query := `
 		SELECT id, order_id, client_id, status, total_price, created_at
@@ -246,7 +205,7 @@ func (s *OrderStore) GetOrderByID(ctx context.Context, orderID string) (*Grocery
 }
 
 func (s *OrderStore) UpdateStatus(ctx context.Context, orderID string, status string) error {
-    query := `UPDATE grocery_orders SET status = $1 WHERE order_id = $2`
-    _, err := s.db.ExecContext(ctx, query, status, orderID)
-    return err
+	query := `UPDATE grocery_orders SET status = $1 WHERE order_id = $2`
+	_, err := s.db.ExecContext(ctx, query, status, orderID)
+	return err
 }

@@ -6,9 +6,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/lib/pq" 
+	"github.com/lib/pq"
 )
-
 
 type StockItem struct {
 	ID         int64     `json:"id"`
@@ -16,12 +15,11 @@ type StockItem struct {
 	Name       string    `json:"name"`
 	AisleType  string    `json:"aisle_type"`
 	Quantity   int       `json:"quantity"`
-	UnitCost   float64   `json:"unit_cost"` 
+	UnitCost   float64   `json:"unit_cost"`
 	MfdDate    time.Time `json:"mfd_date"`
 	ExpiryDate time.Time `json:"expiry_date"`
 	UpdatedAt  time.Time `json:"updated_at"`
 }
-
 
 type Store struct {
 	db *sql.DB
@@ -30,7 +28,6 @@ type Store struct {
 func NewStore(db *sql.DB) *Store {
 	return &Store{db: db}
 }
-
 
 func (s *Store) GetBatchItems(ctx context.Context, skus []string) (map[string]*StockItem, error) {
 
@@ -128,7 +125,6 @@ func (s *Store) ReleaseStock(ctx context.Context, returns map[string]int32) erro
 	return nil
 }
 
-
 func (s *Store) UpsertStock(ctx context.Context, item StockItem) error {
 	query := `
         INSERT INTO available_stock (sku, name, aisle_type, quantity, unit_cost, mfd_date, expiry_date, last_updated)
@@ -136,25 +132,24 @@ func (s *Store) UpsertStock(ctx context.Context, item StockItem) error {
         ON CONFLICT (sku) 
         DO UPDATE SET 
             quantity = available_stock.quantity + EXCLUDED.quantity, 
-            unit_cost = EXCLUDED.unit_cost, -- Keep the most recent cost price
+			unit_cost = EXCLUDED.unit_cost,
             name = EXCLUDED.name,
             last_updated = NOW()
     `
 	_, err := s.db.ExecContext(ctx, query,
-		item.SKU,     
-		item.Name,     
-		item.AisleType, 
-		item.Quantity, 
-		item.UnitCost, 
-		item.MfdDate,  
-		item.ExpiryDate, 
+		item.SKU,
+		item.Name,
+		item.AisleType,
+		item.Quantity,
+		item.UnitCost,
+		item.MfdDate,
+		item.ExpiryDate,
 	)
 	if err != nil {
 		return fmt.Errorf("failed to upsert stock: %w", err)
 	}
 	return nil
 }
-
 
 func (s *Store) ClearExpiredStock(ctx context.Context) (int64, error) {
 	query := `
@@ -169,7 +164,6 @@ func (s *Store) ClearExpiredStock(ctx context.Context) (int64, error) {
 	}
 	return result.RowsAffected()
 }
-
 
 func (s *Store) GetAllStock(ctx context.Context) ([]StockItem, error) {
 	query := `SELECT sku, quantity, unit_cost FROM available_stock`

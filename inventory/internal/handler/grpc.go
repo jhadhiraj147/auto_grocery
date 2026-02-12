@@ -18,8 +18,8 @@ import (
 type InventoryHandler struct {
 	pb.UnimplementedInventoryServiceServer
 	store         *store.Store
-	memoryStore   *store.MemoryStore // Redis Memory
-	publisher     *mq.Publisher      // ZMQ Publisher
+	memoryStore   *store.MemoryStore 
+	publisher     *mq.Publisher     
 	pricingClient pb.PricingServiceClient
 }
 
@@ -38,33 +38,30 @@ func NewInventoryHandler(
 }
 
 func (h *InventoryHandler) AssignRobots(ctx context.Context, req *pb.AssignRequest) (*pb.AssignResponse, error) {
-    fmt.Printf("🤖 Dispatching Robots for Order %s...\n", req.GetOrderId())
+    fmt.Printf("Dispatching Robots for Order %s...\n", req.GetOrderId())
 
-    // 1. Save items to Redis for later billing
     err := h.memoryStore.SaveOrderItems(ctx, req.GetOrderId(), req.GetItems())
     if err != nil {
         log.Printf("Redis Save Failed: %v", err)
         return nil, err
     }
 
-    // --- NEW LOGIC: FETCH AISLES ---
-    // Extract SKUs from the request map to query the database
     skus := make([]string, 0, len(req.GetItems()))
     for sku := range req.GetItems() {
         skus = append(skus, sku)
     }
 
-    // Get item details (including AisleType) from the SQL store
+  
     dbItems, err := h.store.GetBatchItems(ctx, skus)
     if err != nil {
-        log.Printf(" DB Lookup Failed: %v", err)
+        log.Printf("DB Lookup Failed: %v", err)
         return nil, err
     }
 
-    // Create the new map that includes the Aisle information
+   
     robotItems := make(map[string]mq.ItemDetails)
     for sku, qty := range req.GetItems() {
-        aisle := "Unknown" // Default if not found
+        aisle := "Unknown" 
         if item, exists := dbItems[sku]; exists {
             aisle = item.AisleType
         }
@@ -75,21 +72,18 @@ func (h *InventoryHandler) AssignRobots(ctx context.Context, req *pb.AssignReque
         }
     }
 
-    // 2. Broadcast Binary Flatbuffer message to Robots via ZeroMQ (with Aisle!)
     err = h.publisher.SendRobotCommand(req.GetOrderId(), robotItems)
     if err != nil {
         log.Printf("ZMQ Broadcast Failed: %v", err)
         return nil, err
     }
 
-    // 3. Respond instantly to Ordering Service
     return &pb.AssignResponse{
         Success: true,
         Message: "Robots dispatched with aisle info. Order cached.",
     }, nil
 }
 
-// --- PRESERVED ORIGINAL METHODS (UNTOUCHED) ---
 
 func (h *InventoryHandler) CheckAvailability(ctx context.Context, req *pb.CheckAvailabilityRequest) (*pb.CheckAvailabilityResponse, error) {
 	dbItems, err := h.store.GetBatchItems(ctx, req.GetSkus())
@@ -187,24 +181,19 @@ func (h *InventoryHandler) ReportJobStatus(ctx context.Context, req *pb.ReportJo
 	orderID := req.GetOrderId()
 	robotID := req.GetRobotId()
 
-	fmt.Printf("📥 Robot %s reported status for %s: %s\n", robotID, orderID, req.GetStatus())
+	fmt.Printf("Robot %s reported status for %s: %s\n", robotID, orderID, req.GetStatus())
 
-	// 1. Atomic Increment in Redis
-	// This returns the new count after the increment
 	count, err := h.memoryStore.IncrementRobotCount(ctx, orderID)
 	if err != nil {
 		log.Printf("Failed to increment robot count in Redis: %v", err)
 		return nil, err
 	}
 
-	log.Printf("📊 Order %s progress: %d/5 robots finished", orderID, count)
+	log.Printf("Order %s progress: %d/5 robots finished", orderID, count)
 
-	// 2. If this is the 5th and final robot, trigger the finalization
 	if count == 5 {
-		log.Printf("🎉 All 5 robots finished for Order %s! Finalizing...", orderID)
+		log.Printf("All 5 robots finished for Order %s! Finalizing...", orderID)
 		
-		// We run this in a goroutine so the 5th robot gets an instant gRPC response
-		// while the service handles the HTTP Webhook and Pricing calls in the background.
 		go h.finalizeOrder(orderID)
 	}
 
@@ -215,14 +204,12 @@ func (h *InventoryHandler) finalizeOrder(orderID string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	// 1. Fetch original items from Redis
 	items, err := h.memoryStore.GetOrderItems(ctx, orderID)
 	if err != nil {
 		log.Printf("Finalize Error: Could not find items for %s in Redis: %v", orderID, err)
 		return
 	}
 
-	// 2. Call Pricing Service to get the total price
 	var pricingItems []*pb.CartItem
 	for sku, qty := range items {
 		pricingItems = append(pricingItems, &pb.CartItem{
@@ -241,11 +228,8 @@ func (h *InventoryHandler) finalizeOrder(orderID string) {
 		finalPrice = priceResp.GetGrandTotal()
 	}
 
-	// 3. Trigger Webhook to Ordering Service
-	// This updates the SQL DB in the Ordering service
 	h.callOrderingWebhook(orderID, finalPrice)
 
-	// 4. Cleanup Redis
 	h.memoryStore.DeleteOrderData(ctx, orderID)
 	log.Printf("🧹 Cleanup: Removed Redis state for Order %s", orderID)
 }
@@ -254,7 +238,6 @@ func (h *InventoryHandler) finalizeOrder(orderID string) {
 func (h *InventoryHandler) callOrderingWebhook(orderID string, price float64) {
 	url := "http://localhost:5050/internal/webhook/update-order"
 	
-	// Create the payload exactly as the Ordering webhook expects it
 	payload := map[string]interface{}{
 		"order_id":    orderID,
 		"status":      "COMPLETED",
@@ -271,7 +254,6 @@ func (h *InventoryHandler) callOrderingWebhook(orderID string, price float64) {
 	
 	req.Header.Set("Content-Type", "application/json")
 	
-	// SECURE: Add the internal secret key from .env
 	secret := os.Getenv("INTERNAL_SECRET")
 	req.Header.Set("X-Internal-Secret", secret)
 
