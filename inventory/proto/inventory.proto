@@ -23,7 +23,7 @@ service InventoryService {
   rpc ReportJobStatus (ReportJobStatusRequest) returns (ReportJobStatusResponse);
 
   
-  rpc Checkout (CheckoutRequest) returns (CheckoutResponse);
+  rpc BillAndPay (BillRequest) returns (BillResponse);
 
   
   rpc GetInventoryMetrics (GetInventoryMetricsRequest) returns (GetInventoryMetricsResponse);
@@ -100,12 +100,12 @@ message ReportJobStatusResponse {
 }
 
 
-message CheckoutRequest {
+message BillRequest {
   string order_id = 1;
   map<string, int32> items = 2; 
 }
 
-message CheckoutResponse {
+message BillResponse {
   string order_id = 1;
   map<string, int32> items = 2; 
   bool success = 3;

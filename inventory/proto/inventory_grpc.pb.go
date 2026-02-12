@@ -24,44 +24,20 @@ const (
 	InventoryService_ReleaseItems_FullMethodName        = "/inventory.InventoryService/ReleaseItems"
 	InventoryService_RestockItems_FullMethodName        = "/inventory.InventoryService/RestockItems"
 	InventoryService_ReportJobStatus_FullMethodName     = "/inventory.InventoryService/ReportJobStatus"
-	InventoryService_Checkout_FullMethodName            = "/inventory.InventoryService/Checkout"
+	InventoryService_BillAndPay_FullMethodName          = "/inventory.InventoryService/BillAndPay"
 	InventoryService_GetInventoryMetrics_FullMethodName = "/inventory.InventoryService/GetInventoryMetrics"
 )
 
 // InventoryServiceClient is the client API for InventoryService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// ---------------------------------------------------------------------
-// THE INVENTORY SERVICE
-// ---------------------------------------------------------------------
 type InventoryServiceClient interface {
-	// 1. CHECK AVAILABILITY
-	// Input: List of SKUs
-	// Output: Map of Item Details
 	CheckAvailability(ctx context.Context, in *CheckAvailabilityRequest, opts ...grpc.CallOption) (*CheckAvailabilityResponse, error)
-	// 2. RESERVE ITEMS (Buying)
-	// Input: Order ID + Items Wanted
-	// Output: Order ID + Items Got + Success Flag
 	ReserveItems(ctx context.Context, in *ReserveItemsRequest, opts ...grpc.CallOption) (*ReserveItemsResponse, error)
-	// 3. RELEASE ITEMS (Undo)
-	// Input: Order ID + Items to Return
-	// Output: Success Flag
 	ReleaseItems(ctx context.Context, in *ReleaseItemsRequest, opts ...grpc.CallOption) (*ReleaseItemsResponse, error)
-	// 4. RESTOCK ITEMS (Truck)
-	// Input: Supplier ID + List of New Items
-	// Output: Success Flag
 	RestockItems(ctx context.Context, in *RestockItemsRequest, opts ...grpc.CallOption) (*RestockItemsResponse, error)
-	// 5. ROBOT REPORTING
-	// Input: Robot Status + Items Fetched
-	// Output: Success Flag (Acknowledgement)
 	ReportJobStatus(ctx context.Context, in *ReportJobStatusRequest, opts ...grpc.CallOption) (*ReportJobStatusResponse, error)
-	// 6. CHECKOUT (The "Master" Function)
-	// Logic: Reserve Stock -> Calculate Bill
-	// Output: Order ID + Items Reserved + Total Price + Success Flag
-	Checkout(ctx context.Context, in *CheckoutRequest, opts ...grpc.CallOption) (*CheckoutResponse, error)
-	// 7. GET INVENTORY METRICS (NEW for Milestone 2)
-	// Logic: Allows Pricing Service to fetch latest Cost Price and Quantities
+	BillAndPay(ctx context.Context, in *BillRequest, opts ...grpc.CallOption) (*BillResponse, error)
 	GetInventoryMetrics(ctx context.Context, in *GetInventoryMetricsRequest, opts ...grpc.CallOption) (*GetInventoryMetricsResponse, error)
 }
 
@@ -123,10 +99,10 @@ func (c *inventoryServiceClient) ReportJobStatus(ctx context.Context, in *Report
 	return out, nil
 }
 
-func (c *inventoryServiceClient) Checkout(ctx context.Context, in *CheckoutRequest, opts ...grpc.CallOption) (*CheckoutResponse, error) {
+func (c *inventoryServiceClient) BillAndPay(ctx context.Context, in *BillRequest, opts ...grpc.CallOption) (*BillResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CheckoutResponse)
-	err := c.cc.Invoke(ctx, InventoryService_Checkout_FullMethodName, in, out, cOpts...)
+	out := new(BillResponse)
+	err := c.cc.Invoke(ctx, InventoryService_BillAndPay_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -146,37 +122,13 @@ func (c *inventoryServiceClient) GetInventoryMetrics(ctx context.Context, in *Ge
 // InventoryServiceServer is the server API for InventoryService service.
 // All implementations must embed UnimplementedInventoryServiceServer
 // for forward compatibility.
-//
-// ---------------------------------------------------------------------
-// THE INVENTORY SERVICE
-// ---------------------------------------------------------------------
 type InventoryServiceServer interface {
-	// 1. CHECK AVAILABILITY
-	// Input: List of SKUs
-	// Output: Map of Item Details
 	CheckAvailability(context.Context, *CheckAvailabilityRequest) (*CheckAvailabilityResponse, error)
-	// 2. RESERVE ITEMS (Buying)
-	// Input: Order ID + Items Wanted
-	// Output: Order ID + Items Got + Success Flag
 	ReserveItems(context.Context, *ReserveItemsRequest) (*ReserveItemsResponse, error)
-	// 3. RELEASE ITEMS (Undo)
-	// Input: Order ID + Items to Return
-	// Output: Success Flag
 	ReleaseItems(context.Context, *ReleaseItemsRequest) (*ReleaseItemsResponse, error)
-	// 4. RESTOCK ITEMS (Truck)
-	// Input: Supplier ID + List of New Items
-	// Output: Success Flag
 	RestockItems(context.Context, *RestockItemsRequest) (*RestockItemsResponse, error)
-	// 5. ROBOT REPORTING
-	// Input: Robot Status + Items Fetched
-	// Output: Success Flag (Acknowledgement)
 	ReportJobStatus(context.Context, *ReportJobStatusRequest) (*ReportJobStatusResponse, error)
-	// 6. CHECKOUT (The "Master" Function)
-	// Logic: Reserve Stock -> Calculate Bill
-	// Output: Order ID + Items Reserved + Total Price + Success Flag
-	Checkout(context.Context, *CheckoutRequest) (*CheckoutResponse, error)
-	// 7. GET INVENTORY METRICS (NEW for Milestone 2)
-	// Logic: Allows Pricing Service to fetch latest Cost Price and Quantities
+	BillAndPay(context.Context, *BillRequest) (*BillResponse, error)
 	GetInventoryMetrics(context.Context, *GetInventoryMetricsRequest) (*GetInventoryMetricsResponse, error)
 	mustEmbedUnimplementedInventoryServiceServer()
 }
@@ -203,8 +155,8 @@ func (UnimplementedInventoryServiceServer) RestockItems(context.Context, *Restoc
 func (UnimplementedInventoryServiceServer) ReportJobStatus(context.Context, *ReportJobStatusRequest) (*ReportJobStatusResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ReportJobStatus not implemented")
 }
-func (UnimplementedInventoryServiceServer) Checkout(context.Context, *CheckoutRequest) (*CheckoutResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method Checkout not implemented")
+func (UnimplementedInventoryServiceServer) BillAndPay(context.Context, *BillRequest) (*BillResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method BillAndPay not implemented")
 }
 func (UnimplementedInventoryServiceServer) GetInventoryMetrics(context.Context, *GetInventoryMetricsRequest) (*GetInventoryMetricsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetInventoryMetrics not implemented")
@@ -320,20 +272,20 @@ func _InventoryService_ReportJobStatus_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _InventoryService_Checkout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckoutRequest)
+func _InventoryService_BillAndPay_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BillRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InventoryServiceServer).Checkout(ctx, in)
+		return srv.(InventoryServiceServer).BillAndPay(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InventoryService_Checkout_FullMethodName,
+		FullMethod: InventoryService_BillAndPay_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InventoryServiceServer).Checkout(ctx, req.(*CheckoutRequest))
+		return srv.(InventoryServiceServer).BillAndPay(ctx, req.(*BillRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -384,8 +336,8 @@ var InventoryService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _InventoryService_ReportJobStatus_Handler,
 		},
 		{
-			MethodName: "Checkout",
-			Handler:    _InventoryService_Checkout_Handler,
+			MethodName: "BillAndPay",
+			Handler:    _InventoryService_BillAndPay_Handler,
 		},
 		{
 			MethodName: "GetInventoryMetrics",

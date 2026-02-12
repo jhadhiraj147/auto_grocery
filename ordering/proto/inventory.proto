@@ -8,16 +8,22 @@ service InventoryService {
   
   rpc CheckAvailability (CheckAvailabilityRequest) returns (CheckAvailabilityResponse);
 
+
   rpc ReserveItems (ReserveItemsRequest) returns (ReserveItemsResponse);
 
+  
   rpc ReleaseItems (ReleaseItemsRequest) returns (ReleaseItemsResponse);
 
+  
   rpc RestockItems (RestockItemsRequest) returns (RestockItemsResponse);
 
+  
   rpc ReportJobStatus (ReportJobStatusRequest) returns (ReportJobStatusResponse);
 
-  rpc Checkout (CheckoutRequest) returns (CheckoutResponse);
+  
+  rpc BillAndPay (BillRequest) returns (BillResponse);
 
+  
   rpc GetInventoryMetrics (GetInventoryMetricsRequest) returns (GetInventoryMetricsResponse);
 }
 
@@ -48,6 +54,7 @@ message ReserveItemsResponse {
   map<string, int32> items = 2; 
   bool success = 3; 
 }
+
 
 message ReleaseItemsRequest {
   string order_id = 1;
@@ -91,12 +98,12 @@ message ReportJobStatusResponse {
 }
 
 
-message CheckoutRequest {
+message BillRequest {
   string order_id = 1;
   map<string, int32> items = 2; 
 }
 
-message CheckoutResponse {
+message BillResponse {
   string order_id = 1;
   map<string, int32> items = 2; 
   bool success = 3;
@@ -105,7 +112,7 @@ message CheckoutResponse {
 
 
 message GetInventoryMetricsRequest {
-  repeated string skus = 1;
+  repeated string skus = 1; 
 }
 
 message InventoryMetric {
