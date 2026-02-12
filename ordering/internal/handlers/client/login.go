@@ -7,6 +7,7 @@ import (
 
 	"auto_grocery/ordering/internal/auth"
 	"auto_grocery/ordering/internal/store"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -40,7 +41,6 @@ func (h *LoginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	accessToken, _ := auth.GenerateAccessToken(client.ID, "CLIENT")
 	refreshToken, _ := auth.GenerateRefreshToken(client.ID, "CLIENT")
 
-	// Save Refresh Token to DB
 	expiry := time.Now().Add(7 * 24 * time.Hour)
 	h.Store.SetRefreshToken(r.Context(), req.DeviceID, refreshToken, expiry)
 

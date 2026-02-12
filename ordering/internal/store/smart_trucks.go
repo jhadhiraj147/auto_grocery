@@ -23,9 +23,7 @@ func NewTruckStore(db *sql.DB) *TruckStore {
 	return &TruckStore{db: db}
 }
 
-// UpsertSmartTruck: If truck exists, update details. If new, create it.
 func (s *TruckStore) UpsertSmartTruck(ctx context.Context, t SmartTruck) (int, error) {
-	// PostgreSql UPSERT syntax
 	query := `
 		INSERT INTO smart_trucks (truck_id, plate_number, driver_name, contact_info, location)
 		VALUES ($1, $2, $3, $4, $5)
@@ -38,11 +36,11 @@ func (s *TruckStore) UpsertSmartTruck(ctx context.Context, t SmartTruck) (int, e
 		RETURNING id
 	`
 	var dbID int
-	err := s.db.QueryRowContext(ctx, query, 
-		t.TruckID, 
-		t.PlateNumber, 
-		t.DriverName, 
-		t.ContactInfo, 
+	err := s.db.QueryRowContext(ctx, query,
+		t.TruckID,
+		t.PlateNumber,
+		t.DriverName,
+		t.ContactInfo,
 		t.Location,
 	).Scan(&dbID)
 

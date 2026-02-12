@@ -3,7 +3,7 @@ namespace RobotMessages;
 table Item {
   sku:string;
   quantity:int;
-  aisle:string; // <--- Add this field
+  aisle:string;
 }
 
 table OrderBroadcast {

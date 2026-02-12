@@ -105,10 +105,9 @@ message AssignRequest {
   map<string, int32> items = 2; 
 }
 
-// UPDATED: Renamed from BillResponse
 message AssignResponse {
   bool success = 1;
-  string message = 2; // e.g. "Robots started"
+  string message = 2;
 }
 
 

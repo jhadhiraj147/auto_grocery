@@ -2,10 +2,10 @@ package auth
 
 import (
 	"context"
-	"net/http"
-	"strings"
 	"log"
+	"net/http"
 	"os"
+	"strings"
 )
 
 type ContextKey string
@@ -17,7 +17,7 @@ const (
 
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		
+
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
 			http.Error(w, "Missing Authorization Header", http.StatusUnauthorized)
@@ -29,7 +29,6 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			http.Error(w, "Invalid Header Format", http.StatusUnauthorized)
 			return
 		}
-
 
 		claims, err := ValidateToken(parts[1])
 		if err != nil {
@@ -50,16 +49,13 @@ func AuthMiddleware(next http.Handler) http.Handler {
 
 func InternalMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// 1. Get the secret from environment
 		secret := os.Getenv("INTERNAL_SECRET")
 		if secret == "" {
-            // Safety Check: If env var is missing, block everything!
 			log.Println("CRITICAL: INTERNAL_SECRET is not set in .env! Blocking request.")
 			http.Error(w, "Internal Server Error: Configuration Missing", http.StatusInternalServerError)
 			return
 		}
 
-		// 2. Check the header
 		apiKey := r.Header.Get("X-Internal-Secret")
 		if apiKey != secret {
 			log.Printf("⚠️ Unauthorized internal access attempt. Key used: %s", apiKey)
@@ -67,7 +63,6 @@ func InternalMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		// 3. Allow access
 		next.ServeHTTP(w, r)
 	})
 }

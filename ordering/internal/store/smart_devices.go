@@ -7,15 +7,13 @@ import (
 	"time"
 )
 
-// 1. THE DATA STRUCTURE
-// Matches the 'smart_clients' table exactly.
 type SmartClient struct {
 	ID           int
-	DeviceID     string    // Unique ID (e.g. "FRIDGE-99")
+	DeviceID     string
 	Email        string
 	Phone        string
-	PasswordHash string    // We never store plain text passwords!
-	CardInfoEnc  string    // Encrypted string
+	PasswordHash string
+	CardInfoEnc  string
 	RefreshToken string
 	TokenExpiry  time.Time
 }
@@ -28,21 +26,17 @@ func NewClientStore(db *sql.DB) *ClientStore {
 	return &ClientStore{db: db}
 }
 
-// ---------------------------------------------------------
-// 2. REGISTER (Create New Fridge)
-// ---------------------------------------------------------
 func (s *ClientStore) CreateSmartClient(ctx context.Context, c SmartClient) error {
 	query := `
 		INSERT INTO smart_clients (device_id, email, phone, password_hash, card_info_enc)
 		VALUES ($1, $2, $3, $4, $5)
 		RETURNING id
 	`
-	// We execute the query and get the new ID back
-	err := s.db.QueryRowContext(ctx, query, 
-		c.DeviceID, 
-		c.Email, 
-		c.Phone, 
-		c.PasswordHash, 
+	err := s.db.QueryRowContext(ctx, query,
+		c.DeviceID,
+		c.Email,
+		c.Phone,
+		c.PasswordHash,
 		c.CardInfoEnc,
 	).Scan(&c.ID)
 
@@ -52,9 +46,6 @@ func (s *ClientStore) CreateSmartClient(ctx context.Context, c SmartClient) erro
 	return nil
 }
 
-// ---------------------------------------------------------
-// 3. LOGIN (Find by Device ID)
-// ---------------------------------------------------------
 func (s *ClientStore) GetSmartClient(ctx context.Context, deviceID string) (*SmartClient, error) {
 	query := `
 		SELECT id, device_id, email, password_hash, card_info_enc, refresh_token, token_expiry
@@ -62,8 +53,7 @@ func (s *ClientStore) GetSmartClient(ctx context.Context, deviceID string) (*Sma
 		WHERE device_id = $1
 	`
 	var c SmartClient
-	
-	// We use Null types because 'refresh_token' and 'expiry' might be NULL in the DB
+
 	var expiry sql.NullTime
 	var token sql.NullString
 
@@ -75,7 +65,6 @@ func (s *ClientStore) GetSmartClient(ctx context.Context, deviceID string) (*Sma
 		return nil, fmt.Errorf("client not found: %w", err)
 	}
 
-	// Helper logic: If DB value is valid, put it in our struct
 	if token.Valid {
 		c.RefreshToken = token.String
 	}
@@ -86,9 +75,6 @@ func (s *ClientStore) GetSmartClient(ctx context.Context, deviceID string) (*Sma
 	return &c, nil
 }
 
-// ---------------------------------------------------------
-// 4. SAVE SESSION (Update Refresh Token)
-// ---------------------------------------------------------
 func (s *ClientStore) SetRefreshToken(ctx context.Context, deviceID string, token string, expiry time.Time) error {
 	query := `
 		UPDATE smart_clients
