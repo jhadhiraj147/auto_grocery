@@ -1,0 +1,10 @@
+namespace AnalyticsMessages;
+
+table OrderMetric {
+  order_id:string;
+  status:string;
+  duration_seconds:double;  // The time it took from Confirm -> Webhook
+  timestamp:long;           // Unix timestamp of when this report was sent
+}
+
+root_type OrderMetric;
