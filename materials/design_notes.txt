@@ -1,3 +1,12 @@
+add the robots to offload the trucks logic 
+
+
+a redis should be add for the ordering, currentlhy the mapping is sku - quanity for purchase but 
+the user may say apple 10 qty instead apple123-344 10 qty, redis will hold the mapping common names and skus!
+
+
+
+
 add a go routine to be run in the ordering service,,, it will run every minute to ensure
 pending stocks are cleared off. 
 

@@ -13,6 +13,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include/cppzmq
     ${CMAKE_CURRENT_SOURCE_DIR}/fbs
+    ${ZeroMQ_INCLUDE_DIRS}
 )
 
 # Use the binary name specified in your structure [cite: 107]

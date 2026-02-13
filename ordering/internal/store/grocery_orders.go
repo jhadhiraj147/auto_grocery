@@ -38,16 +38,19 @@ func (s *OrderStore) CreateGroceryOrder(ctx context.Context, order GroceryOrder,
 	}
 	defer tx.Rollback()
 
+	// 1. Insert the Order Header
 	queryHeader := `
 		INSERT INTO grocery_orders (order_id, client_id, status, total_price)
 		VALUES ($1, $2, $3, $4)
 		RETURNING id
 	`
+	// Note: We scan the generated DB ID into 'order.ID' for use in the items loop below
 	err = tx.QueryRowContext(ctx, queryHeader, order.OrderID, order.ClientID, "PENDING", 0.0).Scan(&order.ID)
 	if err != nil {
 		return fmt.Errorf("failed to save order header: %w", err)
 	}
 
+	// 2. Insert the Items
 	queryItems := `
 		INSERT INTO grocery_order_items (order_id, sku, quantity)
 		VALUES ($1, $2, $3)
@@ -59,6 +62,7 @@ func (s *OrderStore) CreateGroceryOrder(ctx context.Context, order GroceryOrder,
 	defer stmt.Close()
 
 	for _, item := range items {
+		// Use the integer ID from the created order
 		_, err := stmt.ExecContext(ctx, order.ID, item.Sku, item.Quantity)
 		if err != nil {
 			return fmt.Errorf("failed to save item %s: %w", item.Sku, err)
@@ -119,11 +123,15 @@ func (s *OrderStore) GetLastOrderByClientID(ctx context.Context, clientID int) (
 }
 
 func (s *OrderStore) UpdateOrderStatus(ctx context.Context, orderID string, status string, totalPrice float64) error {
+	// We add ::NUMERIC to explicitly tell Postgres how to handle $2
 	query := `
 		UPDATE grocery_orders
-		SET status = $1, total_price = CASE WHEN $2 > 0 THEN $2 ELSE total_price END
+		SET status = $1, 
+		    total_price = CASE WHEN $2::NUMERIC > 0 THEN $2::NUMERIC ELSE total_price END
 		WHERE order_id = $3
 	`
+
+	// DOUBLE CHECK THIS ORDER: 1=status, 2=price, 3=id
 	result, err := s.db.ExecContext(ctx, query, status, totalPrice, orderID)
 	if err != nil {
 		return fmt.Errorf("failed to update order status: %w", err)
@@ -135,8 +143,10 @@ func (s *OrderStore) UpdateOrderStatus(ctx context.Context, orderID string, stat
 	}
 	return nil
 }
+
 func (s *OrderStore) GetOrderItems(ctx context.Context, orderID string) ([]GroceryOrderItem, error) {
 	var dbID int
+	// Convert UUID (string) to Internal ID (int)
 	err := s.db.QueryRowContext(ctx, "SELECT id FROM grocery_orders WHERE order_id = $1", orderID).Scan(&dbID)
 	if err != nil {
 		return nil, fmt.Errorf("order not found: %w", err)
@@ -201,6 +211,16 @@ func (s *OrderStore) GetOrderByID(ctx context.Context, orderID string) (*Grocery
 	} else if err != nil {
 		return nil, err
 	}
+
+	// 🔧 THE CORE FIX: 
+	// The DB time is retrieved as UTC but contains Local hours.
+	// We must strip the UTC label and replace it with Local.
+	o.CreatedAt = time.Date(
+		o.CreatedAt.Year(), o.CreatedAt.Month(), o.CreatedAt.Day(),
+		o.CreatedAt.Hour(), o.CreatedAt.Minute(), o.CreatedAt.Second(), 
+		o.CreatedAt.Nanosecond(), time.Local,
+	)
+
 	return &o, nil
 }
 
