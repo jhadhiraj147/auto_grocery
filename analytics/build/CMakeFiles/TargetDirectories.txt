@@ -1,0 +1,3 @@
+/Users/jhadhiraj147/Projects/auto_grocery/analytics/build/CMakeFiles/analytics_service.dir
+/Users/jhadhiraj147/Projects/auto_grocery/analytics/build/CMakeFiles/edit_cache.dir
+/Users/jhadhiraj147/Projects/auto_grocery/analytics/build/CMakeFiles/rebuild_cache.dir

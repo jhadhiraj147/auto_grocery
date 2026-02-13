@@ -8,7 +8,7 @@ using namespace AnalyticsMessages;
 int main() {
     zmq::context_t context(1);
     zmq::socket_t subscriber(context, zmq::socket_type::sub);
-    subscriber.connect("tcp://ordering-service:5557");
+    subscriber.connect("tcp://localhost:5557");
     subscriber.set(zmq::sockopt::subscribe, "");
 
     // Open CSV file for writing

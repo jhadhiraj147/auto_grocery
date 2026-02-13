@@ -18,8 +18,8 @@ import (
 type InventoryHandler struct {
 	pb.UnimplementedInventoryServiceServer
 	store         *store.Store
-	memoryStore   *store.MemoryStore 
-	publisher     *mq.Publisher     
+	memoryStore   *store.MemoryStore
+	publisher     *mq.Publisher
 	pricingClient pb.PricingServiceClient
 }
 
@@ -38,52 +38,49 @@ func NewInventoryHandler(
 }
 
 func (h *InventoryHandler) AssignRobots(ctx context.Context, req *pb.AssignRequest) (*pb.AssignResponse, error) {
-    fmt.Printf("Dispatching Robots for Order %s...\n", req.GetOrderId())
+	fmt.Printf("Dispatching Robots for Order %s...\n", req.GetOrderId())
 
-    err := h.memoryStore.SaveOrderItems(ctx, req.GetOrderId(), req.GetItems())
-    if err != nil {
-        log.Printf("Redis Save Failed: %v", err)
-        return nil, err
-    }
+	err := h.memoryStore.SaveOrderItems(ctx, req.GetOrderId(), req.GetItems())
+	if err != nil {
+		log.Printf("Redis Save Failed: %v", err)
+		return nil, err
+	}
 
-    skus := make([]string, 0, len(req.GetItems()))
-    for sku := range req.GetItems() {
-        skus = append(skus, sku)
-    }
+	skus := make([]string, 0, len(req.GetItems()))
+	for sku := range req.GetItems() {
+		skus = append(skus, sku)
+	}
 
-  
-    dbItems, err := h.store.GetBatchItems(ctx, skus)
-    if err != nil {
-        log.Printf("DB Lookup Failed: %v", err)
-        return nil, err
-    }
+	dbItems, err := h.store.GetBatchItems(ctx, skus)
+	if err != nil {
+		log.Printf("DB Lookup Failed: %v", err)
+		return nil, err
+	}
 
-   
-    robotItems := make(map[string]mq.ItemDetails)
-    for sku, qty := range req.GetItems() {
-        aisle := "Unknown" 
-        if item, exists := dbItems[sku]; exists {
-            aisle = item.AisleType
-        }
-        
-        robotItems[sku] = mq.ItemDetails{
-            Quantity: qty,
-            Aisle:    aisle,
-        }
-    }
+	robotItems := make(map[string]mq.ItemDetails)
+	for sku, qty := range req.GetItems() {
+		aisle := "Unknown"
+		if item, exists := dbItems[sku]; exists {
+			aisle = item.AisleType
+		}
 
-    err = h.publisher.SendRobotCommand(req.GetOrderId(), robotItems)
-    if err != nil {
-        log.Printf("ZMQ Broadcast Failed: %v", err)
-        return nil, err
-    }
+		robotItems[sku] = mq.ItemDetails{
+			Quantity: qty,
+			Aisle:    aisle,
+		}
+	}
 
-    return &pb.AssignResponse{
-        Success: true,
-        Message: "Robots dispatched with aisle info. Order cached.",
-    }, nil
+	err = h.publisher.SendRobotCommand(req.GetOrderId(), robotItems)
+	if err != nil {
+		log.Printf("ZMQ Broadcast Failed: %v", err)
+		return nil, err
+	}
+
+	return &pb.AssignResponse{
+		Success: true,
+		Message: "Robots dispatched with aisle info. Order cached.",
+	}, nil
 }
-
 
 func (h *InventoryHandler) CheckAvailability(ctx context.Context, req *pb.CheckAvailabilityRequest) (*pb.CheckAvailabilityResponse, error) {
 	dbItems, err := h.store.GetBatchItems(ctx, req.GetSkus())
@@ -193,7 +190,6 @@ func (h *InventoryHandler) ReportJobStatus(ctx context.Context, req *pb.ReportJo
 
 	if count == 5 {
 		log.Printf("All 5 robots finished for Order %s! Finalizing...", orderID)
-		
 		go h.finalizeOrder(orderID)
 	}
 
@@ -204,10 +200,18 @@ func (h *InventoryHandler) finalizeOrder(orderID string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	// 1. Get Items from Redis
 	items, err := h.memoryStore.GetOrderItems(ctx, orderID)
 	if err != nil {
 		log.Printf("Finalize Error: Could not find items for %s in Redis: %v", orderID, err)
 		return
+	}
+
+	// --- DEBUG LOG: Check if Redis actually had the items ---
+	log.Printf("🔍 [DEBUG] Finalizing Order %s. Found items in Redis: %v", orderID, items)
+
+	if len(items) == 0 {
+		log.Printf("⚠️ [DEBUG] Redis returned 0 items. Pricing cannot be calculated.")
 	}
 
 	var pricingItems []*pb.CartItem
@@ -218,48 +222,52 @@ func (h *InventoryHandler) finalizeOrder(orderID string) {
 		})
 	}
 
+	// 2. Ask Pricing Service for the Bill
 	priceReq := &pb.CalculateBillRequest{Items: pricingItems}
 	priceResp, err := h.pricingClient.CalculateBill(ctx, priceReq)
-	
+
 	finalPrice := 0.0
 	if err != nil {
 		log.Printf("Pricing Service failed for %s, setting price to 0: %v", orderID, err)
 	} else {
 		finalPrice = priceResp.GetGrandTotal()
+		// --- DEBUG LOG: Check what Pricing Service calculated ---
+		log.Printf("💰 [DEBUG] Pricing Service returned: $%0.2f for items %v", finalPrice, items)
 	}
 
+	// 3. Update Ordering Service via Webhook
 	h.callOrderingWebhook(orderID, finalPrice)
 
+	// 4. Cleanup
 	h.memoryStore.DeleteOrderData(ctx, orderID)
 	log.Printf("🧹 Cleanup: Removed Redis state for Order %s", orderID)
 }
 
-
 func (h *InventoryHandler) callOrderingWebhook(orderID string, price float64) {
 	url := "http://localhost:5050/internal/webhook/update-order"
-	
+
 	payload := map[string]interface{}{
 		"order_id":    orderID,
 		"status":      "COMPLETED",
 		"total_price": price,
 	}
-	
+
 	jsonBytes, _ := json.Marshal(payload)
-	
+
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonBytes))
 	if err != nil {
 		log.Printf("Failed to create webhook request: %v", err)
 		return
 	}
-	
+
 	req.Header.Set("Content-Type", "application/json")
-	
+
 	secret := os.Getenv("INTERNAL_SECRET")
 	req.Header.Set("X-Internal-Secret", secret)
 
 	client := &http.Client{Timeout: 5 * time.Second}
 	resp, err := client.Do(req)
-	
+
 	if err != nil {
 		log.Printf("Webhook call failed for %s: %v", orderID, err)
 		return
