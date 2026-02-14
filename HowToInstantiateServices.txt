@@ -87,6 +87,9 @@ D) C++ build/runtime deps (for robots + analytics)
   robots/.env
   analytics/.env
 
+Note: these `.env` files are committed in this repository with local/demo-safe defaults.
+You can run directly after clone, then edit values only if your machine uses different ports/hosts.
+
 
 --------------------------------------------------------------------------------
 3) POSTGRESQL: CREATE USERS + DATABASES
