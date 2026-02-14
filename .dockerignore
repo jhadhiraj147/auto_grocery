@@ -1,0 +1,11 @@
+.git
+.gitignore
+**/.DS_Store
+**/build
+**/CMakeFiles
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/Makefile
+venv
+**/.venv
+frontend/**/.streamlit

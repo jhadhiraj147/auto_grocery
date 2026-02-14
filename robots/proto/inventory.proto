@@ -7,9 +7,48 @@ import "google/protobuf/timestamp.proto";
 option go_package = "auto_grocery/inventory/proto;inventorypb";
 
 service InventoryService {
+  rpc CheckAvailability (CheckAvailabilityRequest) returns (CheckAvailabilityResponse);
+  rpc ReserveItems (ReserveItemsRequest) returns (ReserveItemsResponse);
+  rpc ReleaseItems (ReleaseItemsRequest) returns (ReleaseItemsResponse);
+
   rpc ProcessCustomerOrder (ProcessCustomerOrderRequest) returns (ProcessCustomerOrderResponse);
   rpc RestockItemsOrder (RestockItemsOrderRequest) returns (RestockItemsOrderResponse);
   rpc ReportJobStatus (ReportJobStatusRequest) returns (ReportJobStatusResponse);
+}
+
+message CheckAvailabilityRequest {
+  repeated string skus = 1;
+}
+
+message CheckAvailabilityResponse {
+  map<string, StockLevel> items = 1;
+}
+
+message StockLevel {
+  string sku = 1;
+  string name = 2;
+  string aisle_type = 3;
+  int32 quantity_available = 4;
+}
+
+message ReserveItemsRequest {
+  string order_id = 1;
+  map<string, int32> items = 2;
+}
+
+message ReserveItemsResponse {
+  string order_id = 1;
+  bool success = 2;
+  string error_message = 3;
+}
+
+message ReleaseItemsRequest {
+  string order_id = 1;
+  map<string, int32> items = 2;
+}
+
+message ReleaseItemsResponse {
+  bool success = 1;
 }
 
 message ProcessCustomerOrderRequest {
@@ -27,9 +66,9 @@ message RestockItem {
   string name = 2;
   string aisle_type = 3;
   int32 quantity = 4;
-  google.protobuf.Timestamp mfd_date = 5;
-  google.protobuf.Timestamp expiry_date = 6;
-  double unit_cost = 7;
+  double unit_cost = 5;
+  google.protobuf.Timestamp mfd_date = 6;
+  google.protobuf.Timestamp expiry_date = 7;
 }
 
 message RestockItemsOrderRequest {
@@ -43,9 +82,9 @@ message RestockItemsOrderResponse {
 
 message ReportJobStatusRequest {
   string order_id = 1;
-  string status = 2;
-  map<string, int32> processed_items = 3;
-  string order_type = 4; 
+  string status = 3;
+  map<string, int32> processed_items = 4;
+  string order_type = 5;
 }
 
 message ReportJobStatusResponse {

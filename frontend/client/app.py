@@ -275,9 +275,15 @@ else:
                     for sku, qty in st.session_state.confirmed_items.items():
                         st.write(f"🔸 **{sku}**: {qty} units available")
                 else:
-                    st.error("⚠️ Stock Scan returned 0 items. Please check Inventory.")
+                    st.error("⚠️ Stock Scan returned 0 items. Inventory is currently empty.")
+                    st.info("Load stock first from Truck UI (create a restock order), then retry the stock scan here.")
             else:
-                st.error(f"⚠️ Stock Scan Failed: {res.text}")
+                response_text = (res.text or "").lower()
+                if "insufficient" in response_text or "stock" in response_text:
+                    st.error("⚠️ Not enough stock available for this request.")
+                    st.info("Open Truck UI, create a restock order to load inventory, and retry this scan.")
+                else:
+                    st.error(f"⚠️ Stock Scan Failed: {res.text}")
         except Exception as e:
             print(f"[client-ui] preview exception err={e}")
             st.error(f"Connection Error: {str(e)}")
