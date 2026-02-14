@@ -57,12 +57,19 @@ class InventoryService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ReleaseItemsResponse>> PrepareAsyncReleaseItems(::grpc::ClientContext* context, const ::inventory::ReleaseItemsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ReleaseItemsResponse>>(PrepareAsyncReleaseItemsRaw(context, request, cq));
     }
-    virtual ::grpc::Status RestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::inventory::RestockItemsResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsResponse>> AsyncRestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsResponse>>(AsyncRestockItemsRaw(context, request, cq));
+    virtual ::grpc::Status RestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::inventory::RestockItemsOrderResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsOrderResponse>> AsyncRestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsOrderResponse>>(AsyncRestockItemsOrderRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsResponse>> PrepareAsyncRestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsResponse>>(PrepareAsyncRestockItemsRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsOrderResponse>> PrepareAsyncRestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsOrderResponse>>(PrepareAsyncRestockItemsOrderRaw(context, request, cq));
+    }
+    virtual ::grpc::Status ProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::inventory::ProcessCustomerOrderResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ProcessCustomerOrderResponse>> AsyncProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ProcessCustomerOrderResponse>>(AsyncProcessCustomerOrderRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ProcessCustomerOrderResponse>> PrepareAsyncProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ProcessCustomerOrderResponse>>(PrepareAsyncProcessCustomerOrderRaw(context, request, cq));
     }
     virtual ::grpc::Status ReportJobStatus(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest& request, ::inventory::ReportJobStatusResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ReportJobStatusResponse>> AsyncReportJobStatus(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest& request, ::grpc::CompletionQueue* cq) {
@@ -70,13 +77,6 @@ class InventoryService final {
     }
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ReportJobStatusResponse>> PrepareAsyncReportJobStatus(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ReportJobStatusResponse>>(PrepareAsyncReportJobStatusRaw(context, request, cq));
-    }
-    virtual ::grpc::Status Checkout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::inventory::CheckoutResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::CheckoutResponse>> AsyncCheckout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::CheckoutResponse>>(AsyncCheckoutRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::CheckoutResponse>> PrepareAsyncCheckout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::inventory::CheckoutResponse>>(PrepareAsyncCheckoutRaw(context, request, cq));
     }
     class async_interface {
      public:
@@ -87,12 +87,12 @@ class InventoryService final {
       virtual void ReserveItems(::grpc::ClientContext* context, const ::inventory::ReserveItemsRequest* request, ::inventory::ReserveItemsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void ReleaseItems(::grpc::ClientContext* context, const ::inventory::ReleaseItemsRequest* request, ::inventory::ReleaseItemsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void ReleaseItems(::grpc::ClientContext* context, const ::inventory::ReleaseItemsRequest* request, ::inventory::ReleaseItemsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void RestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest* request, ::inventory::RestockItemsResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void RestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest* request, ::inventory::RestockItemsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void RestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest* request, ::inventory::RestockItemsOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void RestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest* request, ::inventory::RestockItemsOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void ProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest* request, ::inventory::ProcessCustomerOrderResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest* request, ::inventory::ProcessCustomerOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void ReportJobStatus(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest* request, ::inventory::ReportJobStatusResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void ReportJobStatus(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest* request, ::inventory::ReportJobStatusResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void Checkout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest* request, ::inventory::CheckoutResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void Checkout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest* request, ::inventory::CheckoutResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -104,12 +104,12 @@ class InventoryService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ReserveItemsResponse>* PrepareAsyncReserveItemsRaw(::grpc::ClientContext* context, const ::inventory::ReserveItemsRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ReleaseItemsResponse>* AsyncReleaseItemsRaw(::grpc::ClientContext* context, const ::inventory::ReleaseItemsRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ReleaseItemsResponse>* PrepareAsyncReleaseItemsRaw(::grpc::ClientContext* context, const ::inventory::ReleaseItemsRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsResponse>* AsyncRestockItemsRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsResponse>* PrepareAsyncRestockItemsRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsOrderResponse>* AsyncRestockItemsOrderRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::RestockItemsOrderResponse>* PrepareAsyncRestockItemsOrderRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ProcessCustomerOrderResponse>* AsyncProcessCustomerOrderRaw(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ProcessCustomerOrderResponse>* PrepareAsyncProcessCustomerOrderRaw(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ReportJobStatusResponse>* AsyncReportJobStatusRaw(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::ReportJobStatusResponse>* PrepareAsyncReportJobStatusRaw(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::CheckoutResponse>* AsyncCheckoutRaw(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::inventory::CheckoutResponse>* PrepareAsyncCheckoutRaw(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -135,12 +135,19 @@ class InventoryService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::ReleaseItemsResponse>> PrepareAsyncReleaseItems(::grpc::ClientContext* context, const ::inventory::ReleaseItemsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::ReleaseItemsResponse>>(PrepareAsyncReleaseItemsRaw(context, request, cq));
     }
-    ::grpc::Status RestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::inventory::RestockItemsResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsResponse>> AsyncRestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsResponse>>(AsyncRestockItemsRaw(context, request, cq));
+    ::grpc::Status RestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::inventory::RestockItemsOrderResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsOrderResponse>> AsyncRestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsOrderResponse>>(AsyncRestockItemsOrderRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsResponse>> PrepareAsyncRestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsResponse>>(PrepareAsyncRestockItemsRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsOrderResponse>> PrepareAsyncRestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsOrderResponse>>(PrepareAsyncRestockItemsOrderRaw(context, request, cq));
+    }
+    ::grpc::Status ProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::inventory::ProcessCustomerOrderResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::ProcessCustomerOrderResponse>> AsyncProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::ProcessCustomerOrderResponse>>(AsyncProcessCustomerOrderRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::ProcessCustomerOrderResponse>> PrepareAsyncProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::ProcessCustomerOrderResponse>>(PrepareAsyncProcessCustomerOrderRaw(context, request, cq));
     }
     ::grpc::Status ReportJobStatus(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest& request, ::inventory::ReportJobStatusResponse* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::ReportJobStatusResponse>> AsyncReportJobStatus(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest& request, ::grpc::CompletionQueue* cq) {
@@ -148,13 +155,6 @@ class InventoryService final {
     }
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::ReportJobStatusResponse>> PrepareAsyncReportJobStatus(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::ReportJobStatusResponse>>(PrepareAsyncReportJobStatusRaw(context, request, cq));
-    }
-    ::grpc::Status Checkout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::inventory::CheckoutResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::CheckoutResponse>> AsyncCheckout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::CheckoutResponse>>(AsyncCheckoutRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::CheckoutResponse>> PrepareAsyncCheckout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::inventory::CheckoutResponse>>(PrepareAsyncCheckoutRaw(context, request, cq));
     }
     class async final :
       public StubInterface::async_interface {
@@ -165,12 +165,12 @@ class InventoryService final {
       void ReserveItems(::grpc::ClientContext* context, const ::inventory::ReserveItemsRequest* request, ::inventory::ReserveItemsResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void ReleaseItems(::grpc::ClientContext* context, const ::inventory::ReleaseItemsRequest* request, ::inventory::ReleaseItemsResponse* response, std::function<void(::grpc::Status)>) override;
       void ReleaseItems(::grpc::ClientContext* context, const ::inventory::ReleaseItemsRequest* request, ::inventory::ReleaseItemsResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void RestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest* request, ::inventory::RestockItemsResponse* response, std::function<void(::grpc::Status)>) override;
-      void RestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest* request, ::inventory::RestockItemsResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void RestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest* request, ::inventory::RestockItemsOrderResponse* response, std::function<void(::grpc::Status)>) override;
+      void RestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest* request, ::inventory::RestockItemsOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void ProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest* request, ::inventory::ProcessCustomerOrderResponse* response, std::function<void(::grpc::Status)>) override;
+      void ProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest* request, ::inventory::ProcessCustomerOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void ReportJobStatus(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest* request, ::inventory::ReportJobStatusResponse* response, std::function<void(::grpc::Status)>) override;
       void ReportJobStatus(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest* request, ::inventory::ReportJobStatusResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void Checkout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest* request, ::inventory::CheckoutResponse* response, std::function<void(::grpc::Status)>) override;
-      void Checkout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest* request, ::inventory::CheckoutResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -188,18 +188,18 @@ class InventoryService final {
     ::grpc::ClientAsyncResponseReader< ::inventory::ReserveItemsResponse>* PrepareAsyncReserveItemsRaw(::grpc::ClientContext* context, const ::inventory::ReserveItemsRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::inventory::ReleaseItemsResponse>* AsyncReleaseItemsRaw(::grpc::ClientContext* context, const ::inventory::ReleaseItemsRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::inventory::ReleaseItemsResponse>* PrepareAsyncReleaseItemsRaw(::grpc::ClientContext* context, const ::inventory::ReleaseItemsRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsResponse>* AsyncRestockItemsRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsResponse>* PrepareAsyncRestockItemsRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsOrderResponse>* AsyncRestockItemsOrderRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsOrderResponse>* PrepareAsyncRestockItemsOrderRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::inventory::ProcessCustomerOrderResponse>* AsyncProcessCustomerOrderRaw(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::inventory::ProcessCustomerOrderResponse>* PrepareAsyncProcessCustomerOrderRaw(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::inventory::ReportJobStatusResponse>* AsyncReportJobStatusRaw(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::inventory::ReportJobStatusResponse>* PrepareAsyncReportJobStatusRaw(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::inventory::CheckoutResponse>* AsyncCheckoutRaw(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::inventory::CheckoutResponse>* PrepareAsyncCheckoutRaw(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_CheckAvailability_;
     const ::grpc::internal::RpcMethod rpcmethod_ReserveItems_;
     const ::grpc::internal::RpcMethod rpcmethod_ReleaseItems_;
-    const ::grpc::internal::RpcMethod rpcmethod_RestockItems_;
+    const ::grpc::internal::RpcMethod rpcmethod_RestockItemsOrder_;
+    const ::grpc::internal::RpcMethod rpcmethod_ProcessCustomerOrder_;
     const ::grpc::internal::RpcMethod rpcmethod_ReportJobStatus_;
-    const ::grpc::internal::RpcMethod rpcmethod_Checkout_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -210,9 +210,9 @@ class InventoryService final {
     virtual ::grpc::Status CheckAvailability(::grpc::ServerContext* context, const ::inventory::CheckAvailabilityRequest* request, ::inventory::CheckAvailabilityResponse* response);
     virtual ::grpc::Status ReserveItems(::grpc::ServerContext* context, const ::inventory::ReserveItemsRequest* request, ::inventory::ReserveItemsResponse* response);
     virtual ::grpc::Status ReleaseItems(::grpc::ServerContext* context, const ::inventory::ReleaseItemsRequest* request, ::inventory::ReleaseItemsResponse* response);
-    virtual ::grpc::Status RestockItems(::grpc::ServerContext* context, const ::inventory::RestockItemsRequest* request, ::inventory::RestockItemsResponse* response);
+    virtual ::grpc::Status RestockItemsOrder(::grpc::ServerContext* context, const ::inventory::RestockItemsOrderRequest* request, ::inventory::RestockItemsOrderResponse* response);
+    virtual ::grpc::Status ProcessCustomerOrder(::grpc::ServerContext* context, const ::inventory::ProcessCustomerOrderRequest* request, ::inventory::ProcessCustomerOrderResponse* response);
     virtual ::grpc::Status ReportJobStatus(::grpc::ServerContext* context, const ::inventory::ReportJobStatusRequest* request, ::inventory::ReportJobStatusResponse* response);
-    virtual ::grpc::Status Checkout(::grpc::ServerContext* context, const ::inventory::CheckoutRequest* request, ::inventory::CheckoutResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_CheckAvailability : public BaseClass {
@@ -275,23 +275,43 @@ class InventoryService final {
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_RestockItems : public BaseClass {
+  class WithAsyncMethod_RestockItemsOrder : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_RestockItems() {
+    WithAsyncMethod_RestockItemsOrder() {
       ::grpc::Service::MarkMethodAsync(3);
     }
-    ~WithAsyncMethod_RestockItems() override {
+    ~WithAsyncMethod_RestockItemsOrder() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RestockItems(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsRequest* /*request*/, ::inventory::RestockItemsResponse* /*response*/) override {
+    ::grpc::Status RestockItemsOrder(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsOrderRequest* /*request*/, ::inventory::RestockItemsOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestRestockItems(::grpc::ServerContext* context, ::inventory::RestockItemsRequest* request, ::grpc::ServerAsyncResponseWriter< ::inventory::RestockItemsResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestRestockItemsOrder(::grpc::ServerContext* context, ::inventory::RestockItemsOrderRequest* request, ::grpc::ServerAsyncResponseWriter< ::inventory::RestockItemsOrderResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_ProcessCustomerOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_ProcessCustomerOrder() {
+      ::grpc::Service::MarkMethodAsync(4);
+    }
+    ~WithAsyncMethod_ProcessCustomerOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ProcessCustomerOrder(::grpc::ServerContext* /*context*/, const ::inventory::ProcessCustomerOrderRequest* /*request*/, ::inventory::ProcessCustomerOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestProcessCustomerOrder(::grpc::ServerContext* context, ::inventory::ProcessCustomerOrderRequest* request, ::grpc::ServerAsyncResponseWriter< ::inventory::ProcessCustomerOrderResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -300,7 +320,7 @@ class InventoryService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_ReportJobStatus() {
-      ::grpc::Service::MarkMethodAsync(4);
+      ::grpc::Service::MarkMethodAsync(5);
     }
     ~WithAsyncMethod_ReportJobStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -311,30 +331,10 @@ class InventoryService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestReportJobStatus(::grpc::ServerContext* context, ::inventory::ReportJobStatusRequest* request, ::grpc::ServerAsyncResponseWriter< ::inventory::ReportJobStatusResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithAsyncMethod_Checkout : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithAsyncMethod_Checkout() {
-      ::grpc::Service::MarkMethodAsync(5);
-    }
-    ~WithAsyncMethod_Checkout() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status Checkout(::grpc::ServerContext* /*context*/, const ::inventory::CheckoutRequest* /*request*/, ::inventory::CheckoutResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestCheckout(::grpc::ServerContext* context, ::inventory::CheckoutRequest* request, ::grpc::ServerAsyncResponseWriter< ::inventory::CheckoutResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_CheckAvailability<WithAsyncMethod_ReserveItems<WithAsyncMethod_ReleaseItems<WithAsyncMethod_RestockItems<WithAsyncMethod_ReportJobStatus<WithAsyncMethod_Checkout<Service > > > > > > AsyncService;
+  typedef WithAsyncMethod_CheckAvailability<WithAsyncMethod_ReserveItems<WithAsyncMethod_ReleaseItems<WithAsyncMethod_RestockItemsOrder<WithAsyncMethod_ProcessCustomerOrder<WithAsyncMethod_ReportJobStatus<Service > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_CheckAvailability : public BaseClass {
    private:
@@ -417,31 +417,58 @@ class InventoryService final {
       ::grpc::CallbackServerContext* /*context*/, const ::inventory::ReleaseItemsRequest* /*request*/, ::inventory::ReleaseItemsResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_RestockItems : public BaseClass {
+  class WithCallbackMethod_RestockItemsOrder : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_RestockItems() {
+    WithCallbackMethod_RestockItemsOrder() {
       ::grpc::Service::MarkMethodCallback(3,
-          new ::grpc::internal::CallbackUnaryHandler< ::inventory::RestockItemsRequest, ::inventory::RestockItemsResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::inventory::RestockItemsOrderRequest, ::inventory::RestockItemsOrderResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::inventory::RestockItemsRequest* request, ::inventory::RestockItemsResponse* response) { return this->RestockItems(context, request, response); }));}
-    void SetMessageAllocatorFor_RestockItems(
-        ::grpc::MessageAllocator< ::inventory::RestockItemsRequest, ::inventory::RestockItemsResponse>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::inventory::RestockItemsOrderRequest* request, ::inventory::RestockItemsOrderResponse* response) { return this->RestockItemsOrder(context, request, response); }));}
+    void SetMessageAllocatorFor_RestockItemsOrder(
+        ::grpc::MessageAllocator< ::inventory::RestockItemsOrderRequest, ::inventory::RestockItemsOrderResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::inventory::RestockItemsRequest, ::inventory::RestockItemsResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::inventory::RestockItemsOrderRequest, ::inventory::RestockItemsOrderResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_RestockItems() override {
+    ~WithCallbackMethod_RestockItemsOrder() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RestockItems(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsRequest* /*request*/, ::inventory::RestockItemsResponse* /*response*/) override {
+    ::grpc::Status RestockItemsOrder(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsOrderRequest* /*request*/, ::inventory::RestockItemsOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* RestockItems(
-      ::grpc::CallbackServerContext* /*context*/, const ::inventory::RestockItemsRequest* /*request*/, ::inventory::RestockItemsResponse* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* RestockItemsOrder(
+      ::grpc::CallbackServerContext* /*context*/, const ::inventory::RestockItemsOrderRequest* /*request*/, ::inventory::RestockItemsOrderResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_ProcessCustomerOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_ProcessCustomerOrder() {
+      ::grpc::Service::MarkMethodCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::inventory::ProcessCustomerOrderRequest, ::inventory::ProcessCustomerOrderResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::inventory::ProcessCustomerOrderRequest* request, ::inventory::ProcessCustomerOrderResponse* response) { return this->ProcessCustomerOrder(context, request, response); }));}
+    void SetMessageAllocatorFor_ProcessCustomerOrder(
+        ::grpc::MessageAllocator< ::inventory::ProcessCustomerOrderRequest, ::inventory::ProcessCustomerOrderResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::inventory::ProcessCustomerOrderRequest, ::inventory::ProcessCustomerOrderResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_ProcessCustomerOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ProcessCustomerOrder(::grpc::ServerContext* /*context*/, const ::inventory::ProcessCustomerOrderRequest* /*request*/, ::inventory::ProcessCustomerOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* ProcessCustomerOrder(
+      ::grpc::CallbackServerContext* /*context*/, const ::inventory::ProcessCustomerOrderRequest* /*request*/, ::inventory::ProcessCustomerOrderResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_ReportJobStatus : public BaseClass {
@@ -449,13 +476,13 @@ class InventoryService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_ReportJobStatus() {
-      ::grpc::Service::MarkMethodCallback(4,
+      ::grpc::Service::MarkMethodCallback(5,
           new ::grpc::internal::CallbackUnaryHandler< ::inventory::ReportJobStatusRequest, ::inventory::ReportJobStatusResponse>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::inventory::ReportJobStatusRequest* request, ::inventory::ReportJobStatusResponse* response) { return this->ReportJobStatus(context, request, response); }));}
     void SetMessageAllocatorFor_ReportJobStatus(
         ::grpc::MessageAllocator< ::inventory::ReportJobStatusRequest, ::inventory::ReportJobStatusResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::inventory::ReportJobStatusRequest, ::inventory::ReportJobStatusResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -470,34 +497,7 @@ class InventoryService final {
     virtual ::grpc::ServerUnaryReactor* ReportJobStatus(
       ::grpc::CallbackServerContext* /*context*/, const ::inventory::ReportJobStatusRequest* /*request*/, ::inventory::ReportJobStatusResponse* /*response*/)  { return nullptr; }
   };
-  template <class BaseClass>
-  class WithCallbackMethod_Checkout : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithCallbackMethod_Checkout() {
-      ::grpc::Service::MarkMethodCallback(5,
-          new ::grpc::internal::CallbackUnaryHandler< ::inventory::CheckoutRequest, ::inventory::CheckoutResponse>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::inventory::CheckoutRequest* request, ::inventory::CheckoutResponse* response) { return this->Checkout(context, request, response); }));}
-    void SetMessageAllocatorFor_Checkout(
-        ::grpc::MessageAllocator< ::inventory::CheckoutRequest, ::inventory::CheckoutResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::inventory::CheckoutRequest, ::inventory::CheckoutResponse>*>(handler)
-              ->SetMessageAllocator(allocator);
-    }
-    ~WithCallbackMethod_Checkout() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status Checkout(::grpc::ServerContext* /*context*/, const ::inventory::CheckoutRequest* /*request*/, ::inventory::CheckoutResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* Checkout(
-      ::grpc::CallbackServerContext* /*context*/, const ::inventory::CheckoutRequest* /*request*/, ::inventory::CheckoutResponse* /*response*/)  { return nullptr; }
-  };
-  typedef WithCallbackMethod_CheckAvailability<WithCallbackMethod_ReserveItems<WithCallbackMethod_ReleaseItems<WithCallbackMethod_RestockItems<WithCallbackMethod_ReportJobStatus<WithCallbackMethod_Checkout<Service > > > > > > CallbackService;
+  typedef WithCallbackMethod_CheckAvailability<WithCallbackMethod_ReserveItems<WithCallbackMethod_ReleaseItems<WithCallbackMethod_RestockItemsOrder<WithCallbackMethod_ProcessCustomerOrder<WithCallbackMethod_ReportJobStatus<Service > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_CheckAvailability : public BaseClass {
@@ -551,18 +551,35 @@ class InventoryService final {
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_RestockItems : public BaseClass {
+  class WithGenericMethod_RestockItemsOrder : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_RestockItems() {
+    WithGenericMethod_RestockItemsOrder() {
       ::grpc::Service::MarkMethodGeneric(3);
     }
-    ~WithGenericMethod_RestockItems() override {
+    ~WithGenericMethod_RestockItemsOrder() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RestockItems(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsRequest* /*request*/, ::inventory::RestockItemsResponse* /*response*/) override {
+    ::grpc::Status RestockItemsOrder(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsOrderRequest* /*request*/, ::inventory::RestockItemsOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_ProcessCustomerOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_ProcessCustomerOrder() {
+      ::grpc::Service::MarkMethodGeneric(4);
+    }
+    ~WithGenericMethod_ProcessCustomerOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ProcessCustomerOrder(::grpc::ServerContext* /*context*/, const ::inventory::ProcessCustomerOrderRequest* /*request*/, ::inventory::ProcessCustomerOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -573,30 +590,13 @@ class InventoryService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_ReportJobStatus() {
-      ::grpc::Service::MarkMethodGeneric(4);
+      ::grpc::Service::MarkMethodGeneric(5);
     }
     ~WithGenericMethod_ReportJobStatus() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
     ::grpc::Status ReportJobStatus(::grpc::ServerContext* /*context*/, const ::inventory::ReportJobStatusRequest* /*request*/, ::inventory::ReportJobStatusResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-  };
-  template <class BaseClass>
-  class WithGenericMethod_Checkout : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithGenericMethod_Checkout() {
-      ::grpc::Service::MarkMethodGeneric(5);
-    }
-    ~WithGenericMethod_Checkout() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status Checkout(::grpc::ServerContext* /*context*/, const ::inventory::CheckoutRequest* /*request*/, ::inventory::CheckoutResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -662,23 +662,43 @@ class InventoryService final {
     }
   };
   template <class BaseClass>
-  class WithRawMethod_RestockItems : public BaseClass {
+  class WithRawMethod_RestockItemsOrder : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_RestockItems() {
+    WithRawMethod_RestockItemsOrder() {
       ::grpc::Service::MarkMethodRaw(3);
     }
-    ~WithRawMethod_RestockItems() override {
+    ~WithRawMethod_RestockItemsOrder() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RestockItems(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsRequest* /*request*/, ::inventory::RestockItemsResponse* /*response*/) override {
+    ::grpc::Status RestockItemsOrder(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsOrderRequest* /*request*/, ::inventory::RestockItemsOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestRestockItems(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestRestockItemsOrder(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_ProcessCustomerOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_ProcessCustomerOrder() {
+      ::grpc::Service::MarkMethodRaw(4);
+    }
+    ~WithRawMethod_ProcessCustomerOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ProcessCustomerOrder(::grpc::ServerContext* /*context*/, const ::inventory::ProcessCustomerOrderRequest* /*request*/, ::inventory::ProcessCustomerOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestProcessCustomerOrder(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -687,7 +707,7 @@ class InventoryService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_ReportJobStatus() {
-      ::grpc::Service::MarkMethodRaw(4);
+      ::grpc::Service::MarkMethodRaw(5);
     }
     ~WithRawMethod_ReportJobStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -698,26 +718,6 @@ class InventoryService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestReportJobStatus(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithRawMethod_Checkout : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawMethod_Checkout() {
-      ::grpc::Service::MarkMethodRaw(5);
-    }
-    ~WithRawMethod_Checkout() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status Checkout(::grpc::ServerContext* /*context*/, const ::inventory::CheckoutRequest* /*request*/, ::inventory::CheckoutResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestCheckout(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -788,25 +788,47 @@ class InventoryService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_RestockItems : public BaseClass {
+  class WithRawCallbackMethod_RestockItemsOrder : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_RestockItems() {
+    WithRawCallbackMethod_RestockItemsOrder() {
       ::grpc::Service::MarkMethodRawCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RestockItems(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RestockItemsOrder(context, request, response); }));
     }
-    ~WithRawCallbackMethod_RestockItems() override {
+    ~WithRawCallbackMethod_RestockItemsOrder() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status RestockItems(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsRequest* /*request*/, ::inventory::RestockItemsResponse* /*response*/) override {
+    ::grpc::Status RestockItemsOrder(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsOrderRequest* /*request*/, ::inventory::RestockItemsOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* RestockItems(
+    virtual ::grpc::ServerUnaryReactor* RestockItemsOrder(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_ProcessCustomerOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_ProcessCustomerOrder() {
+      ::grpc::Service::MarkMethodRawCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ProcessCustomerOrder(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_ProcessCustomerOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ProcessCustomerOrder(::grpc::ServerContext* /*context*/, const ::inventory::ProcessCustomerOrderRequest* /*request*/, ::inventory::ProcessCustomerOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* ProcessCustomerOrder(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -815,7 +837,7 @@ class InventoryService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_ReportJobStatus() {
-      ::grpc::Service::MarkMethodRawCallback(4,
+      ::grpc::Service::MarkMethodRawCallback(5,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ReportJobStatus(context, request, response); }));
@@ -829,28 +851,6 @@ class InventoryService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* ReportJobStatus(
-      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
-  };
-  template <class BaseClass>
-  class WithRawCallbackMethod_Checkout : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawCallbackMethod_Checkout() {
-      ::grpc::Service::MarkMethodRawCallback(5,
-          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->Checkout(context, request, response); }));
-    }
-    ~WithRawCallbackMethod_Checkout() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status Checkout(::grpc::ServerContext* /*context*/, const ::inventory::CheckoutRequest* /*request*/, ::inventory::CheckoutResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* Checkout(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -935,31 +935,58 @@ class InventoryService final {
     virtual ::grpc::Status StreamedReleaseItems(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::inventory::ReleaseItemsRequest,::inventory::ReleaseItemsResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_RestockItems : public BaseClass {
+  class WithStreamedUnaryMethod_RestockItemsOrder : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_RestockItems() {
+    WithStreamedUnaryMethod_RestockItemsOrder() {
       ::grpc::Service::MarkMethodStreamed(3,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::inventory::RestockItemsRequest, ::inventory::RestockItemsResponse>(
+          ::inventory::RestockItemsOrderRequest, ::inventory::RestockItemsOrderResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::inventory::RestockItemsRequest, ::inventory::RestockItemsResponse>* streamer) {
-                       return this->StreamedRestockItems(context,
+                     ::inventory::RestockItemsOrderRequest, ::inventory::RestockItemsOrderResponse>* streamer) {
+                       return this->StreamedRestockItemsOrder(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_RestockItems() override {
+    ~WithStreamedUnaryMethod_RestockItemsOrder() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status RestockItems(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsRequest* /*request*/, ::inventory::RestockItemsResponse* /*response*/) override {
+    ::grpc::Status RestockItemsOrder(::grpc::ServerContext* /*context*/, const ::inventory::RestockItemsOrderRequest* /*request*/, ::inventory::RestockItemsOrderResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedRestockItems(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::inventory::RestockItemsRequest,::inventory::RestockItemsResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedRestockItemsOrder(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::inventory::RestockItemsOrderRequest,::inventory::RestockItemsOrderResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_ProcessCustomerOrder : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_ProcessCustomerOrder() {
+      ::grpc::Service::MarkMethodStreamed(4,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::inventory::ProcessCustomerOrderRequest, ::inventory::ProcessCustomerOrderResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::inventory::ProcessCustomerOrderRequest, ::inventory::ProcessCustomerOrderResponse>* streamer) {
+                       return this->StreamedProcessCustomerOrder(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_ProcessCustomerOrder() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status ProcessCustomerOrder(::grpc::ServerContext* /*context*/, const ::inventory::ProcessCustomerOrderRequest* /*request*/, ::inventory::ProcessCustomerOrderResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedProcessCustomerOrder(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::inventory::ProcessCustomerOrderRequest,::inventory::ProcessCustomerOrderResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_ReportJobStatus : public BaseClass {
@@ -967,7 +994,7 @@ class InventoryService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_ReportJobStatus() {
-      ::grpc::Service::MarkMethodStreamed(4,
+      ::grpc::Service::MarkMethodStreamed(5,
         new ::grpc::internal::StreamedUnaryHandler<
           ::inventory::ReportJobStatusRequest, ::inventory::ReportJobStatusResponse>(
             [this](::grpc::ServerContext* context,
@@ -988,36 +1015,9 @@ class InventoryService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedReportJobStatus(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::inventory::ReportJobStatusRequest,::inventory::ReportJobStatusResponse>* server_unary_streamer) = 0;
   };
-  template <class BaseClass>
-  class WithStreamedUnaryMethod_Checkout : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithStreamedUnaryMethod_Checkout() {
-      ::grpc::Service::MarkMethodStreamed(5,
-        new ::grpc::internal::StreamedUnaryHandler<
-          ::inventory::CheckoutRequest, ::inventory::CheckoutResponse>(
-            [this](::grpc::ServerContext* context,
-                   ::grpc::ServerUnaryStreamer<
-                     ::inventory::CheckoutRequest, ::inventory::CheckoutResponse>* streamer) {
-                       return this->StreamedCheckout(context,
-                         streamer);
-                  }));
-    }
-    ~WithStreamedUnaryMethod_Checkout() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable regular version of this method
-    ::grpc::Status Checkout(::grpc::ServerContext* /*context*/, const ::inventory::CheckoutRequest* /*request*/, ::inventory::CheckoutResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedCheckout(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::inventory::CheckoutRequest,::inventory::CheckoutResponse>* server_unary_streamer) = 0;
-  };
-  typedef WithStreamedUnaryMethod_CheckAvailability<WithStreamedUnaryMethod_ReserveItems<WithStreamedUnaryMethod_ReleaseItems<WithStreamedUnaryMethod_RestockItems<WithStreamedUnaryMethod_ReportJobStatus<WithStreamedUnaryMethod_Checkout<Service > > > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_CheckAvailability<WithStreamedUnaryMethod_ReserveItems<WithStreamedUnaryMethod_ReleaseItems<WithStreamedUnaryMethod_RestockItemsOrder<WithStreamedUnaryMethod_ProcessCustomerOrder<WithStreamedUnaryMethod_ReportJobStatus<Service > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_CheckAvailability<WithStreamedUnaryMethod_ReserveItems<WithStreamedUnaryMethod_ReleaseItems<WithStreamedUnaryMethod_RestockItems<WithStreamedUnaryMethod_ReportJobStatus<WithStreamedUnaryMethod_Checkout<Service > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_CheckAvailability<WithStreamedUnaryMethod_ReserveItems<WithStreamedUnaryMethod_ReleaseItems<WithStreamedUnaryMethod_RestockItemsOrder<WithStreamedUnaryMethod_ProcessCustomerOrder<WithStreamedUnaryMethod_ReportJobStatus<Service > > > > > > StreamedService;
 };
 
 }  // namespace inventory

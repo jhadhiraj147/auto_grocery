@@ -11,9 +11,9 @@ import (
 	pb "auto_grocery/ordering/proto"
 )
 
+// NewRouter wires all HTTP routes, middleware, and handler dependencies for ordering service APIs.
 func NewRouter(
 	clientStore *store.ClientStore,
-	truckStore *store.TruckStore,
 	orderStore *store.OrderStore,
 	restockStore *store.RestockStore,
 	inventoryClient pb.InventoryServiceClient,
@@ -22,23 +22,34 @@ func NewRouter(
 
 	mux := http.NewServeMux()
 
+	// --- Client API ---
 	mux.Handle("POST /api/client/register", &client.RegisterHandler{Store: clientStore})
 	mux.Handle("POST /api/client/login", &client.LoginHandler{Store: clientStore})
 	mux.Handle("POST /api/client/refresh", &client.RefreshHandler{Store: clientStore})
 
-	mux.Handle("POST /api/truck/register", &truck.RegisterHandler{TruckStore: truckStore})
+	// --- Truck API ---
 	mux.Handle("POST /api/truck/restock", &truck.RestockHandler{
-		TruckStore:      truckStore,
 		RestockStore:    restockStore,
 		InventoryClient: inventoryClient,
 	})
+	mux.Handle("GET /api/truck/restock/status", &truck.RestockStatusHandler{
+		RestockStore: restockStore,
+	})
 
-	webhookHandler := &client.WebhookHandler{
+	// --- Internal Webhooks (Protected by X-Internal-Secret) ---
+	clientWebhook := &client.WebhookHandler{
 		OrderStore: orderStore,
 		Analytics:  analyticsPub,
 	}
-	mux.Handle("POST /internal/webhook/update-order", auth.InternalMiddleware(webhookHandler))
+	mux.Handle("POST /internal/webhook/update-order", auth.InternalMiddleware(clientWebhook))
 
+	truckWebhook := &truck.WebhookHandler{
+		RestockStore: restockStore,
+		Analytics:    analyticsPub,
+	}
+	mux.Handle("POST /internal/webhook/update-restock", auth.InternalMiddleware(truckWebhook))
+
+	// --- Protected Client Routes (Requires JWT) ---
 	protected := func(h http.Handler) http.Handler {
 		return auth.AuthMiddleware(h)
 	}

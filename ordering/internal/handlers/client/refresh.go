@@ -13,6 +13,7 @@ type RefreshHandler struct {
 	Store *store.ClientStore
 }
 
+// ServeHTTP validates a refresh token and issues a new access token.
 func (h *RefreshHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
@@ -21,20 +22,17 @@ func (h *RefreshHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	tokenString := strings.Split(authHeader, " ")[1]
 
-
 	claims, err := auth.ValidateToken(tokenString)
 	if err != nil {
 		http.Error(w, "Invalid Token", http.StatusUnauthorized)
 		return
 	}
 
-
 	if claims.TokenType != "REFRESH" {
 		http.Error(w, "Invalid Token Type", http.StatusUnauthorized)
 		return
 	}
 
-	
 	newAccessToken, _ := auth.GenerateAccessToken(claims.UserID, claims.Role)
 
 	json.NewEncoder(w).Encode(map[string]string{

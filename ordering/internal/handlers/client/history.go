@@ -1,16 +1,17 @@
 package client
 
 import (
-	"encoding/json"
-	"net/http"
 	"auto_grocery/ordering/internal/auth"
 	"auto_grocery/ordering/internal/store"
+	"encoding/json"
+	"net/http"
 )
 
 type HistoryHandler struct {
 	OrderStore *store.OrderStore
 }
 
+// ServeHTTP returns historical orders for the authenticated client.
 func (h *HistoryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	userID, ok := r.Context().Value(auth.UserKey).(int)
 	if !ok {

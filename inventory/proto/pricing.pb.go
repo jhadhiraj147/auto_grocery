@@ -4,7 +4,7 @@
 // 	protoc        v6.33.4
 // source: inventory/proto/pricing.proto
 
-package proto
+package inventorypb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -71,7 +71,7 @@ type GetPriceResponse struct {
 	Sku           string                 `protobuf:"bytes,2,opt,name=sku,proto3" json:"sku,omitempty"`
 	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	Brand         string                 `protobuf:"bytes,4,opt,name=brand,proto3" json:"brand,omitempty"`
-	UnitPrice     float64                `protobuf:"fixed64,5,opt,name=unit_price,json=unitPrice,proto3" json:"unit_price,omitempty"` // Changed to double
+	UnitPrice     float64                `protobuf:"fixed64,5,opt,name=unit_price,json=unitPrice,proto3" json:"unit_price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -146,7 +146,7 @@ type CreateItemRequest struct {
 	Sku           string                 `protobuf:"bytes,1,opt,name=sku,proto3" json:"sku,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Brand         string                 `protobuf:"bytes,3,opt,name=brand,proto3" json:"brand,omitempty"`
-	UnitPrice     float64                `protobuf:"fixed64,4,opt,name=unit_price,json=unitPrice,proto3" json:"unit_price,omitempty"` // Changed to double
+	UnitPrice     float64                `protobuf:"fixed64,4,opt,name=unit_price,json=unitPrice,proto3" json:"unit_price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -353,9 +353,9 @@ type LineItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Sku           string                 `protobuf:"bytes,1,opt,name=sku,proto3" json:"sku,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	UnitPrice     float64                `protobuf:"fixed64,3,opt,name=unit_price,json=unitPrice,proto3" json:"unit_price,omitempty"` // Changed to double
+	UnitPrice     float64                `protobuf:"fixed64,3,opt,name=unit_price,json=unitPrice,proto3" json:"unit_price,omitempty"`
 	Quantity      int32                  `protobuf:"varint,4,opt,name=quantity,proto3" json:"quantity,omitempty"`
-	TotalPrice    float64                `protobuf:"fixed64,5,opt,name=total_price,json=totalPrice,proto3" json:"total_price,omitempty"` // Changed to double
+	TotalPrice    float64                `protobuf:"fixed64,5,opt,name=total_price,json=totalPrice,proto3" json:"total_price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -428,7 +428,7 @@ func (x *LineItem) GetTotalPrice() float64 {
 type CalculateBillResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Items         []*LineItem            `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
-	GrandTotal    float64                `protobuf:"fixed64,2,opt,name=grand_total,json=grandTotal,proto3" json:"grand_total,omitempty"` // Changed to double
+	GrandTotal    float64                `protobuf:"fixed64,2,opt,name=grand_total,json=grandTotal,proto3" json:"grand_total,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -477,6 +477,162 @@ func (x *CalculateBillResponse) GetGrandTotal() float64 {
 	return 0
 }
 
+type StockMetric struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Sku           string                 `protobuf:"bytes,1,opt,name=sku,proto3" json:"sku,omitempty"`
+	Quantity      int32                  `protobuf:"varint,2,opt,name=quantity,proto3" json:"quantity,omitempty"`
+	UnitCost      float64                `protobuf:"fixed64,3,opt,name=unit_cost,json=unitCost,proto3" json:"unit_cost,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *StockMetric) Reset() {
+	*x = StockMetric{}
+	mi := &file_inventory_proto_pricing_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StockMetric) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StockMetric) ProtoMessage() {}
+
+func (x *StockMetric) ProtoReflect() protoreflect.Message {
+	mi := &file_inventory_proto_pricing_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StockMetric.ProtoReflect.Descriptor instead.
+func (*StockMetric) Descriptor() ([]byte, []int) {
+	return file_inventory_proto_pricing_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *StockMetric) GetSku() string {
+	if x != nil {
+		return x.Sku
+	}
+	return ""
+}
+
+func (x *StockMetric) GetQuantity() int32 {
+	if x != nil {
+		return x.Quantity
+	}
+	return 0
+}
+
+func (x *StockMetric) GetUnitCost() float64 {
+	if x != nil {
+		return x.UnitCost
+	}
+	return 0
+}
+
+type UpdateStockMetricsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Updates       []*StockMetric         `protobuf:"bytes,1,rep,name=updates,proto3" json:"updates,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateStockMetricsRequest) Reset() {
+	*x = UpdateStockMetricsRequest{}
+	mi := &file_inventory_proto_pricing_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateStockMetricsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateStockMetricsRequest) ProtoMessage() {}
+
+func (x *UpdateStockMetricsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_inventory_proto_pricing_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateStockMetricsRequest.ProtoReflect.Descriptor instead.
+func (*UpdateStockMetricsRequest) Descriptor() ([]byte, []int) {
+	return file_inventory_proto_pricing_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *UpdateStockMetricsRequest) GetUpdates() []*StockMetric {
+	if x != nil {
+		return x.Updates
+	}
+	return nil
+}
+
+type UpdateStockMetricsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	UpdatedCount  int32                  `protobuf:"varint,2,opt,name=updated_count,json=updatedCount,proto3" json:"updated_count,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateStockMetricsResponse) Reset() {
+	*x = UpdateStockMetricsResponse{}
+	mi := &file_inventory_proto_pricing_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateStockMetricsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateStockMetricsResponse) ProtoMessage() {}
+
+func (x *UpdateStockMetricsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_inventory_proto_pricing_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateStockMetricsResponse.ProtoReflect.Descriptor instead.
+func (*UpdateStockMetricsResponse) Descriptor() ([]byte, []int) {
+	return file_inventory_proto_pricing_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *UpdateStockMetricsResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *UpdateStockMetricsResponse) GetUpdatedCount() int32 {
+	if x != nil {
+		return x.UpdatedCount
+	}
+	return 0
+}
+
 var File_inventory_proto_pricing_proto protoreflect.FileDescriptor
 
 const file_inventory_proto_pricing_proto_rawDesc = "" +
@@ -515,12 +671,22 @@ const file_inventory_proto_pricing_proto_rawDesc = "" +
 	"\x15CalculateBillResponse\x12'\n" +
 	"\x05items\x18\x01 \x03(\v2\x11.pricing.LineItemR\x05items\x12\x1f\n" +
 	"\vgrand_total\x18\x02 \x01(\x01R\n" +
-	"grandTotal2\xe8\x01\n" +
+	"grandTotal\"X\n" +
+	"\vStockMetric\x12\x10\n" +
+	"\x03sku\x18\x01 \x01(\tR\x03sku\x12\x1a\n" +
+	"\bquantity\x18\x02 \x01(\x05R\bquantity\x12\x1b\n" +
+	"\tunit_cost\x18\x03 \x01(\x01R\bunitCost\"K\n" +
+	"\x19UpdateStockMetricsRequest\x12.\n" +
+	"\aupdates\x18\x01 \x03(\v2\x14.pricing.StockMetricR\aupdates\"[\n" +
+	"\x1aUpdateStockMetricsResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12#\n" +
+	"\rupdated_count\x18\x02 \x01(\x05R\fupdatedCount2\xc7\x02\n" +
 	"\x0ePricingService\x12?\n" +
 	"\bGetPrice\x12\x18.pricing.GetPriceRequest\x1a\x19.pricing.GetPriceResponse\x12E\n" +
 	"\n" +
 	"CreateItem\x12\x1a.pricing.CreateItemRequest\x1a\x1b.pricing.CreateItemResponse\x12N\n" +
-	"\rCalculateBill\x12\x1d.pricing.CalculateBillRequest\x1a\x1e.pricing.CalculateBillResponseB\x1eZ\x1cauto_grocery/inventory/protob\x06proto3"
+	"\rCalculateBill\x12\x1d.pricing.CalculateBillRequest\x1a\x1e.pricing.CalculateBillResponse\x12]\n" +
+	"\x12UpdateStockMetrics\x12\".pricing.UpdateStockMetricsRequest\x1a#.pricing.UpdateStockMetricsResponseB*Z(auto_grocery/inventory/proto;inventorypbb\x06proto3"
 
 var (
 	file_inventory_proto_pricing_proto_rawDescOnce sync.Once
@@ -534,31 +700,37 @@ func file_inventory_proto_pricing_proto_rawDescGZIP() []byte {
 	return file_inventory_proto_pricing_proto_rawDescData
 }
 
-var file_inventory_proto_pricing_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_inventory_proto_pricing_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_inventory_proto_pricing_proto_goTypes = []any{
-	(*GetPriceRequest)(nil),       // 0: pricing.GetPriceRequest
-	(*GetPriceResponse)(nil),      // 1: pricing.GetPriceResponse
-	(*CreateItemRequest)(nil),     // 2: pricing.CreateItemRequest
-	(*CreateItemResponse)(nil),    // 3: pricing.CreateItemResponse
-	(*CartItem)(nil),              // 4: pricing.CartItem
-	(*CalculateBillRequest)(nil),  // 5: pricing.CalculateBillRequest
-	(*LineItem)(nil),              // 6: pricing.LineItem
-	(*CalculateBillResponse)(nil), // 7: pricing.CalculateBillResponse
+	(*GetPriceRequest)(nil),            // 0: pricing.GetPriceRequest
+	(*GetPriceResponse)(nil),           // 1: pricing.GetPriceResponse
+	(*CreateItemRequest)(nil),          // 2: pricing.CreateItemRequest
+	(*CreateItemResponse)(nil),         // 3: pricing.CreateItemResponse
+	(*CartItem)(nil),                   // 4: pricing.CartItem
+	(*CalculateBillRequest)(nil),       // 5: pricing.CalculateBillRequest
+	(*LineItem)(nil),                   // 6: pricing.LineItem
+	(*CalculateBillResponse)(nil),      // 7: pricing.CalculateBillResponse
+	(*StockMetric)(nil),                // 8: pricing.StockMetric
+	(*UpdateStockMetricsRequest)(nil),  // 9: pricing.UpdateStockMetricsRequest
+	(*UpdateStockMetricsResponse)(nil), // 10: pricing.UpdateStockMetricsResponse
 }
 var file_inventory_proto_pricing_proto_depIdxs = []int32{
-	4, // 0: pricing.CalculateBillRequest.items:type_name -> pricing.CartItem
-	6, // 1: pricing.CalculateBillResponse.items:type_name -> pricing.LineItem
-	0, // 2: pricing.PricingService.GetPrice:input_type -> pricing.GetPriceRequest
-	2, // 3: pricing.PricingService.CreateItem:input_type -> pricing.CreateItemRequest
-	5, // 4: pricing.PricingService.CalculateBill:input_type -> pricing.CalculateBillRequest
-	1, // 5: pricing.PricingService.GetPrice:output_type -> pricing.GetPriceResponse
-	3, // 6: pricing.PricingService.CreateItem:output_type -> pricing.CreateItemResponse
-	7, // 7: pricing.PricingService.CalculateBill:output_type -> pricing.CalculateBillResponse
-	5, // [5:8] is the sub-list for method output_type
-	2, // [2:5] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	4,  // 0: pricing.CalculateBillRequest.items:type_name -> pricing.CartItem
+	6,  // 1: pricing.CalculateBillResponse.items:type_name -> pricing.LineItem
+	8,  // 2: pricing.UpdateStockMetricsRequest.updates:type_name -> pricing.StockMetric
+	0,  // 3: pricing.PricingService.GetPrice:input_type -> pricing.GetPriceRequest
+	2,  // 4: pricing.PricingService.CreateItem:input_type -> pricing.CreateItemRequest
+	5,  // 5: pricing.PricingService.CalculateBill:input_type -> pricing.CalculateBillRequest
+	9,  // 6: pricing.PricingService.UpdateStockMetrics:input_type -> pricing.UpdateStockMetricsRequest
+	1,  // 7: pricing.PricingService.GetPrice:output_type -> pricing.GetPriceResponse
+	3,  // 8: pricing.PricingService.CreateItem:output_type -> pricing.CreateItemResponse
+	7,  // 9: pricing.PricingService.CalculateBill:output_type -> pricing.CalculateBillResponse
+	10, // 10: pricing.PricingService.UpdateStockMetrics:output_type -> pricing.UpdateStockMetricsResponse
+	7,  // [7:11] is the sub-list for method output_type
+	3,  // [3:7] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_inventory_proto_pricing_proto_init() }
@@ -572,7 +744,7 @@ func file_inventory_proto_pricing_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_inventory_proto_pricing_proto_rawDesc), len(file_inventory_proto_pricing_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -1,0 +1,167 @@
+INVENTORY MICROSERVICE — THOROUGH HIGH-LEVEL GUIDE
+===================================================
+
+1) SERVICE PURPOSE
+------------------
+Inventory is the execution backbone. It manages stock reservations, robot dispatch,
+robot progress tracking, finalization, and pricing/order callbacks.
+
+It exposes gRPC methods consumed by Ordering and Robot workers.
+
+
+2) PROCESS + ENTRYPOINT
+-----------------------
+Entrypoint:
+- inventory/cmd/inventory/main.go
+
+Startup flow:
+1. Load inventory/.env
+2. Connect PostgreSQL (available_stock)
+3. Connect Redis DB0 + DB1 and ping (fail-fast)
+4. Bind ZMQ publisher for robot commands (ROBOT_ZMQ_BIND_ADDR)
+5. Connect gRPC client to Pricing (PRICING_GRPC_ADDR)
+6. Build handler with webhook URLs
+7. Start gRPC server (INVENTORY_GRPC_ADDR)
+
+Defaults:
+- gRPC listen: :50051
+- Robot ZMQ PUB: tcp://*:5556
+- Pricing gRPC target: localhost:50052
+- Order webhook URL: http://localhost:5050/internal/webhook/update-order
+- Restock webhook URL: http://localhost:5050/internal/webhook/update-restock
+
+
+3) EXPOSED gRPC METHODS
+-----------------------
+Defined in inventory/proto/inventory.proto and implemented in internal/handler/grpc.go
+
+- CheckAvailability(CheckAvailabilityRequest)
+  Input: list of SKUs
+  Output: map sku -> stock level
+  Behavior: read-only DB lookup
+
+- ReserveItems(ReserveItemsRequest)
+  Input: order_id + map sku->qty
+  Output: success/error_message
+  Behavior:
+  - atomic reserve in Postgres
+  - all-or-nothing semantics; partial reserve rolls back
+
+- ReleaseItems(ReleaseItemsRequest)
+  Input: order_id + map sku->qty
+  Behavior: returns quantities to stock
+
+- ProcessCustomerOrder(ProcessCustomerOrderRequest)
+  Input: order_id + map sku->qty
+  Behavior:
+  - cache order items in Redis DB0
+  - enrich items with aisle from DB
+  - broadcast robot tasks over ZMQ (order_type=CUSTOMER)
+
+- RestockItemsOrder(RestockItemsOrderRequest)
+  Input: order_id + list of restock item structs
+  Behavior:
+  - cache restock payload in Redis DB1
+  - broadcast robot tasks over ZMQ (order_type=RESTOCK)
+
+- ReportJobStatus(ReportJobStatusRequest)
+  Input: order_id, order_type, status, processed_items
+  Behavior:
+  - increment completion counter in Redis
+  - when threshold reached (>=5): finalize once via SETNX guard
+
+
+4) STORAGE MODEL
+----------------
+PostgreSQL table:
+- available_stock
+
+Key stock operations:
+- ReserveStock: transactional decrement via SQL CTE + row locks
+- ReleaseStock: batch increment
+- UpsertStock: increment quantity on conflict, update unit_cost/name
+- GetBatchItems: used for availability and aisle lookup
+
+Redis usage:
+- DB0 (client orders): order items + robot count + finalized key
+- DB1 (restock orders): restock items + robot count + finalized key
+
+Finalization guard:
+- TryMarkOrderFinalized uses SETNX so webhook and billing execute only once
+
+
+5) SECURITY MODEL
+-----------------
+- Internal webhook calls include X-Internal-Secret from env INTERNAL_SECRET
+- gRPC currently runs insecure transport (local/trusted network assumption)
+- Redis auth uses REDIS_PW; startup pings and fails on auth/connect errors
+
+
+6) CROSS-SERVICE CONNECTIVITY
+-----------------------------
+Incoming:
+- Ordering -> Inventory gRPC
+- Robots -> Inventory gRPC (ReportJobStatus)
+
+Outgoing:
+- Inventory -> Pricing gRPC (CalculateBill, UpdateStockMetrics)
+- Inventory -> Ordering internal webhook HTTP callbacks
+- Inventory -> Robots ZMQ PUB broadcast
+
+
+7) FINALIZATION LOGIC (IMPORTANT)
+---------------------------------
+A) Client order finalization
+- Load order items from Redis DB0
+- Call Pricing CalculateBill
+- POST webhook to Ordering /internal/webhook/update-order with total_price
+- Delete Redis transient keys
+
+B) Restock finalization
+- Load restock items from Redis DB1
+- Upsert available_stock rows
+- Build pricing stock metrics using current total quantity + latest unit cost
+- Async call Pricing UpdateStockMetrics
+- POST webhook to Ordering /internal/webhook/update-restock with total_cost
+- Delete Redis transient keys
+
+
+8) DRY RUN EXAMPLES
+-------------------
+ReserveItems dry run:
+Input:
+- order_id: "abc"
+- items: {"SKU1":2,"SKU2":1}
+Expected:
+- if stock sufficient: success=true, DB quantities reduced
+- if insufficient: success=false, no net quantity change
+
+ProcessCustomerOrder dry run:
+- caches items in Redis DB0
+- resolves aisle map from DB
+- publishes ZMQ OrderBroadcast with order_type=CUSTOMER
+
+ReportJobStatus dry run:
+- each robot callback increments count
+- when count reaches threshold and SETNX passes:
+  - triggers one-time finalize flow
+
+
+9) FAILURE MODES
+----------------
+- Redis unavailable: service startup fails (by design)
+- Pricing unavailable: billing/metric update logs warnings/errors
+- Ordering webhook unavailable: completion callback fails and logs error
+- Missing stock SKUs: reserve returns insufficient stock
+
+
+10) DEMO CHECKLIST
+------------------
+- Listener: :50051 active
+- ZMQ PUB bind: :5556 active
+- Established sockets:
+  - ordering <-> inventory (50051)
+  - robot workers <-> inventory (5556)
+  - inventory <-> redis (6379)
+  - inventory <-> postgres (5432)
+  - inventory -> pricing (50052, after finalization paths)

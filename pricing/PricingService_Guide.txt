@@ -1,0 +1,132 @@
+PRICING MICROSERVICE — THOROUGH HIGH-LEVEL GUIDE
+=================================================
+
+1) SERVICE PURPOSE
+------------------
+Pricing owns SKU selling prices and bill calculation logic.
+It supports two operational modes:
+- Reactive updates from Inventory stock/cost metrics
+- On-demand bill calculation for customer carts
+
+
+2) PROCESS + ENTRYPOINT
+-----------------------
+Entrypoint:
+- pricing/cmd/pricing/main.go
+
+Startup sequence:
+1. Load pricing/.env
+2. Connect Postgres (DATABASE_URL)
+3. Build CatalogStore + PricingHandler
+4. Start gRPC server on PRICING_GRPC_ADDR (default :50052)
+
+
+3) EXPOSED gRPC METHODS
+-----------------------
+Defined in pricing/proto/pricing.proto
+
+- GetPrice(GetPriceRequest)
+  Returns latest stored unit_price for SKU.
+
+- CreateItem(CreateItemRequest)
+  Upsert-like create/update for a SKU price row.
+
+- CalculateBill(CalculateBillRequest)
+  Input: repeated cart items (sku, quantity)
+  Output: line items + grand_total
+  Behavior:
+  - batch fetch prices by SKU
+  - fail with NOT_FOUND if any SKU missing
+  - compute total as sum(unit_price * qty)
+
+- UpdateStockMetrics(UpdateStockMetricsRequest)
+  Input: repeated (sku, quantity, unit_cost)
+  Behavior:
+  - derive new selling price via pricing logic
+  - upsert each SKU in catalog
+  - continue on per-item failure and report updated_count
+
+
+4) PRICING LOGIC
+----------------
+In pricing/internal/logic/pricer.go
+
+CalculatePrice(costPrice, currentStock):
+- base margin = 1.20
+- if low stock (1..4): +0.15
+- if high stock (>100): -0.10
+- rounded to 2 decimal places
+
+Interpretation:
+- scarce stock increases margin
+- abundant stock decreases margin
+
+
+5) DATABASE MODEL
+-----------------
+Table: catalog
+Current effective columns used by service code:
+- id
+- sku (unique)
+- unit_price
+
+Store layer behavior (CatalogStore):
+- UpsertItem: INSERT ... ON CONFLICT(sku) DO UPDATE unit_price
+- GetItem: single SKU lookup
+- GetItemsBySKUs: batch lookup using ANY($1)
+
+
+6) SECURITY + TRANSPORT
+-----------------------
+- gRPC transport currently insecure (local trusted network)
+- No direct public auth middleware in this service
+- Security boundary is mainly network isolation and caller trust
+
+
+7) CROSS-SERVICE CONNECTIVITY
+-----------------------------
+Incoming calls:
+- Inventory -> Pricing (CalculateBill, UpdateStockMetrics)
+- Optional admin/seed callers -> CreateItem, GetPrice
+
+Outgoing calls:
+- None (Pricing is primarily a data+compute endpoint)
+
+
+8) DRY RUNS
+-----------
+A) UpdateStockMetrics dry run
+Input update row:
+- sku="MILK-1L", quantity=3, unit_cost=20.00
+Computation:
+- margin = 1.20 + 0.15 (low stock) = 1.35
+- new_price = 27.00
+Effect:
+- catalog upsert sku MILK-1L -> unit_price 27.00
+
+B) CalculateBill dry run
+Input cart:
+- [{sku:"MILK-1L", quantity:2}, {sku:"BREAD", quantity:1}]
+Behavior:
+- fetch prices for both skus
+- compute line totals and grand total
+Output:
+- line_items[] with unit_price and total_price
+- grand_total
+
+C) Missing SKU dry run
+- any missing SKU returns gRPC NOT_FOUND
+
+
+9) FAILURE MODES
+----------------
+- Postgres down: service startup fails
+- Catalog not seeded: CalculateBill may fail with NOT_FOUND
+- Partial update batch failures: method continues, updated_count < input size
+
+
+10) DEMO CHECKS
+---------------
+- Listener active on :50052
+- Established DB connection to :5432
+- Established gRPC connection from Inventory after finalize events

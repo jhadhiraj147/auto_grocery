@@ -2,6 +2,7 @@ package mq
 
 import (
 	"auto_grocery/inventory/fbs/RobotMessages"
+	"log"
 
 	flatbuffers "github.com/google/flatbuffers/go"
 	zmq "github.com/pebbe/zmq4"
@@ -16,23 +17,27 @@ type Publisher struct {
 	socket *zmq.Socket
 }
 
-func NewPublisher(port string) (*Publisher, error) {
+// NewPublisher creates and binds a ZeroMQ PUB socket on the requested port.
+func NewPublisher(bindAddr string) (*Publisher, error) {
 	sock, err := zmq.NewSocket(zmq.Type(zmq.PUB))
 	if err != nil {
 		return nil, err
 	}
-	addr := "tcp://*:" + port
-	if err := sock.Bind(addr); err != nil {
+	if err := sock.Bind(bindAddr); err != nil {
 		return nil, err
 	}
+	log.Printf("[inventory-pub] bound zmq publisher at %s", bindAddr)
 	return &Publisher{socket: sock}, nil
 }
 
-func (p *Publisher) SendRobotCommand(orderID string, items map[string]ItemDetails) error {
+// SendRobotCommand serializes and broadcasts robot commands for a specific order type.
+func (p *Publisher) SendRobotCommand(orderID string, orderType string, items map[string]ItemDetails) error {
+	log.Printf("[inventory-pub] building broadcast order=%s type=%s items=%d", orderID, orderType, len(items))
 	builder := flatbuffers.NewBuilder(1024)
 
 	var itemOffsets []flatbuffers.UOffsetT
 	for sku, detail := range items {
+		log.Printf("[inventory-pub] item order=%s sku=%s qty=%d aisle=%s", orderID, sku, detail.Quantity, detail.Aisle)
 		s := builder.CreateString(sku)
 		a := builder.CreateString(detail.Aisle)
 
@@ -50,8 +55,11 @@ func (p *Publisher) SendRobotCommand(orderID string, items map[string]ItemDetail
 	itemsVec := builder.EndVector(len(itemOffsets))
 
 	oid := builder.CreateString(orderID)
+	otype := builder.CreateString(orderType) // Create string for orderType
+
 	RobotMessages.OrderBroadcastStart(builder)
 	RobotMessages.OrderBroadcastAddOrderId(builder, oid)
+	RobotMessages.OrderBroadcastAddOrderType(builder, otype) // Add orderType to builder
 	RobotMessages.OrderBroadcastAddItems(builder, itemsVec)
 	order := RobotMessages.OrderBroadcastEnd(builder)
 
@@ -59,9 +67,15 @@ func (p *Publisher) SendRobotCommand(orderID string, items map[string]ItemDetail
 	payload := builder.FinishedBytes()
 
 	_, err := p.socket.SendBytes(payload, 0)
+	if err != nil {
+		log.Printf("[inventory-pub] send failed order=%s err=%v", orderID, err)
+		return err
+	}
+	log.Printf("[inventory-pub] broadcast sent order=%s bytes=%d", orderID, len(payload))
 	return err
 }
 
+// Close releases publisher socket resources.
 func (p *Publisher) Close() {
 	p.socket.Close()
 }

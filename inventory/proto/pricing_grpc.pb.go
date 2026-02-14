@@ -4,7 +4,7 @@
 // - protoc             v6.33.4
 // source: inventory/proto/pricing.proto
 
-package proto
+package inventorypb
 
 import (
 	context "context"
@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	PricingService_GetPrice_FullMethodName      = "/pricing.PricingService/GetPrice"
-	PricingService_CreateItem_FullMethodName    = "/pricing.PricingService/CreateItem"
-	PricingService_CalculateBill_FullMethodName = "/pricing.PricingService/CalculateBill"
+	PricingService_GetPrice_FullMethodName           = "/pricing.PricingService/GetPrice"
+	PricingService_CreateItem_FullMethodName         = "/pricing.PricingService/CreateItem"
+	PricingService_CalculateBill_FullMethodName      = "/pricing.PricingService/CalculateBill"
+	PricingService_UpdateStockMetrics_FullMethodName = "/pricing.PricingService/UpdateStockMetrics"
 )
 
 // PricingServiceClient is the client API for PricingService service.
@@ -31,6 +32,7 @@ type PricingServiceClient interface {
 	GetPrice(ctx context.Context, in *GetPriceRequest, opts ...grpc.CallOption) (*GetPriceResponse, error)
 	CreateItem(ctx context.Context, in *CreateItemRequest, opts ...grpc.CallOption) (*CreateItemResponse, error)
 	CalculateBill(ctx context.Context, in *CalculateBillRequest, opts ...grpc.CallOption) (*CalculateBillResponse, error)
+	UpdateStockMetrics(ctx context.Context, in *UpdateStockMetricsRequest, opts ...grpc.CallOption) (*UpdateStockMetricsResponse, error)
 }
 
 type pricingServiceClient struct {
@@ -71,6 +73,16 @@ func (c *pricingServiceClient) CalculateBill(ctx context.Context, in *CalculateB
 	return out, nil
 }
 
+func (c *pricingServiceClient) UpdateStockMetrics(ctx context.Context, in *UpdateStockMetricsRequest, opts ...grpc.CallOption) (*UpdateStockMetricsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateStockMetricsResponse)
+	err := c.cc.Invoke(ctx, PricingService_UpdateStockMetrics_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PricingServiceServer is the server API for PricingService service.
 // All implementations must embed UnimplementedPricingServiceServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type PricingServiceServer interface {
 	GetPrice(context.Context, *GetPriceRequest) (*GetPriceResponse, error)
 	CreateItem(context.Context, *CreateItemRequest) (*CreateItemResponse, error)
 	CalculateBill(context.Context, *CalculateBillRequest) (*CalculateBillResponse, error)
+	UpdateStockMetrics(context.Context, *UpdateStockMetricsRequest) (*UpdateStockMetricsResponse, error)
 	mustEmbedUnimplementedPricingServiceServer()
 }
 
@@ -96,6 +109,9 @@ func (UnimplementedPricingServiceServer) CreateItem(context.Context, *CreateItem
 }
 func (UnimplementedPricingServiceServer) CalculateBill(context.Context, *CalculateBillRequest) (*CalculateBillResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CalculateBill not implemented")
+}
+func (UnimplementedPricingServiceServer) UpdateStockMetrics(context.Context, *UpdateStockMetricsRequest) (*UpdateStockMetricsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateStockMetrics not implemented")
 }
 func (UnimplementedPricingServiceServer) mustEmbedUnimplementedPricingServiceServer() {}
 func (UnimplementedPricingServiceServer) testEmbeddedByValue()                        {}
@@ -172,6 +188,24 @@ func _PricingService_CalculateBill_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PricingService_UpdateStockMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStockMetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PricingServiceServer).UpdateStockMetrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PricingService_UpdateStockMetrics_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PricingServiceServer).UpdateStockMetrics(ctx, req.(*UpdateStockMetricsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PricingService_ServiceDesc is the grpc.ServiceDesc for PricingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +224,10 @@ var PricingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CalculateBill",
 			Handler:    _PricingService_CalculateBill_Handler,
+		},
+		{
+			MethodName: "UpdateStockMetrics",
+			Handler:    _PricingService_UpdateStockMetrics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -1,0 +1,122 @@
+ANALYTICS MICROSERVICE — THOROUGH HIGH-LEVEL GUIDE
+===================================================
+
+1) SERVICE PURPOSE
+------------------
+Analytics is a passive subscriber service (C++) that listens for order lifecycle
+metrics from Ordering and persists latency records into a CSV dataset.
+
+It is intended for observability/reporting, not request/response business logic.
+
+
+2) PROCESS + ENTRYPOINT
+-----------------------
+Entrypoint:
+- analytics/cmd/analytics/main.cpp
+Binary:
+- analytics/build/analytics_service
+
+Environment loading:
+- attempts ../.env and analytics/.env
+
+Env keys:
+- ANALYTICS_ZMQ_SUB_ADDR (default tcp://127.0.0.1:5557)
+- ANALYTICS_OUTPUT_CSV (default latency_data.csv)
+
+
+3) EXPOSED INTERFACES
+---------------------
+Analytics exposes no HTTP/gRPC endpoints.
+It is a consumer process with:
+
+Input:
+- ZeroMQ SUB to Ordering analytics publisher address
+
+Output:
+- Appends records to CSV file
+
+
+4) MESSAGE CONTRACT
+-------------------
+FlatBuffer schema (analytics/fbs/analytics.fbs):
+- OrderMetric
+  - order_id (string)
+  - status (string)
+  - duration_seconds (double)
+  - timestamp (long, unix epoch)
+
+Publisher side:
+- Ordering service serializes OrderMetric via FlatBuffers
+- publishes over ZMQ PUB socket (default tcp://*:5557)
+
+Subscriber side:
+- Analytics parses incoming bytes as OrderMetric and writes CSV row
+
+
+5) DATA PERSISTENCE MODEL
+-------------------------
+Storage type:
+- append-only CSV (not database)
+
+Output path:
+- ANALYTICS_OUTPUT_CSV
+
+CSV columns:
+- order_id,status,duration_seconds,timestamp
+
+File behavior:
+- if file is empty, header is written once
+- each message appends one line
+
+
+6) SECURITY + RELIABILITY NOTES
+-------------------------------
+- No auth or encryption at transport layer by default
+- Assumes trusted internal network/local machine
+- Process loops indefinitely; no batch checkpointing
+- If process exits unexpectedly, prior CSV writes remain durable
+
+
+7) CONNECTIVITY MATRIX
+----------------------
+Depends on:
+- Ordering analytics ZMQ publisher (:5557 by default)
+
+No dependency on:
+- PostgreSQL
+- Redis
+- gRPC services
+
+
+8) DRY RUN
+----------
+Given incoming metric payload:
+- order_id = "e7f..."
+- status = "COMPLETED"
+- duration_seconds = 42.73
+- timestamp = 1739500000
+
+Analytics behavior:
+1. Parse metric from FlatBuffer message
+2. Append row:
+   e7f...,COMPLETED,42.73,1739500000
+3. Print console log: Logged Order ... | Latency ...
+
+
+9) OPERATIONS CHECKLIST
+-----------------------
+- Build with cmake in analytics/build
+- Start binary:
+  ./analytics_service
+- Ensure ordering service is also running and bound to analytics ZMQ publisher address
+- Verify connectivity:
+  lsof -nP -iTCP:5557 -sTCP:ESTABLISHED
+- Verify output:
+  tail -f <ANALYTICS_OUTPUT_CSV>
+
+
+10) COMMON FAILURES
+-------------------
+- Wrong ANALYTICS_ZMQ_SUB_ADDR -> no incoming metrics
+- File permission issue on output path -> CSV write failures
+- Ordering publisher not running -> subscriber idle (no data)

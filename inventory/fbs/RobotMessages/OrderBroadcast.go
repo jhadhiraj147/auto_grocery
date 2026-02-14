@@ -49,8 +49,16 @@ func (rcv *OrderBroadcast) OrderId() []byte {
 	return nil
 }
 
-func (rcv *OrderBroadcast) Items(obj *Item, j int) bool {
+func (rcv *OrderBroadcast) OrderType() []byte {
 	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
+	if o != 0 {
+		return rcv._tab.ByteVector(o + rcv._tab.Pos)
+	}
+	return nil
+}
+
+func (rcv *OrderBroadcast) Items(obj *Item, j int) bool {
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
 		x := rcv._tab.Vector(o)
 		x += flatbuffers.UOffsetT(j) * 4
@@ -62,7 +70,7 @@ func (rcv *OrderBroadcast) Items(obj *Item, j int) bool {
 }
 
 func (rcv *OrderBroadcast) ItemsLength() int {
-	o := flatbuffers.UOffsetT(rcv._tab.Offset(6))
+	o := flatbuffers.UOffsetT(rcv._tab.Offset(8))
 	if o != 0 {
 		return rcv._tab.VectorLen(o)
 	}
@@ -70,13 +78,16 @@ func (rcv *OrderBroadcast) ItemsLength() int {
 }
 
 func OrderBroadcastStart(builder *flatbuffers.Builder) {
-	builder.StartObject(2)
+	builder.StartObject(3)
 }
 func OrderBroadcastAddOrderId(builder *flatbuffers.Builder, orderId flatbuffers.UOffsetT) {
 	builder.PrependUOffsetTSlot(0, flatbuffers.UOffsetT(orderId), 0)
 }
+func OrderBroadcastAddOrderType(builder *flatbuffers.Builder, orderType flatbuffers.UOffsetT) {
+	builder.PrependUOffsetTSlot(1, flatbuffers.UOffsetT(orderType), 0)
+}
 func OrderBroadcastAddItems(builder *flatbuffers.Builder, items flatbuffers.UOffsetT) {
-	builder.PrependUOffsetTSlot(1, flatbuffers.UOffsetT(items), 0)
+	builder.PrependUOffsetTSlot(2, flatbuffers.UOffsetT(items), 0)
 }
 func OrderBroadcastStartItemsVector(builder *flatbuffers.Builder, numElems int) flatbuffers.UOffsetT {
 	return builder.StartVector(4, numElems, 4)

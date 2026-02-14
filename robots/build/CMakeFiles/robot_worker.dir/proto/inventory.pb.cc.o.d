@@ -1045,6 +1045,7 @@ CMakeFiles/robot_worker.dir/proto/inventory.pb.cc.o: \
   /opt/homebrew/include/google/protobuf/map_type_handler.h \
   /opt/homebrew/include/google/protobuf/map_entry.h \
   /opt/homebrew/include/google/protobuf/map_field.h \
+  /opt/homebrew/include/google/protobuf/timestamp.pb.h \
   /opt/homebrew/include/google/protobuf/generated_message_tctable_impl.h \
   /opt/homebrew/include/absl/status/status.h \
   /opt/homebrew/include/absl/status/internal/status_internal.h \

@@ -27,10 +27,12 @@ type OrderStore struct {
 	db *sql.DB
 }
 
+// NewOrderStore constructs an order store backed by postgres.
 func NewOrderStore(db *sql.DB) *OrderStore {
 	return &OrderStore{db: db}
 }
 
+// CreateGroceryOrder writes an order header and item rows in a single transaction.
 func (s *OrderStore) CreateGroceryOrder(ctx context.Context, order GroceryOrder, items []GroceryOrderItem) error {
 	tx, err := s.db.BeginTx(ctx, nil)
 	if err != nil {
@@ -72,6 +74,7 @@ func (s *OrderStore) CreateGroceryOrder(ctx context.Context, order GroceryOrder,
 	return tx.Commit()
 }
 
+// GetOrdersByClientID returns all orders for a given client.
 func (s *OrderStore) GetOrdersByClientID(ctx context.Context, clientID int) ([]GroceryOrder, error) {
 	query := `
 		SELECT id, order_id, status, total_price, created_at
@@ -98,6 +101,7 @@ func (s *OrderStore) GetOrdersByClientID(ctx context.Context, clientID int) ([]G
 	return history, nil
 }
 
+// GetLastOrderByClientID returns the latest order for polling UX.
 func (s *OrderStore) GetLastOrderByClientID(ctx context.Context, clientID int) (*GroceryOrder, error) {
 	query := `
 		SELECT id, order_id, status, total_price, created_at
@@ -122,6 +126,7 @@ func (s *OrderStore) GetLastOrderByClientID(ctx context.Context, clientID int) (
 	return &o, nil
 }
 
+// UpdateOrderStatus updates business status and finalized total price.
 func (s *OrderStore) UpdateOrderStatus(ctx context.Context, orderID string, status string, totalPrice float64) error {
 	// We add ::NUMERIC to explicitly tell Postgres how to handle $2
 	query := `
@@ -131,7 +136,6 @@ func (s *OrderStore) UpdateOrderStatus(ctx context.Context, orderID string, stat
 		WHERE order_id = $3
 	`
 
-	// DOUBLE CHECK THIS ORDER: 1=status, 2=price, 3=id
 	result, err := s.db.ExecContext(ctx, query, status, totalPrice, orderID)
 	if err != nil {
 		return fmt.Errorf("failed to update order status: %w", err)
@@ -144,6 +148,7 @@ func (s *OrderStore) UpdateOrderStatus(ctx context.Context, orderID string, stat
 	return nil
 }
 
+// GetOrderItems returns item lines for a business order id.
 func (s *OrderStore) GetOrderItems(ctx context.Context, orderID string) ([]GroceryOrderItem, error) {
 	var dbID int
 	// Convert UUID (string) to Internal ID (int)
@@ -170,6 +175,7 @@ func (s *OrderStore) GetOrderItems(ctx context.Context, orderID string) ([]Groce
 	return items, nil
 }
 
+// DeleteOrder removes an order and associated lines.
 func (s *OrderStore) DeleteOrder(ctx context.Context, orderID string) error {
 	tx, err := s.db.BeginTx(ctx, nil)
 	if err != nil {
@@ -196,6 +202,7 @@ func (s *OrderStore) DeleteOrder(ctx context.Context, orderID string) error {
 	return tx.Commit()
 }
 
+// GetOrderByID fetches a single order by business order id.
 func (s *OrderStore) GetOrderByID(ctx context.Context, orderID string) (*GroceryOrder, error) {
 	query := `
 		SELECT id, order_id, client_id, status, total_price, created_at
@@ -212,18 +219,16 @@ func (s *OrderStore) GetOrderByID(ctx context.Context, orderID string) (*Grocery
 		return nil, err
 	}
 
-	// 🔧 THE CORE FIX: 
-	// The DB time is retrieved as UTC but contains Local hours.
-	// We must strip the UTC label and replace it with Local.
 	o.CreatedAt = time.Date(
 		o.CreatedAt.Year(), o.CreatedAt.Month(), o.CreatedAt.Day(),
-		o.CreatedAt.Hour(), o.CreatedAt.Minute(), o.CreatedAt.Second(), 
+		o.CreatedAt.Hour(), o.CreatedAt.Minute(), o.CreatedAt.Second(),
 		o.CreatedAt.Nanosecond(), time.Local,
 	)
 
 	return &o, nil
 }
 
+// UpdateStatus updates only the lifecycle status for an order.
 func (s *OrderStore) UpdateStatus(ctx context.Context, orderID string, status string) error {
 	query := `UPDATE grocery_orders SET status = $1 WHERE order_id = $2`
 	_, err := s.db.ExecContext(ctx, query, status, orderID)

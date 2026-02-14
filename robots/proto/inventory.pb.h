@@ -33,6 +33,7 @@
 #include "google/protobuf/map_entry.h"
 #include "google/protobuf/map_field.h"
 #include "google/protobuf/unknown_field_set.h"
+#include "google/protobuf/timestamp.pb.h"
 // @@protoc_insertion_point(includes)
 
 // Must be included last.
@@ -69,26 +70,18 @@ class CheckAvailabilityResponse_ItemsEntry_DoNotUse;
 struct CheckAvailabilityResponse_ItemsEntry_DoNotUseDefaultTypeInternal;
 extern CheckAvailabilityResponse_ItemsEntry_DoNotUseDefaultTypeInternal _CheckAvailabilityResponse_ItemsEntry_DoNotUse_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull CheckAvailabilityResponse_ItemsEntry_DoNotUse_class_data_;
-class CheckoutRequest;
-struct CheckoutRequestDefaultTypeInternal;
-extern CheckoutRequestDefaultTypeInternal _CheckoutRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull CheckoutRequest_class_data_;
-class CheckoutRequest_ItemsEntry_DoNotUse;
-struct CheckoutRequest_ItemsEntry_DoNotUseDefaultTypeInternal;
-extern CheckoutRequest_ItemsEntry_DoNotUseDefaultTypeInternal _CheckoutRequest_ItemsEntry_DoNotUse_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull CheckoutRequest_ItemsEntry_DoNotUse_class_data_;
-class CheckoutResponse;
-struct CheckoutResponseDefaultTypeInternal;
-extern CheckoutResponseDefaultTypeInternal _CheckoutResponse_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull CheckoutResponse_class_data_;
-class CheckoutResponse_ItemsEntry_DoNotUse;
-struct CheckoutResponse_ItemsEntry_DoNotUseDefaultTypeInternal;
-extern CheckoutResponse_ItemsEntry_DoNotUseDefaultTypeInternal _CheckoutResponse_ItemsEntry_DoNotUse_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull CheckoutResponse_ItemsEntry_DoNotUse_class_data_;
-class ItemDetail;
-struct ItemDetailDefaultTypeInternal;
-extern ItemDetailDefaultTypeInternal _ItemDetail_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ItemDetail_class_data_;
+class ProcessCustomerOrderRequest;
+struct ProcessCustomerOrderRequestDefaultTypeInternal;
+extern ProcessCustomerOrderRequestDefaultTypeInternal _ProcessCustomerOrderRequest_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull ProcessCustomerOrderRequest_class_data_;
+class ProcessCustomerOrderRequest_ItemsEntry_DoNotUse;
+struct ProcessCustomerOrderRequest_ItemsEntry_DoNotUseDefaultTypeInternal;
+extern ProcessCustomerOrderRequest_ItemsEntry_DoNotUseDefaultTypeInternal _ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_class_data_;
+class ProcessCustomerOrderResponse;
+struct ProcessCustomerOrderResponseDefaultTypeInternal;
+extern ProcessCustomerOrderResponseDefaultTypeInternal _ProcessCustomerOrderResponse_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull ProcessCustomerOrderResponse_class_data_;
 class ReleaseItemsRequest;
 struct ReleaseItemsRequestDefaultTypeInternal;
 extern ReleaseItemsRequestDefaultTypeInternal _ReleaseItemsRequest_default_instance_;
@@ -105,10 +98,10 @@ class ReportJobStatusRequest;
 struct ReportJobStatusRequestDefaultTypeInternal;
 extern ReportJobStatusRequestDefaultTypeInternal _ReportJobStatusRequest_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull ReportJobStatusRequest_class_data_;
-class ReportJobStatusRequest_ItemsEntry_DoNotUse;
-struct ReportJobStatusRequest_ItemsEntry_DoNotUseDefaultTypeInternal;
-extern ReportJobStatusRequest_ItemsEntry_DoNotUseDefaultTypeInternal _ReportJobStatusRequest_ItemsEntry_DoNotUse_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ReportJobStatusRequest_ItemsEntry_DoNotUse_class_data_;
+class ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse;
+struct ReportJobStatusRequest_ProcessedItemsEntry_DoNotUseDefaultTypeInternal;
+extern ReportJobStatusRequest_ProcessedItemsEntry_DoNotUseDefaultTypeInternal _ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_class_data_;
 class ReportJobStatusResponse;
 struct ReportJobStatusResponseDefaultTypeInternal;
 extern ReportJobStatusResponseDefaultTypeInternal _ReportJobStatusResponse_default_instance_;
@@ -125,22 +118,22 @@ class ReserveItemsResponse;
 struct ReserveItemsResponseDefaultTypeInternal;
 extern ReserveItemsResponseDefaultTypeInternal _ReserveItemsResponse_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull ReserveItemsResponse_class_data_;
-class ReserveItemsResponse_ItemsEntry_DoNotUse;
-struct ReserveItemsResponse_ItemsEntry_DoNotUseDefaultTypeInternal;
-extern ReserveItemsResponse_ItemsEntry_DoNotUseDefaultTypeInternal _ReserveItemsResponse_ItemsEntry_DoNotUse_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull ReserveItemsResponse_ItemsEntry_DoNotUse_class_data_;
 class RestockItem;
 struct RestockItemDefaultTypeInternal;
 extern RestockItemDefaultTypeInternal _RestockItem_default_instance_;
 extern const ::google::protobuf::internal::ClassDataFull RestockItem_class_data_;
-class RestockItemsRequest;
-struct RestockItemsRequestDefaultTypeInternal;
-extern RestockItemsRequestDefaultTypeInternal _RestockItemsRequest_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull RestockItemsRequest_class_data_;
-class RestockItemsResponse;
-struct RestockItemsResponseDefaultTypeInternal;
-extern RestockItemsResponseDefaultTypeInternal _RestockItemsResponse_default_instance_;
-extern const ::google::protobuf::internal::ClassDataFull RestockItemsResponse_class_data_;
+class RestockItemsOrderRequest;
+struct RestockItemsOrderRequestDefaultTypeInternal;
+extern RestockItemsOrderRequestDefaultTypeInternal _RestockItemsOrderRequest_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull RestockItemsOrderRequest_class_data_;
+class RestockItemsOrderResponse;
+struct RestockItemsOrderResponseDefaultTypeInternal;
+extern RestockItemsOrderResponseDefaultTypeInternal _RestockItemsOrderResponse_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull RestockItemsOrderResponse_class_data_;
+class StockLevel;
+struct StockLevelDefaultTypeInternal;
+extern StockLevelDefaultTypeInternal _StockLevel_default_instance_;
+extern const ::google::protobuf::internal::ClassDataFull StockLevel_class_data_;
 }  // namespace inventory
 namespace google {
 namespace protobuf {
@@ -154,30 +147,30 @@ namespace inventory {
 
 // -------------------------------------------------------------------
 
-class RestockItemsResponse final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:inventory.RestockItemsResponse) */ {
+class StockLevel final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:inventory.StockLevel) */ {
  public:
-  inline RestockItemsResponse() : RestockItemsResponse(nullptr) {}
-  ~RestockItemsResponse() PROTOBUF_FINAL;
+  inline StockLevel() : StockLevel(nullptr) {}
+  ~StockLevel() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(RestockItemsResponse* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+  void operator delete(StockLevel* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(RestockItemsResponse));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(StockLevel));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR RestockItemsResponse(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR StockLevel(::google::protobuf::internal::ConstantInitialized);
 
-  inline RestockItemsResponse(const RestockItemsResponse& from) : RestockItemsResponse(nullptr, from) {}
-  inline RestockItemsResponse(RestockItemsResponse&& from) noexcept
-      : RestockItemsResponse(nullptr, ::std::move(from)) {}
-  inline RestockItemsResponse& operator=(const RestockItemsResponse& from) {
+  inline StockLevel(const StockLevel& from) : StockLevel(nullptr, from) {}
+  inline StockLevel(StockLevel&& from) noexcept
+      : StockLevel(nullptr, ::std::move(from)) {}
+  inline StockLevel& operator=(const StockLevel& from) {
     CopyFrom(from);
     return *this;
   }
-  inline RestockItemsResponse& operator=(RestockItemsResponse&& from) noexcept {
+  inline StockLevel& operator=(StockLevel&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -205,13 +198,13 @@ class RestockItemsResponse final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const RestockItemsResponse& default_instance() {
-    return *reinterpret_cast<const RestockItemsResponse*>(
-        &_RestockItemsResponse_default_instance_);
+  static const StockLevel& default_instance() {
+    return *reinterpret_cast<const StockLevel*>(
+        &_StockLevel_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 13;
-  friend void swap(RestockItemsResponse& a, RestockItemsResponse& b) { a.Swap(&b); }
-  inline void Swap(RestockItemsResponse* PROTOBUF_NONNULL other) {
+  static constexpr int kIndexInFileMessages = 3;
+  friend void swap(StockLevel& a, StockLevel& b) { a.Swap(&b); }
+  inline void Swap(StockLevel* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -219,7 +212,7 @@ class RestockItemsResponse final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(RestockItemsResponse* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(StockLevel* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -227,13 +220,13 @@ class RestockItemsResponse final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  RestockItemsResponse* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<RestockItemsResponse>(arena);
+  StockLevel* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<StockLevel>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const RestockItemsResponse& from);
+  void CopyFrom(const StockLevel& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const RestockItemsResponse& from) { RestockItemsResponse::MergeImpl(*this, from); }
+  void MergeFrom(const StockLevel& from) { StockLevel::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -269,207 +262,17 @@ class RestockItemsResponse final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(RestockItemsResponse* PROTOBUF_NONNULL other);
+  void InternalSwap(StockLevel* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "inventory.RestockItemsResponse"; }
+  static ::absl::string_view FullMessageName() { return "inventory.StockLevel"; }
 
-  explicit RestockItemsResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  RestockItemsResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const RestockItemsResponse& from);
-  RestockItemsResponse(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, RestockItemsResponse&& from) noexcept
-      : RestockItemsResponse(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kSuccessFieldNumber = 1,
-  };
-  // bool success = 1;
-  void clear_success() ;
-  bool success() const;
-  void set_success(bool value);
-
-  private:
-  bool _internal_success() const;
-  void _internal_set_success(bool value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:inventory.RestockItemsResponse)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1,
-                                   0, 0,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const RestockItemsResponse& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    bool success_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_inventory_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull RestockItemsResponse_class_data_;
-// -------------------------------------------------------------------
-
-class RestockItem final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:inventory.RestockItem) */ {
- public:
-  inline RestockItem() : RestockItem(nullptr) {}
-  ~RestockItem() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(RestockItem* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(RestockItem));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR RestockItem(::google::protobuf::internal::ConstantInitialized);
-
-  inline RestockItem(const RestockItem& from) : RestockItem(nullptr, from) {}
-  inline RestockItem(RestockItem&& from) noexcept
-      : RestockItem(nullptr, ::std::move(from)) {}
-  inline RestockItem& operator=(const RestockItem& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline RestockItem& operator=(RestockItem&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const RestockItem& default_instance() {
-    return *reinterpret_cast<const RestockItem*>(
-        &_RestockItem_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 12;
-  friend void swap(RestockItem& a, RestockItem& b) { a.Swap(&b); }
-  inline void Swap(RestockItem* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(RestockItem* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  RestockItem* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<RestockItem>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const RestockItem& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const RestockItem& from) { RestockItem::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(RestockItem* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "inventory.RestockItem"; }
-
-  explicit RestockItem(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  RestockItem(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const RestockItem& from);
-  RestockItem(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, RestockItem&& from) noexcept
-      : RestockItem(arena) {
+  explicit StockLevel(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  StockLevel(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const StockLevel& from);
+  StockLevel(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, StockLevel&& from) noexcept
+      : StockLevel(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -489,9 +292,7 @@ class RestockItem final : public ::google::protobuf::Message
     kSkuFieldNumber = 1,
     kNameFieldNumber = 2,
     kAisleTypeFieldNumber = 3,
-    kMfdDateFieldNumber = 5,
-    kExpiryDateFieldNumber = 6,
-    kQuantityFieldNumber = 4,
+    kQuantityAvailableFieldNumber = 4,
   };
   // string sku = 1;
   void clear_sku() ;
@@ -538,52 +339,22 @@ class RestockItem final : public ::google::protobuf::Message
   ::std::string* PROTOBUF_NONNULL _internal_mutable_aisle_type();
 
   public:
-  // string mfd_date = 5;
-  void clear_mfd_date() ;
-  const ::std::string& mfd_date() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_mfd_date(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_mfd_date();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_mfd_date();
-  void set_allocated_mfd_date(::std::string* PROTOBUF_NULLABLE value);
+  // int32 quantity_available = 4;
+  void clear_quantity_available() ;
+  ::int32_t quantity_available() const;
+  void set_quantity_available(::int32_t value);
 
   private:
-  const ::std::string& _internal_mfd_date() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_mfd_date(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_mfd_date();
+  ::int32_t _internal_quantity_available() const;
+  void _internal_set_quantity_available(::int32_t value);
 
   public:
-  // string expiry_date = 6;
-  void clear_expiry_date() ;
-  const ::std::string& expiry_date() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_expiry_date(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_expiry_date();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_expiry_date();
-  void set_allocated_expiry_date(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_expiry_date() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_expiry_date(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_expiry_date();
-
-  public:
-  // int32 quantity = 4;
-  void clear_quantity() ;
-  ::int32_t quantity() const;
-  void set_quantity(::int32_t value);
-
-  private:
-  ::int32_t _internal_quantity() const;
-  void _internal_set_quantity(::int32_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:inventory.RestockItem)
+  // @@protoc_insertion_point(class_scope:inventory.StockLevel)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 6,
-                                   0, 66,
+  static const ::google::protobuf::internal::TcParseTable<2, 4,
+                                   0, 46,
                                    2>
       _table_;
 
@@ -601,61 +372,434 @@ class RestockItem final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const RestockItem& from_msg);
+        const StockLevel& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr sku_;
     ::google::protobuf::internal::ArenaStringPtr name_;
     ::google::protobuf::internal::ArenaStringPtr aisle_type_;
-    ::google::protobuf::internal::ArenaStringPtr mfd_date_;
-    ::google::protobuf::internal::ArenaStringPtr expiry_date_;
-    ::int32_t quantity_;
+    ::int32_t quantity_available_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_inventory_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull RestockItem_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull StockLevel_class_data_;
 // -------------------------------------------------------------------
 
-class ReserveItemsResponse_ItemsEntry_DoNotUse final
-    : public ::google::protobuf::internal::MapEntry<::std::string, ::int32_t,
-                             ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
-                             ::google::protobuf::internal::WireFormatLite::TYPE_INT32> {
+class RestockItemsOrderResponse final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:inventory.RestockItemsOrderResponse) */ {
  public:
-  using SuperType =
-      ::google::protobuf::internal::MapEntry<::std::string, ::int32_t,
-                      ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
-                      ::google::protobuf::internal::WireFormatLite::TYPE_INT32>;
-  ReserveItemsResponse_ItemsEntry_DoNotUse();
+  inline RestockItemsOrderResponse() : RestockItemsOrderResponse(nullptr) {}
+  ~RestockItemsOrderResponse() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(RestockItemsOrderResponse* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(RestockItemsOrderResponse));
+  }
+#endif
+
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ReserveItemsResponse_ItemsEntry_DoNotUse(::google::protobuf::internal::ConstantInitialized);
-  explicit ReserveItemsResponse_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr const void* PROTOBUF_NONNULL internal_default_instance() {
-    return &_ReserveItemsResponse_ItemsEntry_DoNotUse_default_instance_;
+  explicit PROTOBUF_CONSTEXPR RestockItemsOrderResponse(::google::protobuf::internal::ConstantInitialized);
+
+  inline RestockItemsOrderResponse(const RestockItemsOrderResponse& from) : RestockItemsOrderResponse(nullptr, from) {}
+  inline RestockItemsOrderResponse(RestockItemsOrderResponse&& from) noexcept
+      : RestockItemsOrderResponse(nullptr, ::std::move(from)) {}
+  inline RestockItemsOrderResponse& operator=(const RestockItemsOrderResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RestockItemsOrderResponse& operator=(RestockItemsOrderResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
   }
 
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
 
-  static constexpr auto InternalGenerateClassData_();
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RestockItemsOrderResponse& default_instance() {
+    return *reinterpret_cast<const RestockItemsOrderResponse*>(
+        &_RestockItemsOrderResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 15;
+  friend void swap(RestockItemsOrderResponse& a, RestockItemsOrderResponse& b) { a.Swap(&b); }
+  inline void Swap(RestockItemsOrderResponse* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RestockItemsOrderResponse* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
 
+  // implements Message ----------------------------------------------
+
+  RestockItemsOrderResponse* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<RestockItemsOrderResponse>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const RestockItemsOrderResponse& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const RestockItemsOrderResponse& from) { RestockItemsOrderResponse::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(RestockItemsOrderResponse* PROTOBUF_NONNULL other);
  private:
-  friend class ::google::protobuf::MessageLite;
-  friend struct ::TableStruct_inventory_2eproto;
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "inventory.RestockItemsOrderResponse"; }
 
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 2,
-                                   0, 53,
-                                   2>
-      _table_;
-
+  explicit RestockItemsOrderResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  RestockItemsOrderResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const RestockItemsOrderResponse& from);
+  RestockItemsOrderResponse(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, RestockItemsOrderResponse&& from) noexcept
+      : RestockItemsOrderResponse(arena) {
+    *this = ::std::move(from);
+  }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
   static void* PROTOBUF_NONNULL PlacementNew_(
       const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
       ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kSuccessFieldNumber = 1,
+  };
+  // bool success = 1;
+  void clear_success() ;
+  bool success() const;
+  void set_success(bool value);
+
+  private:
+  bool _internal_success() const;
+  void _internal_set_success(bool value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:inventory.RestockItemsOrderResponse)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<0, 1,
+                                   0, 0,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const RestockItemsOrderResponse& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    bool success_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_inventory_2eproto;
 };
-extern const ::google::protobuf::internal::ClassDataFull ReserveItemsResponse_ItemsEntry_DoNotUse_class_data_;
+
+extern const ::google::protobuf::internal::ClassDataFull RestockItemsOrderResponse_class_data_;
+// -------------------------------------------------------------------
+
+class ReserveItemsResponse final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:inventory.ReserveItemsResponse) */ {
+ public:
+  inline ReserveItemsResponse() : ReserveItemsResponse(nullptr) {}
+  ~ReserveItemsResponse() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(ReserveItemsResponse* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(ReserveItemsResponse));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR ReserveItemsResponse(::google::protobuf::internal::ConstantInitialized);
+
+  inline ReserveItemsResponse(const ReserveItemsResponse& from) : ReserveItemsResponse(nullptr, from) {}
+  inline ReserveItemsResponse(ReserveItemsResponse&& from) noexcept
+      : ReserveItemsResponse(nullptr, ::std::move(from)) {}
+  inline ReserveItemsResponse& operator=(const ReserveItemsResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ReserveItemsResponse& operator=(ReserveItemsResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ReserveItemsResponse& default_instance() {
+    return *reinterpret_cast<const ReserveItemsResponse*>(
+        &_ReserveItemsResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 6;
+  friend void swap(ReserveItemsResponse& a, ReserveItemsResponse& b) { a.Swap(&b); }
+  inline void Swap(ReserveItemsResponse* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ReserveItemsResponse* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ReserveItemsResponse* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<ReserveItemsResponse>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const ReserveItemsResponse& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const ReserveItemsResponse& from) { ReserveItemsResponse::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(ReserveItemsResponse* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "inventory.ReserveItemsResponse"; }
+
+  explicit ReserveItemsResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  ReserveItemsResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ReserveItemsResponse& from);
+  ReserveItemsResponse(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ReserveItemsResponse&& from) noexcept
+      : ReserveItemsResponse(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kOrderIdFieldNumber = 1,
+    kErrorMessageFieldNumber = 3,
+    kSuccessFieldNumber = 2,
+  };
+  // string order_id = 1;
+  void clear_order_id() ;
+  const ::std::string& order_id() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_order_id(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_order_id();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_order_id();
+  void set_allocated_order_id(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_order_id() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_order_id(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_order_id();
+
+  public:
+  // string error_message = 3;
+  void clear_error_message() ;
+  const ::std::string& error_message() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_error_message(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_error_message();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_error_message();
+  void set_allocated_error_message(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_error_message() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_error_message(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_error_message();
+
+  public:
+  // bool success = 2;
+  void clear_success() ;
+  bool success() const;
+  void set_success(bool value);
+
+  private:
+  bool _internal_success() const;
+  void _internal_set_success(bool value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:inventory.ReserveItemsResponse)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<2, 3,
+                                   0, 60,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const ReserveItemsResponse& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::internal::ArenaStringPtr order_id_;
+    ::google::protobuf::internal::ArenaStringPtr error_message_;
+    bool success_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_inventory_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull ReserveItemsResponse_class_data_;
 // -------------------------------------------------------------------
 
 class ReserveItemsRequest_ItemsEntry_DoNotUse final
@@ -752,7 +896,7 @@ class ReportJobStatusResponse final : public ::google::protobuf::Message
     return *reinterpret_cast<const ReportJobStatusResponse*>(
         &_ReportJobStatusResponse_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 16;
+  static constexpr int kIndexInFileMessages = 18;
   friend void swap(ReportJobStatusResponse& a, ReportJobStatusResponse& b) { a.Swap(&b); }
   inline void Swap(ReportJobStatusResponse* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -887,7 +1031,7 @@ class ReportJobStatusResponse final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull ReportJobStatusResponse_class_data_;
 // -------------------------------------------------------------------
 
-class ReportJobStatusRequest_ItemsEntry_DoNotUse final
+class ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse final
     : public ::google::protobuf::internal::MapEntry<::std::string, ::int32_t,
                              ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
                              ::google::protobuf::internal::WireFormatLite::TYPE_INT32> {
@@ -896,12 +1040,12 @@ class ReportJobStatusRequest_ItemsEntry_DoNotUse final
       ::google::protobuf::internal::MapEntry<::std::string, ::int32_t,
                       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
                       ::google::protobuf::internal::WireFormatLite::TYPE_INT32>;
-  ReportJobStatusRequest_ItemsEntry_DoNotUse();
+  ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse();
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ReportJobStatusRequest_ItemsEntry_DoNotUse(::google::protobuf::internal::ConstantInitialized);
-  explicit ReportJobStatusRequest_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  explicit PROTOBUF_CONSTEXPR ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse(::google::protobuf::internal::ConstantInitialized);
+  explicit ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static constexpr const void* PROTOBUF_NONNULL internal_default_instance() {
-    return &_ReportJobStatusRequest_ItemsEntry_DoNotUse_default_instance_;
+    return &_ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_default_instance_;
   }
 
 
@@ -913,7 +1057,7 @@ class ReportJobStatusRequest_ItemsEntry_DoNotUse final
 
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<1, 2,
-                                   0, 55,
+                                   0, 64,
                                    2>
       _table_;
 
@@ -923,7 +1067,7 @@ class ReportJobStatusRequest_ItemsEntry_DoNotUse final
       ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static constexpr auto InternalNewImpl_();
 };
-extern const ::google::protobuf::internal::ClassDataFull ReportJobStatusRequest_ItemsEntry_DoNotUse_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_class_data_;
 // -------------------------------------------------------------------
 
 class ReleaseItemsResponse final : public ::google::protobuf::Message
@@ -981,7 +1125,7 @@ class ReleaseItemsResponse final : public ::google::protobuf::Message
     return *reinterpret_cast<const ReleaseItemsResponse*>(
         &_ReleaseItemsResponse_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 10;
+  static constexpr int kIndexInFileMessages = 9;
   friend void swap(ReleaseItemsResponse& a, ReleaseItemsResponse& b) { a.Swap(&b); }
   inline void Swap(ReleaseItemsResponse* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -1155,30 +1299,30 @@ class ReleaseItemsRequest_ItemsEntry_DoNotUse final
 extern const ::google::protobuf::internal::ClassDataFull ReleaseItemsRequest_ItemsEntry_DoNotUse_class_data_;
 // -------------------------------------------------------------------
 
-class ItemDetail final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:inventory.ItemDetail) */ {
+class ProcessCustomerOrderResponse final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:inventory.ProcessCustomerOrderResponse) */ {
  public:
-  inline ItemDetail() : ItemDetail(nullptr) {}
-  ~ItemDetail() PROTOBUF_FINAL;
+  inline ProcessCustomerOrderResponse() : ProcessCustomerOrderResponse(nullptr) {}
+  ~ProcessCustomerOrderResponse() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(ItemDetail* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+  void operator delete(ProcessCustomerOrderResponse* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(ItemDetail));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(ProcessCustomerOrderResponse));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ItemDetail(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR ProcessCustomerOrderResponse(::google::protobuf::internal::ConstantInitialized);
 
-  inline ItemDetail(const ItemDetail& from) : ItemDetail(nullptr, from) {}
-  inline ItemDetail(ItemDetail&& from) noexcept
-      : ItemDetail(nullptr, ::std::move(from)) {}
-  inline ItemDetail& operator=(const ItemDetail& from) {
+  inline ProcessCustomerOrderResponse(const ProcessCustomerOrderResponse& from) : ProcessCustomerOrderResponse(nullptr, from) {}
+  inline ProcessCustomerOrderResponse(ProcessCustomerOrderResponse&& from) noexcept
+      : ProcessCustomerOrderResponse(nullptr, ::std::move(from)) {}
+  inline ProcessCustomerOrderResponse& operator=(const ProcessCustomerOrderResponse& from) {
     CopyFrom(from);
     return *this;
   }
-  inline ItemDetail& operator=(ItemDetail&& from) noexcept {
+  inline ProcessCustomerOrderResponse& operator=(ProcessCustomerOrderResponse&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -1206,13 +1350,13 @@ class ItemDetail final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const ItemDetail& default_instance() {
-    return *reinterpret_cast<const ItemDetail*>(
-        &_ItemDetail_default_instance_);
+  static const ProcessCustomerOrderResponse& default_instance() {
+    return *reinterpret_cast<const ProcessCustomerOrderResponse*>(
+        &_ProcessCustomerOrderResponse_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 3;
-  friend void swap(ItemDetail& a, ItemDetail& b) { a.Swap(&b); }
-  inline void Swap(ItemDetail* PROTOBUF_NONNULL other) {
+  static constexpr int kIndexInFileMessages = 12;
+  friend void swap(ProcessCustomerOrderResponse& a, ProcessCustomerOrderResponse& b) { a.Swap(&b); }
+  inline void Swap(ProcessCustomerOrderResponse* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -1220,7 +1364,7 @@ class ItemDetail final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(ItemDetail* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(ProcessCustomerOrderResponse* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -1228,13 +1372,13 @@ class ItemDetail final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  ItemDetail* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<ItemDetail>(arena);
+  ProcessCustomerOrderResponse* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<ProcessCustomerOrderResponse>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const ItemDetail& from);
+  void CopyFrom(const ProcessCustomerOrderResponse& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const ItemDetail& from) { ItemDetail::MergeImpl(*this, from); }
+  void MergeFrom(const ProcessCustomerOrderResponse& from) { ProcessCustomerOrderResponse::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -1270,17 +1414,17 @@ class ItemDetail final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(ItemDetail* PROTOBUF_NONNULL other);
+  void InternalSwap(ProcessCustomerOrderResponse* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "inventory.ItemDetail"; }
+  static ::absl::string_view FullMessageName() { return "inventory.ProcessCustomerOrderResponse"; }
 
-  explicit ItemDetail(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  ItemDetail(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ItemDetail& from);
-  ItemDetail(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ItemDetail&& from) noexcept
-      : ItemDetail(arena) {
+  explicit ProcessCustomerOrderResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  ProcessCustomerOrderResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ProcessCustomerOrderResponse& from);
+  ProcessCustomerOrderResponse(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ProcessCustomerOrderResponse&& from) noexcept
+      : ProcessCustomerOrderResponse(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -1297,72 +1441,40 @@ class ItemDetail final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kSkuFieldNumber = 1,
-    kNameFieldNumber = 2,
-    kAisleTypeFieldNumber = 3,
-    kQuantityAvailableFieldNumber = 4,
+    kMessageFieldNumber = 2,
+    kSuccessFieldNumber = 1,
   };
-  // string sku = 1;
-  void clear_sku() ;
-  const ::std::string& sku() const;
+  // string message = 2;
+  void clear_message() ;
+  const ::std::string& message() const;
   template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_sku(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_sku();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_sku();
-  void set_allocated_sku(::std::string* PROTOBUF_NULLABLE value);
+  void set_message(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_message();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_message();
+  void set_allocated_message(::std::string* PROTOBUF_NULLABLE value);
 
   private:
-  const ::std::string& _internal_sku() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_sku(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_sku();
+  const ::std::string& _internal_message() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_message(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_message();
 
   public:
-  // string name = 2;
-  void clear_name() ;
-  const ::std::string& name() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_name(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_name();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_name();
-  void set_allocated_name(::std::string* PROTOBUF_NULLABLE value);
+  // bool success = 1;
+  void clear_success() ;
+  bool success() const;
+  void set_success(bool value);
 
   private:
-  const ::std::string& _internal_name() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_name(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_name();
+  bool _internal_success() const;
+  void _internal_set_success(bool value);
 
   public:
-  // string aisle_type = 3;
-  void clear_aisle_type() ;
-  const ::std::string& aisle_type() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_aisle_type(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_aisle_type();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_aisle_type();
-  void set_allocated_aisle_type(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_aisle_type() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_aisle_type(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_aisle_type();
-
-  public:
-  // int32 quantity_available = 4;
-  void clear_quantity_available() ;
-  ::int32_t quantity_available() const;
-  void set_quantity_available(::int32_t value);
-
-  private:
-  ::int32_t _internal_quantity_available() const;
-  void _internal_set_quantity_available(::int32_t value);
-
-  public:
-  // @@protoc_insertion_point(class_scope:inventory.ItemDetail)
+  // @@protoc_insertion_point(class_scope:inventory.ProcessCustomerOrderResponse)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 4,
-                                   0, 46,
+  static const ::google::protobuf::internal::TcParseTable<1, 2,
+                                   0, 54,
                                    2>
       _table_;
 
@@ -1380,23 +1492,21 @@ class ItemDetail final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const ItemDetail& from_msg);
+        const ProcessCustomerOrderResponse& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr sku_;
-    ::google::protobuf::internal::ArenaStringPtr name_;
-    ::google::protobuf::internal::ArenaStringPtr aisle_type_;
-    ::int32_t quantity_available_;
+    ::google::protobuf::internal::ArenaStringPtr message_;
+    bool success_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_inventory_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull ItemDetail_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull ProcessCustomerOrderResponse_class_data_;
 // -------------------------------------------------------------------
 
-class CheckoutResponse_ItemsEntry_DoNotUse final
+class ProcessCustomerOrderRequest_ItemsEntry_DoNotUse final
     : public ::google::protobuf::internal::MapEntry<::std::string, ::int32_t,
                              ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
                              ::google::protobuf::internal::WireFormatLite::TYPE_INT32> {
@@ -1405,12 +1515,12 @@ class CheckoutResponse_ItemsEntry_DoNotUse final
       ::google::protobuf::internal::MapEntry<::std::string, ::int32_t,
                       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
                       ::google::protobuf::internal::WireFormatLite::TYPE_INT32>;
-  CheckoutResponse_ItemsEntry_DoNotUse();
+  ProcessCustomerOrderRequest_ItemsEntry_DoNotUse();
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR CheckoutResponse_ItemsEntry_DoNotUse(::google::protobuf::internal::ConstantInitialized);
-  explicit CheckoutResponse_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  explicit PROTOBUF_CONSTEXPR ProcessCustomerOrderRequest_ItemsEntry_DoNotUse(::google::protobuf::internal::ConstantInitialized);
+  explicit ProcessCustomerOrderRequest_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static constexpr const void* PROTOBUF_NONNULL internal_default_instance() {
-    return &_CheckoutResponse_ItemsEntry_DoNotUse_default_instance_;
+    return &_ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_default_instance_;
   }
 
 
@@ -1422,7 +1532,7 @@ class CheckoutResponse_ItemsEntry_DoNotUse final
 
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<1, 2,
-                                   0, 49,
+                                   0, 60,
                                    2>
       _table_;
 
@@ -1432,46 +1542,7 @@ class CheckoutResponse_ItemsEntry_DoNotUse final
       ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static constexpr auto InternalNewImpl_();
 };
-extern const ::google::protobuf::internal::ClassDataFull CheckoutResponse_ItemsEntry_DoNotUse_class_data_;
-// -------------------------------------------------------------------
-
-class CheckoutRequest_ItemsEntry_DoNotUse final
-    : public ::google::protobuf::internal::MapEntry<::std::string, ::int32_t,
-                             ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
-                             ::google::protobuf::internal::WireFormatLite::TYPE_INT32> {
- public:
-  using SuperType =
-      ::google::protobuf::internal::MapEntry<::std::string, ::int32_t,
-                      ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
-                      ::google::protobuf::internal::WireFormatLite::TYPE_INT32>;
-  CheckoutRequest_ItemsEntry_DoNotUse();
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR CheckoutRequest_ItemsEntry_DoNotUse(::google::protobuf::internal::ConstantInitialized);
-  explicit CheckoutRequest_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr const void* PROTOBUF_NONNULL internal_default_instance() {
-    return &_CheckoutRequest_ItemsEntry_DoNotUse_default_instance_;
-  }
-
-
-  static constexpr auto InternalGenerateClassData_();
-
- private:
-  friend class ::google::protobuf::MessageLite;
-  friend struct ::TableStruct_inventory_2eproto;
-
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 2,
-                                   0, 48,
-                                   2>
-      _table_;
-
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-};
-extern const ::google::protobuf::internal::ClassDataFull CheckoutRequest_ItemsEntry_DoNotUse_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_class_data_;
 // -------------------------------------------------------------------
 
 class CheckAvailabilityRequest final : public ::google::protobuf::Message
@@ -1676,30 +1747,30 @@ class CheckAvailabilityRequest final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull CheckAvailabilityRequest_class_data_;
 // -------------------------------------------------------------------
 
-class RestockItemsRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:inventory.RestockItemsRequest) */ {
+class RestockItem final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:inventory.RestockItem) */ {
  public:
-  inline RestockItemsRequest() : RestockItemsRequest(nullptr) {}
-  ~RestockItemsRequest() PROTOBUF_FINAL;
+  inline RestockItem() : RestockItem(nullptr) {}
+  ~RestockItem() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(RestockItemsRequest* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+  void operator delete(RestockItem* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(RestockItemsRequest));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(RestockItem));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR RestockItemsRequest(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR RestockItem(::google::protobuf::internal::ConstantInitialized);
 
-  inline RestockItemsRequest(const RestockItemsRequest& from) : RestockItemsRequest(nullptr, from) {}
-  inline RestockItemsRequest(RestockItemsRequest&& from) noexcept
-      : RestockItemsRequest(nullptr, ::std::move(from)) {}
-  inline RestockItemsRequest& operator=(const RestockItemsRequest& from) {
+  inline RestockItem(const RestockItem& from) : RestockItem(nullptr, from) {}
+  inline RestockItem(RestockItem&& from) noexcept
+      : RestockItem(nullptr, ::std::move(from)) {}
+  inline RestockItem& operator=(const RestockItem& from) {
     CopyFrom(from);
     return *this;
   }
-  inline RestockItemsRequest& operator=(RestockItemsRequest&& from) noexcept {
+  inline RestockItem& operator=(RestockItem&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -1727,13 +1798,13 @@ class RestockItemsRequest final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const RestockItemsRequest& default_instance() {
-    return *reinterpret_cast<const RestockItemsRequest*>(
-        &_RestockItemsRequest_default_instance_);
+  static const RestockItem& default_instance() {
+    return *reinterpret_cast<const RestockItem*>(
+        &_RestockItem_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 11;
-  friend void swap(RestockItemsRequest& a, RestockItemsRequest& b) { a.Swap(&b); }
-  inline void Swap(RestockItemsRequest* PROTOBUF_NONNULL other) {
+  static constexpr int kIndexInFileMessages = 14;
+  friend void swap(RestockItem& a, RestockItem& b) { a.Swap(&b); }
+  inline void Swap(RestockItem* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -1741,7 +1812,7 @@ class RestockItemsRequest final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(RestockItemsRequest* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(RestockItem* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -1749,13 +1820,13 @@ class RestockItemsRequest final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  RestockItemsRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<RestockItemsRequest>(arena);
+  RestockItem* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<RestockItem>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const RestockItemsRequest& from);
+  void CopyFrom(const RestockItem& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const RestockItemsRequest& from) { RestockItemsRequest::MergeImpl(*this, from); }
+  void MergeFrom(const RestockItem& from) { RestockItem::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -1791,17 +1862,17 @@ class RestockItemsRequest final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(RestockItemsRequest* PROTOBUF_NONNULL other);
+  void InternalSwap(RestockItem* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "inventory.RestockItemsRequest"; }
+  static ::absl::string_view FullMessageName() { return "inventory.RestockItem"; }
 
-  explicit RestockItemsRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  RestockItemsRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const RestockItemsRequest& from);
-  RestockItemsRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, RestockItemsRequest&& from) noexcept
-      : RestockItemsRequest(arena) {
+  explicit RestockItem(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  RestockItem(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const RestockItem& from);
+  RestockItem(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, RestockItem&& from) noexcept
+      : RestockItem(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -1818,47 +1889,115 @@ class RestockItemsRequest final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kItemsFieldNumber = 2,
-    kSupplierIdFieldNumber = 1,
+    kSkuFieldNumber = 1,
+    kNameFieldNumber = 2,
+    kAisleTypeFieldNumber = 3,
+    kMfdDateFieldNumber = 6,
+    kExpiryDateFieldNumber = 7,
+    kUnitCostFieldNumber = 5,
+    kQuantityFieldNumber = 4,
   };
-  // repeated .inventory.RestockItem items = 2;
-  int items_size() const;
-  private:
-  int _internal_items_size() const;
-
-  public:
-  void clear_items() ;
-  ::inventory::RestockItem* PROTOBUF_NONNULL mutable_items(int index);
-  ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>* PROTOBUF_NONNULL mutable_items();
-
-  private:
-  const ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>& _internal_items() const;
-  ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>* PROTOBUF_NONNULL _internal_mutable_items();
-  public:
-  const ::inventory::RestockItem& items(int index) const;
-  ::inventory::RestockItem* PROTOBUF_NONNULL add_items();
-  const ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>& items() const;
-  // string supplier_id = 1;
-  void clear_supplier_id() ;
-  const ::std::string& supplier_id() const;
+  // string sku = 1;
+  void clear_sku() ;
+  const ::std::string& sku() const;
   template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_supplier_id(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_supplier_id();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_supplier_id();
-  void set_allocated_supplier_id(::std::string* PROTOBUF_NULLABLE value);
+  void set_sku(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_sku();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_sku();
+  void set_allocated_sku(::std::string* PROTOBUF_NULLABLE value);
 
   private:
-  const ::std::string& _internal_supplier_id() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_supplier_id(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_supplier_id();
+  const ::std::string& _internal_sku() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_sku(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_sku();
 
   public:
-  // @@protoc_insertion_point(class_scope:inventory.RestockItemsRequest)
+  // string name = 2;
+  void clear_name() ;
+  const ::std::string& name() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_name(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_name();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_name();
+  void set_allocated_name(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_name() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_name(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_name();
+
+  public:
+  // string aisle_type = 3;
+  void clear_aisle_type() ;
+  const ::std::string& aisle_type() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_aisle_type(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_aisle_type();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_aisle_type();
+  void set_allocated_aisle_type(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_aisle_type() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_aisle_type(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_aisle_type();
+
+  public:
+  // .google.protobuf.Timestamp mfd_date = 6;
+  bool has_mfd_date() const;
+  void clear_mfd_date() ;
+  const ::google::protobuf::Timestamp& mfd_date() const;
+  [[nodiscard]] ::google::protobuf::Timestamp* PROTOBUF_NULLABLE release_mfd_date();
+  ::google::protobuf::Timestamp* PROTOBUF_NONNULL mutable_mfd_date();
+  void set_allocated_mfd_date(::google::protobuf::Timestamp* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_mfd_date(::google::protobuf::Timestamp* PROTOBUF_NULLABLE value);
+  ::google::protobuf::Timestamp* PROTOBUF_NULLABLE unsafe_arena_release_mfd_date();
+
+  private:
+  const ::google::protobuf::Timestamp& _internal_mfd_date() const;
+  ::google::protobuf::Timestamp* PROTOBUF_NONNULL _internal_mutable_mfd_date();
+
+  public:
+  // .google.protobuf.Timestamp expiry_date = 7;
+  bool has_expiry_date() const;
+  void clear_expiry_date() ;
+  const ::google::protobuf::Timestamp& expiry_date() const;
+  [[nodiscard]] ::google::protobuf::Timestamp* PROTOBUF_NULLABLE release_expiry_date();
+  ::google::protobuf::Timestamp* PROTOBUF_NONNULL mutable_expiry_date();
+  void set_allocated_expiry_date(::google::protobuf::Timestamp* PROTOBUF_NULLABLE value);
+  void unsafe_arena_set_allocated_expiry_date(::google::protobuf::Timestamp* PROTOBUF_NULLABLE value);
+  ::google::protobuf::Timestamp* PROTOBUF_NULLABLE unsafe_arena_release_expiry_date();
+
+  private:
+  const ::google::protobuf::Timestamp& _internal_expiry_date() const;
+  ::google::protobuf::Timestamp* PROTOBUF_NONNULL _internal_mutable_expiry_date();
+
+  public:
+  // double unit_cost = 5;
+  void clear_unit_cost() ;
+  double unit_cost() const;
+  void set_unit_cost(double value);
+
+  private:
+  double _internal_unit_cost() const;
+  void _internal_set_unit_cost(double value);
+
+  public:
+  // int32 quantity = 4;
+  void clear_quantity() ;
+  ::int32_t quantity() const;
+  void set_quantity(::int32_t value);
+
+  private:
+  ::int32_t _internal_quantity() const;
+  void _internal_set_quantity(::int32_t value);
+
+  public:
+  // @@protoc_insertion_point(class_scope:inventory.RestockItem)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 2,
-                                   1, 49,
+  static const ::google::protobuf::internal::TcParseTable<3, 7,
+                                   2, 47,
                                    2>
       _table_;
 
@@ -1876,245 +2015,23 @@ class RestockItemsRequest final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const RestockItemsRequest& from_msg);
+        const RestockItem& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::RepeatedPtrField< ::inventory::RestockItem > items_;
-    ::google::protobuf::internal::ArenaStringPtr supplier_id_;
+    ::google::protobuf::internal::ArenaStringPtr sku_;
+    ::google::protobuf::internal::ArenaStringPtr name_;
+    ::google::protobuf::internal::ArenaStringPtr aisle_type_;
+    ::google::protobuf::Timestamp* PROTOBUF_NULLABLE mfd_date_;
+    ::google::protobuf::Timestamp* PROTOBUF_NULLABLE expiry_date_;
+    double unit_cost_;
+    ::int32_t quantity_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_inventory_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull RestockItemsRequest_class_data_;
-// -------------------------------------------------------------------
-
-class ReserveItemsResponse final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:inventory.ReserveItemsResponse) */ {
- public:
-  inline ReserveItemsResponse() : ReserveItemsResponse(nullptr) {}
-  ~ReserveItemsResponse() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(ReserveItemsResponse* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(ReserveItemsResponse));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR ReserveItemsResponse(::google::protobuf::internal::ConstantInitialized);
-
-  inline ReserveItemsResponse(const ReserveItemsResponse& from) : ReserveItemsResponse(nullptr, from) {}
-  inline ReserveItemsResponse(ReserveItemsResponse&& from) noexcept
-      : ReserveItemsResponse(nullptr, ::std::move(from)) {}
-  inline ReserveItemsResponse& operator=(const ReserveItemsResponse& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline ReserveItemsResponse& operator=(ReserveItemsResponse&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const ReserveItemsResponse& default_instance() {
-    return *reinterpret_cast<const ReserveItemsResponse*>(
-        &_ReserveItemsResponse_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 7;
-  friend void swap(ReserveItemsResponse& a, ReserveItemsResponse& b) { a.Swap(&b); }
-  inline void Swap(ReserveItemsResponse* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(ReserveItemsResponse* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  ReserveItemsResponse* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<ReserveItemsResponse>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const ReserveItemsResponse& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const ReserveItemsResponse& from) { ReserveItemsResponse::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(ReserveItemsResponse* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "inventory.ReserveItemsResponse"; }
-
-  explicit ReserveItemsResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  ReserveItemsResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ReserveItemsResponse& from);
-  ReserveItemsResponse(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ReserveItemsResponse&& from) noexcept
-      : ReserveItemsResponse(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kOrderIdFieldNumber = 1,
-    kSuccessFieldNumber = 3,
-    kItemsFieldNumber = 2,
-  };
-  // string order_id = 1;
-  void clear_order_id() ;
-  const ::std::string& order_id() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_order_id(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_order_id();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_order_id();
-  void set_allocated_order_id(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_order_id() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_order_id(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_order_id();
-
-  public:
-  // bool success = 3;
-  void clear_success() ;
-  bool success() const;
-  void set_success(bool value);
-
-  private:
-  bool _internal_success() const;
-  void _internal_set_success(bool value);
-
-  public:
-  // map<string, int32> items = 2;
-  int items_size() const;
-  private:
-  int _internal_items_size() const;
-
-  public:
-  void clear_items() ;
-  const ::google::protobuf::Map<::std::string, ::int32_t>& items() const;
-  ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL mutable_items();
-
-  private:
-  const ::google::protobuf::Map<::std::string, ::int32_t>& _internal_items() const;
-  ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL _internal_mutable_items();
-
-  public:
-  // @@protoc_insertion_point(class_scope:inventory.ReserveItemsResponse)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
-                                   1, 52,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const ReserveItemsResponse& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr order_id_;
-    bool success_;
-    ::google::protobuf::internal::MapField<ReserveItemsResponse_ItemsEntry_DoNotUse, ::std::string, ::int32_t,
-                      ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
-                      ::google::protobuf::internal::WireFormatLite::TYPE_INT32>
-        items_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_inventory_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull ReserveItemsResponse_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull RestockItem_class_data_;
 // -------------------------------------------------------------------
 
 class ReserveItemsRequest final : public ::google::protobuf::Message
@@ -2387,7 +2304,7 @@ class ReportJobStatusRequest final : public ::google::protobuf::Message
     return *reinterpret_cast<const ReportJobStatusRequest*>(
         &_ReportJobStatusRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 15;
+  static constexpr int kIndexInFileMessages = 17;
   friend void swap(ReportJobStatusRequest& a, ReportJobStatusRequest& b) { a.Swap(&b); }
   inline void Swap(ReportJobStatusRequest* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2475,9 +2392,9 @@ class ReportJobStatusRequest final : public ::google::protobuf::Message
   // accessors -------------------------------------------------------
   enum : int {
     kOrderIdFieldNumber = 1,
-    kRobotIdFieldNumber = 2,
     kStatusFieldNumber = 3,
-    kItemsFieldNumber = 4,
+    kOrderTypeFieldNumber = 5,
+    kProcessedItemsFieldNumber = 4,
   };
   // string order_id = 1;
   void clear_order_id() ;
@@ -2492,21 +2409,6 @@ class ReportJobStatusRequest final : public ::google::protobuf::Message
   const ::std::string& _internal_order_id() const;
   PROTOBUF_ALWAYS_INLINE void _internal_set_order_id(const ::std::string& value);
   ::std::string* PROTOBUF_NONNULL _internal_mutable_order_id();
-
-  public:
-  // string robot_id = 2;
-  void clear_robot_id() ;
-  const ::std::string& robot_id() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_robot_id(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_robot_id();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_robot_id();
-  void set_allocated_robot_id(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_robot_id() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_robot_id(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_robot_id();
 
   public:
   // string status = 3;
@@ -2524,27 +2426,42 @@ class ReportJobStatusRequest final : public ::google::protobuf::Message
   ::std::string* PROTOBUF_NONNULL _internal_mutable_status();
 
   public:
-  // map<string, int32> items = 4;
-  int items_size() const;
+  // string order_type = 5;
+  void clear_order_type() ;
+  const ::std::string& order_type() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_order_type(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_order_type();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_order_type();
+  void set_allocated_order_type(::std::string* PROTOBUF_NULLABLE value);
+
   private:
-  int _internal_items_size() const;
+  const ::std::string& _internal_order_type() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_order_type(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_order_type();
 
   public:
-  void clear_items() ;
-  const ::google::protobuf::Map<::std::string, ::int32_t>& items() const;
-  ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL mutable_items();
+  // map<string, int32> processed_items = 4;
+  int processed_items_size() const;
+  private:
+  int _internal_processed_items_size() const;
+
+  public:
+  void clear_processed_items() ;
+  const ::google::protobuf::Map<::std::string, ::int32_t>& processed_items() const;
+  ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL mutable_processed_items();
 
   private:
-  const ::google::protobuf::Map<::std::string, ::int32_t>& _internal_items() const;
-  ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL _internal_mutable_items();
+  const ::google::protobuf::Map<::std::string, ::int32_t>& _internal_processed_items() const;
+  ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL _internal_mutable_processed_items();
 
   public:
   // @@protoc_insertion_point(class_scope:inventory.ReportJobStatusRequest)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 4,
-                                   1, 68,
+  static const ::google::protobuf::internal::TcParseTable<3, 4,
+                                   1, 80,
                                    2>
       _table_;
 
@@ -2566,12 +2483,12 @@ class ReportJobStatusRequest final : public ::google::protobuf::Message
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr order_id_;
-    ::google::protobuf::internal::ArenaStringPtr robot_id_;
     ::google::protobuf::internal::ArenaStringPtr status_;
-    ::google::protobuf::internal::MapField<ReportJobStatusRequest_ItemsEntry_DoNotUse, ::std::string, ::int32_t,
+    ::google::protobuf::internal::ArenaStringPtr order_type_;
+    ::google::protobuf::internal::MapField<ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse, ::std::string, ::int32_t,
                       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
                       ::google::protobuf::internal::WireFormatLite::TYPE_INT32>
-        items_;
+        processed_items_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -2636,7 +2553,7 @@ class ReleaseItemsRequest final : public ::google::protobuf::Message
     return *reinterpret_cast<const ReleaseItemsRequest*>(
         &_ReleaseItemsRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 9;
+  static constexpr int kIndexInFileMessages = 8;
   friend void swap(ReleaseItemsRequest& a, ReleaseItemsRequest& b) { a.Swap(&b); }
   inline void Swap(ReleaseItemsRequest* PROTOBUF_NONNULL other) {
     if (other == this) return;
@@ -2796,30 +2713,30 @@ class ReleaseItemsRequest final : public ::google::protobuf::Message
 extern const ::google::protobuf::internal::ClassDataFull ReleaseItemsRequest_class_data_;
 // -------------------------------------------------------------------
 
-class CheckoutResponse final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:inventory.CheckoutResponse) */ {
+class ProcessCustomerOrderRequest final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:inventory.ProcessCustomerOrderRequest) */ {
  public:
-  inline CheckoutResponse() : CheckoutResponse(nullptr) {}
-  ~CheckoutResponse() PROTOBUF_FINAL;
+  inline ProcessCustomerOrderRequest() : ProcessCustomerOrderRequest(nullptr) {}
+  ~ProcessCustomerOrderRequest() PROTOBUF_FINAL;
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(CheckoutResponse* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+  void operator delete(ProcessCustomerOrderRequest* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
     SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(CheckoutResponse));
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(ProcessCustomerOrderRequest));
   }
 #endif
 
   template <typename = void>
-  explicit PROTOBUF_CONSTEXPR CheckoutResponse(::google::protobuf::internal::ConstantInitialized);
+  explicit PROTOBUF_CONSTEXPR ProcessCustomerOrderRequest(::google::protobuf::internal::ConstantInitialized);
 
-  inline CheckoutResponse(const CheckoutResponse& from) : CheckoutResponse(nullptr, from) {}
-  inline CheckoutResponse(CheckoutResponse&& from) noexcept
-      : CheckoutResponse(nullptr, ::std::move(from)) {}
-  inline CheckoutResponse& operator=(const CheckoutResponse& from) {
+  inline ProcessCustomerOrderRequest(const ProcessCustomerOrderRequest& from) : ProcessCustomerOrderRequest(nullptr, from) {}
+  inline ProcessCustomerOrderRequest(ProcessCustomerOrderRequest&& from) noexcept
+      : ProcessCustomerOrderRequest(nullptr, ::std::move(from)) {}
+  inline ProcessCustomerOrderRequest& operator=(const ProcessCustomerOrderRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline CheckoutResponse& operator=(CheckoutResponse&& from) noexcept {
+  inline ProcessCustomerOrderRequest& operator=(ProcessCustomerOrderRequest&& from) noexcept {
     if (this == &from) return *this;
     if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
       InternalSwap(&from);
@@ -2847,13 +2764,13 @@ class CheckoutResponse final : public ::google::protobuf::Message
   static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const CheckoutResponse& default_instance() {
-    return *reinterpret_cast<const CheckoutResponse*>(
-        &_CheckoutResponse_default_instance_);
+  static const ProcessCustomerOrderRequest& default_instance() {
+    return *reinterpret_cast<const ProcessCustomerOrderRequest*>(
+        &_ProcessCustomerOrderRequest_default_instance_);
   }
-  static constexpr int kIndexInFileMessages = 20;
-  friend void swap(CheckoutResponse& a, CheckoutResponse& b) { a.Swap(&b); }
-  inline void Swap(CheckoutResponse* PROTOBUF_NONNULL other) {
+  static constexpr int kIndexInFileMessages = 11;
+  friend void swap(ProcessCustomerOrderRequest& a, ProcessCustomerOrderRequest& b) { a.Swap(&b); }
+  inline void Swap(ProcessCustomerOrderRequest* PROTOBUF_NONNULL other) {
     if (other == this) return;
     if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
       InternalSwap(other);
@@ -2861,7 +2778,7 @@ class CheckoutResponse final : public ::google::protobuf::Message
       ::google::protobuf::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(CheckoutResponse* PROTOBUF_NONNULL other) {
+  void UnsafeArenaSwap(ProcessCustomerOrderRequest* PROTOBUF_NONNULL other) {
     if (other == this) return;
     ABSL_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -2869,13 +2786,13 @@ class CheckoutResponse final : public ::google::protobuf::Message
 
   // implements Message ----------------------------------------------
 
-  CheckoutResponse* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<CheckoutResponse>(arena);
+  ProcessCustomerOrderRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<ProcessCustomerOrderRequest>(arena);
   }
   using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const CheckoutResponse& from);
+  void CopyFrom(const ProcessCustomerOrderRequest& from);
   using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const CheckoutResponse& from) { CheckoutResponse::MergeImpl(*this, from); }
+  void MergeFrom(const ProcessCustomerOrderRequest& from) { ProcessCustomerOrderRequest::MergeImpl(*this, from); }
 
   private:
   static void MergeImpl(::google::protobuf::MessageLite& to_msg,
@@ -2911,256 +2828,17 @@ class CheckoutResponse final : public ::google::protobuf::Message
   private:
   void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
   static void SharedDtor(MessageLite& self);
-  void InternalSwap(CheckoutResponse* PROTOBUF_NONNULL other);
+  void InternalSwap(ProcessCustomerOrderRequest* PROTOBUF_NONNULL other);
  private:
   template <typename T>
   friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "inventory.CheckoutResponse"; }
+  static ::absl::string_view FullMessageName() { return "inventory.ProcessCustomerOrderRequest"; }
 
-  explicit CheckoutResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  CheckoutResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const CheckoutResponse& from);
-  CheckoutResponse(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, CheckoutResponse&& from) noexcept
-      : CheckoutResponse(arena) {
-    *this = ::std::move(from);
-  }
-  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
-  static void* PROTOBUF_NONNULL PlacementNew_(
-      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static constexpr auto InternalNewImpl_();
-
- public:
-  static constexpr auto InternalGenerateClassData_();
-
-  ::google::protobuf::Metadata GetMetadata() const;
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-  enum : int {
-    kOrderIdFieldNumber = 1,
-    kTotalPriceFieldNumber = 4,
-    kSuccessFieldNumber = 3,
-    kItemsFieldNumber = 2,
-  };
-  // string order_id = 1;
-  void clear_order_id() ;
-  const ::std::string& order_id() const;
-  template <typename Arg_ = const ::std::string&, typename... Args_>
-  void set_order_id(Arg_&& arg, Args_... args);
-  ::std::string* PROTOBUF_NONNULL mutable_order_id();
-  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_order_id();
-  void set_allocated_order_id(::std::string* PROTOBUF_NULLABLE value);
-
-  private:
-  const ::std::string& _internal_order_id() const;
-  PROTOBUF_ALWAYS_INLINE void _internal_set_order_id(const ::std::string& value);
-  ::std::string* PROTOBUF_NONNULL _internal_mutable_order_id();
-
-  public:
-  // double total_price = 4;
-  void clear_total_price() ;
-  double total_price() const;
-  void set_total_price(double value);
-
-  private:
-  double _internal_total_price() const;
-  void _internal_set_total_price(double value);
-
-  public:
-  // bool success = 3;
-  void clear_success() ;
-  bool success() const;
-  void set_success(bool value);
-
-  private:
-  bool _internal_success() const;
-  void _internal_set_success(bool value);
-
-  public:
-  // map<string, int32> items = 2;
-  int items_size() const;
-  private:
-  int _internal_items_size() const;
-
-  public:
-  void clear_items() ;
-  const ::google::protobuf::Map<::std::string, ::int32_t>& items() const;
-  ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL mutable_items();
-
-  private:
-  const ::google::protobuf::Map<::std::string, ::int32_t>& _internal_items() const;
-  ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL _internal_mutable_items();
-
-  public:
-  // @@protoc_insertion_point(class_scope:inventory.CheckoutResponse)
- private:
-  class _Internal;
-  friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 4,
-                                   1, 48,
-                                   2>
-      _table_;
-
-  friend class ::google::protobuf::MessageLite;
-  friend class ::google::protobuf::Arena;
-  template <typename T>
-  friend class ::google::protobuf::Arena::InternalHelper;
-  using InternalArenaConstructable_ = void;
-  using DestructorSkippable_ = void;
-  struct Impl_ {
-    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-    inline explicit Impl_(
-        ::google::protobuf::internal::InternalVisibility visibility,
-        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const CheckoutResponse& from_msg);
-    ::google::protobuf::internal::HasBits<1> _has_bits_;
-    ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::ArenaStringPtr order_id_;
-    double total_price_;
-    bool success_;
-    ::google::protobuf::internal::MapField<CheckoutResponse_ItemsEntry_DoNotUse, ::std::string, ::int32_t,
-                      ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
-                      ::google::protobuf::internal::WireFormatLite::TYPE_INT32>
-        items_;
-    PROTOBUF_TSAN_DECLARE_MEMBER
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_inventory_2eproto;
-};
-
-extern const ::google::protobuf::internal::ClassDataFull CheckoutResponse_class_data_;
-// -------------------------------------------------------------------
-
-class CheckoutRequest final : public ::google::protobuf::Message
-/* @@protoc_insertion_point(class_definition:inventory.CheckoutRequest) */ {
- public:
-  inline CheckoutRequest() : CheckoutRequest(nullptr) {}
-  ~CheckoutRequest() PROTOBUF_FINAL;
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-  void operator delete(CheckoutRequest* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
-    SharedDtor(*msg);
-    ::google::protobuf::internal::SizedDelete(msg, sizeof(CheckoutRequest));
-  }
-#endif
-
-  template <typename = void>
-  explicit PROTOBUF_CONSTEXPR CheckoutRequest(::google::protobuf::internal::ConstantInitialized);
-
-  inline CheckoutRequest(const CheckoutRequest& from) : CheckoutRequest(nullptr, from) {}
-  inline CheckoutRequest(CheckoutRequest&& from) noexcept
-      : CheckoutRequest(nullptr, ::std::move(from)) {}
-  inline CheckoutRequest& operator=(const CheckoutRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline CheckoutRequest& operator=(CheckoutRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
-  }
-  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
-      ABSL_ATTRIBUTE_LIFETIME_BOUND {
-    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
-  }
-
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
-    return GetDescriptor();
-  }
-  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const CheckoutRequest& default_instance() {
-    return *reinterpret_cast<const CheckoutRequest*>(
-        &_CheckoutRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages = 18;
-  friend void swap(CheckoutRequest& a, CheckoutRequest& b) { a.Swap(&b); }
-  inline void Swap(CheckoutRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
-      InternalSwap(other);
-    } else {
-      ::google::protobuf::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(CheckoutRequest* PROTOBUF_NONNULL other) {
-    if (other == this) return;
-    ABSL_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  CheckoutRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
-    return ::google::protobuf::Message::DefaultConstruct<CheckoutRequest>(arena);
-  }
-  using ::google::protobuf::Message::CopyFrom;
-  void CopyFrom(const CheckoutRequest& from);
-  using ::google::protobuf::Message::MergeFrom;
-  void MergeFrom(const CheckoutRequest& from) { CheckoutRequest::MergeImpl(*this, from); }
-
-  private:
-  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
-                        const ::google::protobuf::MessageLite& from_msg);
-
-  public:
-  bool IsInitialized() const {
-    return true;
-  }
-  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
-  #if defined(PROTOBUF_CUSTOM_VTABLE)
-  private:
-  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
-  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
-
-  public:
-  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-    return _InternalSerialize(*this, target, stream);
-  }
-  #else   // PROTOBUF_CUSTOM_VTABLE
-  ::size_t ByteSizeLong() const final;
-  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
-      ::uint8_t* PROTOBUF_NONNULL target,
-      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
-  #endif  // PROTOBUF_CUSTOM_VTABLE
-  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  static void SharedDtor(MessageLite& self);
-  void InternalSwap(CheckoutRequest* PROTOBUF_NONNULL other);
- private:
-  template <typename T>
-  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
-  static ::absl::string_view FullMessageName() { return "inventory.CheckoutRequest"; }
-
-  explicit CheckoutRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
-  CheckoutRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const CheckoutRequest& from);
-  CheckoutRequest(
-      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, CheckoutRequest&& from) noexcept
-      : CheckoutRequest(arena) {
+  explicit ProcessCustomerOrderRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  ProcessCustomerOrderRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const ProcessCustomerOrderRequest& from);
+  ProcessCustomerOrderRequest(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, ProcessCustomerOrderRequest&& from) noexcept
+      : ProcessCustomerOrderRequest(arena) {
     *this = ::std::move(from);
   }
   const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
@@ -3210,12 +2888,12 @@ class CheckoutRequest final : public ::google::protobuf::Message
   ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL _internal_mutable_items();
 
   public:
-  // @@protoc_insertion_point(class_scope:inventory.CheckoutRequest)
+  // @@protoc_insertion_point(class_scope:inventory.ProcessCustomerOrderRequest)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
   static const ::google::protobuf::internal::TcParseTable<0, 2,
-                                   1, 47,
+                                   1, 59,
                                    2>
       _table_;
 
@@ -3233,11 +2911,11 @@ class CheckoutRequest final : public ::google::protobuf::Message
     inline explicit Impl_(
         ::google::protobuf::internal::InternalVisibility visibility,
         ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-        const CheckoutRequest& from_msg);
+        const ProcessCustomerOrderRequest& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr order_id_;
-    ::google::protobuf::internal::MapField<CheckoutRequest_ItemsEntry_DoNotUse, ::std::string, ::int32_t,
+    ::google::protobuf::internal::MapField<ProcessCustomerOrderRequest_ItemsEntry_DoNotUse, ::std::string, ::int32_t,
                       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
                       ::google::protobuf::internal::WireFormatLite::TYPE_INT32>
         items_;
@@ -3247,7 +2925,7 @@ class CheckoutRequest final : public ::google::protobuf::Message
   friend struct ::TableStruct_inventory_2eproto;
 };
 
-extern const ::google::protobuf::internal::ClassDataFull CheckoutRequest_class_data_;
+extern const ::google::protobuf::internal::ClassDataFull ProcessCustomerOrderRequest_class_data_;
 // -------------------------------------------------------------------
 
 class CheckAvailabilityResponse_ItemsEntry_DoNotUse final
@@ -3287,6 +2965,220 @@ class CheckAvailabilityResponse_ItemsEntry_DoNotUse final
   static constexpr auto InternalNewImpl_();
 };
 extern const ::google::protobuf::internal::ClassDataFull CheckAvailabilityResponse_ItemsEntry_DoNotUse_class_data_;
+// -------------------------------------------------------------------
+
+class RestockItemsOrderRequest final : public ::google::protobuf::Message
+/* @@protoc_insertion_point(class_definition:inventory.RestockItemsOrderRequest) */ {
+ public:
+  inline RestockItemsOrderRequest() : RestockItemsOrderRequest(nullptr) {}
+  ~RestockItemsOrderRequest() PROTOBUF_FINAL;
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+  void operator delete(RestockItemsOrderRequest* PROTOBUF_NONNULL msg, ::std::destroying_delete_t) {
+    SharedDtor(*msg);
+    ::google::protobuf::internal::SizedDelete(msg, sizeof(RestockItemsOrderRequest));
+  }
+#endif
+
+  template <typename = void>
+  explicit PROTOBUF_CONSTEXPR RestockItemsOrderRequest(::google::protobuf::internal::ConstantInitialized);
+
+  inline RestockItemsOrderRequest(const RestockItemsOrderRequest& from) : RestockItemsOrderRequest(nullptr, from) {}
+  inline RestockItemsOrderRequest(RestockItemsOrderRequest&& from) noexcept
+      : RestockItemsOrderRequest(nullptr, ::std::move(from)) {}
+  inline RestockItemsOrderRequest& operator=(const RestockItemsOrderRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RestockItemsOrderRequest& operator=(RestockItemsOrderRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (::google::protobuf::internal::CanMoveWithInternalSwap(GetArena(), from.GetArena())) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance);
+  }
+  inline ::google::protobuf::UnknownFieldSet* PROTOBUF_NONNULL mutable_unknown_fields()
+      ABSL_ATTRIBUTE_LIFETIME_BOUND {
+    return _internal_metadata_.mutable_unknown_fields<::google::protobuf::UnknownFieldSet>();
+  }
+
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL descriptor() {
+    return GetDescriptor();
+  }
+  static const ::google::protobuf::Descriptor* PROTOBUF_NONNULL GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::google::protobuf::Reflection* PROTOBUF_NONNULL GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RestockItemsOrderRequest& default_instance() {
+    return *reinterpret_cast<const RestockItemsOrderRequest*>(
+        &_RestockItemsOrderRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages = 13;
+  friend void swap(RestockItemsOrderRequest& a, RestockItemsOrderRequest& b) { a.Swap(&b); }
+  inline void Swap(RestockItemsOrderRequest* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    if (::google::protobuf::internal::CanUseInternalSwap(GetArena(), other->GetArena())) {
+      InternalSwap(other);
+    } else {
+      ::google::protobuf::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RestockItemsOrderRequest* PROTOBUF_NONNULL other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RestockItemsOrderRequest* PROTOBUF_NONNULL New(::google::protobuf::Arena* PROTOBUF_NULLABLE arena = nullptr) const {
+    return ::google::protobuf::Message::DefaultConstruct<RestockItemsOrderRequest>(arena);
+  }
+  using ::google::protobuf::Message::CopyFrom;
+  void CopyFrom(const RestockItemsOrderRequest& from);
+  using ::google::protobuf::Message::MergeFrom;
+  void MergeFrom(const RestockItemsOrderRequest& from) { RestockItemsOrderRequest::MergeImpl(*this, from); }
+
+  private:
+  static void MergeImpl(::google::protobuf::MessageLite& to_msg,
+                        const ::google::protobuf::MessageLite& from_msg);
+
+  public:
+  bool IsInitialized() const {
+    return true;
+  }
+  ABSL_ATTRIBUTE_REINITIALIZES void Clear() PROTOBUF_FINAL;
+  #if defined(PROTOBUF_CUSTOM_VTABLE)
+  private:
+  static ::size_t ByteSizeLong(const ::google::protobuf::MessageLite& msg);
+  static ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      const ::google::protobuf::MessageLite& msg, ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream);
+
+  public:
+  ::size_t ByteSizeLong() const { return ByteSizeLong(*this); }
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+    return _InternalSerialize(*this, target, stream);
+  }
+  #else   // PROTOBUF_CUSTOM_VTABLE
+  ::size_t ByteSizeLong() const final;
+  ::uint8_t* PROTOBUF_NONNULL _InternalSerialize(
+      ::uint8_t* PROTOBUF_NONNULL target,
+      ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const final;
+  #endif  // PROTOBUF_CUSTOM_VTABLE
+  int GetCachedSize() const { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static void SharedDtor(MessageLite& self);
+  void InternalSwap(RestockItemsOrderRequest* PROTOBUF_NONNULL other);
+ private:
+  template <typename T>
+  friend ::absl::string_view(::google::protobuf::internal::GetAnyMessageName)();
+  static ::absl::string_view FullMessageName() { return "inventory.RestockItemsOrderRequest"; }
+
+  explicit RestockItemsOrderRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  RestockItemsOrderRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const RestockItemsOrderRequest& from);
+  RestockItemsOrderRequest(
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, RestockItemsOrderRequest&& from) noexcept
+      : RestockItemsOrderRequest(arena) {
+    *this = ::std::move(from);
+  }
+  const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL GetClassData() const PROTOBUF_FINAL;
+  static void* PROTOBUF_NONNULL PlacementNew_(
+      const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+      ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+  static constexpr auto InternalNewImpl_();
+
+ public:
+  static constexpr auto InternalGenerateClassData_();
+
+  ::google::protobuf::Metadata GetMetadata() const;
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+  enum : int {
+    kItemsFieldNumber = 2,
+    kOrderIdFieldNumber = 1,
+  };
+  // repeated .inventory.RestockItem items = 2;
+  int items_size() const;
+  private:
+  int _internal_items_size() const;
+
+  public:
+  void clear_items() ;
+  ::inventory::RestockItem* PROTOBUF_NONNULL mutable_items(int index);
+  ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>* PROTOBUF_NONNULL mutable_items();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>& _internal_items() const;
+  ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>* PROTOBUF_NONNULL _internal_mutable_items();
+  public:
+  const ::inventory::RestockItem& items(int index) const;
+  ::inventory::RestockItem* PROTOBUF_NONNULL add_items();
+  const ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>& items() const;
+  // string order_id = 1;
+  void clear_order_id() ;
+  const ::std::string& order_id() const;
+  template <typename Arg_ = const ::std::string&, typename... Args_>
+  void set_order_id(Arg_&& arg, Args_... args);
+  ::std::string* PROTOBUF_NONNULL mutable_order_id();
+  [[nodiscard]] ::std::string* PROTOBUF_NULLABLE release_order_id();
+  void set_allocated_order_id(::std::string* PROTOBUF_NULLABLE value);
+
+  private:
+  const ::std::string& _internal_order_id() const;
+  PROTOBUF_ALWAYS_INLINE void _internal_set_order_id(const ::std::string& value);
+  ::std::string* PROTOBUF_NONNULL _internal_mutable_order_id();
+
+  public:
+  // @@protoc_insertion_point(class_scope:inventory.RestockItemsOrderRequest)
+ private:
+  class _Internal;
+  friend class ::google::protobuf::internal::TcParser;
+  static const ::google::protobuf::internal::TcParseTable<1, 2,
+                                   1, 51,
+                                   2>
+      _table_;
+
+  friend class ::google::protobuf::MessageLite;
+  friend class ::google::protobuf::Arena;
+  template <typename T>
+  friend class ::google::protobuf::Arena::InternalHelper;
+  using InternalArenaConstructable_ = void;
+  using DestructorSkippable_ = void;
+  struct Impl_ {
+    inline explicit constexpr Impl_(::google::protobuf::internal::ConstantInitialized) noexcept;
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena);
+    inline explicit Impl_(
+        ::google::protobuf::internal::InternalVisibility visibility,
+        ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+        const RestockItemsOrderRequest& from_msg);
+    ::google::protobuf::internal::HasBits<1> _has_bits_;
+    ::google::protobuf::internal::CachedSize _cached_size_;
+    ::google::protobuf::RepeatedPtrField< ::inventory::RestockItem > items_;
+    ::google::protobuf::internal::ArenaStringPtr order_id_;
+    PROTOBUF_TSAN_DECLARE_MEMBER
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_inventory_2eproto;
+};
+
+extern const ::google::protobuf::internal::ClassDataFull RestockItemsOrderRequest_class_data_;
 // -------------------------------------------------------------------
 
 class CheckAvailabilityResponse final : public ::google::protobuf::Message
@@ -3433,19 +3325,19 @@ class CheckAvailabilityResponse final : public ::google::protobuf::Message
   enum : int {
     kItemsFieldNumber = 1,
   };
-  // map<string, .inventory.ItemDetail> items = 1;
+  // map<string, .inventory.StockLevel> items = 1;
   int items_size() const;
   private:
   int _internal_items_size() const;
 
   public:
   void clear_items() ;
-  const ::google::protobuf::Map<::std::string, ::inventory::ItemDetail>& items() const;
-  ::google::protobuf::Map<::std::string, ::inventory::ItemDetail>* PROTOBUF_NONNULL mutable_items();
+  const ::google::protobuf::Map<::std::string, ::inventory::StockLevel>& items() const;
+  ::google::protobuf::Map<::std::string, ::inventory::StockLevel>* PROTOBUF_NONNULL mutable_items();
 
   private:
-  const ::google::protobuf::Map<::std::string, ::inventory::ItemDetail>& _internal_items() const;
-  ::google::protobuf::Map<::std::string, ::inventory::ItemDetail>* PROTOBUF_NONNULL _internal_mutable_items();
+  const ::google::protobuf::Map<::std::string, ::inventory::StockLevel>& _internal_items() const;
+  ::google::protobuf::Map<::std::string, ::inventory::StockLevel>* PROTOBUF_NONNULL _internal_mutable_items();
 
   public:
   // @@protoc_insertion_point(class_scope:inventory.CheckAvailabilityResponse)
@@ -3474,7 +3366,7 @@ class CheckAvailabilityResponse final : public ::google::protobuf::Message
         const CheckAvailabilityResponse& from_msg);
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
-    ::google::protobuf::internal::MapField<CheckAvailabilityResponse_ItemsEntry_DoNotUse, ::std::string, ::inventory::ItemDetail,
+    ::google::protobuf::internal::MapField<CheckAvailabilityResponse_ItemsEntry_DoNotUse, ::std::string, ::inventory::StockLevel,
                       ::google::protobuf::internal::WireFormatLite::TYPE_STRING,
                       ::google::protobuf::internal::WireFormatLite::TYPE_MESSAGE>
         items_;
@@ -3580,7 +3472,7 @@ CheckAvailabilityRequest::_internal_mutable_skus() {
 
 // CheckAvailabilityResponse
 
-// map<string, .inventory.ItemDetail> items = 1;
+// map<string, .inventory.StockLevel> items = 1;
 inline int CheckAvailabilityResponse::_internal_items_size() const {
   return _internal_items().size();
 }
@@ -3593,19 +3485,19 @@ inline void CheckAvailabilityResponse::clear_items() {
   ClearHasBitForRepeated(_impl_._has_bits_[0],
                   0x00000001U);
 }
-inline const ::google::protobuf::Map<::std::string, ::inventory::ItemDetail>& CheckAvailabilityResponse::_internal_items() const {
+inline const ::google::protobuf::Map<::std::string, ::inventory::StockLevel>& CheckAvailabilityResponse::_internal_items() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.items_.GetMap();
 }
-inline const ::google::protobuf::Map<::std::string, ::inventory::ItemDetail>& CheckAvailabilityResponse::items() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline const ::google::protobuf::Map<::std::string, ::inventory::StockLevel>& CheckAvailabilityResponse::items() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_map:inventory.CheckAvailabilityResponse.items)
   return _internal_items();
 }
-inline ::google::protobuf::Map<::std::string, ::inventory::ItemDetail>* PROTOBUF_NONNULL CheckAvailabilityResponse::_internal_mutable_items() {
+inline ::google::protobuf::Map<::std::string, ::inventory::StockLevel>* PROTOBUF_NONNULL CheckAvailabilityResponse::_internal_mutable_items() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   return _impl_.items_.MutableMap();
 }
-inline ::google::protobuf::Map<::std::string, ::inventory::ItemDetail>* PROTOBUF_NONNULL CheckAvailabilityResponse::mutable_items()
+inline ::google::protobuf::Map<::std::string, ::inventory::StockLevel>* PROTOBUF_NONNULL CheckAvailabilityResponse::mutable_items()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
   // @@protoc_insertion_point(field_mutable_map:inventory.CheckAvailabilityResponse.items)
@@ -3614,49 +3506,49 @@ inline ::google::protobuf::Map<::std::string, ::inventory::ItemDetail>* PROTOBUF
 
 // -------------------------------------------------------------------
 
-// ItemDetail
+// StockLevel
 
 // string sku = 1;
-inline void ItemDetail::clear_sku() {
+inline void StockLevel::clear_sku() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.sku_.ClearToEmpty();
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000001U);
 }
-inline const ::std::string& ItemDetail::sku() const
+inline const ::std::string& StockLevel::sku() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:inventory.ItemDetail.sku)
+  // @@protoc_insertion_point(field_get:inventory.StockLevel.sku)
   return _internal_sku();
 }
 template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void ItemDetail::set_sku(Arg_&& arg, Args_... args) {
+PROTOBUF_ALWAYS_INLINE void StockLevel::set_sku(Arg_&& arg, Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   SetHasBit(_impl_._has_bits_[0], 0x00000001U);
   _impl_.sku_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:inventory.ItemDetail.sku)
+  // @@protoc_insertion_point(field_set:inventory.StockLevel.sku)
 }
-inline ::std::string* PROTOBUF_NONNULL ItemDetail::mutable_sku()
+inline ::std::string* PROTOBUF_NONNULL StockLevel::mutable_sku()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBit(_impl_._has_bits_[0], 0x00000001U);
   ::std::string* _s = _internal_mutable_sku();
-  // @@protoc_insertion_point(field_mutable:inventory.ItemDetail.sku)
+  // @@protoc_insertion_point(field_mutable:inventory.StockLevel.sku)
   return _s;
 }
-inline const ::std::string& ItemDetail::_internal_sku() const {
+inline const ::std::string& StockLevel::_internal_sku() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.sku_.Get();
 }
-inline void ItemDetail::_internal_set_sku(const ::std::string& value) {
+inline void StockLevel::_internal_set_sku(const ::std::string& value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.sku_.Set(value, GetArena());
 }
-inline ::std::string* PROTOBUF_NONNULL ItemDetail::_internal_mutable_sku() {
+inline ::std::string* PROTOBUF_NONNULL StockLevel::_internal_mutable_sku() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   return _impl_.sku_.Mutable( GetArena());
 }
-inline ::std::string* PROTOBUF_NULLABLE ItemDetail::release_sku() {
+inline ::std::string* PROTOBUF_NULLABLE StockLevel::release_sku() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:inventory.ItemDetail.sku)
+  // @@protoc_insertion_point(field_release:inventory.StockLevel.sku)
   if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
     return nullptr;
   }
@@ -3667,7 +3559,7 @@ inline ::std::string* PROTOBUF_NULLABLE ItemDetail::release_sku() {
   }
   return released;
 }
-inline void ItemDetail::set_allocated_sku(::std::string* PROTOBUF_NULLABLE value) {
+inline void StockLevel::set_allocated_sku(::std::string* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (value != nullptr) {
     SetHasBit(_impl_._has_bits_[0], 0x00000001U);
@@ -3678,50 +3570,50 @@ inline void ItemDetail::set_allocated_sku(::std::string* PROTOBUF_NULLABLE value
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.sku_.IsDefault()) {
     _impl_.sku_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:inventory.ItemDetail.sku)
+  // @@protoc_insertion_point(field_set_allocated:inventory.StockLevel.sku)
 }
 
 // string name = 2;
-inline void ItemDetail::clear_name() {
+inline void StockLevel::clear_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.name_.ClearToEmpty();
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000002U);
 }
-inline const ::std::string& ItemDetail::name() const
+inline const ::std::string& StockLevel::name() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:inventory.ItemDetail.name)
+  // @@protoc_insertion_point(field_get:inventory.StockLevel.name)
   return _internal_name();
 }
 template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void ItemDetail::set_name(Arg_&& arg, Args_... args) {
+PROTOBUF_ALWAYS_INLINE void StockLevel::set_name(Arg_&& arg, Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   _impl_.name_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:inventory.ItemDetail.name)
+  // @@protoc_insertion_point(field_set:inventory.StockLevel.name)
 }
-inline ::std::string* PROTOBUF_NONNULL ItemDetail::mutable_name()
+inline ::std::string* PROTOBUF_NONNULL StockLevel::mutable_name()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   ::std::string* _s = _internal_mutable_name();
-  // @@protoc_insertion_point(field_mutable:inventory.ItemDetail.name)
+  // @@protoc_insertion_point(field_mutable:inventory.StockLevel.name)
   return _s;
 }
-inline const ::std::string& ItemDetail::_internal_name() const {
+inline const ::std::string& StockLevel::_internal_name() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.name_.Get();
 }
-inline void ItemDetail::_internal_set_name(const ::std::string& value) {
+inline void StockLevel::_internal_set_name(const ::std::string& value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.name_.Set(value, GetArena());
 }
-inline ::std::string* PROTOBUF_NONNULL ItemDetail::_internal_mutable_name() {
+inline ::std::string* PROTOBUF_NONNULL StockLevel::_internal_mutable_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   return _impl_.name_.Mutable( GetArena());
 }
-inline ::std::string* PROTOBUF_NULLABLE ItemDetail::release_name() {
+inline ::std::string* PROTOBUF_NULLABLE StockLevel::release_name() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:inventory.ItemDetail.name)
+  // @@protoc_insertion_point(field_release:inventory.StockLevel.name)
   if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
     return nullptr;
   }
@@ -3732,7 +3624,7 @@ inline ::std::string* PROTOBUF_NULLABLE ItemDetail::release_name() {
   }
   return released;
 }
-inline void ItemDetail::set_allocated_name(::std::string* PROTOBUF_NULLABLE value) {
+inline void StockLevel::set_allocated_name(::std::string* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (value != nullptr) {
     SetHasBit(_impl_._has_bits_[0], 0x00000002U);
@@ -3743,50 +3635,50 @@ inline void ItemDetail::set_allocated_name(::std::string* PROTOBUF_NULLABLE valu
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.name_.IsDefault()) {
     _impl_.name_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:inventory.ItemDetail.name)
+  // @@protoc_insertion_point(field_set_allocated:inventory.StockLevel.name)
 }
 
 // string aisle_type = 3;
-inline void ItemDetail::clear_aisle_type() {
+inline void StockLevel::clear_aisle_type() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.aisle_type_.ClearToEmpty();
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000004U);
 }
-inline const ::std::string& ItemDetail::aisle_type() const
+inline const ::std::string& StockLevel::aisle_type() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:inventory.ItemDetail.aisle_type)
+  // @@protoc_insertion_point(field_get:inventory.StockLevel.aisle_type)
   return _internal_aisle_type();
 }
 template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void ItemDetail::set_aisle_type(Arg_&& arg, Args_... args) {
+PROTOBUF_ALWAYS_INLINE void StockLevel::set_aisle_type(Arg_&& arg, Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   SetHasBit(_impl_._has_bits_[0], 0x00000004U);
   _impl_.aisle_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:inventory.ItemDetail.aisle_type)
+  // @@protoc_insertion_point(field_set:inventory.StockLevel.aisle_type)
 }
-inline ::std::string* PROTOBUF_NONNULL ItemDetail::mutable_aisle_type()
+inline ::std::string* PROTOBUF_NONNULL StockLevel::mutable_aisle_type()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBit(_impl_._has_bits_[0], 0x00000004U);
   ::std::string* _s = _internal_mutable_aisle_type();
-  // @@protoc_insertion_point(field_mutable:inventory.ItemDetail.aisle_type)
+  // @@protoc_insertion_point(field_mutable:inventory.StockLevel.aisle_type)
   return _s;
 }
-inline const ::std::string& ItemDetail::_internal_aisle_type() const {
+inline const ::std::string& StockLevel::_internal_aisle_type() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.aisle_type_.Get();
 }
-inline void ItemDetail::_internal_set_aisle_type(const ::std::string& value) {
+inline void StockLevel::_internal_set_aisle_type(const ::std::string& value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.aisle_type_.Set(value, GetArena());
 }
-inline ::std::string* PROTOBUF_NONNULL ItemDetail::_internal_mutable_aisle_type() {
+inline ::std::string* PROTOBUF_NONNULL StockLevel::_internal_mutable_aisle_type() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   return _impl_.aisle_type_.Mutable( GetArena());
 }
-inline ::std::string* PROTOBUF_NULLABLE ItemDetail::release_aisle_type() {
+inline ::std::string* PROTOBUF_NULLABLE StockLevel::release_aisle_type() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:inventory.ItemDetail.aisle_type)
+  // @@protoc_insertion_point(field_release:inventory.StockLevel.aisle_type)
   if (!CheckHasBit(_impl_._has_bits_[0], 0x00000004U)) {
     return nullptr;
   }
@@ -3797,7 +3689,7 @@ inline ::std::string* PROTOBUF_NULLABLE ItemDetail::release_aisle_type() {
   }
   return released;
 }
-inline void ItemDetail::set_allocated_aisle_type(::std::string* PROTOBUF_NULLABLE value) {
+inline void StockLevel::set_allocated_aisle_type(::std::string* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (value != nullptr) {
     SetHasBit(_impl_._has_bits_[0], 0x00000004U);
@@ -3808,30 +3700,30 @@ inline void ItemDetail::set_allocated_aisle_type(::std::string* PROTOBUF_NULLABL
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.aisle_type_.IsDefault()) {
     _impl_.aisle_type_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:inventory.ItemDetail.aisle_type)
+  // @@protoc_insertion_point(field_set_allocated:inventory.StockLevel.aisle_type)
 }
 
 // int32 quantity_available = 4;
-inline void ItemDetail::clear_quantity_available() {
+inline void StockLevel::clear_quantity_available() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.quantity_available_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000008U);
 }
-inline ::int32_t ItemDetail::quantity_available() const {
-  // @@protoc_insertion_point(field_get:inventory.ItemDetail.quantity_available)
+inline ::int32_t StockLevel::quantity_available() const {
+  // @@protoc_insertion_point(field_get:inventory.StockLevel.quantity_available)
   return _internal_quantity_available();
 }
-inline void ItemDetail::set_quantity_available(::int32_t value) {
+inline void StockLevel::set_quantity_available(::int32_t value) {
   _internal_set_quantity_available(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000008U);
-  // @@protoc_insertion_point(field_set:inventory.ItemDetail.quantity_available)
+  // @@protoc_insertion_point(field_set:inventory.StockLevel.quantity_available)
 }
-inline ::int32_t ItemDetail::_internal_quantity_available() const {
+inline ::int32_t StockLevel::_internal_quantity_available() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.quantity_available_;
 }
-inline void ItemDetail::_internal_set_quantity_available(::int32_t value) {
+inline void StockLevel::_internal_set_quantity_available(::int32_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.quantity_available_ = value;
 }
@@ -3941,8 +3833,6 @@ inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL Reser
 
 // -------------------------------------------------------------------
 
-// -------------------------------------------------------------------
-
 // ReserveItemsResponse
 
 // string order_id = 1;
@@ -4010,44 +3900,12 @@ inline void ReserveItemsResponse::set_allocated_order_id(::std::string* PROTOBUF
   // @@protoc_insertion_point(field_set_allocated:inventory.ReserveItemsResponse.order_id)
 }
 
-// map<string, int32> items = 2;
-inline int ReserveItemsResponse::_internal_items_size() const {
-  return _internal_items().size();
-}
-inline int ReserveItemsResponse::items_size() const {
-  return _internal_items_size();
-}
-inline void ReserveItemsResponse::clear_items() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.items_.Clear();
-  ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00000004U);
-}
-inline const ::google::protobuf::Map<::std::string, ::int32_t>& ReserveItemsResponse::_internal_items() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.items_.GetMap();
-}
-inline const ::google::protobuf::Map<::std::string, ::int32_t>& ReserveItemsResponse::items() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_map:inventory.ReserveItemsResponse.items)
-  return _internal_items();
-}
-inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL ReserveItemsResponse::_internal_mutable_items() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.items_.MutableMap();
-}
-inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL ReserveItemsResponse::mutable_items()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000004U);
-  // @@protoc_insertion_point(field_mutable_map:inventory.ReserveItemsResponse.items)
-  return _internal_mutable_items();
-}
-
-// bool success = 3;
+// bool success = 2;
 inline void ReserveItemsResponse::clear_success() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.success_ = false;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000002U);
+                  0x00000004U);
 }
 inline bool ReserveItemsResponse::success() const {
   // @@protoc_insertion_point(field_get:inventory.ReserveItemsResponse.success)
@@ -4055,7 +3913,7 @@ inline bool ReserveItemsResponse::success() const {
 }
 inline void ReserveItemsResponse::set_success(bool value) {
   _internal_set_success(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
   // @@protoc_insertion_point(field_set:inventory.ReserveItemsResponse.success)
 }
 inline bool ReserveItemsResponse::_internal_success() const {
@@ -4065,6 +3923,71 @@ inline bool ReserveItemsResponse::_internal_success() const {
 inline void ReserveItemsResponse::_internal_set_success(bool value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.success_ = value;
+}
+
+// string error_message = 3;
+inline void ReserveItemsResponse::clear_error_message() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.error_message_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::std::string& ReserveItemsResponse::error_message() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:inventory.ReserveItemsResponse.error_message)
+  return _internal_error_message();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void ReserveItemsResponse::set_error_message(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  _impl_.error_message_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:inventory.ReserveItemsResponse.error_message)
+}
+inline ::std::string* PROTOBUF_NONNULL ReserveItemsResponse::mutable_error_message()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::std::string* _s = _internal_mutable_error_message();
+  // @@protoc_insertion_point(field_mutable:inventory.ReserveItemsResponse.error_message)
+  return _s;
+}
+inline const ::std::string& ReserveItemsResponse::_internal_error_message() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.error_message_.Get();
+}
+inline void ReserveItemsResponse::_internal_set_error_message(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.error_message_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL ReserveItemsResponse::_internal_mutable_error_message() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.error_message_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE ReserveItemsResponse::release_error_message() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:inventory.ReserveItemsResponse.error_message)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  auto* released = _impl_.error_message_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.error_message_.Set("", GetArena());
+  }
+  return released;
+}
+inline void ReserveItemsResponse::set_allocated_error_message(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
+  }
+  _impl_.error_message_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.error_message_.IsDefault()) {
+    _impl_.error_message_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:inventory.ReserveItemsResponse.error_message)
 }
 
 // -------------------------------------------------------------------
@@ -4201,125 +4124,322 @@ inline void ReleaseItemsResponse::_internal_set_success(bool value) {
 
 // -------------------------------------------------------------------
 
-// RestockItemsRequest
+// -------------------------------------------------------------------
 
-// string supplier_id = 1;
-inline void RestockItemsRequest::clear_supplier_id() {
+// ProcessCustomerOrderRequest
+
+// string order_id = 1;
+inline void ProcessCustomerOrderRequest::clear_order_id() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.supplier_id_.ClearToEmpty();
+  _impl_.order_id_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline const ::std::string& ProcessCustomerOrderRequest::order_id() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:inventory.ProcessCustomerOrderRequest.order_id)
+  return _internal_order_id();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void ProcessCustomerOrderRequest::set_order_id(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  _impl_.order_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:inventory.ProcessCustomerOrderRequest.order_id)
+}
+inline ::std::string* PROTOBUF_NONNULL ProcessCustomerOrderRequest::mutable_order_id()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::std::string* _s = _internal_mutable_order_id();
+  // @@protoc_insertion_point(field_mutable:inventory.ProcessCustomerOrderRequest.order_id)
+  return _s;
+}
+inline const ::std::string& ProcessCustomerOrderRequest::_internal_order_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.order_id_.Get();
+}
+inline void ProcessCustomerOrderRequest::_internal_set_order_id(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.order_id_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL ProcessCustomerOrderRequest::_internal_mutable_order_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.order_id_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE ProcessCustomerOrderRequest::release_order_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:inventory.ProcessCustomerOrderRequest.order_id)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  auto* released = _impl_.order_id_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.order_id_.Set("", GetArena());
+  }
+  return released;
+}
+inline void ProcessCustomerOrderRequest::set_allocated_order_id(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+  _impl_.order_id_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.order_id_.IsDefault()) {
+    _impl_.order_id_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:inventory.ProcessCustomerOrderRequest.order_id)
+}
+
+// map<string, int32> items = 2;
+inline int ProcessCustomerOrderRequest::_internal_items_size() const {
+  return _internal_items().size();
+}
+inline int ProcessCustomerOrderRequest::items_size() const {
+  return _internal_items_size();
+}
+inline void ProcessCustomerOrderRequest::clear_items() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.items_.Clear();
+  ClearHasBitForRepeated(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::google::protobuf::Map<::std::string, ::int32_t>& ProcessCustomerOrderRequest::_internal_items() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.items_.GetMap();
+}
+inline const ::google::protobuf::Map<::std::string, ::int32_t>& ProcessCustomerOrderRequest::items() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_map:inventory.ProcessCustomerOrderRequest.items)
+  return _internal_items();
+}
+inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL ProcessCustomerOrderRequest::_internal_mutable_items() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.items_.MutableMap();
+}
+inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL ProcessCustomerOrderRequest::mutable_items()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000002U);
+  // @@protoc_insertion_point(field_mutable_map:inventory.ProcessCustomerOrderRequest.items)
+  return _internal_mutable_items();
+}
+
+// -------------------------------------------------------------------
+
+// ProcessCustomerOrderResponse
+
+// bool success = 1;
+inline void ProcessCustomerOrderResponse::clear_success() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.success_ = false;
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000002U);
 }
-inline const ::std::string& RestockItemsRequest::supplier_id() const
+inline bool ProcessCustomerOrderResponse::success() const {
+  // @@protoc_insertion_point(field_get:inventory.ProcessCustomerOrderResponse.success)
+  return _internal_success();
+}
+inline void ProcessCustomerOrderResponse::set_success(bool value) {
+  _internal_set_success(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  // @@protoc_insertion_point(field_set:inventory.ProcessCustomerOrderResponse.success)
+}
+inline bool ProcessCustomerOrderResponse::_internal_success() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.success_;
+}
+inline void ProcessCustomerOrderResponse::_internal_set_success(bool value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.success_ = value;
+}
+
+// string message = 2;
+inline void ProcessCustomerOrderResponse::clear_message() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.message_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000001U);
+}
+inline const ::std::string& ProcessCustomerOrderResponse::message() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:inventory.RestockItemsRequest.supplier_id)
-  return _internal_supplier_id();
+  // @@protoc_insertion_point(field_get:inventory.ProcessCustomerOrderResponse.message)
+  return _internal_message();
 }
 template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void RestockItemsRequest::set_supplier_id(Arg_&& arg, Args_... args) {
+PROTOBUF_ALWAYS_INLINE void ProcessCustomerOrderResponse::set_message(Arg_&& arg, Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
-  _impl_.supplier_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:inventory.RestockItemsRequest.supplier_id)
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  _impl_.message_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:inventory.ProcessCustomerOrderResponse.message)
 }
-inline ::std::string* PROTOBUF_NONNULL RestockItemsRequest::mutable_supplier_id()
+inline ::std::string* PROTOBUF_NONNULL ProcessCustomerOrderResponse::mutable_message()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
-  ::std::string* _s = _internal_mutable_supplier_id();
-  // @@protoc_insertion_point(field_mutable:inventory.RestockItemsRequest.supplier_id)
+  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  ::std::string* _s = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:inventory.ProcessCustomerOrderResponse.message)
   return _s;
 }
-inline const ::std::string& RestockItemsRequest::_internal_supplier_id() const {
+inline const ::std::string& ProcessCustomerOrderResponse::_internal_message() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.supplier_id_.Get();
+  return _impl_.message_.Get();
 }
-inline void RestockItemsRequest::_internal_set_supplier_id(const ::std::string& value) {
+inline void ProcessCustomerOrderResponse::_internal_set_message(const ::std::string& value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.supplier_id_.Set(value, GetArena());
+  _impl_.message_.Set(value, GetArena());
 }
-inline ::std::string* PROTOBUF_NONNULL RestockItemsRequest::_internal_mutable_supplier_id() {
+inline ::std::string* PROTOBUF_NONNULL ProcessCustomerOrderResponse::_internal_mutable_message() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.supplier_id_.Mutable( GetArena());
+  return _impl_.message_.Mutable( GetArena());
 }
-inline ::std::string* PROTOBUF_NULLABLE RestockItemsRequest::release_supplier_id() {
+inline ::std::string* PROTOBUF_NULLABLE ProcessCustomerOrderResponse::release_message() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:inventory.RestockItemsRequest.supplier_id)
+  // @@protoc_insertion_point(field_release:inventory.ProcessCustomerOrderResponse.message)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  auto* released = _impl_.message_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.message_.Set("", GetArena());
+  }
+  return released;
+}
+inline void ProcessCustomerOrderResponse::set_allocated_message(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
+  }
+  _impl_.message_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.message_.IsDefault()) {
+    _impl_.message_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:inventory.ProcessCustomerOrderResponse.message)
+}
+
+// -------------------------------------------------------------------
+
+// RestockItemsOrderRequest
+
+// string order_id = 1;
+inline void RestockItemsOrderRequest::clear_order_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.order_id_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000002U);
+}
+inline const ::std::string& RestockItemsOrderRequest::order_id() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:inventory.RestockItemsOrderRequest.order_id)
+  return _internal_order_id();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void RestockItemsOrderRequest::set_order_id(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  _impl_.order_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:inventory.RestockItemsOrderRequest.order_id)
+}
+inline ::std::string* PROTOBUF_NONNULL RestockItemsOrderRequest::mutable_order_id()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
+  ::std::string* _s = _internal_mutable_order_id();
+  // @@protoc_insertion_point(field_mutable:inventory.RestockItemsOrderRequest.order_id)
+  return _s;
+}
+inline const ::std::string& RestockItemsOrderRequest::_internal_order_id() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.order_id_.Get();
+}
+inline void RestockItemsOrderRequest::_internal_set_order_id(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.order_id_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL RestockItemsOrderRequest::_internal_mutable_order_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.order_id_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE RestockItemsOrderRequest::release_order_id() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:inventory.RestockItemsOrderRequest.order_id)
   if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
     return nullptr;
   }
   ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
-  auto* released = _impl_.supplier_id_.Release();
+  auto* released = _impl_.order_id_.Release();
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.supplier_id_.Set("", GetArena());
+    _impl_.order_id_.Set("", GetArena());
   }
   return released;
 }
-inline void RestockItemsRequest::set_allocated_supplier_id(::std::string* PROTOBUF_NULLABLE value) {
+inline void RestockItemsOrderRequest::set_allocated_order_id(::std::string* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (value != nullptr) {
     SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   } else {
     ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
   }
-  _impl_.supplier_id_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.supplier_id_.IsDefault()) {
-    _impl_.supplier_id_.Set("", GetArena());
+  _impl_.order_id_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.order_id_.IsDefault()) {
+    _impl_.order_id_.Set("", GetArena());
   }
-  // @@protoc_insertion_point(field_set_allocated:inventory.RestockItemsRequest.supplier_id)
+  // @@protoc_insertion_point(field_set_allocated:inventory.RestockItemsOrderRequest.order_id)
 }
 
 // repeated .inventory.RestockItem items = 2;
-inline int RestockItemsRequest::_internal_items_size() const {
+inline int RestockItemsOrderRequest::_internal_items_size() const {
   return _internal_items().size();
 }
-inline int RestockItemsRequest::items_size() const {
+inline int RestockItemsOrderRequest::items_size() const {
   return _internal_items_size();
 }
-inline void RestockItemsRequest::clear_items() {
+inline void RestockItemsOrderRequest::clear_items() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.items_.Clear();
   ClearHasBitForRepeated(_impl_._has_bits_[0],
                   0x00000001U);
 }
-inline ::inventory::RestockItem* PROTOBUF_NONNULL RestockItemsRequest::mutable_items(int index)
+inline ::inventory::RestockItem* PROTOBUF_NONNULL RestockItemsOrderRequest::mutable_items(int index)
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_mutable:inventory.RestockItemsRequest.items)
+  // @@protoc_insertion_point(field_mutable:inventory.RestockItemsOrderRequest.items)
   return _internal_mutable_items()->Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>* PROTOBUF_NONNULL RestockItemsRequest::mutable_items()
+inline ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>* PROTOBUF_NONNULL RestockItemsOrderRequest::mutable_items()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
-  // @@protoc_insertion_point(field_mutable_list:inventory.RestockItemsRequest.items)
+  // @@protoc_insertion_point(field_mutable_list:inventory.RestockItemsOrderRequest.items)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   return _internal_mutable_items();
 }
-inline const ::inventory::RestockItem& RestockItemsRequest::items(int index) const
+inline const ::inventory::RestockItem& RestockItemsOrderRequest::items(int index) const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:inventory.RestockItemsRequest.items)
+  // @@protoc_insertion_point(field_get:inventory.RestockItemsOrderRequest.items)
   return _internal_items().Get(index);
 }
-inline ::inventory::RestockItem* PROTOBUF_NONNULL RestockItemsRequest::add_items()
+inline ::inventory::RestockItem* PROTOBUF_NONNULL RestockItemsOrderRequest::add_items()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::inventory::RestockItem* _add =
       _internal_mutable_items()->InternalAddWithArena(
           ::google::protobuf::MessageLite::internal_visibility(), GetArena());
   SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000001U);
-  // @@protoc_insertion_point(field_add:inventory.RestockItemsRequest.items)
+  // @@protoc_insertion_point(field_add:inventory.RestockItemsOrderRequest.items)
   return _add;
 }
-inline const ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>& RestockItemsRequest::items() const
+inline const ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>& RestockItemsOrderRequest::items() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_list:inventory.RestockItemsRequest.items)
+  // @@protoc_insertion_point(field_list:inventory.RestockItemsOrderRequest.items)
   return _internal_items();
 }
 inline const ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>&
-RestockItemsRequest::_internal_items() const {
+RestockItemsOrderRequest::_internal_items() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.items_;
 }
 inline ::google::protobuf::RepeatedPtrField<::inventory::RestockItem>* PROTOBUF_NONNULL
-RestockItemsRequest::_internal_mutable_items() {
+RestockItemsOrderRequest::_internal_mutable_items() {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return &_impl_.items_;
 }
@@ -4528,7 +4648,7 @@ inline void RestockItem::clear_quantity() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.quantity_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000020U);
+                  0x00000040U);
 }
 inline ::int32_t RestockItem::quantity() const {
   // @@protoc_insertion_point(field_get:inventory.RestockItem.quantity)
@@ -4536,7 +4656,7 @@ inline ::int32_t RestockItem::quantity() const {
 }
 inline void RestockItem::set_quantity(::int32_t value) {
   _internal_set_quantity(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000040U);
   // @@protoc_insertion_point(field_set:inventory.RestockItem.quantity)
 }
 inline ::int32_t RestockItem::_internal_quantity() const {
@@ -4548,161 +4668,242 @@ inline void RestockItem::_internal_set_quantity(::int32_t value) {
   _impl_.quantity_ = value;
 }
 
-// string mfd_date = 5;
-inline void RestockItem::clear_mfd_date() {
+// double unit_cost = 5;
+inline void RestockItem::clear_unit_cost() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.mfd_date_.ClearToEmpty();
+  _impl_.unit_cost_ = 0;
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000008U);
+                  0x00000020U);
 }
-inline const ::std::string& RestockItem::mfd_date() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+inline double RestockItem::unit_cost() const {
+  // @@protoc_insertion_point(field_get:inventory.RestockItem.unit_cost)
+  return _internal_unit_cost();
+}
+inline void RestockItem::set_unit_cost(double value) {
+  _internal_set_unit_cost(value);
+  SetHasBit(_impl_._has_bits_[0], 0x00000020U);
+  // @@protoc_insertion_point(field_set:inventory.RestockItem.unit_cost)
+}
+inline double RestockItem::_internal_unit_cost() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.unit_cost_;
+}
+inline void RestockItem::_internal_set_unit_cost(double value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.unit_cost_ = value;
+}
+
+// .google.protobuf.Timestamp mfd_date = 6;
+inline bool RestockItem::has_mfd_date() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000008U);
+  PROTOBUF_ASSUME(!value || _impl_.mfd_date_ != nullptr);
+  return value;
+}
+inline const ::google::protobuf::Timestamp& RestockItem::_internal_mfd_date() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::google::protobuf::Timestamp* p = _impl_.mfd_date_;
+  return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
+}
+inline const ::google::protobuf::Timestamp& RestockItem::mfd_date() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
   // @@protoc_insertion_point(field_get:inventory.RestockItem.mfd_date)
   return _internal_mfd_date();
 }
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void RestockItem::set_mfd_date(Arg_&& arg, Args_... args) {
+inline void RestockItem::unsafe_arena_set_allocated_mfd_date(
+    ::google::protobuf::Timestamp* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
-  _impl_.mfd_date_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:inventory.RestockItem.mfd_date)
-}
-inline ::std::string* PROTOBUF_NONNULL RestockItem::mutable_mfd_date()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
-  ::std::string* _s = _internal_mutable_mfd_date();
-  // @@protoc_insertion_point(field_mutable:inventory.RestockItem.mfd_date)
-  return _s;
-}
-inline const ::std::string& RestockItem::_internal_mfd_date() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.mfd_date_.Get();
-}
-inline void RestockItem::_internal_set_mfd_date(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.mfd_date_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL RestockItem::_internal_mutable_mfd_date() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.mfd_date_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE RestockItem::release_mfd_date() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:inventory.RestockItem.mfd_date)
-  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000008U)) {
-    return nullptr;
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.mfd_date_);
   }
-  ClearHasBit(_impl_._has_bits_[0], 0x00000008U);
-  auto* released = _impl_.mfd_date_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.mfd_date_.Set("", GetArena());
-  }
-  return released;
-}
-inline void RestockItem::set_allocated_mfd_date(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.mfd_date_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
   if (value != nullptr) {
     SetHasBit(_impl_._has_bits_[0], 0x00000008U);
   } else {
     ClearHasBit(_impl_._has_bits_[0], 0x00000008U);
   }
-  _impl_.mfd_date_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.mfd_date_.IsDefault()) {
-    _impl_.mfd_date_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:inventory.RestockItem.mfd_date)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:inventory.RestockItem.mfd_date)
 }
+inline ::google::protobuf::Timestamp* PROTOBUF_NULLABLE RestockItem::release_mfd_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
 
-// string expiry_date = 6;
-inline void RestockItem::clear_expiry_date() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.expiry_date_.ClearToEmpty();
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000010U);
-}
-inline const ::std::string& RestockItem::expiry_date() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:inventory.RestockItem.expiry_date)
-  return _internal_expiry_date();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void RestockItem::set_expiry_date(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
-  _impl_.expiry_date_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:inventory.RestockItem.expiry_date)
-}
-inline ::std::string* PROTOBUF_NONNULL RestockItem::mutable_expiry_date()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
-  ::std::string* _s = _internal_mutable_expiry_date();
-  // @@protoc_insertion_point(field_mutable:inventory.RestockItem.expiry_date)
-  return _s;
-}
-inline const ::std::string& RestockItem::_internal_expiry_date() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.expiry_date_.Get();
-}
-inline void RestockItem::_internal_set_expiry_date(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.expiry_date_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL RestockItem::_internal_mutable_expiry_date() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.expiry_date_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE RestockItem::release_expiry_date() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:inventory.RestockItem.expiry_date)
-  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000010U)) {
-    return nullptr;
-  }
-  ClearHasBit(_impl_._has_bits_[0], 0x00000010U);
-  auto* released = _impl_.expiry_date_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.expiry_date_.Set("", GetArena());
+  ClearHasBit(_impl_._has_bits_[0], 0x00000008U);
+  ::google::protobuf::Timestamp* released = _impl_.mfd_date_;
+  _impl_.mfd_date_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
   }
   return released;
 }
-inline void RestockItem::set_allocated_expiry_date(::std::string* PROTOBUF_NULLABLE value) {
+inline ::google::protobuf::Timestamp* PROTOBUF_NULLABLE RestockItem::unsafe_arena_release_mfd_date() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:inventory.RestockItem.mfd_date)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000008U);
+  ::google::protobuf::Timestamp* temp = _impl_.mfd_date_;
+  _impl_.mfd_date_ = nullptr;
+  return temp;
+}
+inline ::google::protobuf::Timestamp* PROTOBUF_NONNULL RestockItem::_internal_mutable_mfd_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.mfd_date_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Timestamp>(GetArena());
+    _impl_.mfd_date_ = reinterpret_cast<::google::protobuf::Timestamp*>(p);
+  }
+  return _impl_.mfd_date_;
+}
+inline ::google::protobuf::Timestamp* PROTOBUF_NONNULL RestockItem::mutable_mfd_date()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  ::google::protobuf::Timestamp* _msg = _internal_mutable_mfd_date();
+  // @@protoc_insertion_point(field_mutable:inventory.RestockItem.mfd_date)
+  return _msg;
+}
+inline void RestockItem::set_allocated_mfd_date(::google::protobuf::Timestamp* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.mfd_date_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000008U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000008U);
+  }
+
+  _impl_.mfd_date_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
+  // @@protoc_insertion_point(field_set_allocated:inventory.RestockItem.mfd_date)
+}
+
+// .google.protobuf.Timestamp expiry_date = 7;
+inline bool RestockItem::has_expiry_date() const {
+  bool value = CheckHasBit(_impl_._has_bits_[0], 0x00000010U);
+  PROTOBUF_ASSUME(!value || _impl_.expiry_date_ != nullptr);
+  return value;
+}
+inline const ::google::protobuf::Timestamp& RestockItem::_internal_expiry_date() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  const ::google::protobuf::Timestamp* p = _impl_.expiry_date_;
+  return p != nullptr ? *p : reinterpret_cast<const ::google::protobuf::Timestamp&>(::google::protobuf::_Timestamp_default_instance_);
+}
+inline const ::google::protobuf::Timestamp& RestockItem::expiry_date() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:inventory.RestockItem.expiry_date)
+  return _internal_expiry_date();
+}
+inline void RestockItem::unsafe_arena_set_allocated_expiry_date(
+    ::google::protobuf::Timestamp* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.expiry_date_);
+  }
+  _impl_.expiry_date_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
   if (value != nullptr) {
     SetHasBit(_impl_._has_bits_[0], 0x00000010U);
   } else {
     ClearHasBit(_impl_._has_bits_[0], 0x00000010U);
   }
-  _impl_.expiry_date_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.expiry_date_.IsDefault()) {
-    _impl_.expiry_date_.Set("", GetArena());
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:inventory.RestockItem.expiry_date)
+}
+inline ::google::protobuf::Timestamp* PROTOBUF_NULLABLE RestockItem::release_expiry_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000010U);
+  ::google::protobuf::Timestamp* released = _impl_.expiry_date_;
+  _impl_.expiry_date_ = nullptr;
+  if (::google::protobuf::internal::DebugHardenForceCopyInRelease()) {
+    auto* old = reinterpret_cast<::google::protobuf::MessageLite*>(released);
+    released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    if (GetArena() == nullptr) {
+      delete old;
+    }
+  } else {
+    if (GetArena() != nullptr) {
+      released = ::google::protobuf::internal::DuplicateIfNonNull(released);
+    }
   }
+  return released;
+}
+inline ::google::protobuf::Timestamp* PROTOBUF_NULLABLE RestockItem::unsafe_arena_release_expiry_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:inventory.RestockItem.expiry_date)
+
+  ClearHasBit(_impl_._has_bits_[0], 0x00000010U);
+  ::google::protobuf::Timestamp* temp = _impl_.expiry_date_;
+  _impl_.expiry_date_ = nullptr;
+  return temp;
+}
+inline ::google::protobuf::Timestamp* PROTOBUF_NONNULL RestockItem::_internal_mutable_expiry_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.expiry_date_ == nullptr) {
+    auto* p = ::google::protobuf::Message::DefaultConstruct<::google::protobuf::Timestamp>(GetArena());
+    _impl_.expiry_date_ = reinterpret_cast<::google::protobuf::Timestamp*>(p);
+  }
+  return _impl_.expiry_date_;
+}
+inline ::google::protobuf::Timestamp* PROTOBUF_NONNULL RestockItem::mutable_expiry_date()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  ::google::protobuf::Timestamp* _msg = _internal_mutable_expiry_date();
+  // @@protoc_insertion_point(field_mutable:inventory.RestockItem.expiry_date)
+  return _msg;
+}
+inline void RestockItem::set_allocated_expiry_date(::google::protobuf::Timestamp* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::Arena* message_arena = GetArena();
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (message_arena == nullptr) {
+    delete reinterpret_cast<::google::protobuf::MessageLite*>(_impl_.expiry_date_);
+  }
+
+  if (value != nullptr) {
+    ::google::protobuf::Arena* submessage_arena = reinterpret_cast<::google::protobuf::Message*>(value)->GetArena();
+    if (message_arena != submessage_arena) {
+      value = ::google::protobuf::internal::GetOwnedMessage(message_arena, value, submessage_arena);
+    }
+    SetHasBit(_impl_._has_bits_[0], 0x00000010U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000010U);
+  }
+
+  _impl_.expiry_date_ = reinterpret_cast<::google::protobuf::Timestamp*>(value);
   // @@protoc_insertion_point(field_set_allocated:inventory.RestockItem.expiry_date)
 }
 
 // -------------------------------------------------------------------
 
-// RestockItemsResponse
+// RestockItemsOrderResponse
 
 // bool success = 1;
-inline void RestockItemsResponse::clear_success() {
+inline void RestockItemsOrderResponse::clear_success() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.success_ = false;
   ClearHasBit(_impl_._has_bits_[0],
                   0x00000001U);
 }
-inline bool RestockItemsResponse::success() const {
-  // @@protoc_insertion_point(field_get:inventory.RestockItemsResponse.success)
+inline bool RestockItemsOrderResponse::success() const {
+  // @@protoc_insertion_point(field_get:inventory.RestockItemsOrderResponse.success)
   return _internal_success();
 }
-inline void RestockItemsResponse::set_success(bool value) {
+inline void RestockItemsOrderResponse::set_success(bool value) {
   _internal_set_success(value);
   SetHasBit(_impl_._has_bits_[0], 0x00000001U);
-  // @@protoc_insertion_point(field_set:inventory.RestockItemsResponse.success)
+  // @@protoc_insertion_point(field_set:inventory.RestockItemsOrderResponse.success)
 }
-inline bool RestockItemsResponse::_internal_success() const {
+inline bool RestockItemsOrderResponse::_internal_success() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
   return _impl_.success_;
 }
-inline void RestockItemsResponse::_internal_set_success(bool value) {
+inline void RestockItemsOrderResponse::_internal_set_success(bool value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.success_ = value;
 }
@@ -4778,77 +4979,12 @@ inline void ReportJobStatusRequest::set_allocated_order_id(::std::string* PROTOB
   // @@protoc_insertion_point(field_set_allocated:inventory.ReportJobStatusRequest.order_id)
 }
 
-// string robot_id = 2;
-inline void ReportJobStatusRequest::clear_robot_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.robot_id_.ClearToEmpty();
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000002U);
-}
-inline const ::std::string& ReportJobStatusRequest::robot_id() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:inventory.ReportJobStatusRequest.robot_id)
-  return _internal_robot_id();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void ReportJobStatusRequest::set_robot_id(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
-  _impl_.robot_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:inventory.ReportJobStatusRequest.robot_id)
-}
-inline ::std::string* PROTOBUF_NONNULL ReportJobStatusRequest::mutable_robot_id()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
-  ::std::string* _s = _internal_mutable_robot_id();
-  // @@protoc_insertion_point(field_mutable:inventory.ReportJobStatusRequest.robot_id)
-  return _s;
-}
-inline const ::std::string& ReportJobStatusRequest::_internal_robot_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.robot_id_.Get();
-}
-inline void ReportJobStatusRequest::_internal_set_robot_id(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.robot_id_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL ReportJobStatusRequest::_internal_mutable_robot_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.robot_id_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE ReportJobStatusRequest::release_robot_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:inventory.ReportJobStatusRequest.robot_id)
-  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
-    return nullptr;
-  }
-  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
-  auto* released = _impl_.robot_id_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.robot_id_.Set("", GetArena());
-  }
-  return released;
-}
-inline void ReportJobStatusRequest::set_allocated_robot_id(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
-  } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
-  }
-  _impl_.robot_id_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.robot_id_.IsDefault()) {
-    _impl_.robot_id_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:inventory.ReportJobStatusRequest.robot_id)
-}
-
 // string status = 3;
 inline void ReportJobStatusRequest::clear_status() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.status_.ClearToEmpty();
   ClearHasBit(_impl_._has_bits_[0],
-                  0x00000004U);
+                  0x00000002U);
 }
 inline const ::std::string& ReportJobStatusRequest::status() const
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
@@ -4858,13 +4994,13 @@ inline const ::std::string& ReportJobStatusRequest::status() const
 template <typename Arg_, typename... Args_>
 PROTOBUF_ALWAYS_INLINE void ReportJobStatusRequest::set_status(Arg_&& arg, Args_... args) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   _impl_.status_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
   // @@protoc_insertion_point(field_set:inventory.ReportJobStatusRequest.status)
 }
 inline ::std::string* PROTOBUF_NONNULL ReportJobStatusRequest::mutable_status()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   ::std::string* _s = _internal_mutable_status();
   // @@protoc_insertion_point(field_mutable:inventory.ReportJobStatusRequest.status)
   return _s;
@@ -4884,10 +5020,10 @@ inline ::std::string* PROTOBUF_NONNULL ReportJobStatusRequest::_internal_mutable
 inline ::std::string* PROTOBUF_NULLABLE ReportJobStatusRequest::release_status() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   // @@protoc_insertion_point(field_release:inventory.ReportJobStatusRequest.status)
-  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000004U)) {
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000002U)) {
     return nullptr;
   }
-  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
   auto* released = _impl_.status_.Release();
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
     _impl_.status_.Set("", GetArena());
@@ -4897,9 +5033,9 @@ inline ::std::string* PROTOBUF_NULLABLE ReportJobStatusRequest::release_status()
 inline void ReportJobStatusRequest::set_allocated_status(::std::string* PROTOBUF_NULLABLE value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+    SetHasBit(_impl_._has_bits_[0], 0x00000002U);
   } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+    ClearHasBit(_impl_._has_bits_[0], 0x00000002U);
   }
   _impl_.status_.SetAllocated(value, GetArena());
   if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.status_.IsDefault()) {
@@ -4908,36 +5044,101 @@ inline void ReportJobStatusRequest::set_allocated_status(::std::string* PROTOBUF
   // @@protoc_insertion_point(field_set_allocated:inventory.ReportJobStatusRequest.status)
 }
 
-// map<string, int32> items = 4;
-inline int ReportJobStatusRequest::_internal_items_size() const {
-  return _internal_items().size();
+// map<string, int32> processed_items = 4;
+inline int ReportJobStatusRequest::_internal_processed_items_size() const {
+  return _internal_processed_items().size();
 }
-inline int ReportJobStatusRequest::items_size() const {
-  return _internal_items_size();
+inline int ReportJobStatusRequest::processed_items_size() const {
+  return _internal_processed_items_size();
 }
-inline void ReportJobStatusRequest::clear_items() {
+inline void ReportJobStatusRequest::clear_processed_items() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.items_.Clear();
+  _impl_.processed_items_.Clear();
   ClearHasBitForRepeated(_impl_._has_bits_[0],
                   0x00000008U);
 }
-inline const ::google::protobuf::Map<::std::string, ::int32_t>& ReportJobStatusRequest::_internal_items() const {
+inline const ::google::protobuf::Map<::std::string, ::int32_t>& ReportJobStatusRequest::_internal_processed_items() const {
   ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.items_.GetMap();
+  return _impl_.processed_items_.GetMap();
 }
-inline const ::google::protobuf::Map<::std::string, ::int32_t>& ReportJobStatusRequest::items() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_map:inventory.ReportJobStatusRequest.items)
-  return _internal_items();
+inline const ::google::protobuf::Map<::std::string, ::int32_t>& ReportJobStatusRequest::processed_items() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_map:inventory.ReportJobStatusRequest.processed_items)
+  return _internal_processed_items();
 }
-inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL ReportJobStatusRequest::_internal_mutable_items() {
+inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL ReportJobStatusRequest::_internal_mutable_processed_items() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.items_.MutableMap();
+  return _impl_.processed_items_.MutableMap();
 }
-inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL ReportJobStatusRequest::mutable_items()
+inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL ReportJobStatusRequest::mutable_processed_items()
     ABSL_ATTRIBUTE_LIFETIME_BOUND {
   SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000008U);
-  // @@protoc_insertion_point(field_mutable_map:inventory.ReportJobStatusRequest.items)
-  return _internal_mutable_items();
+  // @@protoc_insertion_point(field_mutable_map:inventory.ReportJobStatusRequest.processed_items)
+  return _internal_mutable_processed_items();
+}
+
+// string order_type = 5;
+inline void ReportJobStatusRequest::clear_order_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.order_type_.ClearToEmpty();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000004U);
+}
+inline const ::std::string& ReportJobStatusRequest::order_type() const
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  // @@protoc_insertion_point(field_get:inventory.ReportJobStatusRequest.order_type)
+  return _internal_order_type();
+}
+template <typename Arg_, typename... Args_>
+PROTOBUF_ALWAYS_INLINE void ReportJobStatusRequest::set_order_type(Arg_&& arg, Args_... args) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  _impl_.order_type_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
+  // @@protoc_insertion_point(field_set:inventory.ReportJobStatusRequest.order_type)
+}
+inline ::std::string* PROTOBUF_NONNULL ReportJobStatusRequest::mutable_order_type()
+    ABSL_ATTRIBUTE_LIFETIME_BOUND {
+  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  ::std::string* _s = _internal_mutable_order_type();
+  // @@protoc_insertion_point(field_mutable:inventory.ReportJobStatusRequest.order_type)
+  return _s;
+}
+inline const ::std::string& ReportJobStatusRequest::_internal_order_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.order_type_.Get();
+}
+inline void ReportJobStatusRequest::_internal_set_order_type(const ::std::string& value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.order_type_.Set(value, GetArena());
+}
+inline ::std::string* PROTOBUF_NONNULL ReportJobStatusRequest::_internal_mutable_order_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  return _impl_.order_type_.Mutable( GetArena());
+}
+inline ::std::string* PROTOBUF_NULLABLE ReportJobStatusRequest::release_order_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  // @@protoc_insertion_point(field_release:inventory.ReportJobStatusRequest.order_type)
+  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000004U)) {
+    return nullptr;
+  }
+  ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  auto* released = _impl_.order_type_.Release();
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
+    _impl_.order_type_.Set("", GetArena());
+  }
+  return released;
+}
+inline void ReportJobStatusRequest::set_allocated_order_type(::std::string* PROTOBUF_NULLABLE value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (value != nullptr) {
+    SetHasBit(_impl_._has_bits_[0], 0x00000004U);
+  } else {
+    ClearHasBit(_impl_._has_bits_[0], 0x00000004U);
+  }
+  _impl_.order_type_.SetAllocated(value, GetArena());
+  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.order_type_.IsDefault()) {
+    _impl_.order_type_.Set("", GetArena());
+  }
+  // @@protoc_insertion_point(field_set_allocated:inventory.ReportJobStatusRequest.order_type)
 }
 
 // -------------------------------------------------------------------
@@ -4967,262 +5168,6 @@ inline bool ReportJobStatusResponse::_internal_success() const {
 inline void ReportJobStatusResponse::_internal_set_success(bool value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.success_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// CheckoutRequest
-
-// string order_id = 1;
-inline void CheckoutRequest::clear_order_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.order_id_.ClearToEmpty();
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000001U);
-}
-inline const ::std::string& CheckoutRequest::order_id() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:inventory.CheckoutRequest.order_id)
-  return _internal_order_id();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void CheckoutRequest::set_order_id(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
-  _impl_.order_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:inventory.CheckoutRequest.order_id)
-}
-inline ::std::string* PROTOBUF_NONNULL CheckoutRequest::mutable_order_id()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
-  ::std::string* _s = _internal_mutable_order_id();
-  // @@protoc_insertion_point(field_mutable:inventory.CheckoutRequest.order_id)
-  return _s;
-}
-inline const ::std::string& CheckoutRequest::_internal_order_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.order_id_.Get();
-}
-inline void CheckoutRequest::_internal_set_order_id(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.order_id_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL CheckoutRequest::_internal_mutable_order_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.order_id_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE CheckoutRequest::release_order_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:inventory.CheckoutRequest.order_id)
-  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
-    return nullptr;
-  }
-  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
-  auto* released = _impl_.order_id_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.order_id_.Set("", GetArena());
-  }
-  return released;
-}
-inline void CheckoutRequest::set_allocated_order_id(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
-  } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
-  }
-  _impl_.order_id_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.order_id_.IsDefault()) {
-    _impl_.order_id_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:inventory.CheckoutRequest.order_id)
-}
-
-// map<string, int32> items = 2;
-inline int CheckoutRequest::_internal_items_size() const {
-  return _internal_items().size();
-}
-inline int CheckoutRequest::items_size() const {
-  return _internal_items_size();
-}
-inline void CheckoutRequest::clear_items() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.items_.Clear();
-  ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00000002U);
-}
-inline const ::google::protobuf::Map<::std::string, ::int32_t>& CheckoutRequest::_internal_items() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.items_.GetMap();
-}
-inline const ::google::protobuf::Map<::std::string, ::int32_t>& CheckoutRequest::items() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_map:inventory.CheckoutRequest.items)
-  return _internal_items();
-}
-inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL CheckoutRequest::_internal_mutable_items() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.items_.MutableMap();
-}
-inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL CheckoutRequest::mutable_items()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000002U);
-  // @@protoc_insertion_point(field_mutable_map:inventory.CheckoutRequest.items)
-  return _internal_mutable_items();
-}
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// CheckoutResponse
-
-// string order_id = 1;
-inline void CheckoutResponse::clear_order_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.order_id_.ClearToEmpty();
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000001U);
-}
-inline const ::std::string& CheckoutResponse::order_id() const
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_get:inventory.CheckoutResponse.order_id)
-  return _internal_order_id();
-}
-template <typename Arg_, typename... Args_>
-PROTOBUF_ALWAYS_INLINE void CheckoutResponse::set_order_id(Arg_&& arg, Args_... args) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
-  _impl_.order_id_.Set(static_cast<Arg_&&>(arg), args..., GetArena());
-  // @@protoc_insertion_point(field_set:inventory.CheckoutResponse.order_id)
-}
-inline ::std::string* PROTOBUF_NONNULL CheckoutResponse::mutable_order_id()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBit(_impl_._has_bits_[0], 0x00000001U);
-  ::std::string* _s = _internal_mutable_order_id();
-  // @@protoc_insertion_point(field_mutable:inventory.CheckoutResponse.order_id)
-  return _s;
-}
-inline const ::std::string& CheckoutResponse::_internal_order_id() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.order_id_.Get();
-}
-inline void CheckoutResponse::_internal_set_order_id(const ::std::string& value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.order_id_.Set(value, GetArena());
-}
-inline ::std::string* PROTOBUF_NONNULL CheckoutResponse::_internal_mutable_order_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.order_id_.Mutable( GetArena());
-}
-inline ::std::string* PROTOBUF_NULLABLE CheckoutResponse::release_order_id() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  // @@protoc_insertion_point(field_release:inventory.CheckoutResponse.order_id)
-  if (!CheckHasBit(_impl_._has_bits_[0], 0x00000001U)) {
-    return nullptr;
-  }
-  ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
-  auto* released = _impl_.order_id_.Release();
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString()) {
-    _impl_.order_id_.Set("", GetArena());
-  }
-  return released;
-}
-inline void CheckoutResponse::set_allocated_order_id(::std::string* PROTOBUF_NULLABLE value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  if (value != nullptr) {
-    SetHasBit(_impl_._has_bits_[0], 0x00000001U);
-  } else {
-    ClearHasBit(_impl_._has_bits_[0], 0x00000001U);
-  }
-  _impl_.order_id_.SetAllocated(value, GetArena());
-  if (::google::protobuf::internal::DebugHardenForceCopyDefaultString() && _impl_.order_id_.IsDefault()) {
-    _impl_.order_id_.Set("", GetArena());
-  }
-  // @@protoc_insertion_point(field_set_allocated:inventory.CheckoutResponse.order_id)
-}
-
-// map<string, int32> items = 2;
-inline int CheckoutResponse::_internal_items_size() const {
-  return _internal_items().size();
-}
-inline int CheckoutResponse::items_size() const {
-  return _internal_items_size();
-}
-inline void CheckoutResponse::clear_items() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.items_.Clear();
-  ClearHasBitForRepeated(_impl_._has_bits_[0],
-                  0x00000008U);
-}
-inline const ::google::protobuf::Map<::std::string, ::int32_t>& CheckoutResponse::_internal_items() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.items_.GetMap();
-}
-inline const ::google::protobuf::Map<::std::string, ::int32_t>& CheckoutResponse::items() const ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  // @@protoc_insertion_point(field_map:inventory.CheckoutResponse.items)
-  return _internal_items();
-}
-inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL CheckoutResponse::_internal_mutable_items() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  return _impl_.items_.MutableMap();
-}
-inline ::google::protobuf::Map<::std::string, ::int32_t>* PROTOBUF_NONNULL CheckoutResponse::mutable_items()
-    ABSL_ATTRIBUTE_LIFETIME_BOUND {
-  SetHasBitForRepeated(_impl_._has_bits_[0], 0x00000008U);
-  // @@protoc_insertion_point(field_mutable_map:inventory.CheckoutResponse.items)
-  return _internal_mutable_items();
-}
-
-// bool success = 3;
-inline void CheckoutResponse::clear_success() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.success_ = false;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000004U);
-}
-inline bool CheckoutResponse::success() const {
-  // @@protoc_insertion_point(field_get:inventory.CheckoutResponse.success)
-  return _internal_success();
-}
-inline void CheckoutResponse::set_success(bool value) {
-  _internal_set_success(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000004U);
-  // @@protoc_insertion_point(field_set:inventory.CheckoutResponse.success)
-}
-inline bool CheckoutResponse::_internal_success() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.success_;
-}
-inline void CheckoutResponse::_internal_set_success(bool value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.success_ = value;
-}
-
-// double total_price = 4;
-inline void CheckoutResponse::clear_total_price() {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.total_price_ = 0;
-  ClearHasBit(_impl_._has_bits_[0],
-                  0x00000002U);
-}
-inline double CheckoutResponse::total_price() const {
-  // @@protoc_insertion_point(field_get:inventory.CheckoutResponse.total_price)
-  return _internal_total_price();
-}
-inline void CheckoutResponse::set_total_price(double value) {
-  _internal_set_total_price(value);
-  SetHasBit(_impl_._has_bits_[0], 0x00000002U);
-  // @@protoc_insertion_point(field_set:inventory.CheckoutResponse.total_price)
-}
-inline double CheckoutResponse::_internal_total_price() const {
-  ::google::protobuf::internal::TSanRead(&_impl_);
-  return _impl_.total_price_;
-}
-inline void CheckoutResponse::_internal_set_total_price(double value) {
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  _impl_.total_price_ = value;
 }
 
 #ifdef __GNUC__

@@ -2,12 +2,13 @@ syntax = "proto3";
 
 package pricing;
 
-option go_package = "./proto";
+option go_package = "auto_grocery/pricing/proto;pricingpb";
 
 service PricingService {
   rpc GetPrice (GetPriceRequest) returns (GetPriceResponse);
   rpc CreateItem (CreateItemRequest) returns (CreateItemResponse);
   rpc CalculateBill (CalculateBillRequest) returns (CalculateBillResponse);
+  rpc UpdateStockMetrics (UpdateStockMetricsRequest) returns (UpdateStockMetricsResponse);
 }
 
 message GetPriceRequest {
@@ -45,7 +46,7 @@ message CalculateBillRequest {
 message LineItem {
     string sku = 1;
     string name = 2;
-    double unit_price = 3; 
+    double unit_price = 3;
     int32 quantity = 4;
     double total_price = 5; 
 }
@@ -53,4 +54,21 @@ message LineItem {
 message CalculateBillResponse {
     repeated LineItem items = 1;
     double grand_total = 2; 
+}
+
+
+message StockMetric {
+    string sku = 1;
+    int32 quantity = 2;
+    double unit_cost = 3;
+}
+
+message UpdateStockMetricsRequest {
+    repeated StockMetric updates = 1;
+}
+
+
+message UpdateStockMetricsResponse {
+    bool success = 1;
+    int32 updated_count = 2; 
 }

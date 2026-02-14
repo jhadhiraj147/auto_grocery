@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"auto_grocery/ordering/internal/store"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -12,6 +13,7 @@ type RegisterHandler struct {
 	Store *store.ClientStore
 }
 
+// ServeHTTP registers a new smart client device account.
 func (h *RegisterHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var req struct {
 		DeviceID string `json:"device_id"`

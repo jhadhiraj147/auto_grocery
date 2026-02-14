@@ -15,6 +15,7 @@ const (
 	RoleKey ContextKey = "role"
 )
 
+// AuthMiddleware validates access tokens and injects user context for protected endpoints.
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
@@ -47,6 +48,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 	})
 }
 
+// InternalMiddleware validates internal service-to-service secret headers.
 func InternalMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		secret := os.Getenv("INTERNAL_SECRET")
@@ -58,7 +60,7 @@ func InternalMiddleware(next http.Handler) http.Handler {
 
 		apiKey := r.Header.Get("X-Internal-Secret")
 		if apiKey != secret {
-			log.Printf("⚠️ Unauthorized internal access attempt. Key used: %s", apiKey)
+			log.Printf("[ordering-auth] WARN unauthorized internal access attempt key=%s", apiKey)
 			http.Error(w, "Unauthorized: Invalid Internal Key", http.StatusUnauthorized)
 			return
 		}

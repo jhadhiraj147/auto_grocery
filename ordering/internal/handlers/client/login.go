@@ -15,6 +15,7 @@ type LoginHandler struct {
 	Store *store.ClientStore
 }
 
+// ServeHTTP authenticates a smart client device and returns access/refresh JWT tokens.
 func (h *LoginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var req struct {
 		DeviceID string `json:"device_id"`

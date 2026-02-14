@@ -1,0 +1,1 @@
+ALTER TABLE restock_orders ADD COLUMN total_cost NUMERIC(10,2) DEFAULT 0.00;

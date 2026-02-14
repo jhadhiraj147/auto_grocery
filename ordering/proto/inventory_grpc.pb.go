@@ -4,7 +4,7 @@
 // - protoc             v6.33.4
 // source: ordering/proto/inventory.proto
 
-package proto
+package inventorypb
 
 import (
 	context "context"
@@ -19,13 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	InventoryService_CheckAvailability_FullMethodName   = "/inventory.InventoryService/CheckAvailability"
-	InventoryService_ReserveItems_FullMethodName        = "/inventory.InventoryService/ReserveItems"
-	InventoryService_ReleaseItems_FullMethodName        = "/inventory.InventoryService/ReleaseItems"
-	InventoryService_RestockItems_FullMethodName        = "/inventory.InventoryService/RestockItems"
-	InventoryService_ReportJobStatus_FullMethodName     = "/inventory.InventoryService/ReportJobStatus"
-	InventoryService_AssignRobots_FullMethodName        = "/inventory.InventoryService/AssignRobots"
-	InventoryService_GetInventoryMetrics_FullMethodName = "/inventory.InventoryService/GetInventoryMetrics"
+	InventoryService_CheckAvailability_FullMethodName    = "/inventory.InventoryService/CheckAvailability"
+	InventoryService_ReserveItems_FullMethodName         = "/inventory.InventoryService/ReserveItems"
+	InventoryService_ReleaseItems_FullMethodName         = "/inventory.InventoryService/ReleaseItems"
+	InventoryService_RestockItemsOrder_FullMethodName    = "/inventory.InventoryService/RestockItemsOrder"
+	InventoryService_ProcessCustomerOrder_FullMethodName = "/inventory.InventoryService/ProcessCustomerOrder"
+	InventoryService_ReportJobStatus_FullMethodName      = "/inventory.InventoryService/ReportJobStatus"
 )
 
 // InventoryServiceClient is the client API for InventoryService service.
@@ -35,10 +34,9 @@ type InventoryServiceClient interface {
 	CheckAvailability(ctx context.Context, in *CheckAvailabilityRequest, opts ...grpc.CallOption) (*CheckAvailabilityResponse, error)
 	ReserveItems(ctx context.Context, in *ReserveItemsRequest, opts ...grpc.CallOption) (*ReserveItemsResponse, error)
 	ReleaseItems(ctx context.Context, in *ReleaseItemsRequest, opts ...grpc.CallOption) (*ReleaseItemsResponse, error)
-	RestockItems(ctx context.Context, in *RestockItemsRequest, opts ...grpc.CallOption) (*RestockItemsResponse, error)
+	RestockItemsOrder(ctx context.Context, in *RestockItemsOrderRequest, opts ...grpc.CallOption) (*RestockItemsOrderResponse, error)
+	ProcessCustomerOrder(ctx context.Context, in *ProcessCustomerOrderRequest, opts ...grpc.CallOption) (*ProcessCustomerOrderResponse, error)
 	ReportJobStatus(ctx context.Context, in *ReportJobStatusRequest, opts ...grpc.CallOption) (*ReportJobStatusResponse, error)
-	AssignRobots(ctx context.Context, in *AssignRequest, opts ...grpc.CallOption) (*AssignResponse, error)
-	GetInventoryMetrics(ctx context.Context, in *GetInventoryMetricsRequest, opts ...grpc.CallOption) (*GetInventoryMetricsResponse, error)
 }
 
 type inventoryServiceClient struct {
@@ -79,10 +77,20 @@ func (c *inventoryServiceClient) ReleaseItems(ctx context.Context, in *ReleaseIt
 	return out, nil
 }
 
-func (c *inventoryServiceClient) RestockItems(ctx context.Context, in *RestockItemsRequest, opts ...grpc.CallOption) (*RestockItemsResponse, error) {
+func (c *inventoryServiceClient) RestockItemsOrder(ctx context.Context, in *RestockItemsOrderRequest, opts ...grpc.CallOption) (*RestockItemsOrderResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RestockItemsResponse)
-	err := c.cc.Invoke(ctx, InventoryService_RestockItems_FullMethodName, in, out, cOpts...)
+	out := new(RestockItemsOrderResponse)
+	err := c.cc.Invoke(ctx, InventoryService_RestockItemsOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *inventoryServiceClient) ProcessCustomerOrder(ctx context.Context, in *ProcessCustomerOrderRequest, opts ...grpc.CallOption) (*ProcessCustomerOrderResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ProcessCustomerOrderResponse)
+	err := c.cc.Invoke(ctx, InventoryService_ProcessCustomerOrder_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -99,26 +107,6 @@ func (c *inventoryServiceClient) ReportJobStatus(ctx context.Context, in *Report
 	return out, nil
 }
 
-func (c *inventoryServiceClient) AssignRobots(ctx context.Context, in *AssignRequest, opts ...grpc.CallOption) (*AssignResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AssignResponse)
-	err := c.cc.Invoke(ctx, InventoryService_AssignRobots_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *inventoryServiceClient) GetInventoryMetrics(ctx context.Context, in *GetInventoryMetricsRequest, opts ...grpc.CallOption) (*GetInventoryMetricsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetInventoryMetricsResponse)
-	err := c.cc.Invoke(ctx, InventoryService_GetInventoryMetrics_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // InventoryServiceServer is the server API for InventoryService service.
 // All implementations must embed UnimplementedInventoryServiceServer
 // for forward compatibility.
@@ -126,10 +114,9 @@ type InventoryServiceServer interface {
 	CheckAvailability(context.Context, *CheckAvailabilityRequest) (*CheckAvailabilityResponse, error)
 	ReserveItems(context.Context, *ReserveItemsRequest) (*ReserveItemsResponse, error)
 	ReleaseItems(context.Context, *ReleaseItemsRequest) (*ReleaseItemsResponse, error)
-	RestockItems(context.Context, *RestockItemsRequest) (*RestockItemsResponse, error)
+	RestockItemsOrder(context.Context, *RestockItemsOrderRequest) (*RestockItemsOrderResponse, error)
+	ProcessCustomerOrder(context.Context, *ProcessCustomerOrderRequest) (*ProcessCustomerOrderResponse, error)
 	ReportJobStatus(context.Context, *ReportJobStatusRequest) (*ReportJobStatusResponse, error)
-	AssignRobots(context.Context, *AssignRequest) (*AssignResponse, error)
-	GetInventoryMetrics(context.Context, *GetInventoryMetricsRequest) (*GetInventoryMetricsResponse, error)
 	mustEmbedUnimplementedInventoryServiceServer()
 }
 
@@ -149,17 +136,14 @@ func (UnimplementedInventoryServiceServer) ReserveItems(context.Context, *Reserv
 func (UnimplementedInventoryServiceServer) ReleaseItems(context.Context, *ReleaseItemsRequest) (*ReleaseItemsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ReleaseItems not implemented")
 }
-func (UnimplementedInventoryServiceServer) RestockItems(context.Context, *RestockItemsRequest) (*RestockItemsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method RestockItems not implemented")
+func (UnimplementedInventoryServiceServer) RestockItemsOrder(context.Context, *RestockItemsOrderRequest) (*RestockItemsOrderResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RestockItemsOrder not implemented")
+}
+func (UnimplementedInventoryServiceServer) ProcessCustomerOrder(context.Context, *ProcessCustomerOrderRequest) (*ProcessCustomerOrderResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ProcessCustomerOrder not implemented")
 }
 func (UnimplementedInventoryServiceServer) ReportJobStatus(context.Context, *ReportJobStatusRequest) (*ReportJobStatusResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ReportJobStatus not implemented")
-}
-func (UnimplementedInventoryServiceServer) AssignRobots(context.Context, *AssignRequest) (*AssignResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method AssignRobots not implemented")
-}
-func (UnimplementedInventoryServiceServer) GetInventoryMetrics(context.Context, *GetInventoryMetricsRequest) (*GetInventoryMetricsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetInventoryMetrics not implemented")
 }
 func (UnimplementedInventoryServiceServer) mustEmbedUnimplementedInventoryServiceServer() {}
 func (UnimplementedInventoryServiceServer) testEmbeddedByValue()                          {}
@@ -236,20 +220,38 @@ func _InventoryService_ReleaseItems_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _InventoryService_RestockItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RestockItemsRequest)
+func _InventoryService_RestockItemsOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RestockItemsOrderRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(InventoryServiceServer).RestockItems(ctx, in)
+		return srv.(InventoryServiceServer).RestockItemsOrder(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: InventoryService_RestockItems_FullMethodName,
+		FullMethod: InventoryService_RestockItemsOrder_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InventoryServiceServer).RestockItems(ctx, req.(*RestockItemsRequest))
+		return srv.(InventoryServiceServer).RestockItemsOrder(ctx, req.(*RestockItemsOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InventoryService_ProcessCustomerOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProcessCustomerOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InventoryServiceServer).ProcessCustomerOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InventoryService_ProcessCustomerOrder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InventoryServiceServer).ProcessCustomerOrder(ctx, req.(*ProcessCustomerOrderRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,42 +270,6 @@ func _InventoryService_ReportJobStatus_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(InventoryServiceServer).ReportJobStatus(ctx, req.(*ReportJobStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InventoryService_AssignRobots_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AssignRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InventoryServiceServer).AssignRobots(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InventoryService_AssignRobots_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InventoryServiceServer).AssignRobots(ctx, req.(*AssignRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _InventoryService_GetInventoryMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetInventoryMetricsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(InventoryServiceServer).GetInventoryMetrics(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: InventoryService_GetInventoryMetrics_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InventoryServiceServer).GetInventoryMetrics(ctx, req.(*GetInventoryMetricsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -328,20 +294,16 @@ var InventoryService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _InventoryService_ReleaseItems_Handler,
 		},
 		{
-			MethodName: "RestockItems",
-			Handler:    _InventoryService_RestockItems_Handler,
+			MethodName: "RestockItemsOrder",
+			Handler:    _InventoryService_RestockItemsOrder_Handler,
+		},
+		{
+			MethodName: "ProcessCustomerOrder",
+			Handler:    _InventoryService_ProcessCustomerOrder_Handler,
 		},
 		{
 			MethodName: "ReportJobStatus",
 			Handler:    _InventoryService_ReportJobStatus_Handler,
-		},
-		{
-			MethodName: "AssignRobots",
-			Handler:    _InventoryService_AssignRobots_Handler,
-		},
-		{
-			MethodName: "GetInventoryMetrics",
-			Handler:    _InventoryService_GetInventoryMetrics_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -22,10 +22,12 @@ type ClientStore struct {
 	db *sql.DB
 }
 
+// NewClientStore constructs a client store backed by postgres.
 func NewClientStore(db *sql.DB) *ClientStore {
 	return &ClientStore{db: db}
 }
 
+// CreateSmartClient inserts a new smart client device record.
 func (s *ClientStore) CreateSmartClient(ctx context.Context, c SmartClient) error {
 	query := `
 		INSERT INTO smart_clients (device_id, email, phone, password_hash, card_info_enc)
@@ -46,6 +48,7 @@ func (s *ClientStore) CreateSmartClient(ctx context.Context, c SmartClient) erro
 	return nil
 }
 
+// GetSmartClient fetches a smart client by business device identifier.
 func (s *ClientStore) GetSmartClient(ctx context.Context, deviceID string) (*SmartClient, error) {
 	query := `
 		SELECT id, device_id, email, password_hash, card_info_enc, refresh_token, token_expiry
@@ -75,6 +78,7 @@ func (s *ClientStore) GetSmartClient(ctx context.Context, deviceID string) (*Sma
 	return &c, nil
 }
 
+// SetRefreshToken stores/updates a refresh token and expiry for a client device.
 func (s *ClientStore) SetRefreshToken(ctx context.Context, deviceID string, token string, expiry time.Time) error {
 	query := `
 		UPDATE smart_clients
