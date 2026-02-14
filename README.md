@@ -160,7 +160,66 @@ These `.env` files are intentionally committed with local/demo defaults (no exte
 
 ---
 
-## 7) Documentation Artifacts
+## 7) Docker Quick Start
+
+One-command stack (PostgreSQL, Redis, pricing, inventory, ordering, analytics, and 5 robot workers):
+
+```bash
+docker compose up --build -d
+```
+
+View logs:
+
+```bash
+docker compose logs -f ordering inventory pricing analytics
+docker compose logs -f robot-bread robot-meat robot-produce robot-dairy robot-party
+```
+
+Per-service logs (examples):
+
+```bash
+docker compose logs -f ordering
+docker compose logs -f inventory
+docker compose logs -f pricing
+docker compose logs -f analytics
+docker compose logs -f robot-bread
+docker compose logs -f robot-meat
+docker compose logs -f robot-produce
+docker compose logs -f robot-dairy
+docker compose logs -f robot-party
+```
+
+Stop and remove containers:
+
+```bash
+docker compose down
+```
+
+Reset data volumes (fresh DB + analytics CSV):
+
+```bash
+docker compose down -v
+```
+
+Notes:
+- HTTP API remains available at `http://localhost:5050`.
+- PostgreSQL and Redis are exposed on `localhost:5432` and `localhost:6379`.
+- Frontend Streamlit apps are still run locally (outside compose).
+- Frontend run order for demo: start Truck UI first to load stock, then start Client UI.
+
+Frontend sequence after Docker:
+1. Run `frontend/truck` and submit at least one restock order.
+2. Run `frontend/client` and place customer orders.
+
+Recommended for professor/grading:
+- Use Docker Compose for the fastest and most reproducible setup.
+- Use manual per-service startup only if step-by-step debugging is required.
+
+Manual mode remains fully supported in `HowToInstantiateServices.txt` (build + run each service one by one).
+
+---
+
+## 8) Documentation Artifacts
 
 Instantiation guide:
 - `HowToInstantiateServices.txt`
@@ -174,7 +233,7 @@ Per-service deep-dive guides:
 
 ---
 
-## 8) Quick Verification (Runtime)
+## 9) Quick Verification (Runtime)
 
 Example listener check:
 ```bash
@@ -188,7 +247,7 @@ lsof -nP -iTCP:5432 -iTCP:6379 -sTCP:ESTABLISHED
 
 ---
 
-## 9) Contributors
+## 10) Contributors
 
 - **Dhiraj Jha** — Inventory, DB (PostgreSQL + Redis), Pricing, Ordering
 - **Saugat Lamichhane** — Robot, Analytics, Debugging

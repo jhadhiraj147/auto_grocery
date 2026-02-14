@@ -1,0 +1,169 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: auto-grocery-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    container_name: auto-grocery-redis
+    command: ["redis-server", "--requirepass", "auto_grocery_cache"]
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "auto_grocery_cache", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  pricing:
+    build:
+      context: .
+      dockerfile: docker/pricing.Dockerfile
+    container_name: auto-grocery-pricing
+    environment:
+      DATABASE_URL: postgres://user_pricing_service_team:pricing_secure_v1@postgres:5432/db_pricing?sslmode=disable
+      PRICING_GRPC_ADDR: :50052
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "50052:50052"
+
+  inventory:
+    build:
+      context: .
+      dockerfile: docker/inventory.Dockerfile
+    container_name: auto-grocery-inventory
+    environment:
+      DATABASE_URL: postgres://user_inventory_service_team:inventory_secure_v1@postgres:5432/db_inventory?sslmode=disable
+      REDIS_ADDR: redis:6379
+      REDIS_PW: auto_grocery_cache
+      INTERNAL_SECRET: my-super-secure-production-key-999
+      INVENTORY_GRPC_ADDR: :50051
+      PRICING_GRPC_ADDR: pricing:50052
+      ROBOT_ZMQ_BIND_ADDR: tcp://*:5556
+      ORDERING_ORDER_WEBHOOK_URL: http://ordering:5050/internal/webhook/update-order
+      ORDERING_RESTOCK_WEBHOOK_URL: http://ordering:5050/internal/webhook/update-restock
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      pricing:
+        condition: service_started
+    ports:
+      - "50051:50051"
+
+  ordering:
+    build:
+      context: .
+      dockerfile: docker/ordering.Dockerfile
+    container_name: auto-grocery-ordering
+    environment:
+      DATABASE_URL: postgres://user_ordering_service_team:ordering_secure_v1@postgres:5432/db_ordering?sslmode=disable
+      ORDERING_HTTP_ADDR: :5050
+      INVENTORY_GRPC_ADDR: inventory:50051
+      ANALYTICS_ZMQ_BIND_ADDR: tcp://*:5557
+      INTERNAL_SECRET: my-super-secure-production-key-999
+      JWT_SECRET: my_super_secure_secret_key_change_me_in_prod
+    depends_on:
+      postgres:
+        condition: service_healthy
+      inventory:
+        condition: service_started
+    ports:
+      - "5050:5050"
+
+  analytics:
+    build:
+      context: .
+      dockerfile: docker/analytics.Dockerfile
+    container_name: auto-grocery-analytics
+    environment:
+      ANALYTICS_ZMQ_SUB_ADDR: tcp://ordering:5557
+      ANALYTICS_OUTPUT_CSV: /data/latency_data.csv
+    depends_on:
+      ordering:
+        condition: service_started
+    volumes:
+      - analytics_data:/data
+
+  robot-bread:
+    build:
+      context: .
+      dockerfile: docker/robots.Dockerfile
+    image: auto-grocery-robots:local
+    container_name: auto-grocery-robot-bread
+    environment:
+      INVENTORY_GRPC_ADDR: inventory:50051
+      ROBOT_ZMQ_SUB_ADDR: tcp://inventory:5556
+    command: ["bread"]
+    depends_on:
+      inventory:
+        condition: service_started
+
+  robot-meat:
+    image: auto-grocery-robots:local
+    pull_policy: never
+    container_name: auto-grocery-robot-meat
+    environment:
+      INVENTORY_GRPC_ADDR: inventory:50051
+      ROBOT_ZMQ_SUB_ADDR: tcp://inventory:5556
+    command: ["meat"]
+    depends_on:
+      inventory:
+        condition: service_started
+
+  robot-produce:
+    image: auto-grocery-robots:local
+    pull_policy: never
+    container_name: auto-grocery-robot-produce
+    environment:
+      INVENTORY_GRPC_ADDR: inventory:50051
+      ROBOT_ZMQ_SUB_ADDR: tcp://inventory:5556
+    command: ["produce"]
+    depends_on:
+      inventory:
+        condition: service_started
+
+  robot-dairy:
+    image: auto-grocery-robots:local
+    pull_policy: never
+    container_name: auto-grocery-robot-dairy
+    environment:
+      INVENTORY_GRPC_ADDR: inventory:50051
+      ROBOT_ZMQ_SUB_ADDR: tcp://inventory:5556
+    command: ["dairy"]
+    depends_on:
+      inventory:
+        condition: service_started
+
+  robot-party:
+    image: auto-grocery-robots:local
+    pull_policy: never
+    container_name: auto-grocery-robot-party
+    environment:
+      INVENTORY_GRPC_ADDR: inventory:50051
+      ROBOT_ZMQ_SUB_ADDR: tcp://inventory:5556
+    command: ["party"]
+    depends_on:
+      inventory:
+        condition: service_started
+
+volumes:
+  pgdata:
+  analytics_data:

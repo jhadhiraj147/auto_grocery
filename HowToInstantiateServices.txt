@@ -6,6 +6,21 @@ Purpose
 This guide explains how to set up and run the full Auto Grocery microservices system
 from scratch on a new machine.
 
+START HERE (DOCKER-FIRST, RECOMMENDED)
+--------------------------------------
+If you only need to run the project quickly and reliably:
+
+  cd <repo-root>
+  docker compose up --build -d
+
+Check status/logs:
+  docker compose ps
+  docker compose logs -f ordering inventory pricing analytics
+  docker compose logs -f robot-bread robot-meat robot-produce robot-dairy robot-party
+
+Stop:
+  docker compose down
+
 It includes:
 1) Tool/language installation checklist
 2) Database and Redis setup
@@ -13,6 +28,82 @@ It includes:
 4) Service build/start order
 5) Verification commands (ports + connections)
 6) Troubleshooting
+
+RUN MODES (WHICH ONE TO USE)
+-----------------------------
+Mode A (recommended for professor/grading): Docker Compose
+- One command to bring up backend + infra + workers
+- Consistent and reproducible environment across machines
+
+Mode B (optional fallback): Manual startup
+- Start each service one-by-one in separate terminals
+- Useful for debugging individual components
+
+
+--------------------------------------------------------------------------------
+QUICKEST PATH (DOCKER)
+--------------------------------------------------------------------------------
+If Docker Desktop is installed, you can run the full backend/worker stack with one command:
+
+  cd <repo-root>
+  docker compose up --build -d
+
+What this starts:
+- postgres (with auto DB/user/schema initialization)
+- redis (password-enabled)
+- pricing, inventory, ordering
+- analytics
+- robot workers: bread, meat, produce, dairy, party
+
+Verify:
+  docker compose ps
+  docker compose logs -f ordering inventory pricing analytics
+  docker compose logs -f robot-bread robot-meat robot-produce robot-dairy robot-party
+
+See logs per service (examples):
+  docker compose logs -f ordering
+  docker compose logs -f inventory
+  docker compose logs -f pricing
+  docker compose logs -f analytics
+  docker compose logs -f robot-bread
+  docker compose logs -f robot-meat
+  docker compose logs -f robot-produce
+  docker compose logs -f robot-dairy
+  docker compose logs -f robot-party
+
+Stop:
+  docker compose down
+
+Hard reset (recreate DB and analytics data):
+  docker compose down -v
+
+Note:
+- Frontend Streamlit apps are not part of compose and should still be run locally.
+
+AFTER DOCKER: RUN FRONTEND UIs (SEPARATE TERMINALS)
+----------------------------------------------------
+IMPORTANT ORDER FOR DEMO:
+1) Open Truck UI first and create at least one restock order (this loads inventory).
+2) Then open Client UI and place customer orders.
+
+Terminal A (Truck UI — run first):
+  cd <repo-root>/frontend/truck
+  python3 -m venv .venv
+  source .venv/bin/activate
+  pip install -r requirements.txt
+  streamlit run app.py
+
+Terminal B (Client UI — run after truck restock):
+  cd <repo-root>/frontend/client
+  python3 -m venv .venv
+  source .venv/bin/activate
+  pip install -r requirements.txt
+  streamlit run app.py
+
+UI URLs:
+- First Streamlit app usually opens at http://localhost:8501
+- Second Streamlit app usually opens at http://localhost:8502
+- Both connect to backend at http://localhost:5050
 
 
 --------------------------------------------------------------------------------
