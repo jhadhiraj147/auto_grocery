@@ -25,10 +25,12 @@ type Store struct {
 	db *sql.DB
 }
 
+// NewStore constructs a postgres-backed stock store.
 func NewStore(db *sql.DB) *Store {
 	return &Store{db: db}
 }
 
+// GetBatchItems returns stock metadata for a batch of SKUs.
 func (s *Store) GetBatchItems(ctx context.Context, skus []string) (map[string]*StockItem, error) {
 
 	query := `
@@ -56,6 +58,7 @@ func (s *Store) GetBatchItems(ctx context.Context, skus []string) (map[string]*S
 	return items, nil
 }
 
+// ReserveStock atomically decrements available stock and returns actual reserved quantities.
 func (s *Store) ReserveStock(ctx context.Context, requests map[string]int32) (map[string]int32, error) {
 	var skus []string
 	var counts []int32
@@ -101,6 +104,7 @@ func (s *Store) ReserveStock(ctx context.Context, requests map[string]int32) (ma
 	return results, nil
 }
 
+// ReleaseStock restores quantities for previously reserved SKUs.
 func (s *Store) ReleaseStock(ctx context.Context, returns map[string]int32) error {
 	var skus []string
 	var counts []int32
@@ -125,6 +129,7 @@ func (s *Store) ReleaseStock(ctx context.Context, returns map[string]int32) erro
 	return nil
 }
 
+// UpsertStock inserts new stock or increments existing quantity for a SKU.
 func (s *Store) UpsertStock(ctx context.Context, item StockItem) error {
 	query := `
         INSERT INTO available_stock (sku, name, aisle_type, quantity, unit_cost, mfd_date, expiry_date, last_updated)
@@ -151,6 +156,7 @@ func (s *Store) UpsertStock(ctx context.Context, item StockItem) error {
 	return nil
 }
 
+// ClearExpiredStock zeroes out quantities for expired inventory records.
 func (s *Store) ClearExpiredStock(ctx context.Context) (int64, error) {
 	query := `
         UPDATE available_stock
@@ -165,6 +171,7 @@ func (s *Store) ClearExpiredStock(ctx context.Context) (int64, error) {
 	return result.RowsAffected()
 }
 
+// GetAllStock returns sku-level quantity and unit cost for pricing sync.
 func (s *Store) GetAllStock(ctx context.Context) ([]StockItem, error) {
 	query := `SELECT sku, quantity, unit_cost FROM available_stock`
 	rows, err := s.db.QueryContext(ctx, query)

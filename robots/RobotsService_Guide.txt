@@ -1,0 +1,139 @@
+ROBOTS MICROSERVICE — THOROUGH HIGH-LEVEL GUIDE
+================================================
+
+1) SERVICE PURPOSE
+------------------
+Robots is a worker service (C++) that consumes robot task broadcasts from Inventory,
+filters tasks by aisle, simulates work, and reports status back to Inventory via gRPC.
+
+This service scales horizontally by starting multiple worker processes,
+one per aisle label (e.g., bread, meat, produce, dairy, party).
+
+
+2) PROCESS + ENTRYPOINT
+-----------------------
+Entrypoint:
+- robots/internal/bot/main.cpp
+Binary:
+- robots/build/robot_worker
+
+Startup contract:
+- required argv[1] = aisle name
+  Example: ./robot_worker bread
+
+Important:
+- The worker argument must exactly match the `aisle_type` values sent in robot tasks.
+- Filtering is a direct string comparison (case-sensitive).
+
+Environment loading:
+- attempts ../.env and robots/.env
+- uses defaults if env keys absent
+
+Env keys used:
+- INVENTORY_GRPC_ADDR (default localhost:50051)
+- ROBOT_ZMQ_SUB_ADDR (default tcp://localhost:5556)
+
+
+3) EXPOSED INTERFACES
+---------------------
+Robots does not expose HTTP or gRPC server endpoints.
+It is a client/worker process with two external interfaces:
+
+Input interface:
+- ZeroMQ SUB on ROBOT_ZMQ_SUB_ADDR
+- Payload format: FlatBuffer RobotMessages.OrderBroadcast
+
+Output interface:
+- gRPC client call to Inventory ReportJobStatus
+
+
+4) MESSAGE CONTRACTS
+--------------------
+Input FlatBuffer schema (robots/fbs/order.fbs):
+- OrderBroadcast:
+  - order_id
+  - order_type (CUSTOMER/RESTOCK)
+  - items[] { sku, quantity, aisle }
+
+Output gRPC call:
+- ReportJobStatusRequest {
+    order_id,
+    order_type,
+    status (SUCCESS or NO_OP),
+    processed_items map
+  }
+
+
+5) WORKER EXECUTION MODEL
+-------------------------
+Per received broadcast:
+1. Parse OrderBroadcast
+2. Iterate all items
+3. Keep only items where item.aisle == worker aisle
+4. For each matching item:
+   - simulate pick/offload (sleep 5 seconds)
+   - record processed quantity
+5. Call Inventory ReportJobStatus:
+   - SUCCESS if any item processed
+   - NO_OP if no aisle match
+
+Concurrency model:
+- single-threaded receive/process loop per worker process
+- horizontal scaling by launching multiple worker processes
+
+
+6) SECURITY + RELIABILITY NOTES
+-------------------------------
+- gRPC client uses insecure channel (trusted local/internal network assumption)
+- No auth token currently attached to gRPC status calls
+- Worker is resilient to empty receive results (continues loop)
+- If gRPC report fails, error is logged and worker continues processing next jobs
+
+
+7) CONNECTIVITY MATRIX
+----------------------
+Dependencies:
+- Inventory ZMQ publisher (tcp://...:5556)
+- Inventory gRPC server (:50051)
+
+No direct DB/Redis dependencies.
+
+
+8) DRY RUN
+----------
+Given broadcast:
+- order_id=R1
+- order_type=RESTOCK
+- items:
+  - {sku:BREAD-01, qty:10, aisle:bread}
+  - {sku:MILK-01,  qty: 5, aisle:dairy}
+
+Worker bread:
+- processes BREAD-01 only
+- reports SUCCESS with processed_items[BREAD-01]=10
+
+Worker meat:
+- no matching items
+- reports NO_OP with empty map
+
+Worker dairy:
+- processes MILK-01 only
+- reports SUCCESS with processed_items[MILK-01]=5
+
+Inventory aggregates callbacks and finalizes when threshold is reached.
+
+
+9) OPERATIONS CHECKLIST
+-----------------------
+- Build in robots/build with cmake --build .
+- Start one process per aisle used in the scenario.
+- Verify established sockets via:
+  lsof -nP -iTCP:5556 -sTCP:ESTABLISHED
+- Verify gRPC reporting indirectly via Inventory logs/counters.
+
+
+10) COMMON FAILURES
+-------------------
+- Running without aisle arg -> usage error and exit.
+- Wrong ROBOT_ZMQ_SUB_ADDR -> worker never receives tasks.
+- Wrong INVENTORY_GRPC_ADDR -> status report failures.

@@ -1,13 +1,15 @@
+
 namespace RobotMessages;
 
 table Item {
   sku:string;
   quantity:int;
-  aisle:string; 
+  aisle:string;
 }
 
 table OrderBroadcast {
   order_id:string;
+  order_type:string;  // Added order_type
   items:[Item];
 }
 

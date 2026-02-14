@@ -1,0 +1,1 @@
+ALTER TABLE restock_orders DROP COLUMN total_cost;

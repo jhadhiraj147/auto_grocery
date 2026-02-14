@@ -103,10 +103,14 @@ struct OrderBroadcast FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
   typedef OrderBroadcastBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_ORDER_ID = 4,
-    VT_ITEMS = 6
+    VT_ORDER_TYPE = 6,
+    VT_ITEMS = 8
   };
   const ::flatbuffers::String *order_id() const {
     return GetPointer<const ::flatbuffers::String *>(VT_ORDER_ID);
+  }
+  const ::flatbuffers::String *order_type() const {
+    return GetPointer<const ::flatbuffers::String *>(VT_ORDER_TYPE);
   }
   const ::flatbuffers::Vector<::flatbuffers::Offset<RobotMessages::Item>> *items() const {
     return GetPointer<const ::flatbuffers::Vector<::flatbuffers::Offset<RobotMessages::Item>> *>(VT_ITEMS);
@@ -116,6 +120,8 @@ struct OrderBroadcast FLATBUFFERS_FINAL_CLASS : private ::flatbuffers::Table {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_ORDER_ID) &&
            verifier.VerifyString(order_id()) &&
+           VerifyOffset(verifier, VT_ORDER_TYPE) &&
+           verifier.VerifyString(order_type()) &&
            VerifyOffset(verifier, VT_ITEMS) &&
            verifier.VerifyVector(items()) &&
            verifier.VerifyVectorOfTables(items()) &&
@@ -129,6 +135,9 @@ struct OrderBroadcastBuilder {
   ::flatbuffers::uoffset_t start_;
   void add_order_id(::flatbuffers::Offset<::flatbuffers::String> order_id) {
     fbb_.AddOffset(OrderBroadcast::VT_ORDER_ID, order_id);
+  }
+  void add_order_type(::flatbuffers::Offset<::flatbuffers::String> order_type) {
+    fbb_.AddOffset(OrderBroadcast::VT_ORDER_TYPE, order_type);
   }
   void add_items(::flatbuffers::Offset<::flatbuffers::Vector<::flatbuffers::Offset<RobotMessages::Item>>> items) {
     fbb_.AddOffset(OrderBroadcast::VT_ITEMS, items);
@@ -147,9 +156,11 @@ struct OrderBroadcastBuilder {
 inline ::flatbuffers::Offset<OrderBroadcast> CreateOrderBroadcast(
     ::flatbuffers::FlatBufferBuilder &_fbb,
     ::flatbuffers::Offset<::flatbuffers::String> order_id = 0,
+    ::flatbuffers::Offset<::flatbuffers::String> order_type = 0,
     ::flatbuffers::Offset<::flatbuffers::Vector<::flatbuffers::Offset<RobotMessages::Item>>> items = 0) {
   OrderBroadcastBuilder builder_(_fbb);
   builder_.add_items(items);
+  builder_.add_order_type(order_type);
   builder_.add_order_id(order_id);
   return builder_.Finish();
 }
@@ -157,12 +168,15 @@ inline ::flatbuffers::Offset<OrderBroadcast> CreateOrderBroadcast(
 inline ::flatbuffers::Offset<OrderBroadcast> CreateOrderBroadcastDirect(
     ::flatbuffers::FlatBufferBuilder &_fbb,
     const char *order_id = nullptr,
+    const char *order_type = nullptr,
     const std::vector<::flatbuffers::Offset<RobotMessages::Item>> *items = nullptr) {
   auto order_id__ = order_id ? _fbb.CreateString(order_id) : 0;
+  auto order_type__ = order_type ? _fbb.CreateString(order_type) : 0;
   auto items__ = items ? _fbb.CreateVector<::flatbuffers::Offset<RobotMessages::Item>>(*items) : 0;
   return RobotMessages::CreateOrderBroadcast(
       _fbb,
       order_id__,
+      order_type__,
       items__);
 }
 

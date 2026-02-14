@@ -14,6 +14,7 @@ type CancelOrderHandler struct {
 	InventoryClient pb.InventoryServiceClient
 }
 
+// ServeHTTP cancels an order, releases reserved stock, and removes order records.
 func (h *CancelOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	userID, ok := r.Context().Value(auth.UserKey).(int)
 	if !ok {

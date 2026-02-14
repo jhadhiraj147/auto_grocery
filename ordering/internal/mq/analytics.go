@@ -13,18 +13,19 @@ type AnalyticsPublisher struct {
 	socket *zmq.Socket
 }
 
-func NewAnalyticsPublisher(port string) (*AnalyticsPublisher, error) {
+// NewAnalyticsPublisher creates a ZMQ PUB socket for sending order latency analytics messages.
+func NewAnalyticsPublisher(bindAddr string) (*AnalyticsPublisher, error) {
 	sock, err := zmq.NewSocket(zmq.Type(zmq.PUB))
 	if err != nil {
 		return nil, err
 	}
-	addr := "tcp://*:" + port
-	if err := sock.Bind(addr); err != nil {
+	if err := sock.Bind(bindAddr); err != nil {
 		return nil, err
 	}
 	return &AnalyticsPublisher{socket: sock}, nil
 }
 
+// Publish serializes and emits analytics payload for a completed order lifecycle event.
 func (p *AnalyticsPublisher) Publish(orderID string, status string, duration float64) error {
 	builder := flatbuffers.NewBuilder(1024)
 
@@ -45,6 +46,7 @@ func (p *AnalyticsPublisher) Publish(orderID string, status string, duration flo
 	return err
 }
 
+// Close releases underlying publisher socket resources.
 func (p *AnalyticsPublisher) Close() {
 	p.socket.Close()
 }

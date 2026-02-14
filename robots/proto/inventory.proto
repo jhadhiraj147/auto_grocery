@@ -2,78 +2,24 @@ syntax = "proto3";
 
 package inventory;
 
+import "google/protobuf/timestamp.proto";
 
-option go_package = "auto_grocery/robots/proto";
-
+option go_package = "auto_grocery/inventory/proto;inventorypb";
 
 service InventoryService {
-  
-  
-  rpc CheckAvailability (CheckAvailabilityRequest) returns (CheckAvailabilityResponse);
-
-  
-  rpc ReserveItems (ReserveItemsRequest) returns (ReserveItemsResponse);
-
- 
-  rpc ReleaseItems (ReleaseItemsRequest) returns (ReleaseItemsResponse);
-
-  
-  rpc RestockItems (RestockItemsRequest) returns (RestockItemsResponse);
-
-  
+  rpc ProcessCustomerOrder (ProcessCustomerOrderRequest) returns (ProcessCustomerOrderResponse);
+  rpc RestockItemsOrder (RestockItemsOrderRequest) returns (RestockItemsOrderResponse);
   rpc ReportJobStatus (ReportJobStatusRequest) returns (ReportJobStatusResponse);
-
-  
-  rpc Checkout (CheckoutRequest) returns (CheckoutResponse);
 }
 
-
-
-message CheckAvailabilityRequest {
-  repeated string skus = 1; 
-}
-
-message CheckAvailabilityResponse {
-  map<string, ItemDetail> items = 1;
-}
-
-message ItemDetail {
-  string sku = 1;
-  string name = 2;
-  string aisle_type = 3;
-  int32 quantity_available = 4;
-}
-
-
-message ReserveItemsRequest {
+message ProcessCustomerOrderRequest {
   string order_id = 1;
-  map<string, int32> items = 2; 
+  map<string, int32> items = 2;
 }
 
-message ReserveItemsResponse {
-  string order_id = 1;
-  map<string, int32> items = 2; 
-  bool success = 3; 
-}
-
-
-
-
-message ReleaseItemsRequest {
-  string order_id = 1;
-  map<string, int32> items = 2; 
-}
-
-message ReleaseItemsResponse {
-  bool success = 1; 
-}
-
-
-
-
-message RestockItemsRequest {
-  string supplier_id = 1;
-  repeated RestockItem items = 2;
+message ProcessCustomerOrderResponse {
+  bool success = 1;
+  string message = 2;
 }
 
 message RestockItem {
@@ -81,44 +27,27 @@ message RestockItem {
   string name = 2;
   string aisle_type = 3;
   int32 quantity = 4;
-  string mfd_date = 5;
-  string expiry_date = 6;
+  google.protobuf.Timestamp mfd_date = 5;
+  google.protobuf.Timestamp expiry_date = 6;
+  double unit_cost = 7;
 }
 
-message RestockItemsResponse {
-  bool success = 1; 
+message RestockItemsOrderRequest {
+  string order_id = 1;
+  repeated RestockItem items = 2;
 }
 
-
-
+message RestockItemsOrderResponse {
+  bool success = 1;
+}
 
 message ReportJobStatusRequest {
   string order_id = 1;
-  string robot_id = 2;
-  string status = 3; 
-  map<string, int32> items = 4;
+  string status = 2;
+  map<string, int32> processed_items = 3;
+  string order_type = 4; 
 }
 
 message ReportJobStatusResponse {
-  bool success = 1; 
-}
-
-
-
-
-message CheckoutRequest {
-  string order_id = 1;
-  map<string, int32> items = 2; 
-}
-
-message CheckoutResponse {
-  string order_id = 1;
-  
-  
-  map<string, int32> items = 2; 
-  
-  bool success = 3;
-  
-  
-  double total_price = 4; 
+  bool success = 1;
 }

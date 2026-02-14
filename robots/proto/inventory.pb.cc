@@ -26,32 +26,7 @@ namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
 namespace inventory {
 
-inline constexpr RestockItemsResponse::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        success_{false} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR RestockItemsResponse::RestockItemsResponse(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(RestockItemsResponse_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct RestockItemsResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RestockItemsResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~RestockItemsResponseDefaultTypeInternal() {}
-  union {
-    RestockItemsResponse _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RestockItemsResponseDefaultTypeInternal _RestockItemsResponse_default_instance_;
-
-inline constexpr RestockItem::Impl_::Impl_(
+inline constexpr StockLevel::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
         sku_(
@@ -63,51 +38,83 @@ inline constexpr RestockItem::Impl_::Impl_(
         aisle_type_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
-        mfd_date_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        expiry_date_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        quantity_{0} {}
+        quantity_available_{0} {}
 
 template <typename>
-PROTOBUF_CONSTEXPR RestockItem::RestockItem(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR StockLevel::StockLevel(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(RestockItem_class_data_.base()),
+    : ::google::protobuf::Message(StockLevel_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct RestockItemDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RestockItemDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~RestockItemDefaultTypeInternal() {}
+struct StockLevelDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR StockLevelDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~StockLevelDefaultTypeInternal() {}
   union {
-    RestockItem _instance;
+    StockLevel _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RestockItemDefaultTypeInternal _RestockItem_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StockLevelDefaultTypeInternal _StockLevel_default_instance_;
+
+inline constexpr RestockItemsOrderResponse::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        success_{false} {}
+
 template <typename>
-PROTOBUF_CONSTEXPR ReserveItemsResponse_ItemsEntry_DoNotUse::ReserveItemsResponse_ItemsEntry_DoNotUse(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR RestockItemsOrderResponse::RestockItemsOrderResponse(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ReserveItemsResponse_ItemsEntry_DoNotUse::MapEntry(ReserveItemsResponse_ItemsEntry_DoNotUse_class_data_.base()){}
+    : ::google::protobuf::Message(RestockItemsOrderResponse_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
-    : ReserveItemsResponse_ItemsEntry_DoNotUse::MapEntry() {
-}
+    : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
-struct ReserveItemsResponse_ItemsEntry_DoNotUseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ReserveItemsResponse_ItemsEntry_DoNotUseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ReserveItemsResponse_ItemsEntry_DoNotUseDefaultTypeInternal() {}
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct RestockItemsOrderResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR RestockItemsOrderResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~RestockItemsOrderResponseDefaultTypeInternal() {}
   union {
-    ReserveItemsResponse_ItemsEntry_DoNotUse _instance;
+    RestockItemsOrderResponse _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ReserveItemsResponse_ItemsEntry_DoNotUseDefaultTypeInternal _ReserveItemsResponse_ItemsEntry_DoNotUse_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RestockItemsOrderResponseDefaultTypeInternal _RestockItemsOrderResponse_default_instance_;
+
+inline constexpr ReserveItemsResponse::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        order_id_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        error_message_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        success_{false} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR ReserveItemsResponse::ReserveItemsResponse(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(ReserveItemsResponse_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct ReserveItemsResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ReserveItemsResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ReserveItemsResponseDefaultTypeInternal() {}
+  union {
+    ReserveItemsResponse _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ReserveItemsResponseDefaultTypeInternal _ReserveItemsResponse_default_instance_;
 template <typename>
 PROTOBUF_CONSTEXPR ReserveItemsRequest_ItemsEntry_DoNotUse::ReserveItemsRequest_ItemsEntry_DoNotUse(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
@@ -152,23 +159,23 @@ struct ReportJobStatusResponseDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ReportJobStatusResponseDefaultTypeInternal _ReportJobStatusResponse_default_instance_;
 template <typename>
-PROTOBUF_CONSTEXPR ReportJobStatusRequest_ItemsEntry_DoNotUse::ReportJobStatusRequest_ItemsEntry_DoNotUse(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ReportJobStatusRequest_ItemsEntry_DoNotUse::MapEntry(ReportJobStatusRequest_ItemsEntry_DoNotUse_class_data_.base()){}
+    : ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::MapEntry(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_class_data_.base()){}
 #else   // PROTOBUF_CUSTOM_VTABLE
-    : ReportJobStatusRequest_ItemsEntry_DoNotUse::MapEntry() {
+    : ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::MapEntry() {
 }
 #endif  // PROTOBUF_CUSTOM_VTABLE
-struct ReportJobStatusRequest_ItemsEntry_DoNotUseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ReportJobStatusRequest_ItemsEntry_DoNotUseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ReportJobStatusRequest_ItemsEntry_DoNotUseDefaultTypeInternal() {}
+struct ReportJobStatusRequest_ProcessedItemsEntry_DoNotUseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ReportJobStatusRequest_ProcessedItemsEntry_DoNotUseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ReportJobStatusRequest_ProcessedItemsEntry_DoNotUseDefaultTypeInternal() {}
   union {
-    ReportJobStatusRequest_ItemsEntry_DoNotUse _instance;
+    ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ReportJobStatusRequest_ItemsEntry_DoNotUseDefaultTypeInternal _ReportJobStatusRequest_ItemsEntry_DoNotUse_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ReportJobStatusRequest_ProcessedItemsEntry_DoNotUseDefaultTypeInternal _ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_default_instance_;
 
 inline constexpr ReleaseItemsResponse::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -213,75 +220,51 @@ struct ReleaseItemsRequest_ItemsEntry_DoNotUseDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ReleaseItemsRequest_ItemsEntry_DoNotUseDefaultTypeInternal _ReleaseItemsRequest_ItemsEntry_DoNotUse_default_instance_;
 
-inline constexpr ItemDetail::Impl_::Impl_(
+inline constexpr ProcessCustomerOrderResponse::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
-        sku_(
+        message_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
-        name_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        aisle_type_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        quantity_available_{0} {}
+        success_{false} {}
 
 template <typename>
-PROTOBUF_CONSTEXPR ItemDetail::ItemDetail(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR ProcessCustomerOrderResponse::ProcessCustomerOrderResponse(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(ItemDetail_class_data_.base()),
+    : ::google::protobuf::Message(ProcessCustomerOrderResponse_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct ItemDetailDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ItemDetailDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ItemDetailDefaultTypeInternal() {}
+struct ProcessCustomerOrderResponseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ProcessCustomerOrderResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ProcessCustomerOrderResponseDefaultTypeInternal() {}
   union {
-    ItemDetail _instance;
+    ProcessCustomerOrderResponse _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ItemDetailDefaultTypeInternal _ItemDetail_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ProcessCustomerOrderResponseDefaultTypeInternal _ProcessCustomerOrderResponse_default_instance_;
 template <typename>
-PROTOBUF_CONSTEXPR CheckoutResponse_ItemsEntry_DoNotUse::CheckoutResponse_ItemsEntry_DoNotUse(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::ProcessCustomerOrderRequest_ItemsEntry_DoNotUse(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : CheckoutResponse_ItemsEntry_DoNotUse::MapEntry(CheckoutResponse_ItemsEntry_DoNotUse_class_data_.base()){}
+    : ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::MapEntry(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_class_data_.base()){}
 #else   // PROTOBUF_CUSTOM_VTABLE
-    : CheckoutResponse_ItemsEntry_DoNotUse::MapEntry() {
+    : ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::MapEntry() {
 }
 #endif  // PROTOBUF_CUSTOM_VTABLE
-struct CheckoutResponse_ItemsEntry_DoNotUseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR CheckoutResponse_ItemsEntry_DoNotUseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~CheckoutResponse_ItemsEntry_DoNotUseDefaultTypeInternal() {}
+struct ProcessCustomerOrderRequest_ItemsEntry_DoNotUseDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ProcessCustomerOrderRequest_ItemsEntry_DoNotUseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ProcessCustomerOrderRequest_ItemsEntry_DoNotUseDefaultTypeInternal() {}
   union {
-    CheckoutResponse_ItemsEntry_DoNotUse _instance;
+    ProcessCustomerOrderRequest_ItemsEntry_DoNotUse _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CheckoutResponse_ItemsEntry_DoNotUseDefaultTypeInternal _CheckoutResponse_ItemsEntry_DoNotUse_default_instance_;
-template <typename>
-PROTOBUF_CONSTEXPR CheckoutRequest_ItemsEntry_DoNotUse::CheckoutRequest_ItemsEntry_DoNotUse(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : CheckoutRequest_ItemsEntry_DoNotUse::MapEntry(CheckoutRequest_ItemsEntry_DoNotUse_class_data_.base()){}
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : CheckoutRequest_ItemsEntry_DoNotUse::MapEntry() {
-}
-#endif  // PROTOBUF_CUSTOM_VTABLE
-struct CheckoutRequest_ItemsEntry_DoNotUseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR CheckoutRequest_ItemsEntry_DoNotUseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~CheckoutRequest_ItemsEntry_DoNotUseDefaultTypeInternal() {}
-  union {
-    CheckoutRequest_ItemsEntry_DoNotUse _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CheckoutRequest_ItemsEntry_DoNotUseDefaultTypeInternal _CheckoutRequest_ItemsEntry_DoNotUse_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ProcessCustomerOrderRequest_ItemsEntry_DoNotUseDefaultTypeInternal _ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_default_instance_;
 
 inline constexpr CheckAvailabilityRequest::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -308,62 +291,42 @@ struct CheckAvailabilityRequestDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CheckAvailabilityRequestDefaultTypeInternal _CheckAvailabilityRequest_default_instance_;
 
-inline constexpr RestockItemsRequest::Impl_::Impl_(
+inline constexpr RestockItem::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
-        items_{},
-        supplier_id_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()) {}
-
-template <typename>
-PROTOBUF_CONSTEXPR RestockItemsRequest::RestockItemsRequest(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(RestockItemsRequest_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct RestockItemsRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RestockItemsRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~RestockItemsRequestDefaultTypeInternal() {}
-  union {
-    RestockItemsRequest _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RestockItemsRequestDefaultTypeInternal _RestockItemsRequest_default_instance_;
-
-inline constexpr ReserveItemsResponse::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        order_id_(
+        sku_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
-        success_{false},
-        items_{} {}
+        name_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        aisle_type_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        mfd_date_{nullptr},
+        expiry_date_{nullptr},
+        unit_cost_{0},
+        quantity_{0} {}
 
 template <typename>
-PROTOBUF_CONSTEXPR ReserveItemsResponse::ReserveItemsResponse(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR RestockItem::RestockItem(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(ReserveItemsResponse_class_data_.base()),
+    : ::google::protobuf::Message(RestockItem_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct ReserveItemsResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ReserveItemsResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ReserveItemsResponseDefaultTypeInternal() {}
+struct RestockItemDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR RestockItemDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~RestockItemDefaultTypeInternal() {}
   union {
-    ReserveItemsResponse _instance;
+    RestockItem _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ReserveItemsResponseDefaultTypeInternal _ReserveItemsResponse_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RestockItemDefaultTypeInternal _RestockItem_default_instance_;
 
 inline constexpr ReserveItemsRequest::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -399,13 +362,13 @@ inline constexpr ReportJobStatusRequest::Impl_::Impl_(
         order_id_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
-        robot_id_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
         status_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
-        items_{} {}
+        order_type_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        processed_items_{} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR ReportJobStatusRequest::ReportJobStatusRequest(::_pbi::ConstantInitialized)
@@ -455,37 +418,7 @@ struct ReleaseItemsRequestDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ReleaseItemsRequestDefaultTypeInternal _ReleaseItemsRequest_default_instance_;
 
-inline constexpr CheckoutResponse::Impl_::Impl_(
-    ::_pbi::ConstantInitialized) noexcept
-      : _cached_size_{0},
-        order_id_(
-            &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()),
-        total_price_{0},
-        success_{false},
-        items_{} {}
-
-template <typename>
-PROTOBUF_CONSTEXPR CheckoutResponse::CheckoutResponse(::_pbi::ConstantInitialized)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(CheckoutResponse_class_data_.base()),
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(),
-#endif  // PROTOBUF_CUSTOM_VTABLE
-      _impl_(::_pbi::ConstantInitialized()) {
-}
-struct CheckoutResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR CheckoutResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~CheckoutResponseDefaultTypeInternal() {}
-  union {
-    CheckoutResponse _instance;
-  };
-};
-
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CheckoutResponseDefaultTypeInternal _CheckoutResponse_default_instance_;
-
-inline constexpr CheckoutRequest::Impl_::Impl_(
+inline constexpr ProcessCustomerOrderRequest::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
         order_id_(
@@ -494,24 +427,24 @@ inline constexpr CheckoutRequest::Impl_::Impl_(
         items_{} {}
 
 template <typename>
-PROTOBUF_CONSTEXPR CheckoutRequest::CheckoutRequest(::_pbi::ConstantInitialized)
+PROTOBUF_CONSTEXPR ProcessCustomerOrderRequest::ProcessCustomerOrderRequest(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(CheckoutRequest_class_data_.base()),
+    : ::google::protobuf::Message(ProcessCustomerOrderRequest_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(),
 #endif  // PROTOBUF_CUSTOM_VTABLE
       _impl_(::_pbi::ConstantInitialized()) {
 }
-struct CheckoutRequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR CheckoutRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
-  ~CheckoutRequestDefaultTypeInternal() {}
+struct ProcessCustomerOrderRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ProcessCustomerOrderRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ProcessCustomerOrderRequestDefaultTypeInternal() {}
   union {
-    CheckoutRequest _instance;
+    ProcessCustomerOrderRequest _instance;
   };
 };
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
-    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CheckoutRequestDefaultTypeInternal _CheckoutRequest_default_instance_;
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ProcessCustomerOrderRequestDefaultTypeInternal _ProcessCustomerOrderRequest_default_instance_;
 template <typename>
 PROTOBUF_CONSTEXPR CheckAvailabilityResponse_ItemsEntry_DoNotUse::CheckAvailabilityResponse_ItemsEntry_DoNotUse(::_pbi::ConstantInitialized)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
@@ -530,6 +463,34 @@ struct CheckAvailabilityResponse_ItemsEntry_DoNotUseDefaultTypeInternal {
 
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CheckAvailabilityResponse_ItemsEntry_DoNotUseDefaultTypeInternal _CheckAvailabilityResponse_ItemsEntry_DoNotUse_default_instance_;
+
+inline constexpr RestockItemsOrderRequest::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        items_{},
+        order_id_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()) {}
+
+template <typename>
+PROTOBUF_CONSTEXPR RestockItemsOrderRequest::RestockItemsOrderRequest(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(RestockItemsOrderRequest_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct RestockItemsOrderRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR RestockItemsOrderRequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~RestockItemsOrderRequestDefaultTypeInternal() {}
+  union {
+    RestockItemsOrderRequest _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RestockItemsOrderRequestDefaultTypeInternal _RestockItemsOrderRequest_default_instance_;
 
 inline constexpr CheckAvailabilityResponse::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
@@ -581,12 +542,12 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::inventory::CheckAvailabilityResponse, _impl_.items_),
         0,
         0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::inventory::ItemDetail, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::inventory::StockLevel, _impl_._has_bits_),
         7, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::inventory::ItemDetail, _impl_.sku_),
-        PROTOBUF_FIELD_OFFSET(::inventory::ItemDetail, _impl_.name_),
-        PROTOBUF_FIELD_OFFSET(::inventory::ItemDetail, _impl_.aisle_type_),
-        PROTOBUF_FIELD_OFFSET(::inventory::ItemDetail, _impl_.quantity_available_),
+        PROTOBUF_FIELD_OFFSET(::inventory::StockLevel, _impl_.sku_),
+        PROTOBUF_FIELD_OFFSET(::inventory::StockLevel, _impl_.name_),
+        PROTOBUF_FIELD_OFFSET(::inventory::StockLevel, _impl_.aisle_type_),
+        PROTOBUF_FIELD_OFFSET(::inventory::StockLevel, _impl_.quantity_available_),
         0,
         1,
         2,
@@ -606,18 +567,11 @@ const ::uint32_t
         0,
         1,
         0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::inventory::ReserveItemsResponse_ItemsEntry_DoNotUse, _impl_._has_bits_),
-        5, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::inventory::ReserveItemsResponse_ItemsEntry_DoNotUse, _impl_.key_),
-        PROTOBUF_FIELD_OFFSET(::inventory::ReserveItemsResponse_ItemsEntry_DoNotUse, _impl_.value_),
-        0,
-        1,
-        0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::inventory::ReserveItemsResponse, _impl_._has_bits_),
         6, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::inventory::ReserveItemsResponse, _impl_.order_id_),
-        PROTOBUF_FIELD_OFFSET(::inventory::ReserveItemsResponse, _impl_.items_),
         PROTOBUF_FIELD_OFFSET(::inventory::ReserveItemsResponse, _impl_.success_),
+        PROTOBUF_FIELD_OFFSET(::inventory::ReserveItemsResponse, _impl_.error_message_),
         0,
         2,
         1,
@@ -641,87 +595,78 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::inventory::ReleaseItemsResponse, _impl_.success_),
         0,
         0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::inventory::RestockItemsRequest, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::inventory::ProcessCustomerOrderRequest_ItemsEntry_DoNotUse, _impl_._has_bits_),
         5, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::inventory::RestockItemsRequest, _impl_.supplier_id_),
-        PROTOBUF_FIELD_OFFSET(::inventory::RestockItemsRequest, _impl_.items_),
+        PROTOBUF_FIELD_OFFSET(::inventory::ProcessCustomerOrderRequest_ItemsEntry_DoNotUse, _impl_.key_),
+        PROTOBUF_FIELD_OFFSET(::inventory::ProcessCustomerOrderRequest_ItemsEntry_DoNotUse, _impl_.value_),
+        0,
+        1,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::inventory::ProcessCustomerOrderRequest, _impl_._has_bits_),
+        5, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::inventory::ProcessCustomerOrderRequest, _impl_.order_id_),
+        PROTOBUF_FIELD_OFFSET(::inventory::ProcessCustomerOrderRequest, _impl_.items_),
+        0,
+        1,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::inventory::ProcessCustomerOrderResponse, _impl_._has_bits_),
+        5, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::inventory::ProcessCustomerOrderResponse, _impl_.success_),
+        PROTOBUF_FIELD_OFFSET(::inventory::ProcessCustomerOrderResponse, _impl_.message_),
+        1,
+        0,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::inventory::RestockItemsOrderRequest, _impl_._has_bits_),
+        5, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::inventory::RestockItemsOrderRequest, _impl_.order_id_),
+        PROTOBUF_FIELD_OFFSET(::inventory::RestockItemsOrderRequest, _impl_.items_),
         1,
         0,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::inventory::RestockItem, _impl_._has_bits_),
-        9, // hasbit index offset
+        10, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::inventory::RestockItem, _impl_.sku_),
         PROTOBUF_FIELD_OFFSET(::inventory::RestockItem, _impl_.name_),
         PROTOBUF_FIELD_OFFSET(::inventory::RestockItem, _impl_.aisle_type_),
         PROTOBUF_FIELD_OFFSET(::inventory::RestockItem, _impl_.quantity_),
+        PROTOBUF_FIELD_OFFSET(::inventory::RestockItem, _impl_.unit_cost_),
         PROTOBUF_FIELD_OFFSET(::inventory::RestockItem, _impl_.mfd_date_),
         PROTOBUF_FIELD_OFFSET(::inventory::RestockItem, _impl_.expiry_date_),
         0,
         1,
         2,
+        6,
         5,
         3,
         4,
         0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::inventory::RestockItemsResponse, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::inventory::RestockItemsOrderResponse, _impl_._has_bits_),
         4, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::inventory::RestockItemsResponse, _impl_.success_),
+        PROTOBUF_FIELD_OFFSET(::inventory::RestockItemsOrderResponse, _impl_.success_),
         0,
         0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest_ItemsEntry_DoNotUse, _impl_._has_bits_),
+        PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse, _impl_._has_bits_),
         5, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest_ItemsEntry_DoNotUse, _impl_.key_),
-        PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest_ItemsEntry_DoNotUse, _impl_.value_),
+        PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse, _impl_.key_),
+        PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse, _impl_.value_),
         0,
         1,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest, _impl_._has_bits_),
         7, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest, _impl_.order_id_),
-        PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest, _impl_.robot_id_),
         PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest, _impl_.status_),
-        PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest, _impl_.items_),
+        PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest, _impl_.processed_items_),
+        PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusRequest, _impl_.order_type_),
         0,
         1,
-        2,
         3,
+        2,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusResponse, _impl_._has_bits_),
         4, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::inventory::ReportJobStatusResponse, _impl_.success_),
         0,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutRequest_ItemsEntry_DoNotUse, _impl_._has_bits_),
-        5, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutRequest_ItemsEntry_DoNotUse, _impl_.key_),
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutRequest_ItemsEntry_DoNotUse, _impl_.value_),
-        0,
-        1,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutRequest, _impl_._has_bits_),
-        5, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutRequest, _impl_.order_id_),
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutRequest, _impl_.items_),
-        0,
-        1,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutResponse_ItemsEntry_DoNotUse, _impl_._has_bits_),
-        5, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutResponse_ItemsEntry_DoNotUse, _impl_.key_),
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutResponse_ItemsEntry_DoNotUse, _impl_.value_),
-        0,
-        1,
-        0x081, // bitmap
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutResponse, _impl_._has_bits_),
-        7, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutResponse, _impl_.order_id_),
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutResponse, _impl_.items_),
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutResponse, _impl_.success_),
-        PROTOBUF_FIELD_OFFSET(::inventory::CheckoutResponse, _impl_.total_price_),
-        0,
-        3,
-        2,
-        1,
 };
 
 static const ::_pbi::MigrationSchema
@@ -729,117 +674,118 @@ static const ::_pbi::MigrationSchema
         {0, sizeof(::inventory::CheckAvailabilityRequest)},
         {5, sizeof(::inventory::CheckAvailabilityResponse_ItemsEntry_DoNotUse)},
         {12, sizeof(::inventory::CheckAvailabilityResponse)},
-        {17, sizeof(::inventory::ItemDetail)},
+        {17, sizeof(::inventory::StockLevel)},
         {28, sizeof(::inventory::ReserveItemsRequest_ItemsEntry_DoNotUse)},
         {35, sizeof(::inventory::ReserveItemsRequest)},
-        {42, sizeof(::inventory::ReserveItemsResponse_ItemsEntry_DoNotUse)},
-        {49, sizeof(::inventory::ReserveItemsResponse)},
-        {58, sizeof(::inventory::ReleaseItemsRequest_ItemsEntry_DoNotUse)},
-        {65, sizeof(::inventory::ReleaseItemsRequest)},
-        {72, sizeof(::inventory::ReleaseItemsResponse)},
-        {77, sizeof(::inventory::RestockItemsRequest)},
-        {84, sizeof(::inventory::RestockItem)},
-        {99, sizeof(::inventory::RestockItemsResponse)},
-        {104, sizeof(::inventory::ReportJobStatusRequest_ItemsEntry_DoNotUse)},
-        {111, sizeof(::inventory::ReportJobStatusRequest)},
-        {122, sizeof(::inventory::ReportJobStatusResponse)},
-        {127, sizeof(::inventory::CheckoutRequest_ItemsEntry_DoNotUse)},
-        {134, sizeof(::inventory::CheckoutRequest)},
-        {141, sizeof(::inventory::CheckoutResponse_ItemsEntry_DoNotUse)},
-        {148, sizeof(::inventory::CheckoutResponse)},
+        {42, sizeof(::inventory::ReserveItemsResponse)},
+        {51, sizeof(::inventory::ReleaseItemsRequest_ItemsEntry_DoNotUse)},
+        {58, sizeof(::inventory::ReleaseItemsRequest)},
+        {65, sizeof(::inventory::ReleaseItemsResponse)},
+        {70, sizeof(::inventory::ProcessCustomerOrderRequest_ItemsEntry_DoNotUse)},
+        {77, sizeof(::inventory::ProcessCustomerOrderRequest)},
+        {84, sizeof(::inventory::ProcessCustomerOrderResponse)},
+        {91, sizeof(::inventory::RestockItemsOrderRequest)},
+        {98, sizeof(::inventory::RestockItem)},
+        {115, sizeof(::inventory::RestockItemsOrderResponse)},
+        {120, sizeof(::inventory::ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse)},
+        {127, sizeof(::inventory::ReportJobStatusRequest)},
+        {138, sizeof(::inventory::ReportJobStatusResponse)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::inventory::_CheckAvailabilityRequest_default_instance_._instance,
     &::inventory::_CheckAvailabilityResponse_ItemsEntry_DoNotUse_default_instance_._instance,
     &::inventory::_CheckAvailabilityResponse_default_instance_._instance,
-    &::inventory::_ItemDetail_default_instance_._instance,
+    &::inventory::_StockLevel_default_instance_._instance,
     &::inventory::_ReserveItemsRequest_ItemsEntry_DoNotUse_default_instance_._instance,
     &::inventory::_ReserveItemsRequest_default_instance_._instance,
-    &::inventory::_ReserveItemsResponse_ItemsEntry_DoNotUse_default_instance_._instance,
     &::inventory::_ReserveItemsResponse_default_instance_._instance,
     &::inventory::_ReleaseItemsRequest_ItemsEntry_DoNotUse_default_instance_._instance,
     &::inventory::_ReleaseItemsRequest_default_instance_._instance,
     &::inventory::_ReleaseItemsResponse_default_instance_._instance,
-    &::inventory::_RestockItemsRequest_default_instance_._instance,
+    &::inventory::_ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_default_instance_._instance,
+    &::inventory::_ProcessCustomerOrderRequest_default_instance_._instance,
+    &::inventory::_ProcessCustomerOrderResponse_default_instance_._instance,
+    &::inventory::_RestockItemsOrderRequest_default_instance_._instance,
     &::inventory::_RestockItem_default_instance_._instance,
-    &::inventory::_RestockItemsResponse_default_instance_._instance,
-    &::inventory::_ReportJobStatusRequest_ItemsEntry_DoNotUse_default_instance_._instance,
+    &::inventory::_RestockItemsOrderResponse_default_instance_._instance,
+    &::inventory::_ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_default_instance_._instance,
     &::inventory::_ReportJobStatusRequest_default_instance_._instance,
     &::inventory::_ReportJobStatusResponse_default_instance_._instance,
-    &::inventory::_CheckoutRequest_ItemsEntry_DoNotUse_default_instance_._instance,
-    &::inventory::_CheckoutRequest_default_instance_._instance,
-    &::inventory::_CheckoutResponse_ItemsEntry_DoNotUse_default_instance_._instance,
-    &::inventory::_CheckoutResponse_default_instance_._instance,
 };
 const char descriptor_table_protodef_inventory_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
-    "\n\017inventory.proto\022\tinventory\"(\n\030CheckAva"
-    "ilabilityRequest\022\014\n\004skus\030\001 \003(\t\"\240\001\n\031Check"
-    "AvailabilityResponse\022>\n\005items\030\001 \003(\0132/.in"
-    "ventory.CheckAvailabilityResponse.ItemsE"
-    "ntry\032C\n\nItemsEntry\022\013\n\003key\030\001 \001(\t\022$\n\005value"
-    "\030\002 \001(\0132\025.inventory.ItemDetail:\0028\001\"W\n\nIte"
-    "mDetail\022\013\n\003sku\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\022\n\nai"
-    "sle_type\030\003 \001(\t\022\032\n\022quantity_available\030\004 \001"
-    "(\005\"\217\001\n\023ReserveItemsRequest\022\020\n\010order_id\030\001"
-    " \001(\t\0228\n\005items\030\002 \003(\0132).inventory.ReserveI"
-    "temsRequest.ItemsEntry\032,\n\nItemsEntry\022\013\n\003"
-    "key\030\001 \001(\t\022\r\n\005value\030\002 \001(\005:\0028\001\"\242\001\n\024Reserve"
-    "ItemsResponse\022\020\n\010order_id\030\001 \001(\t\0229\n\005items"
-    "\030\002 \003(\0132*.inventory.ReserveItemsResponse."
-    "ItemsEntry\022\017\n\007success\030\003 \001(\010\032,\n\nItemsEntr"
-    "y\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\005:\0028\001\"\217\001\n\023Re"
-    "leaseItemsRequest\022\020\n\010order_id\030\001 \001(\t\0228\n\005i"
-    "tems\030\002 \003(\0132).inventory.ReleaseItemsReque"
-    "st.ItemsEntry\032,\n\nItemsEntry\022\013\n\003key\030\001 \001(\t"
-    "\022\r\n\005value\030\002 \001(\005:\0028\001\"\'\n\024ReleaseItemsRespo"
-    "nse\022\017\n\007success\030\001 \001(\010\"Q\n\023RestockItemsRequ"
-    "est\022\023\n\013supplier_id\030\001 \001(\t\022%\n\005items\030\002 \003(\0132"
-    "\026.inventory.RestockItem\"u\n\013RestockItem\022\013"
-    "\n\003sku\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\022\n\naisle_type\030"
-    "\003 \001(\t\022\020\n\010quantity\030\004 \001(\005\022\020\n\010mfd_date\030\005 \001("
-    "\t\022\023\n\013expiry_date\030\006 \001(\t\"\'\n\024RestockItemsRe"
-    "sponse\022\017\n\007success\030\001 \001(\010\"\267\001\n\026ReportJobSta"
-    "tusRequest\022\020\n\010order_id\030\001 \001(\t\022\020\n\010robot_id"
-    "\030\002 \001(\t\022\016\n\006status\030\003 \001(\t\022;\n\005items\030\004 \003(\0132,."
-    "inventory.ReportJobStatusRequest.ItemsEn"
+    "\n\017inventory.proto\022\tinventory\032\037google/pro"
+    "tobuf/timestamp.proto\"(\n\030CheckAvailabili"
+    "tyRequest\022\014\n\004skus\030\001 \003(\t\"\240\001\n\031CheckAvailab"
+    "ilityResponse\022>\n\005items\030\001 \003(\0132/.inventory"
+    ".CheckAvailabilityResponse.ItemsEntry\032C\n"
+    "\nItemsEntry\022\013\n\003key\030\001 \001(\t\022$\n\005value\030\002 \001(\0132"
+    "\025.inventory.StockLevel:\0028\001\"W\n\nStockLevel"
+    "\022\013\n\003sku\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\022\n\naisle_typ"
+    "e\030\003 \001(\t\022\032\n\022quantity_available\030\004 \001(\005\"\217\001\n\023"
+    "ReserveItemsRequest\022\020\n\010order_id\030\001 \001(\t\0228\n"
+    "\005items\030\002 \003(\0132).inventory.ReserveItemsReq"
+    "uest.ItemsEntry\032,\n\nItemsEntry\022\013\n\003key\030\001 \001"
+    "(\t\022\r\n\005value\030\002 \001(\005:\0028\001\"P\n\024ReserveItemsRes"
+    "ponse\022\020\n\010order_id\030\001 \001(\t\022\017\n\007success\030\002 \001(\010"
+    "\022\025\n\rerror_message\030\003 \001(\t\"\217\001\n\023ReleaseItems"
+    "Request\022\020\n\010order_id\030\001 \001(\t\0228\n\005items\030\002 \003(\013"
+    "2).inventory.ReleaseItemsRequest.ItemsEn"
     "try\032,\n\nItemsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030"
-    "\002 \001(\005:\0028\001\"*\n\027ReportJobStatusResponse\022\017\n\007"
-    "success\030\001 \001(\010\"\207\001\n\017CheckoutRequest\022\020\n\010ord"
-    "er_id\030\001 \001(\t\0224\n\005items\030\002 \003(\0132%.inventory.C"
-    "heckoutRequest.ItemsEntry\032,\n\nItemsEntry\022"
-    "\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\005:\0028\001\"\257\001\n\020Chec"
-    "koutResponse\022\020\n\010order_id\030\001 \001(\t\0225\n\005items\030"
-    "\002 \003(\0132&.inventory.CheckoutResponse.Items"
-    "Entry\022\017\n\007success\030\003 \001(\010\022\023\n\013total_price\030\004 "
-    "\001(\001\032,\n\nItemsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030"
-    "\002 \001(\005:\0028\0012\204\004\n\020InventoryService\022^\n\021CheckA"
-    "vailability\022#.inventory.CheckAvailabilit"
-    "yRequest\032$.inventory.CheckAvailabilityRe"
-    "sponse\022O\n\014ReserveItems\022\036.inventory.Reser"
-    "veItemsRequest\032\037.inventory.ReserveItemsR"
-    "esponse\022O\n\014ReleaseItems\022\036.inventory.Rele"
-    "aseItemsRequest\032\037.inventory.ReleaseItems"
-    "Response\022O\n\014RestockItems\022\036.inventory.Res"
-    "tockItemsRequest\032\037.inventory.RestockItem"
-    "sResponse\022X\n\017ReportJobStatus\022!.inventory"
-    ".ReportJobStatusRequest\032\".inventory.Repo"
-    "rtJobStatusResponse\022C\n\010Checkout\022\032.invent"
-    "ory.CheckoutRequest\032\033.inventory.Checkout"
-    "ResponseB\033Z\031auto_grocery/robots/protob\006p"
-    "roto3"
+    "\002 \001(\005:\0028\001\"\'\n\024ReleaseItemsResponse\022\017\n\007suc"
+    "cess\030\001 \001(\010\"\237\001\n\033ProcessCustomerOrderReque"
+    "st\022\020\n\010order_id\030\001 \001(\t\022@\n\005items\030\002 \003(\01321.in"
+    "ventory.ProcessCustomerOrderRequest.Item"
+    "sEntry\032,\n\nItemsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005val"
+    "ue\030\002 \001(\005:\0028\001\"@\n\034ProcessCustomerOrderResp"
+    "onse\022\017\n\007success\030\001 \001(\010\022\017\n\007message\030\002 \001(\t\"S"
+    "\n\030RestockItemsOrderRequest\022\020\n\010order_id\030\001"
+    " \001(\t\022%\n\005items\030\002 \003(\0132\026.inventory.RestockI"
+    "tem\"\300\001\n\013RestockItem\022\013\n\003sku\030\001 \001(\t\022\014\n\004name"
+    "\030\002 \001(\t\022\022\n\naisle_type\030\003 \001(\t\022\020\n\010quantity\030\004"
+    " \001(\005\022\021\n\tunit_cost\030\005 \001(\001\022,\n\010mfd_date\030\006 \001("
+    "\0132\032.google.protobuf.Timestamp\022/\n\013expiry_"
+    "date\030\007 \001(\0132\032.google.protobuf.Timestamp\","
+    "\n\031RestockItemsOrderResponse\022\017\n\007success\030\001"
+    " \001(\010\"\325\001\n\026ReportJobStatusRequest\022\020\n\010order"
+    "_id\030\001 \001(\t\022\016\n\006status\030\003 \001(\t\022N\n\017processed_i"
+    "tems\030\004 \003(\01325.inventory.ReportJobStatusRe"
+    "quest.ProcessedItemsEntry\022\022\n\norder_type\030"
+    "\005 \001(\t\0325\n\023ProcessedItemsEntry\022\013\n\003key\030\001 \001("
+    "\t\022\r\n\005value\030\002 \001(\005:\0028\001\"*\n\027ReportJobStatusR"
+    "esponse\022\017\n\007success\030\001 \001(\0102\267\004\n\020InventorySe"
+    "rvice\022^\n\021CheckAvailability\022#.inventory.C"
+    "heckAvailabilityRequest\032$.inventory.Chec"
+    "kAvailabilityResponse\022O\n\014ReserveItems\022\036."
+    "inventory.ReserveItemsRequest\032\037.inventor"
+    "y.ReserveItemsResponse\022O\n\014ReleaseItems\022\036"
+    ".inventory.ReleaseItemsRequest\032\037.invento"
+    "ry.ReleaseItemsResponse\022^\n\021RestockItemsO"
+    "rder\022#.inventory.RestockItemsOrderReques"
+    "t\032$.inventory.RestockItemsOrderResponse\022"
+    "g\n\024ProcessCustomerOrder\022&.inventory.Proc"
+    "essCustomerOrderRequest\032\'.inventory.Proc"
+    "essCustomerOrderResponse\022X\n\017ReportJobSta"
+    "tus\022!.inventory.ReportJobStatusRequest\032\""
+    ".inventory.ReportJobStatusResponseB*Z(au"
+    "to_grocery/inventory/proto;inventorypbb\006"
+    "proto3"
+};
+static const ::_pbi::DescriptorTable* PROTOBUF_NONNULL const
+    descriptor_table_inventory_2eproto_deps[1] = {
+        &::descriptor_table_google_2fprotobuf_2ftimestamp_2eproto,
 };
 static ::absl::once_flag descriptor_table_inventory_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_inventory_2eproto = {
     false,
     false,
-    2165,
+    2206,
     descriptor_table_protodef_inventory_2eproto,
     "inventory.proto",
     &descriptor_table_inventory_2eproto_once,
-    nullptr,
-    0,
-    21,
+    descriptor_table_inventory_2eproto_deps,
+    1,
+    19,
     schemas,
     file_default_instances,
     TableStruct_inventory_2eproto::offsets,
@@ -1205,7 +1151,7 @@ CheckAvailabilityResponse_ItemsEntry_DoNotUse::_table_ = {
     ::_pbi::TcParser::GetTable<::inventory::CheckAvailabilityResponse_ItemsEntry_DoNotUse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // .inventory.ItemDetail value = 2;
+    // .inventory.StockLevel value = 2;
     {::_pbi::TcParser::FastMtS1,
      {18, 1, 0,
       PROTOBUF_FIELD_OFFSET(CheckAvailabilityResponse_ItemsEntry_DoNotUse, _impl_.value_)}},
@@ -1218,11 +1164,11 @@ CheckAvailabilityResponse_ItemsEntry_DoNotUse::_table_ = {
   }}, {{
     // string key = 1;
     {PROTOBUF_FIELD_OFFSET(CheckAvailabilityResponse_ItemsEntry_DoNotUse, _impl_.key_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // .inventory.ItemDetail value = 2;
+    // .inventory.StockLevel value = 2;
     {PROTOBUF_FIELD_OFFSET(CheckAvailabilityResponse_ItemsEntry_DoNotUse, _impl_.value_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
-      {::_pbi::TcParser::GetTable<::inventory::ItemDetail>()},
+      {::_pbi::TcParser::GetTable<::inventory::StockLevel>()},
   }},
   {{
     "\56\3\0\0\0\0\0\0"
@@ -1374,13 +1320,13 @@ CheckAvailabilityResponse::_table_ = {
   }}, {{
     65535, 65535
   }}, {{
-    // map<string, .inventory.ItemDetail> items = 1;
+    // map<string, .inventory.StockLevel> items = 1;
     {PROTOBUF_FIELD_OFFSET(CheckAvailabilityResponse, _impl_.items_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMap)},
   }},
   {{
       {::_pbi::TcParser::GetMapAuxInfo(
           1, 0, 9, 11, 0)},
-      {::_pbi::TcParser::GetTable<::inventory::ItemDetail>()},
+      {::_pbi::TcParser::GetTable<::inventory::StockLevel>()},
   }},
   {{
     "\43\5\0\0\0\0\0\0"
@@ -1422,11 +1368,11 @@ PROTOBUF_NOINLINE void CheckAvailabilityResponse::Clear() {
   (void)cached_has_bits;
 
   cached_has_bits = this_._impl_._has_bits_[0];
-  // map<string, .inventory.ItemDetail> items = 1;
+  // map<string, .inventory.StockLevel> items = 1;
   if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
     if (!this_._internal_items().empty()) {
-      using MapType = ::google::protobuf::Map<::std::string, ::inventory::ItemDetail>;
-      using WireHelper = _pbi::MapEntryFuncs<::std::string, ::inventory::ItemDetail,
+      using MapType = ::google::protobuf::Map<::std::string, ::inventory::StockLevel>;
+      using WireHelper = _pbi::MapEntryFuncs<::std::string, ::inventory::StockLevel,
                                      _pbi::WireFormatLite::TYPE_STRING,
                                      _pbi::WireFormatLite::TYPE_MESSAGE>;
       const auto& field = this_._internal_items();
@@ -1476,13 +1422,13 @@ PROTOBUF_NOINLINE void CheckAvailabilityResponse::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
    {
-    // map<string, .inventory.ItemDetail> items = 1;
+    // map<string, .inventory.StockLevel> items = 1;
     cached_has_bits = this_._impl_._has_bits_[0];
     if (CheckHasBitForRepeated(cached_has_bits, 0x00000001U)) {
       total_size +=
           1 * ::google::protobuf::internal::FromIntSize(this_._internal_items_size());
       for (const auto& entry : this_._internal_items()) {
-        total_size += _pbi::MapEntryFuncs<::std::string, ::inventory::ItemDetail,
+        total_size += _pbi::MapEntryFuncs<::std::string, ::inventory::StockLevel,
                                        _pbi::WireFormatLite::TYPE_STRING,
                                        _pbi::WireFormatLite::TYPE_MESSAGE>::ByteSizeLong(entry.first, entry.second);
       }
@@ -1534,51 +1480,51 @@ void CheckAvailabilityResponse::InternalSwap(CheckAvailabilityResponse* PROTOBUF
 }
 // ===================================================================
 
-class ItemDetail::_Internal {
+class StockLevel::_Internal {
  public:
   using HasBits =
-      decltype(::std::declval<ItemDetail>()._impl_._has_bits_);
+      decltype(::std::declval<StockLevel>()._impl_._has_bits_);
   static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(ItemDetail, _impl_._has_bits_);
+      8 * PROTOBUF_FIELD_OFFSET(StockLevel, _impl_._has_bits_);
 };
 
-ItemDetail::ItemDetail(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+StockLevel::StockLevel(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, ItemDetail_class_data_.base()) {
+    : ::google::protobuf::Message(arena, StockLevel_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:inventory.ItemDetail)
+  // @@protoc_insertion_point(arena_constructor:inventory.StockLevel)
 }
-PROTOBUF_NDEBUG_INLINE ItemDetail::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE StockLevel::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    [[maybe_unused]] const ::inventory::ItemDetail& from_msg)
+    [[maybe_unused]] const ::inventory::StockLevel& from_msg)
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         sku_(arena, from.sku_),
         name_(arena, from.name_),
         aisle_type_(arena, from.aisle_type_) {}
 
-ItemDetail::ItemDetail(
+StockLevel::StockLevel(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const ItemDetail& from)
+    const StockLevel& from)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, ItemDetail_class_data_.base()) {
+    : ::google::protobuf::Message(arena, StockLevel_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  ItemDetail* const _this = this;
+  StockLevel* const _this = this;
   (void)_this;
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   _impl_.quantity_available_ = from._impl_.quantity_available_;
 
-  // @@protoc_insertion_point(copy_constructor:inventory.ItemDetail)
+  // @@protoc_insertion_point(copy_constructor:inventory.StockLevel)
 }
-PROTOBUF_NDEBUG_INLINE ItemDetail::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE StockLevel::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
@@ -1586,16 +1532,16 @@ PROTOBUF_NDEBUG_INLINE ItemDetail::Impl_::Impl_(
         name_(arena),
         aisle_type_(arena) {}
 
-inline void ItemDetail::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+inline void StockLevel::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   _impl_.quantity_available_ = {};
 }
-ItemDetail::~ItemDetail() {
-  // @@protoc_insertion_point(destructor:inventory.ItemDetail)
+StockLevel::~StockLevel() {
+  // @@protoc_insertion_point(destructor:inventory.StockLevel)
   SharedDtor(*this);
 }
-inline void ItemDetail::SharedDtor(MessageLite& self) {
-  ItemDetail& this_ = static_cast<ItemDetail&>(self);
+inline void StockLevel::SharedDtor(MessageLite& self) {
+  StockLevel& this_ = static_cast<StockLevel&>(self);
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     this_.CheckHasBitConsistency();
   }
@@ -1607,53 +1553,53 @@ inline void ItemDetail::SharedDtor(MessageLite& self) {
   this_._impl_.~Impl_();
 }
 
-inline void* PROTOBUF_NONNULL ItemDetail::PlacementNew_(
+inline void* PROTOBUF_NONNULL StockLevel::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) ItemDetail(arena);
+  return ::new (mem) StockLevel(arena);
 }
-constexpr auto ItemDetail::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(ItemDetail),
-                                            alignof(ItemDetail));
+constexpr auto StockLevel::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(StockLevel),
+                                            alignof(StockLevel));
 }
-constexpr auto ItemDetail::InternalGenerateClassData_() {
+constexpr auto StockLevel::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_ItemDetail_default_instance_._instance,
+          &_StockLevel_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &ItemDetail::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<ItemDetail>(),
+          &StockLevel::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<StockLevel>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &ItemDetail::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<ItemDetail>(), &ItemDetail::ByteSizeLong,
-              &ItemDetail::_InternalSerialize,
+          &StockLevel::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<StockLevel>(), &StockLevel::ByteSizeLong,
+              &StockLevel::_InternalSerialize,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(ItemDetail, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(StockLevel, _impl_._cached_size_),
           false,
       },
-      &ItemDetail::kDescriptorMethods,
+      &StockLevel::kDescriptorMethods,
       &descriptor_table_inventory_2eproto,
       nullptr,  // tracker
   };
 }
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull ItemDetail_class_data_ =
-        ItemDetail::InternalGenerateClassData_();
+    ::google::protobuf::internal::ClassDataFull StockLevel_class_data_ =
+        StockLevel::InternalGenerateClassData_();
 
 PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-ItemDetail::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&ItemDetail_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(ItemDetail_class_data_.tc_table);
-  return ItemDetail_class_data_.base();
+StockLevel::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&StockLevel_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(StockLevel_class_data_.tc_table);
+  return StockLevel_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
 const ::_pbi::TcParseTable<2, 4, 0, 46, 2>
-ItemDetail::_table_ = {
+StockLevel::_table_ = {
   {
-    PROTOBUF_FIELD_OFFSET(ItemDetail, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(StockLevel, _impl_._has_bits_),
     0, // no _extensions_
     4, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
@@ -1662,52 +1608,52 @@ ItemDetail::_table_ = {
     4,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
-    ItemDetail_class_data_.base(),
+    StockLevel_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::inventory::ItemDetail>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::inventory::StockLevel>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     // int32 quantity_available = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ItemDetail, _impl_.quantity_available_), 3>(),
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(StockLevel, _impl_.quantity_available_), 3>(),
      {32, 3, 0,
-      PROTOBUF_FIELD_OFFSET(ItemDetail, _impl_.quantity_available_)}},
+      PROTOBUF_FIELD_OFFSET(StockLevel, _impl_.quantity_available_)}},
     // string sku = 1;
     {::_pbi::TcParser::FastUS1,
      {10, 0, 0,
-      PROTOBUF_FIELD_OFFSET(ItemDetail, _impl_.sku_)}},
+      PROTOBUF_FIELD_OFFSET(StockLevel, _impl_.sku_)}},
     // string name = 2;
     {::_pbi::TcParser::FastUS1,
      {18, 1, 0,
-      PROTOBUF_FIELD_OFFSET(ItemDetail, _impl_.name_)}},
+      PROTOBUF_FIELD_OFFSET(StockLevel, _impl_.name_)}},
     // string aisle_type = 3;
     {::_pbi::TcParser::FastUS1,
      {26, 2, 0,
-      PROTOBUF_FIELD_OFFSET(ItemDetail, _impl_.aisle_type_)}},
+      PROTOBUF_FIELD_OFFSET(StockLevel, _impl_.aisle_type_)}},
   }}, {{
     65535, 65535
   }}, {{
     // string sku = 1;
-    {PROTOBUF_FIELD_OFFSET(ItemDetail, _impl_.sku_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(StockLevel, _impl_.sku_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string name = 2;
-    {PROTOBUF_FIELD_OFFSET(ItemDetail, _impl_.name_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(StockLevel, _impl_.name_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string aisle_type = 3;
-    {PROTOBUF_FIELD_OFFSET(ItemDetail, _impl_.aisle_type_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(StockLevel, _impl_.aisle_type_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // int32 quantity_available = 4;
-    {PROTOBUF_FIELD_OFFSET(ItemDetail, _impl_.quantity_available_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    {PROTOBUF_FIELD_OFFSET(StockLevel, _impl_.quantity_available_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
   }},
   // no aux_entries
   {{
     "\24\3\4\12\0\0\0\0"
-    "inventory.ItemDetail"
+    "inventory.StockLevel"
     "sku"
     "name"
     "aisle_type"
   }},
 };
-PROTOBUF_NOINLINE void ItemDetail::Clear() {
-// @@protoc_insertion_point(message_clear_start:inventory.ItemDetail)
+PROTOBUF_NOINLINE void StockLevel::Clear() {
+// @@protoc_insertion_point(message_clear_start:inventory.StockLevel)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1731,20 +1677,20 @@ PROTOBUF_NOINLINE void ItemDetail::Clear() {
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL ItemDetail::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL StockLevel::_InternalSerialize(
     const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const ItemDetail& this_ = static_cast<const ItemDetail&>(base);
+  const StockLevel& this_ = static_cast<const StockLevel&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL ItemDetail::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL StockLevel::_InternalSerialize(
     ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const ItemDetail& this_ = *this;
+  const StockLevel& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     this_.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(serialize_to_array_start:inventory.ItemDetail)
+  // @@protoc_insertion_point(serialize_to_array_start:inventory.StockLevel)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
@@ -1754,7 +1700,7 @@ PROTOBUF_NOINLINE void ItemDetail::Clear() {
     if (!this_._internal_sku().empty()) {
       const ::std::string& _s = this_._internal_sku();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ItemDetail.sku");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.StockLevel.sku");
       target = stream->WriteStringMaybeAliased(1, _s, target);
     }
   }
@@ -1764,7 +1710,7 @@ PROTOBUF_NOINLINE void ItemDetail::Clear() {
     if (!this_._internal_name().empty()) {
       const ::std::string& _s = this_._internal_name();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ItemDetail.name");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.StockLevel.name");
       target = stream->WriteStringMaybeAliased(2, _s, target);
     }
   }
@@ -1774,7 +1720,7 @@ PROTOBUF_NOINLINE void ItemDetail::Clear() {
     if (!this_._internal_aisle_type().empty()) {
       const ::std::string& _s = this_._internal_aisle_type();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ItemDetail.aisle_type");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.StockLevel.aisle_type");
       target = stream->WriteStringMaybeAliased(3, _s, target);
     }
   }
@@ -1793,18 +1739,18 @@ PROTOBUF_NOINLINE void ItemDetail::Clear() {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:inventory.ItemDetail)
+  // @@protoc_insertion_point(serialize_to_array_end:inventory.StockLevel)
   return target;
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t ItemDetail::ByteSizeLong(const MessageLite& base) {
-  const ItemDetail& this_ = static_cast<const ItemDetail&>(base);
+::size_t StockLevel::ByteSizeLong(const MessageLite& base) {
+  const StockLevel& this_ = static_cast<const StockLevel&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::size_t ItemDetail::ByteSizeLong() const {
-  const ItemDetail& this_ = *this;
+::size_t StockLevel::ByteSizeLong() const {
+  const StockLevel& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:inventory.ItemDetail)
+  // @@protoc_insertion_point(message_byte_size_start:inventory.StockLevel)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -1847,15 +1793,15 @@ PROTOBUF_NOINLINE void ItemDetail::Clear() {
                                              &this_._impl_._cached_size_);
 }
 
-void ItemDetail::MergeImpl(::google::protobuf::MessageLite& to_msg,
+void StockLevel::MergeImpl(::google::protobuf::MessageLite& to_msg,
                             const ::google::protobuf::MessageLite& from_msg) {
    auto* const _this =
-      static_cast<ItemDetail*>(&to_msg);
-  auto& from = static_cast<const ItemDetail&>(from_msg);
+      static_cast<StockLevel*>(&to_msg);
+  auto& from = static_cast<const StockLevel&>(from_msg);
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(class_specific_merge_from_start:inventory.ItemDetail)
+  // @@protoc_insertion_point(class_specific_merge_from_start:inventory.StockLevel)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
@@ -1900,15 +1846,15 @@ void ItemDetail::MergeImpl(::google::protobuf::MessageLite& to_msg,
       from._internal_metadata_);
 }
 
-void ItemDetail::CopyFrom(const ItemDetail& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:inventory.ItemDetail)
+void StockLevel::CopyFrom(const StockLevel& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:inventory.StockLevel)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 
-void ItemDetail::InternalSwap(ItemDetail* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+void StockLevel::InternalSwap(StockLevel* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using ::std::swap;
   auto* arena = GetArena();
   ABSL_DCHECK_EQ(arena, other->GetArena());
@@ -1920,7 +1866,7 @@ void ItemDetail::InternalSwap(ItemDetail* PROTOBUF_RESTRICT PROTOBUF_NONNULL oth
   swap(_impl_.quantity_available_, other->_impl_.quantity_available_);
 }
 
-::google::protobuf::Metadata ItemDetail::GetMetadata() const {
+::google::protobuf::Metadata StockLevel::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
@@ -2368,103 +2314,6 @@ void ReserveItemsRequest::InternalSwap(ReserveItemsRequest* PROTOBUF_RESTRICT PR
 }
 // ===================================================================
 
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-ReserveItemsResponse_ItemsEntry_DoNotUse::ReserveItemsResponse_ItemsEntry_DoNotUse()
-    : SuperType(ReserveItemsResponse_ItemsEntry_DoNotUse_class_data_.base()) {}
-ReserveItemsResponse_ItemsEntry_DoNotUse::ReserveItemsResponse_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-    : SuperType(arena, ReserveItemsResponse_ItemsEntry_DoNotUse_class_data_.base()) {}
-#else   // PROTOBUF_CUSTOM_VTABLE
-ReserveItemsResponse_ItemsEntry_DoNotUse::ReserveItemsResponse_ItemsEntry_DoNotUse() : SuperType() {}
-ReserveItemsResponse_ItemsEntry_DoNotUse::ReserveItemsResponse_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena) : SuperType(arena) {}
-#endif  // PROTOBUF_CUSTOM_VTABLE
-inline void* PROTOBUF_NONNULL ReserveItemsResponse_ItemsEntry_DoNotUse::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) ReserveItemsResponse_ItemsEntry_DoNotUse(arena);
-}
-constexpr auto ReserveItemsResponse_ItemsEntry_DoNotUse::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(ReserveItemsResponse_ItemsEntry_DoNotUse),
-                                            alignof(ReserveItemsResponse_ItemsEntry_DoNotUse));
-}
-constexpr auto ReserveItemsResponse_ItemsEntry_DoNotUse::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_ReserveItemsResponse_ItemsEntry_DoNotUse_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &ReserveItemsResponse_ItemsEntry_DoNotUse::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<ReserveItemsResponse_ItemsEntry_DoNotUse>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &ReserveItemsResponse_ItemsEntry_DoNotUse::SharedDtor,
-          static_cast<void (::google::protobuf::MessageLite::*)()>(&ReserveItemsResponse_ItemsEntry_DoNotUse::ClearImpl),
-              ::google::protobuf::Message::ByteSizeLongImpl, ::google::protobuf::Message::_InternalSerializeImpl
-              ,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(ReserveItemsResponse_ItemsEntry_DoNotUse, _impl_._cached_size_),
-          false,
-      },
-      &ReserveItemsResponse_ItemsEntry_DoNotUse::kDescriptorMethods,
-      &descriptor_table_inventory_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull ReserveItemsResponse_ItemsEntry_DoNotUse_class_data_ =
-        ReserveItemsResponse_ItemsEntry_DoNotUse::InternalGenerateClassData_();
-
-PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-ReserveItemsResponse_ItemsEntry_DoNotUse::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&ReserveItemsResponse_ItemsEntry_DoNotUse_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(ReserveItemsResponse_ItemsEntry_DoNotUse_class_data_.tc_table);
-  return ReserveItemsResponse_ItemsEntry_DoNotUse_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 0, 53, 2>
-ReserveItemsResponse_ItemsEntry_DoNotUse::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(ReserveItemsResponse_ItemsEntry_DoNotUse, _impl_._has_bits_),
-    0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    ReserveItemsResponse_ItemsEntry_DoNotUse_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::DiscardEverythingFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::inventory::ReserveItemsResponse_ItemsEntry_DoNotUse>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    // int32 value = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ReserveItemsResponse_ItemsEntry_DoNotUse, _impl_.value_), 1>(),
-     {16, 1, 0,
-      PROTOBUF_FIELD_OFFSET(ReserveItemsResponse_ItemsEntry_DoNotUse, _impl_.value_)}},
-    // string key = 1;
-    {::_pbi::TcParser::FastUS1,
-     {10, 0, 0,
-      PROTOBUF_FIELD_OFFSET(ReserveItemsResponse_ItemsEntry_DoNotUse, _impl_.key_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // string key = 1;
-    {PROTOBUF_FIELD_OFFSET(ReserveItemsResponse_ItemsEntry_DoNotUse, _impl_.key_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // int32 value = 2;
-    {PROTOBUF_FIELD_OFFSET(ReserveItemsResponse_ItemsEntry_DoNotUse, _impl_.value_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
-  }},
-  // no aux_entries
-  {{
-    "\51\3\0\0\0\0\0\0"
-    "inventory.ReserveItemsResponse.ItemsEntry"
-    "key"
-  }},
-};
-// ===================================================================
-
 class ReserveItemsResponse::_Internal {
  public:
   using HasBits =
@@ -2489,7 +2338,7 @@ PROTOBUF_NDEBUG_INLINE ReserveItemsResponse::Impl_::Impl_(
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         order_id_(arena, from.order_id_),
-        items_{visibility, arena, from.items_} {}
+        error_message_(arena, from.error_message_) {}
 
 ReserveItemsResponse::ReserveItemsResponse(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
@@ -2513,7 +2362,7 @@ PROTOBUF_NDEBUG_INLINE ReserveItemsResponse::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
         order_id_(arena),
-        items_{visibility, arena} {}
+        error_message_(arena) {}
 
 inline void ReserveItemsResponse::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
@@ -2531,6 +2380,7 @@ inline void ReserveItemsResponse::SharedDtor(MessageLite& self) {
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.order_id_.Destroy();
+  this_._impl_.error_message_.Destroy();
   this_._impl_.~Impl_();
 }
 
@@ -2540,20 +2390,8 @@ inline void* PROTOBUF_NONNULL ReserveItemsResponse::PlacementNew_(
   return ::new (mem) ReserveItemsResponse(arena);
 }
 constexpr auto ReserveItemsResponse::InternalNewImpl_() {
-  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
-      PROTOBUF_FIELD_OFFSET(ReserveItemsResponse, _impl_.items_) +
-          decltype(ReserveItemsResponse::_impl_.items_)::
-              InternalGetArenaOffset(
-                  ::google::protobuf::Message::internal_visibility()),
-  });
-  if (arena_bits.has_value()) {
-    return ::google::protobuf::internal::MessageCreator::CopyInit(
-        sizeof(ReserveItemsResponse), alignof(ReserveItemsResponse), *arena_bits);
-  } else {
-    return ::google::protobuf::internal::MessageCreator(&ReserveItemsResponse::PlacementNew_,
-                                 sizeof(ReserveItemsResponse),
-                                 alignof(ReserveItemsResponse));
-  }
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(ReserveItemsResponse),
+                                            alignof(ReserveItemsResponse));
 }
 constexpr auto ReserveItemsResponse::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
@@ -2589,7 +2427,7 @@ ReserveItemsResponse::GetClassData() const {
   return ReserveItemsResponse_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 3, 1, 52, 2>
+const ::_pbi::TcParseTable<2, 3, 0, 60, 2>
 ReserveItemsResponse::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(ReserveItemsResponse, _impl_._has_bits_),
@@ -2599,8 +2437,8 @@ ReserveItemsResponse::_table_ = {
     4294967288,  // skipmap
     offsetof(decltype(_table_), field_entries),
     3,  // num_field_entries
-    1,  // num_aux_entries
-    offsetof(decltype(_table_), aux_entries),
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
     ReserveItemsResponse_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
@@ -2613,30 +2451,30 @@ ReserveItemsResponse::_table_ = {
     {::_pbi::TcParser::FastUS1,
      {10, 0, 0,
       PROTOBUF_FIELD_OFFSET(ReserveItemsResponse, _impl_.order_id_)}},
-    {::_pbi::TcParser::MiniParse, {}},
-    // bool success = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(ReserveItemsResponse, _impl_.success_), 1>(),
-     {24, 1, 0,
+    // bool success = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(ReserveItemsResponse, _impl_.success_), 2>(),
+     {16, 2, 0,
       PROTOBUF_FIELD_OFFSET(ReserveItemsResponse, _impl_.success_)}},
+    // string error_message = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 1, 0,
+      PROTOBUF_FIELD_OFFSET(ReserveItemsResponse, _impl_.error_message_)}},
   }}, {{
     65535, 65535
   }}, {{
     // string order_id = 1;
     {PROTOBUF_FIELD_OFFSET(ReserveItemsResponse, _impl_.order_id_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // map<string, int32> items = 2;
-    {PROTOBUF_FIELD_OFFSET(ReserveItemsResponse, _impl_.items_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMap)},
-    // bool success = 3;
-    {PROTOBUF_FIELD_OFFSET(ReserveItemsResponse, _impl_.success_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // bool success = 2;
+    {PROTOBUF_FIELD_OFFSET(ReserveItemsResponse, _impl_.success_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // string error_message = 3;
+    {PROTOBUF_FIELD_OFFSET(ReserveItemsResponse, _impl_.error_message_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
+  // no aux_entries
   {{
-      {::_pbi::TcParser::GetMapAuxInfo(
-          1, 0, 9, 5, 0)},
-  }},
-  {{
-    "\36\10\5\0\0\0\0\0"
+    "\36\10\0\15\0\0\0\0"
     "inventory.ReserveItemsResponse"
     "order_id"
-    "items"
+    "error_message"
   }},
 };
 PROTOBUF_NOINLINE void ReserveItemsResponse::Clear() {
@@ -2647,15 +2485,15 @@ PROTOBUF_NOINLINE void ReserveItemsResponse::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _impl_._has_bits_[0];
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    _impl_.order_id_.ClearNonDefaultToEmpty();
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x00000006U)) {
-    _impl_.success_ = false;
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000004U)) {
-      _impl_.items_.Clear();
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _impl_.order_id_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      _impl_.error_message_.ClearNonDefaultToEmpty();
     }
   }
+  _impl_.success_ = false;
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -2689,41 +2527,22 @@ PROTOBUF_NOINLINE void ReserveItemsResponse::Clear() {
     }
   }
 
-  // map<string, int32> items = 2;
-  if (CheckHasBitForRepeated(cached_has_bits, 0x00000004U)) {
-    if (!this_._internal_items().empty()) {
-      using MapType = ::google::protobuf::Map<::std::string, ::int32_t>;
-      using WireHelper = _pbi::MapEntryFuncs<::std::string, ::int32_t,
-                                     _pbi::WireFormatLite::TYPE_STRING,
-                                     _pbi::WireFormatLite::TYPE_INT32>;
-      const auto& field = this_._internal_items();
-
-      if (stream->IsSerializationDeterministic() && field.size() > 1) {
-        for (const auto& entry : ::google::protobuf::internal::MapSorterPtr<MapType>(field)) {
-          target = WireHelper::InternalSerialize(
-              2, entry.first, entry.second, target, stream);
-          ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-              entry.first.data(), static_cast<int>(entry.first.length()),
- ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ReserveItemsResponse.items");
-        }
-      } else {
-        for (const auto& entry : field) {
-          target = WireHelper::InternalSerialize(
-              2, entry.first, entry.second, target, stream);
-          ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-              entry.first.data(), static_cast<int>(entry.first.length()),
- ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ReserveItemsResponse.items");
-        }
-      }
-    }
-  }
-
-  // bool success = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+  // bool success = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
     if (this_._internal_success() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteBoolToArray(
-          3, this_._internal_success(), target);
+          2, this_._internal_success(), target);
+    }
+  }
+
+  // string error_message = 3;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (!this_._internal_error_message().empty()) {
+      const ::std::string& _s = this_._internal_error_message();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ReserveItemsResponse.error_message");
+      target = stream->WriteStringMaybeAliased(3, _s, target);
     }
   }
 
@@ -2760,20 +2579,17 @@ PROTOBUF_NOINLINE void ReserveItemsResponse::Clear() {
                                         this_._internal_order_id());
       }
     }
-    // bool success = 3;
+    // string error_message = 3;
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (this_._internal_success() != 0) {
-        total_size += 2;
+      if (!this_._internal_error_message().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_error_message());
       }
     }
-    // map<string, int32> items = 2;
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000004U)) {
-      total_size +=
-          1 * ::google::protobuf::internal::FromIntSize(this_._internal_items_size());
-      for (const auto& entry : this_._internal_items()) {
-        total_size += _pbi::MapEntryFuncs<::std::string, ::int32_t,
-                                       _pbi::WireFormatLite::TYPE_STRING,
-                                       _pbi::WireFormatLite::TYPE_INT32>::ByteSizeLong(entry.first, entry.second);
+    // bool success = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (this_._internal_success() != 0) {
+        total_size += 2;
       }
     }
   }
@@ -2806,12 +2622,18 @@ void ReserveItemsResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (!from._internal_error_message().empty()) {
+        _this->_internal_set_error_message(from._internal_error_message());
+      } else {
+        if (_this->_impl_.error_message_.IsDefault()) {
+          _this->_internal_set_error_message("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       if (from._internal_success() != 0) {
         _this->_impl_.success_ = from._impl_.success_;
       }
-    }
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000004U)) {
-      _this->_impl_.items_.MergeFrom(from._impl_.items_);
     }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
@@ -2834,8 +2656,8 @@ void ReserveItemsResponse::InternalSwap(ReserveItemsResponse* PROTOBUF_RESTRICT 
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.order_id_, &other->_impl_.order_id_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.error_message_, &other->_impl_.error_message_, arena);
   swap(_impl_.success_, other->_impl_.success_);
-  _impl_.items_.InternalSwap(&other->_impl_.items_);
 }
 
 ::google::protobuf::Metadata ReserveItemsResponse::GetMetadata() const {
@@ -3533,132 +3355,883 @@ void ReleaseItemsResponse::InternalSwap(ReleaseItemsResponse* PROTOBUF_RESTRICT 
 }
 // ===================================================================
 
-class RestockItemsRequest::_Internal {
- public:
-  using HasBits =
-      decltype(::std::declval<RestockItemsRequest>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(RestockItemsRequest, _impl_._has_bits_);
-};
-
-RestockItemsRequest::RestockItemsRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, RestockItemsRequest_class_data_.base()) {
+ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::ProcessCustomerOrderRequest_ItemsEntry_DoNotUse()
+    : SuperType(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_class_data_.base()) {}
+ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::ProcessCustomerOrderRequest_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+    : SuperType(arena, ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_class_data_.base()) {}
 #else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
+ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::ProcessCustomerOrderRequest_ItemsEntry_DoNotUse() : SuperType() {}
+ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::ProcessCustomerOrderRequest_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena) : SuperType(arena) {}
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:inventory.RestockItemsRequest)
-}
-PROTOBUF_NDEBUG_INLINE RestockItemsRequest::Impl_::Impl_(
-    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
-    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    [[maybe_unused]] const ::inventory::RestockItemsRequest& from_msg)
-      : _has_bits_{from._has_bits_},
-        _cached_size_{0},
-        items_{visibility, arena, from.items_},
-        supplier_id_(arena, from.supplier_id_) {}
-
-RestockItemsRequest::RestockItemsRequest(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const RestockItemsRequest& from)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, RestockItemsRequest_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  RestockItemsRequest* const _this = this;
-  (void)_this;
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
-
-  // @@protoc_insertion_point(copy_constructor:inventory.RestockItemsRequest)
-}
-PROTOBUF_NDEBUG_INLINE RestockItemsRequest::Impl_::Impl_(
-    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
-    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0},
-        items_{visibility, arena},
-        supplier_id_(arena) {}
-
-inline void RestockItemsRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
-  new (&_impl_) Impl_(internal_visibility(), arena);
-}
-RestockItemsRequest::~RestockItemsRequest() {
-  // @@protoc_insertion_point(destructor:inventory.RestockItemsRequest)
-  SharedDtor(*this);
-}
-inline void RestockItemsRequest::SharedDtor(MessageLite& self) {
-  RestockItemsRequest& this_ = static_cast<RestockItemsRequest&>(self);
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    this_.CheckHasBitConsistency();
-  }
-  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  ABSL_DCHECK(this_.GetArena() == nullptr);
-  this_._impl_.supplier_id_.Destroy();
-  this_._impl_.~Impl_();
-}
-
-inline void* PROTOBUF_NONNULL RestockItemsRequest::PlacementNew_(
+inline void* PROTOBUF_NONNULL ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) RestockItemsRequest(arena);
+  return ::new (mem) ProcessCustomerOrderRequest_ItemsEntry_DoNotUse(arena);
 }
-constexpr auto RestockItemsRequest::InternalNewImpl_() {
-  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
-      PROTOBUF_FIELD_OFFSET(RestockItemsRequest, _impl_.items_) +
-          decltype(RestockItemsRequest::_impl_.items_)::
-              InternalGetArenaOffset(
-                  ::google::protobuf::Message::internal_visibility()),
-  });
-  if (arena_bits.has_value()) {
-    return ::google::protobuf::internal::MessageCreator::CopyInit(
-        sizeof(RestockItemsRequest), alignof(RestockItemsRequest), *arena_bits);
-  } else {
-    return ::google::protobuf::internal::MessageCreator(&RestockItemsRequest::PlacementNew_,
-                                 sizeof(RestockItemsRequest),
-                                 alignof(RestockItemsRequest));
-  }
+constexpr auto ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse),
+                                            alignof(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse));
 }
-constexpr auto RestockItemsRequest::InternalGenerateClassData_() {
+constexpr auto ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_RestockItemsRequest_default_instance_._instance,
+          &_ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &RestockItemsRequest::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<RestockItemsRequest>(),
+          &ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<ProcessCustomerOrderRequest_ItemsEntry_DoNotUse>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &RestockItemsRequest::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<RestockItemsRequest>(), &RestockItemsRequest::ByteSizeLong,
-              &RestockItemsRequest::_InternalSerialize,
+          &ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::SharedDtor,
+          static_cast<void (::google::protobuf::MessageLite::*)()>(&ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::ClearImpl),
+              ::google::protobuf::Message::ByteSizeLongImpl, ::google::protobuf::Message::_InternalSerializeImpl
+              ,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(RestockItemsRequest, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse, _impl_._cached_size_),
           false,
       },
-      &RestockItemsRequest::kDescriptorMethods,
+      &ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::kDescriptorMethods,
       &descriptor_table_inventory_2eproto,
       nullptr,  // tracker
   };
 }
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull RestockItemsRequest_class_data_ =
-        RestockItemsRequest::InternalGenerateClassData_();
+    ::google::protobuf::internal::ClassDataFull ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_class_data_ =
+        ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::InternalGenerateClassData_();
 
 PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-RestockItemsRequest::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&RestockItemsRequest_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(RestockItemsRequest_class_data_.tc_table);
-  return RestockItemsRequest_class_data_.base();
+ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_class_data_.tc_table);
+  return ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 1, 49, 2>
-RestockItemsRequest::_table_ = {
+const ::_pbi::TcParseTable<1, 2, 0, 60, 2>
+ProcessCustomerOrderRequest_ItemsEntry_DoNotUse::_table_ = {
   {
-    PROTOBUF_FIELD_OFFSET(RestockItemsRequest, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse, _impl_._has_bits_),
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    ProcessCustomerOrderRequest_ItemsEntry_DoNotUse_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::DiscardEverythingFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::inventory::ProcessCustomerOrderRequest_ItemsEntry_DoNotUse>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // int32 value = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse, _impl_.value_), 1>(),
+     {16, 1, 0,
+      PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse, _impl_.value_)}},
+    // string key = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 0, 0,
+      PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse, _impl_.key_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string key = 1;
+    {PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse, _impl_.key_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // int32 value = 2;
+    {PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest_ItemsEntry_DoNotUse, _impl_.value_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+  }},
+  // no aux_entries
+  {{
+    "\60\3\0\0\0\0\0\0"
+    "inventory.ProcessCustomerOrderRequest.ItemsEntry"
+    "key"
+  }},
+};
+// ===================================================================
+
+class ProcessCustomerOrderRequest::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<ProcessCustomerOrderRequest>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest, _impl_._has_bits_);
+};
+
+ProcessCustomerOrderRequest::ProcessCustomerOrderRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ProcessCustomerOrderRequest_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:inventory.ProcessCustomerOrderRequest)
+}
+PROTOBUF_NDEBUG_INLINE ProcessCustomerOrderRequest::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::inventory::ProcessCustomerOrderRequest& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        order_id_(arena, from.order_id_),
+        items_{visibility, arena, from.items_} {}
+
+ProcessCustomerOrderRequest::ProcessCustomerOrderRequest(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const ProcessCustomerOrderRequest& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ProcessCustomerOrderRequest_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  ProcessCustomerOrderRequest* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+
+  // @@protoc_insertion_point(copy_constructor:inventory.ProcessCustomerOrderRequest)
+}
+PROTOBUF_NDEBUG_INLINE ProcessCustomerOrderRequest::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        order_id_(arena),
+        items_{visibility, arena} {}
+
+inline void ProcessCustomerOrderRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+ProcessCustomerOrderRequest::~ProcessCustomerOrderRequest() {
+  // @@protoc_insertion_point(destructor:inventory.ProcessCustomerOrderRequest)
+  SharedDtor(*this);
+}
+inline void ProcessCustomerOrderRequest::SharedDtor(MessageLite& self) {
+  ProcessCustomerOrderRequest& this_ = static_cast<ProcessCustomerOrderRequest&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.order_id_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL ProcessCustomerOrderRequest::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) ProcessCustomerOrderRequest(arena);
+}
+constexpr auto ProcessCustomerOrderRequest::InternalNewImpl_() {
+  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
+      PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest, _impl_.items_) +
+          decltype(ProcessCustomerOrderRequest::_impl_.items_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+  });
+  if (arena_bits.has_value()) {
+    return ::google::protobuf::internal::MessageCreator::CopyInit(
+        sizeof(ProcessCustomerOrderRequest), alignof(ProcessCustomerOrderRequest), *arena_bits);
+  } else {
+    return ::google::protobuf::internal::MessageCreator(&ProcessCustomerOrderRequest::PlacementNew_,
+                                 sizeof(ProcessCustomerOrderRequest),
+                                 alignof(ProcessCustomerOrderRequest));
+  }
+}
+constexpr auto ProcessCustomerOrderRequest::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_ProcessCustomerOrderRequest_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &ProcessCustomerOrderRequest::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<ProcessCustomerOrderRequest>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &ProcessCustomerOrderRequest::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<ProcessCustomerOrderRequest>(), &ProcessCustomerOrderRequest::ByteSizeLong,
+              &ProcessCustomerOrderRequest::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest, _impl_._cached_size_),
+          false,
+      },
+      &ProcessCustomerOrderRequest::kDescriptorMethods,
+      &descriptor_table_inventory_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull ProcessCustomerOrderRequest_class_data_ =
+        ProcessCustomerOrderRequest::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+ProcessCustomerOrderRequest::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&ProcessCustomerOrderRequest_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(ProcessCustomerOrderRequest_class_data_.tc_table);
+  return ProcessCustomerOrderRequest_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<0, 2, 1, 59, 2>
+ProcessCustomerOrderRequest::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest, _impl_._has_bits_),
+    0, // no _extensions_
+    2, 0,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    1,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
+    ProcessCustomerOrderRequest_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::inventory::ProcessCustomerOrderRequest>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // string order_id = 1;
+    {::_pbi::TcParser::FastUS1,
+     {10, 0, 0,
+      PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest, _impl_.order_id_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // string order_id = 1;
+    {PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest, _impl_.order_id_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // map<string, int32> items = 2;
+    {PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderRequest, _impl_.items_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMap)},
+  }},
+  {{
+      {::_pbi::TcParser::GetMapAuxInfo(
+          1, 0, 9, 5, 0)},
+  }},
+  {{
+    "\45\10\5\0\0\0\0\0"
+    "inventory.ProcessCustomerOrderRequest"
+    "order_id"
+    "items"
+  }},
+};
+PROTOBUF_NOINLINE void ProcessCustomerOrderRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:inventory.ProcessCustomerOrderRequest)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      _impl_.order_id_.ClearNonDefaultToEmpty();
+    }
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
+      _impl_.items_.Clear();
+    }
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL ProcessCustomerOrderRequest::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const ProcessCustomerOrderRequest& this_ = static_cast<const ProcessCustomerOrderRequest&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL ProcessCustomerOrderRequest::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const ProcessCustomerOrderRequest& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:inventory.ProcessCustomerOrderRequest)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // string order_id = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (!this_._internal_order_id().empty()) {
+      const ::std::string& _s = this_._internal_order_id();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ProcessCustomerOrderRequest.order_id");
+      target = stream->WriteStringMaybeAliased(1, _s, target);
+    }
+  }
+
+  // map<string, int32> items = 2;
+  if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
+    if (!this_._internal_items().empty()) {
+      using MapType = ::google::protobuf::Map<::std::string, ::int32_t>;
+      using WireHelper = _pbi::MapEntryFuncs<::std::string, ::int32_t,
+                                     _pbi::WireFormatLite::TYPE_STRING,
+                                     _pbi::WireFormatLite::TYPE_INT32>;
+      const auto& field = this_._internal_items();
+
+      if (stream->IsSerializationDeterministic() && field.size() > 1) {
+        for (const auto& entry : ::google::protobuf::internal::MapSorterPtr<MapType>(field)) {
+          target = WireHelper::InternalSerialize(
+              2, entry.first, entry.second, target, stream);
+          ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+              entry.first.data(), static_cast<int>(entry.first.length()),
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ProcessCustomerOrderRequest.items");
+        }
+      } else {
+        for (const auto& entry : field) {
+          target = WireHelper::InternalSerialize(
+              2, entry.first, entry.second, target, stream);
+          ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+              entry.first.data(), static_cast<int>(entry.first.length()),
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ProcessCustomerOrderRequest.items");
+        }
+      }
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:inventory.ProcessCustomerOrderRequest)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t ProcessCustomerOrderRequest::ByteSizeLong(const MessageLite& base) {
+  const ProcessCustomerOrderRequest& this_ = static_cast<const ProcessCustomerOrderRequest&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t ProcessCustomerOrderRequest::ByteSizeLong() const {
+  const ProcessCustomerOrderRequest& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:inventory.ProcessCustomerOrderRequest)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    // string order_id = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!this_._internal_order_id().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_order_id());
+      }
+    }
+    // map<string, int32> items = 2;
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
+      total_size +=
+          1 * ::google::protobuf::internal::FromIntSize(this_._internal_items_size());
+      for (const auto& entry : this_._internal_items()) {
+        total_size += _pbi::MapEntryFuncs<::std::string, ::int32_t,
+                                       _pbi::WireFormatLite::TYPE_STRING,
+                                       _pbi::WireFormatLite::TYPE_INT32>::ByteSizeLong(entry.first, entry.second);
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void ProcessCustomerOrderRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<ProcessCustomerOrderRequest*>(&to_msg);
+  auto& from = static_cast<const ProcessCustomerOrderRequest&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:inventory.ProcessCustomerOrderRequest)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!from._internal_order_id().empty()) {
+        _this->_internal_set_order_id(from._internal_order_id());
+      } else {
+        if (_this->_impl_.order_id_.IsDefault()) {
+          _this->_internal_set_order_id("");
+        }
+      }
+    }
+    if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
+      _this->_impl_.items_.MergeFrom(from._impl_.items_);
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void ProcessCustomerOrderRequest::CopyFrom(const ProcessCustomerOrderRequest& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:inventory.ProcessCustomerOrderRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void ProcessCustomerOrderRequest::InternalSwap(ProcessCustomerOrderRequest* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.order_id_, &other->_impl_.order_id_, arena);
+  _impl_.items_.InternalSwap(&other->_impl_.items_);
+}
+
+::google::protobuf::Metadata ProcessCustomerOrderRequest::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class ProcessCustomerOrderResponse::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<ProcessCustomerOrderResponse>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderResponse, _impl_._has_bits_);
+};
+
+ProcessCustomerOrderResponse::ProcessCustomerOrderResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ProcessCustomerOrderResponse_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:inventory.ProcessCustomerOrderResponse)
+}
+PROTOBUF_NDEBUG_INLINE ProcessCustomerOrderResponse::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::inventory::ProcessCustomerOrderResponse& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        message_(arena, from.message_) {}
+
+ProcessCustomerOrderResponse::ProcessCustomerOrderResponse(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const ProcessCustomerOrderResponse& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, ProcessCustomerOrderResponse_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  ProcessCustomerOrderResponse* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  _impl_.success_ = from._impl_.success_;
+
+  // @@protoc_insertion_point(copy_constructor:inventory.ProcessCustomerOrderResponse)
+}
+PROTOBUF_NDEBUG_INLINE ProcessCustomerOrderResponse::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        message_(arena) {}
+
+inline void ProcessCustomerOrderResponse::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  _impl_.success_ = {};
+}
+ProcessCustomerOrderResponse::~ProcessCustomerOrderResponse() {
+  // @@protoc_insertion_point(destructor:inventory.ProcessCustomerOrderResponse)
+  SharedDtor(*this);
+}
+inline void ProcessCustomerOrderResponse::SharedDtor(MessageLite& self) {
+  ProcessCustomerOrderResponse& this_ = static_cast<ProcessCustomerOrderResponse&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.message_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL ProcessCustomerOrderResponse::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) ProcessCustomerOrderResponse(arena);
+}
+constexpr auto ProcessCustomerOrderResponse::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(ProcessCustomerOrderResponse),
+                                            alignof(ProcessCustomerOrderResponse));
+}
+constexpr auto ProcessCustomerOrderResponse::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_ProcessCustomerOrderResponse_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &ProcessCustomerOrderResponse::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<ProcessCustomerOrderResponse>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &ProcessCustomerOrderResponse::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<ProcessCustomerOrderResponse>(), &ProcessCustomerOrderResponse::ByteSizeLong,
+              &ProcessCustomerOrderResponse::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderResponse, _impl_._cached_size_),
+          false,
+      },
+      &ProcessCustomerOrderResponse::kDescriptorMethods,
+      &descriptor_table_inventory_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull ProcessCustomerOrderResponse_class_data_ =
+        ProcessCustomerOrderResponse::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+ProcessCustomerOrderResponse::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&ProcessCustomerOrderResponse_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(ProcessCustomerOrderResponse_class_data_.tc_table);
+  return ProcessCustomerOrderResponse_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 0, 54, 2>
+ProcessCustomerOrderResponse::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderResponse, _impl_._has_bits_),
+    0, // no _extensions_
+    2, 8,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967292,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    2,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    ProcessCustomerOrderResponse_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::inventory::ProcessCustomerOrderResponse>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    // string message = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 0, 0,
+      PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderResponse, _impl_.message_)}},
+    // bool success = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(ProcessCustomerOrderResponse, _impl_.success_), 1>(),
+     {8, 1, 0,
+      PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderResponse, _impl_.success_)}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // bool success = 1;
+    {PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderResponse, _impl_.success_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    // string message = 2;
+    {PROTOBUF_FIELD_OFFSET(ProcessCustomerOrderResponse, _impl_.message_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+  }},
+  // no aux_entries
+  {{
+    "\46\0\7\0\0\0\0\0"
+    "inventory.ProcessCustomerOrderResponse"
+    "message"
+  }},
+};
+PROTOBUF_NOINLINE void ProcessCustomerOrderResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:inventory.ProcessCustomerOrderResponse)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    _impl_.message_.ClearNonDefaultToEmpty();
+  }
+  _impl_.success_ = false;
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL ProcessCustomerOrderResponse::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const ProcessCustomerOrderResponse& this_ = static_cast<const ProcessCustomerOrderResponse&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL ProcessCustomerOrderResponse::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const ProcessCustomerOrderResponse& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:inventory.ProcessCustomerOrderResponse)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = this_._impl_._has_bits_[0];
+  // bool success = 1;
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+    if (this_._internal_success() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteBoolToArray(
+          1, this_._internal_success(), target);
+    }
+  }
+
+  // string message = 2;
+  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+    if (!this_._internal_message().empty()) {
+      const ::std::string& _s = this_._internal_message();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ProcessCustomerOrderResponse.message");
+      target = stream->WriteStringMaybeAliased(2, _s, target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:inventory.ProcessCustomerOrderResponse)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t ProcessCustomerOrderResponse::ByteSizeLong(const MessageLite& base) {
+  const ProcessCustomerOrderResponse& this_ = static_cast<const ProcessCustomerOrderResponse&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t ProcessCustomerOrderResponse::ByteSizeLong() const {
+  const ProcessCustomerOrderResponse& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:inventory.ProcessCustomerOrderResponse)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    // string message = 2;
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!this_._internal_message().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_message());
+      }
+    }
+    // bool success = 1;
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (this_._internal_success() != 0) {
+        total_size += 2;
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void ProcessCustomerOrderResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
+                            const ::google::protobuf::MessageLite& from_msg) {
+   auto* const _this =
+      static_cast<ProcessCustomerOrderResponse*>(&to_msg);
+  auto& from = static_cast<const ProcessCustomerOrderResponse&>(from_msg);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    from.CheckHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:inventory.ProcessCustomerOrderResponse)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
+      if (!from._internal_message().empty()) {
+        _this->_internal_set_message(from._internal_message());
+      } else {
+        if (_this->_impl_.message_.IsDefault()) {
+          _this->_internal_set_message("");
+        }
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
+      if (from._internal_success() != 0) {
+        _this->_impl_.success_ = from._impl_.success_;
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+}
+
+void ProcessCustomerOrderResponse::CopyFrom(const ProcessCustomerOrderResponse& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:inventory.ProcessCustomerOrderResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void ProcessCustomerOrderResponse::InternalSwap(ProcessCustomerOrderResponse* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.message_, &other->_impl_.message_, arena);
+  swap(_impl_.success_, other->_impl_.success_);
+}
+
+::google::protobuf::Metadata ProcessCustomerOrderResponse::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class RestockItemsOrderRequest::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<RestockItemsOrderRequest>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(RestockItemsOrderRequest, _impl_._has_bits_);
+};
+
+RestockItemsOrderRequest::RestockItemsOrderRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, RestockItemsOrderRequest_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:inventory.RestockItemsOrderRequest)
+}
+PROTOBUF_NDEBUG_INLINE RestockItemsOrderRequest::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::inventory::RestockItemsOrderRequest& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        items_{visibility, arena, from.items_},
+        order_id_(arena, from.order_id_) {}
+
+RestockItemsOrderRequest::RestockItemsOrderRequest(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const RestockItemsOrderRequest& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, RestockItemsOrderRequest_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  RestockItemsOrderRequest* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+
+  // @@protoc_insertion_point(copy_constructor:inventory.RestockItemsOrderRequest)
+}
+PROTOBUF_NDEBUG_INLINE RestockItemsOrderRequest::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        items_{visibility, arena},
+        order_id_(arena) {}
+
+inline void RestockItemsOrderRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+}
+RestockItemsOrderRequest::~RestockItemsOrderRequest() {
+  // @@protoc_insertion_point(destructor:inventory.RestockItemsOrderRequest)
+  SharedDtor(*this);
+}
+inline void RestockItemsOrderRequest::SharedDtor(MessageLite& self) {
+  RestockItemsOrderRequest& this_ = static_cast<RestockItemsOrderRequest&>(self);
+  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
+    this_.CheckHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.order_id_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL RestockItemsOrderRequest::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) RestockItemsOrderRequest(arena);
+}
+constexpr auto RestockItemsOrderRequest::InternalNewImpl_() {
+  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
+      PROTOBUF_FIELD_OFFSET(RestockItemsOrderRequest, _impl_.items_) +
+          decltype(RestockItemsOrderRequest::_impl_.items_)::
+              InternalGetArenaOffset(
+                  ::google::protobuf::Message::internal_visibility()),
+  });
+  if (arena_bits.has_value()) {
+    return ::google::protobuf::internal::MessageCreator::CopyInit(
+        sizeof(RestockItemsOrderRequest), alignof(RestockItemsOrderRequest), *arena_bits);
+  } else {
+    return ::google::protobuf::internal::MessageCreator(&RestockItemsOrderRequest::PlacementNew_,
+                                 sizeof(RestockItemsOrderRequest),
+                                 alignof(RestockItemsOrderRequest));
+  }
+}
+constexpr auto RestockItemsOrderRequest::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_RestockItemsOrderRequest_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &RestockItemsOrderRequest::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<RestockItemsOrderRequest>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &RestockItemsOrderRequest::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<RestockItemsOrderRequest>(), &RestockItemsOrderRequest::ByteSizeLong,
+              &RestockItemsOrderRequest::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(RestockItemsOrderRequest, _impl_._cached_size_),
+          false,
+      },
+      &RestockItemsOrderRequest::kDescriptorMethods,
+      &descriptor_table_inventory_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull RestockItemsOrderRequest_class_data_ =
+        RestockItemsOrderRequest::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+RestockItemsOrderRequest::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&RestockItemsOrderRequest_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(RestockItemsOrderRequest_class_data_.tc_table);
+  return RestockItemsOrderRequest_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<1, 2, 1, 51, 2>
+RestockItemsOrderRequest::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(RestockItemsOrderRequest, _impl_._has_bits_),
     0, // no _extensions_
     2, 8,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
@@ -3667,40 +4240,40 @@ RestockItemsRequest::_table_ = {
     2,  // num_field_entries
     1,  // num_aux_entries
     offsetof(decltype(_table_), aux_entries),
-    RestockItemsRequest_class_data_.base(),
+    RestockItemsOrderRequest_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::inventory::RestockItemsRequest>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::inventory::RestockItemsOrderRequest>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     // repeated .inventory.RestockItem items = 2;
     {::_pbi::TcParser::FastMtR1,
      {18, 0, 0,
-      PROTOBUF_FIELD_OFFSET(RestockItemsRequest, _impl_.items_)}},
-    // string supplier_id = 1;
+      PROTOBUF_FIELD_OFFSET(RestockItemsOrderRequest, _impl_.items_)}},
+    // string order_id = 1;
     {::_pbi::TcParser::FastUS1,
      {10, 1, 0,
-      PROTOBUF_FIELD_OFFSET(RestockItemsRequest, _impl_.supplier_id_)}},
+      PROTOBUF_FIELD_OFFSET(RestockItemsOrderRequest, _impl_.order_id_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // string supplier_id = 1;
-    {PROTOBUF_FIELD_OFFSET(RestockItemsRequest, _impl_.supplier_id_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string order_id = 1;
+    {PROTOBUF_FIELD_OFFSET(RestockItemsOrderRequest, _impl_.order_id_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // repeated .inventory.RestockItem items = 2;
-    {PROTOBUF_FIELD_OFFSET(RestockItemsRequest, _impl_.items_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
+    {PROTOBUF_FIELD_OFFSET(RestockItemsOrderRequest, _impl_.items_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
   {{
       {::_pbi::TcParser::GetTable<::inventory::RestockItem>()},
   }},
   {{
-    "\35\13\0\0\0\0\0\0"
-    "inventory.RestockItemsRequest"
-    "supplier_id"
+    "\42\10\0\0\0\0\0\0"
+    "inventory.RestockItemsOrderRequest"
+    "order_id"
   }},
 };
-PROTOBUF_NOINLINE void RestockItemsRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:inventory.RestockItemsRequest)
+PROTOBUF_NOINLINE void RestockItemsOrderRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:inventory.RestockItemsOrderRequest)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -3712,7 +4285,7 @@ PROTOBUF_NOINLINE void RestockItemsRequest::Clear() {
       _impl_.items_.Clear();
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      _impl_.supplier_id_.ClearNonDefaultToEmpty();
+      _impl_.order_id_.ClearNonDefaultToEmpty();
     }
   }
   _impl_._has_bits_.Clear();
@@ -3720,30 +4293,30 @@ PROTOBUF_NOINLINE void RestockItemsRequest::Clear() {
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL RestockItemsRequest::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL RestockItemsOrderRequest::_InternalSerialize(
     const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const RestockItemsRequest& this_ = static_cast<const RestockItemsRequest&>(base);
+  const RestockItemsOrderRequest& this_ = static_cast<const RestockItemsOrderRequest&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL RestockItemsRequest::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL RestockItemsOrderRequest::_InternalSerialize(
     ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const RestockItemsRequest& this_ = *this;
+  const RestockItemsOrderRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     this_.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(serialize_to_array_start:inventory.RestockItemsRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:inventory.RestockItemsOrderRequest)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
   cached_has_bits = this_._impl_._has_bits_[0];
-  // string supplier_id = 1;
+  // string order_id = 1;
   if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-    if (!this_._internal_supplier_id().empty()) {
-      const ::std::string& _s = this_._internal_supplier_id();
+    if (!this_._internal_order_id().empty()) {
+      const ::std::string& _s = this_._internal_order_id();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.RestockItemsRequest.supplier_id");
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.RestockItemsOrderRequest.order_id");
       target = stream->WriteStringMaybeAliased(1, _s, target);
     }
   }
@@ -3766,18 +4339,18 @@ PROTOBUF_NOINLINE void RestockItemsRequest::Clear() {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:inventory.RestockItemsRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:inventory.RestockItemsOrderRequest)
   return target;
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t RestockItemsRequest::ByteSizeLong(const MessageLite& base) {
-  const RestockItemsRequest& this_ = static_cast<const RestockItemsRequest&>(base);
+::size_t RestockItemsOrderRequest::ByteSizeLong(const MessageLite& base) {
+  const RestockItemsOrderRequest& this_ = static_cast<const RestockItemsOrderRequest&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::size_t RestockItemsRequest::ByteSizeLong() const {
-  const RestockItemsRequest& this_ = *this;
+::size_t RestockItemsOrderRequest::ByteSizeLong() const {
+  const RestockItemsOrderRequest& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:inventory.RestockItemsRequest)
+  // @@protoc_insertion_point(message_byte_size_start:inventory.RestockItemsOrderRequest)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -3794,11 +4367,11 @@ PROTOBUF_NOINLINE void RestockItemsRequest::Clear() {
         total_size += ::google::protobuf::internal::WireFormatLite::MessageSize(msg);
       }
     }
-    // string supplier_id = 1;
+    // string order_id = 1;
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (!this_._internal_supplier_id().empty()) {
+      if (!this_._internal_order_id().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_supplier_id());
+                                        this_._internal_order_id());
       }
     }
   }
@@ -3806,16 +4379,16 @@ PROTOBUF_NOINLINE void RestockItemsRequest::Clear() {
                                              &this_._impl_._cached_size_);
 }
 
-void RestockItemsRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
+void RestockItemsOrderRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
                             const ::google::protobuf::MessageLite& from_msg) {
    auto* const _this =
-      static_cast<RestockItemsRequest*>(&to_msg);
-  auto& from = static_cast<const RestockItemsRequest&>(from_msg);
+      static_cast<RestockItemsOrderRequest*>(&to_msg);
+  auto& from = static_cast<const RestockItemsOrderRequest&>(from_msg);
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
   ::google::protobuf::Arena* arena = _this->GetArena();
-  // @@protoc_insertion_point(class_specific_merge_from_start:inventory.RestockItemsRequest)
+  // @@protoc_insertion_point(class_specific_merge_from_start:inventory.RestockItemsOrderRequest)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
@@ -3828,11 +4401,11 @@ void RestockItemsRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
           from._internal_items());
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (!from._internal_supplier_id().empty()) {
-        _this->_internal_set_supplier_id(from._internal_supplier_id());
+      if (!from._internal_order_id().empty()) {
+        _this->_internal_set_order_id(from._internal_order_id());
       } else {
-        if (_this->_impl_.supplier_id_.IsDefault()) {
-          _this->_internal_set_supplier_id("");
+        if (_this->_impl_.order_id_.IsDefault()) {
+          _this->_internal_set_order_id("");
         }
       }
     }
@@ -3842,25 +4415,25 @@ void RestockItemsRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
       from._internal_metadata_);
 }
 
-void RestockItemsRequest::CopyFrom(const RestockItemsRequest& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:inventory.RestockItemsRequest)
+void RestockItemsOrderRequest::CopyFrom(const RestockItemsOrderRequest& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:inventory.RestockItemsOrderRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 
-void RestockItemsRequest::InternalSwap(RestockItemsRequest* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+void RestockItemsOrderRequest::InternalSwap(RestockItemsOrderRequest* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using ::std::swap;
   auto* arena = GetArena();
   ABSL_DCHECK_EQ(arena, other->GetArena());
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   _impl_.items_.InternalSwap(&other->_impl_.items_);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.supplier_id_, &other->_impl_.supplier_id_, arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.order_id_, &other->_impl_.order_id_, arena);
 }
 
-::google::protobuf::Metadata RestockItemsRequest::GetMetadata() const {
+::google::protobuf::Metadata RestockItemsOrderRequest::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
@@ -3873,6 +4446,18 @@ class RestockItem::_Internal {
       8 * PROTOBUF_FIELD_OFFSET(RestockItem, _impl_._has_bits_);
 };
 
+void RestockItem::clear_mfd_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.mfd_date_ != nullptr) _impl_.mfd_date_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000008U);
+}
+void RestockItem::clear_expiry_date() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  if (_impl_.expiry_date_ != nullptr) _impl_.expiry_date_->Clear();
+  ClearHasBit(_impl_._has_bits_[0],
+                  0x00000010U);
+}
 RestockItem::RestockItem(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
     : ::google::protobuf::Message(arena, RestockItem_class_data_.base()) {
@@ -3890,9 +4475,7 @@ PROTOBUF_NDEBUG_INLINE RestockItem::Impl_::Impl_(
         _cached_size_{0},
         sku_(arena, from.sku_),
         name_(arena, from.name_),
-        aisle_type_(arena, from.aisle_type_),
-        mfd_date_(arena, from.mfd_date_),
-        expiry_date_(arena, from.expiry_date_) {}
+        aisle_type_(arena, from.aisle_type_) {}
 
 RestockItem::RestockItem(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
@@ -3907,7 +4490,20 @@ RestockItem::RestockItem(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
-  _impl_.quantity_ = from._impl_.quantity_;
+  ::uint32_t cached_has_bits = _impl_._has_bits_[0];
+  _impl_.mfd_date_ = (CheckHasBit(cached_has_bits, 0x00000008U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.mfd_date_)
+                : nullptr;
+  _impl_.expiry_date_ = (CheckHasBit(cached_has_bits, 0x00000010U))
+                ? ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.expiry_date_)
+                : nullptr;
+  ::memcpy(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, unit_cost_),
+           reinterpret_cast<const char*>(&from._impl_) +
+               offsetof(Impl_, unit_cost_),
+           offsetof(Impl_, quantity_) -
+               offsetof(Impl_, unit_cost_) +
+               sizeof(Impl_::quantity_));
 
   // @@protoc_insertion_point(copy_constructor:inventory.RestockItem)
 }
@@ -3917,13 +4513,16 @@ PROTOBUF_NDEBUG_INLINE RestockItem::Impl_::Impl_(
       : _cached_size_{0},
         sku_(arena),
         name_(arena),
-        aisle_type_(arena),
-        mfd_date_(arena),
-        expiry_date_(arena) {}
+        aisle_type_(arena) {}
 
 inline void RestockItem::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
-  _impl_.quantity_ = {};
+  ::memset(reinterpret_cast<char*>(&_impl_) +
+               offsetof(Impl_, mfd_date_),
+           0,
+           offsetof(Impl_, quantity_) -
+               offsetof(Impl_, mfd_date_) +
+               sizeof(Impl_::quantity_));
 }
 RestockItem::~RestockItem() {
   // @@protoc_insertion_point(destructor:inventory.RestockItem)
@@ -3939,8 +4538,8 @@ inline void RestockItem::SharedDtor(MessageLite& self) {
   this_._impl_.sku_.Destroy();
   this_._impl_.name_.Destroy();
   this_._impl_.aisle_type_.Destroy();
-  this_._impl_.mfd_date_.Destroy();
-  this_._impl_.expiry_date_.Destroy();
+  delete this_._impl_.mfd_date_;
+  delete this_._impl_.expiry_date_;
   this_._impl_.~Impl_();
 }
 
@@ -3987,18 +4586,18 @@ RestockItem::GetClassData() const {
   return RestockItem_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 6, 0, 66, 2>
+const ::_pbi::TcParseTable<3, 7, 2, 47, 2>
 RestockItem::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(RestockItem, _impl_._has_bits_),
     0, // no _extensions_
-    6, 56,  // max_field_number, fast_idx_mask
+    7, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967232,  // skipmap
+    4294967168,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    6,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
+    7,  // num_field_entries
+    2,  // num_aux_entries
+    offsetof(decltype(_table_), aux_entries),
     RestockItem_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
@@ -4020,18 +4619,21 @@ RestockItem::_table_ = {
      {26, 2, 0,
       PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.aisle_type_)}},
     // int32 quantity = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RestockItem, _impl_.quantity_), 5>(),
-     {32, 5, 0,
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(RestockItem, _impl_.quantity_), 6>(),
+     {32, 6, 0,
       PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.quantity_)}},
-    // string mfd_date = 5;
-    {::_pbi::TcParser::FastUS1,
-     {42, 3, 0,
+    // double unit_cost = 5;
+    {::_pbi::TcParser::FastF64S1,
+     {41, 5, 0,
+      PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.unit_cost_)}},
+    // .google.protobuf.Timestamp mfd_date = 6;
+    {::_pbi::TcParser::FastMtS1,
+     {50, 3, 0,
       PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.mfd_date_)}},
-    // string expiry_date = 6;
-    {::_pbi::TcParser::FastUS1,
-     {50, 4, 0,
+    // .google.protobuf.Timestamp expiry_date = 7;
+    {::_pbi::TcParser::FastMtS1,
+     {58, 4, 1,
       PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.expiry_date_)}},
-    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
@@ -4042,21 +4644,24 @@ RestockItem::_table_ = {
     // string aisle_type = 3;
     {PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.aisle_type_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // int32 quantity = 4;
-    {PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.quantity_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
-    // string mfd_date = 5;
-    {PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.mfd_date_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // string expiry_date = 6;
-    {PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.expiry_date_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.quantity_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    // double unit_cost = 5;
+    {PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.unit_cost_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
+    // .google.protobuf.Timestamp mfd_date = 6;
+    {PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.mfd_date_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
+    // .google.protobuf.Timestamp expiry_date = 7;
+    {PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.expiry_date_), _Internal::kHasBitsOffset + 4, 1, (0 | ::_fl::kFcOptional | ::_fl::kMessage | ::_fl::kTvTable)},
   }},
-  // no aux_entries
   {{
-    "\25\3\4\12\0\10\13\0"
+      {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
+      {::_pbi::TcParser::GetTable<::google::protobuf::Timestamp>()},
+  }},
+  {{
+    "\25\3\4\12\0\0\0\0"
     "inventory.RestockItem"
     "sku"
     "name"
     "aisle_type"
-    "mfd_date"
-    "expiry_date"
   }},
 };
 PROTOBUF_NOINLINE void RestockItem::Clear() {
@@ -4078,13 +4683,19 @@ PROTOBUF_NOINLINE void RestockItem::Clear() {
       _impl_.aisle_type_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      _impl_.mfd_date_.ClearNonDefaultToEmpty();
+      ABSL_DCHECK(_impl_.mfd_date_ != nullptr);
+      _impl_.mfd_date_->Clear();
     }
     if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      _impl_.expiry_date_.ClearNonDefaultToEmpty();
+      ABSL_DCHECK(_impl_.expiry_date_ != nullptr);
+      _impl_.expiry_date_->Clear();
     }
   }
-  _impl_.quantity_ = 0;
+  if (BatchCheckHasBit(cached_has_bits, 0x00000060U)) {
+    ::memset(&_impl_.unit_cost_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.quantity_) -
+        reinterpret_cast<char*>(&_impl_.unit_cost_)) + sizeof(_impl_.quantity_));
+  }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -4139,7 +4750,7 @@ PROTOBUF_NOINLINE void RestockItem::Clear() {
   }
 
   // int32 quantity = 4;
-  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000040U)) {
     if (this_._internal_quantity() != 0) {
       target =
           ::google::protobuf::internal::WireFormatLite::WriteInt32ToArrayWithField<4>(
@@ -4147,24 +4758,27 @@ PROTOBUF_NOINLINE void RestockItem::Clear() {
     }
   }
 
-  // string mfd_date = 5;
-  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-    if (!this_._internal_mfd_date().empty()) {
-      const ::std::string& _s = this_._internal_mfd_date();
-      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.RestockItem.mfd_date");
-      target = stream->WriteStringMaybeAliased(5, _s, target);
+  // double unit_cost = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    if (::absl::bit_cast<::uint64_t>(this_._internal_unit_cost()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+          5, this_._internal_unit_cost(), target);
     }
   }
 
-  // string expiry_date = 6;
+  // .google.protobuf.Timestamp mfd_date = 6;
+  if (CheckHasBit(cached_has_bits, 0x00000008U)) {
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        6, *this_._impl_.mfd_date_, this_._impl_.mfd_date_->GetCachedSize(), target,
+        stream);
+  }
+
+  // .google.protobuf.Timestamp expiry_date = 7;
   if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-    if (!this_._internal_expiry_date().empty()) {
-      const ::std::string& _s = this_._internal_expiry_date();
-      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.RestockItem.expiry_date");
-      target = stream->WriteStringMaybeAliased(6, _s, target);
-    }
+    target = ::google::protobuf::internal::WireFormatLite::InternalWriteMessage(
+        7, *this_._impl_.expiry_date_, this_._impl_.expiry_date_->GetCachedSize(), target,
+        stream);
   }
 
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
@@ -4192,7 +4806,7 @@ PROTOBUF_NOINLINE void RestockItem::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
     // string sku = 1;
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       if (!this_._internal_sku().empty()) {
@@ -4214,22 +4828,24 @@ PROTOBUF_NOINLINE void RestockItem::Clear() {
                                         this_._internal_aisle_type());
       }
     }
-    // string mfd_date = 5;
+    // .google.protobuf.Timestamp mfd_date = 6;
     if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (!this_._internal_mfd_date().empty()) {
-        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_mfd_date());
-      }
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.mfd_date_);
     }
-    // string expiry_date = 6;
+    // .google.protobuf.Timestamp expiry_date = 7;
     if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      if (!this_._internal_expiry_date().empty()) {
-        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_expiry_date());
+      total_size += 1 +
+                    ::google::protobuf::internal::WireFormatLite::MessageSize(*this_._impl_.expiry_date_);
+    }
+    // double unit_cost = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      if (::absl::bit_cast<::uint64_t>(this_._internal_unit_cost()) != 0) {
+        total_size += 9;
       }
     }
     // int32 quantity = 4;
-    if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
       if (this_._internal_quantity() != 0) {
         total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
             this_._internal_quantity());
@@ -4248,13 +4864,14 @@ void RestockItem::MergeImpl(::google::protobuf::MessageLite& to_msg,
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
+  ::google::protobuf::Arena* arena = _this->GetArena();
   // @@protoc_insertion_point(class_specific_merge_from_start:inventory.RestockItem)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000003fU)) {
+  if (BatchCheckHasBit(cached_has_bits, 0x0000007fU)) {
     if (CheckHasBit(cached_has_bits, 0x00000001U)) {
       if (!from._internal_sku().empty()) {
         _this->_internal_set_sku(from._internal_sku());
@@ -4283,24 +4900,27 @@ void RestockItem::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000008U)) {
-      if (!from._internal_mfd_date().empty()) {
-        _this->_internal_set_mfd_date(from._internal_mfd_date());
+      ABSL_DCHECK(from._impl_.mfd_date_ != nullptr);
+      if (_this->_impl_.mfd_date_ == nullptr) {
+        _this->_impl_.mfd_date_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.mfd_date_);
       } else {
-        if (_this->_impl_.mfd_date_.IsDefault()) {
-          _this->_internal_set_mfd_date("");
-        }
+        _this->_impl_.mfd_date_->MergeFrom(*from._impl_.mfd_date_);
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000010U)) {
-      if (!from._internal_expiry_date().empty()) {
-        _this->_internal_set_expiry_date(from._internal_expiry_date());
+      ABSL_DCHECK(from._impl_.expiry_date_ != nullptr);
+      if (_this->_impl_.expiry_date_ == nullptr) {
+        _this->_impl_.expiry_date_ = ::google::protobuf::Message::CopyConstruct(arena, *from._impl_.expiry_date_);
       } else {
-        if (_this->_impl_.expiry_date_.IsDefault()) {
-          _this->_internal_set_expiry_date("");
-        }
+        _this->_impl_.expiry_date_->MergeFrom(*from._impl_.expiry_date_);
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000020U)) {
+      if (::absl::bit_cast<::uint64_t>(from._internal_unit_cost()) != 0) {
+        _this->_impl_.unit_cost_ = from._impl_.unit_cost_;
+      }
+    }
+    if (CheckHasBit(cached_has_bits, 0x00000040U)) {
       if (from._internal_quantity() != 0) {
         _this->_impl_.quantity_ = from._impl_.quantity_;
       }
@@ -4328,9 +4948,12 @@ void RestockItem::InternalSwap(RestockItem* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.sku_, &other->_impl_.sku_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, &other->_impl_.name_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.aisle_type_, &other->_impl_.aisle_type_, arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.mfd_date_, &other->_impl_.mfd_date_, arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.expiry_date_, &other->_impl_.expiry_date_, arena);
-  swap(_impl_.quantity_, other->_impl_.quantity_);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.quantity_)
+      + sizeof(RestockItem::_impl_.quantity_)
+      - PROTOBUF_FIELD_OFFSET(RestockItem, _impl_.mfd_date_)>(
+          reinterpret_cast<char*>(&_impl_.mfd_date_),
+          reinterpret_cast<char*>(&other->_impl_.mfd_date_));
 }
 
 ::google::protobuf::Metadata RestockItem::GetMetadata() const {
@@ -4338,27 +4961,27 @@ void RestockItem::InternalSwap(RestockItem* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
 }
 // ===================================================================
 
-class RestockItemsResponse::_Internal {
+class RestockItemsOrderResponse::_Internal {
  public:
   using HasBits =
-      decltype(::std::declval<RestockItemsResponse>()._impl_._has_bits_);
+      decltype(::std::declval<RestockItemsOrderResponse>()._impl_._has_bits_);
   static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(RestockItemsResponse, _impl_._has_bits_);
+      8 * PROTOBUF_FIELD_OFFSET(RestockItemsOrderResponse, _impl_._has_bits_);
 };
 
-RestockItemsResponse::RestockItemsResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+RestockItemsOrderResponse::RestockItemsOrderResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, RestockItemsResponse_class_data_.base()) {
+    : ::google::protobuf::Message(arena, RestockItemsOrderResponse_class_data_.base()) {
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena) {
 #endif  // PROTOBUF_CUSTOM_VTABLE
   SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:inventory.RestockItemsResponse)
+  // @@protoc_insertion_point(arena_constructor:inventory.RestockItemsOrderResponse)
 }
-RestockItemsResponse::RestockItemsResponse(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const RestockItemsResponse& from)
+RestockItemsOrderResponse::RestockItemsOrderResponse(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const RestockItemsOrderResponse& from)
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, RestockItemsResponse_class_data_.base()),
+    : ::google::protobuf::Message(arena, RestockItemsOrderResponse_class_data_.base()),
 #else   // PROTOBUF_CUSTOM_VTABLE
     : ::google::protobuf::Message(arena),
 #endif  // PROTOBUF_CUSTOM_VTABLE
@@ -4366,21 +4989,21 @@ RestockItemsResponse::RestockItemsResponse(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
 }
-PROTOBUF_NDEBUG_INLINE RestockItemsResponse::Impl_::Impl_(
+PROTOBUF_NDEBUG_INLINE RestockItemsOrderResponse::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0} {}
 
-inline void RestockItemsResponse::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+inline void RestockItemsOrderResponse::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   _impl_.success_ = {};
 }
-RestockItemsResponse::~RestockItemsResponse() {
-  // @@protoc_insertion_point(destructor:inventory.RestockItemsResponse)
+RestockItemsOrderResponse::~RestockItemsOrderResponse() {
+  // @@protoc_insertion_point(destructor:inventory.RestockItemsOrderResponse)
   SharedDtor(*this);
 }
-inline void RestockItemsResponse::SharedDtor(MessageLite& self) {
-  RestockItemsResponse& this_ = static_cast<RestockItemsResponse&>(self);
+inline void RestockItemsOrderResponse::SharedDtor(MessageLite& self) {
+  RestockItemsOrderResponse& this_ = static_cast<RestockItemsOrderResponse&>(self);
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     this_.CheckHasBitConsistency();
   }
@@ -4389,53 +5012,53 @@ inline void RestockItemsResponse::SharedDtor(MessageLite& self) {
   this_._impl_.~Impl_();
 }
 
-inline void* PROTOBUF_NONNULL RestockItemsResponse::PlacementNew_(
+inline void* PROTOBUF_NONNULL RestockItemsOrderResponse::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) RestockItemsResponse(arena);
+  return ::new (mem) RestockItemsOrderResponse(arena);
 }
-constexpr auto RestockItemsResponse::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(RestockItemsResponse),
-                                            alignof(RestockItemsResponse));
+constexpr auto RestockItemsOrderResponse::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::ZeroInit(sizeof(RestockItemsOrderResponse),
+                                            alignof(RestockItemsOrderResponse));
 }
-constexpr auto RestockItemsResponse::InternalGenerateClassData_() {
+constexpr auto RestockItemsOrderResponse::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_RestockItemsResponse_default_instance_._instance,
+          &_RestockItemsOrderResponse_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &RestockItemsResponse::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<RestockItemsResponse>(),
+          &RestockItemsOrderResponse::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<RestockItemsOrderResponse>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &RestockItemsResponse::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<RestockItemsResponse>(), &RestockItemsResponse::ByteSizeLong,
-              &RestockItemsResponse::_InternalSerialize,
+          &RestockItemsOrderResponse::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<RestockItemsOrderResponse>(), &RestockItemsOrderResponse::ByteSizeLong,
+              &RestockItemsOrderResponse::_InternalSerialize,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(RestockItemsResponse, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(RestockItemsOrderResponse, _impl_._cached_size_),
           false,
       },
-      &RestockItemsResponse::kDescriptorMethods,
+      &RestockItemsOrderResponse::kDescriptorMethods,
       &descriptor_table_inventory_2eproto,
       nullptr,  // tracker
   };
 }
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull RestockItemsResponse_class_data_ =
-        RestockItemsResponse::InternalGenerateClassData_();
+    ::google::protobuf::internal::ClassDataFull RestockItemsOrderResponse_class_data_ =
+        RestockItemsOrderResponse::InternalGenerateClassData_();
 
 PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-RestockItemsResponse::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&RestockItemsResponse_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(RestockItemsResponse_class_data_.tc_table);
-  return RestockItemsResponse_class_data_.base();
+RestockItemsOrderResponse::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&RestockItemsOrderResponse_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(RestockItemsOrderResponse_class_data_.tc_table);
+  return RestockItemsOrderResponse_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
 const ::_pbi::TcParseTable<0, 1, 0, 0, 2>
-RestockItemsResponse::_table_ = {
+RestockItemsOrderResponse::_table_ = {
   {
-    PROTOBUF_FIELD_OFFSET(RestockItemsResponse, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(RestockItemsOrderResponse, _impl_._has_bits_),
     0, // no _extensions_
     1, 0,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
@@ -4444,29 +5067,29 @@ RestockItemsResponse::_table_ = {
     1,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
-    RestockItemsResponse_class_data_.base(),
+    RestockItemsOrderResponse_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::GenericFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::inventory::RestockItemsResponse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::inventory::RestockItemsOrderResponse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     // bool success = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(RestockItemsResponse, _impl_.success_), 0>(),
+    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(RestockItemsOrderResponse, _impl_.success_), 0>(),
      {8, 0, 0,
-      PROTOBUF_FIELD_OFFSET(RestockItemsResponse, _impl_.success_)}},
+      PROTOBUF_FIELD_OFFSET(RestockItemsOrderResponse, _impl_.success_)}},
   }}, {{
     65535, 65535
   }}, {{
     // bool success = 1;
-    {PROTOBUF_FIELD_OFFSET(RestockItemsResponse, _impl_.success_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
+    {PROTOBUF_FIELD_OFFSET(RestockItemsOrderResponse, _impl_.success_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
   }},
   // no aux_entries
   {{
   }},
 };
-PROTOBUF_NOINLINE void RestockItemsResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:inventory.RestockItemsResponse)
+PROTOBUF_NOINLINE void RestockItemsOrderResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:inventory.RestockItemsOrderResponse)
   ::google::protobuf::internal::TSanWrite(&_impl_);
   ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -4478,20 +5101,20 @@ PROTOBUF_NOINLINE void RestockItemsResponse::Clear() {
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL RestockItemsResponse::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL RestockItemsOrderResponse::_InternalSerialize(
     const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const RestockItemsResponse& this_ = static_cast<const RestockItemsResponse&>(base);
+  const RestockItemsOrderResponse& this_ = static_cast<const RestockItemsOrderResponse&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL RestockItemsResponse::_InternalSerialize(
+::uint8_t* PROTOBUF_NONNULL RestockItemsOrderResponse::_InternalSerialize(
     ::uint8_t* PROTOBUF_NONNULL target,
     ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const RestockItemsResponse& this_ = *this;
+  const RestockItemsOrderResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     this_.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(serialize_to_array_start:inventory.RestockItemsResponse)
+  // @@protoc_insertion_point(serialize_to_array_start:inventory.RestockItemsOrderResponse)
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
@@ -4510,18 +5133,18 @@ PROTOBUF_NOINLINE void RestockItemsResponse::Clear() {
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
             this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:inventory.RestockItemsResponse)
+  // @@protoc_insertion_point(serialize_to_array_end:inventory.RestockItemsOrderResponse)
   return target;
 }
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t RestockItemsResponse::ByteSizeLong(const MessageLite& base) {
-  const RestockItemsResponse& this_ = static_cast<const RestockItemsResponse&>(base);
+::size_t RestockItemsOrderResponse::ByteSizeLong(const MessageLite& base) {
+  const RestockItemsOrderResponse& this_ = static_cast<const RestockItemsOrderResponse&>(base);
 #else   // PROTOBUF_CUSTOM_VTABLE
-::size_t RestockItemsResponse::ByteSizeLong() const {
-  const RestockItemsResponse& this_ = *this;
+::size_t RestockItemsOrderResponse::ByteSizeLong() const {
+  const RestockItemsOrderResponse& this_ = *this;
 #endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:inventory.RestockItemsResponse)
+  // @@protoc_insertion_point(message_byte_size_start:inventory.RestockItemsOrderResponse)
   ::size_t total_size = 0;
 
   ::uint32_t cached_has_bits = 0;
@@ -4541,15 +5164,15 @@ PROTOBUF_NOINLINE void RestockItemsResponse::Clear() {
                                              &this_._impl_._cached_size_);
 }
 
-void RestockItemsResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
+void RestockItemsOrderResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
                             const ::google::protobuf::MessageLite& from_msg) {
    auto* const _this =
-      static_cast<RestockItemsResponse*>(&to_msg);
-  auto& from = static_cast<const RestockItemsResponse&>(from_msg);
+      static_cast<RestockItemsOrderResponse*>(&to_msg);
+  auto& from = static_cast<const RestockItemsOrderResponse&>(from_msg);
   if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
     from.CheckHasBitConsistency();
   }
-  // @@protoc_insertion_point(class_specific_merge_from_start:inventory.RestockItemsResponse)
+  // @@protoc_insertion_point(class_specific_merge_from_start:inventory.RestockItemsOrderResponse)
   ABSL_DCHECK_NE(&from, _this);
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
@@ -4565,83 +5188,83 @@ void RestockItemsResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
       from._internal_metadata_);
 }
 
-void RestockItemsResponse::CopyFrom(const RestockItemsResponse& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:inventory.RestockItemsResponse)
+void RestockItemsOrderResponse::CopyFrom(const RestockItemsOrderResponse& from) {
+  // @@protoc_insertion_point(class_specific_copy_from_start:inventory.RestockItemsOrderResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 
-void RestockItemsResponse::InternalSwap(RestockItemsResponse* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+void RestockItemsOrderResponse::InternalSwap(RestockItemsOrderResponse* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
   using ::std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   swap(_impl_.success_, other->_impl_.success_);
 }
 
-::google::protobuf::Metadata RestockItemsResponse::GetMetadata() const {
+::google::protobuf::Metadata RestockItemsOrderResponse::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // ===================================================================
 
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-ReportJobStatusRequest_ItemsEntry_DoNotUse::ReportJobStatusRequest_ItemsEntry_DoNotUse()
-    : SuperType(ReportJobStatusRequest_ItemsEntry_DoNotUse_class_data_.base()) {}
-ReportJobStatusRequest_ItemsEntry_DoNotUse::ReportJobStatusRequest_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-    : SuperType(arena, ReportJobStatusRequest_ItemsEntry_DoNotUse_class_data_.base()) {}
+ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse()
+    : SuperType(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_class_data_.base()) {}
+ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+    : SuperType(arena, ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_class_data_.base()) {}
 #else   // PROTOBUF_CUSTOM_VTABLE
-ReportJobStatusRequest_ItemsEntry_DoNotUse::ReportJobStatusRequest_ItemsEntry_DoNotUse() : SuperType() {}
-ReportJobStatusRequest_ItemsEntry_DoNotUse::ReportJobStatusRequest_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena) : SuperType(arena) {}
+ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse() : SuperType() {}
+ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena) : SuperType(arena) {}
 #endif  // PROTOBUF_CUSTOM_VTABLE
-inline void* PROTOBUF_NONNULL ReportJobStatusRequest_ItemsEntry_DoNotUse::PlacementNew_(
+inline void* PROTOBUF_NONNULL ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::PlacementNew_(
     const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) ReportJobStatusRequest_ItemsEntry_DoNotUse(arena);
+  return ::new (mem) ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse(arena);
 }
-constexpr auto ReportJobStatusRequest_ItemsEntry_DoNotUse::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(ReportJobStatusRequest_ItemsEntry_DoNotUse),
-                                            alignof(ReportJobStatusRequest_ItemsEntry_DoNotUse));
+constexpr auto ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse),
+                                            alignof(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse));
 }
-constexpr auto ReportJobStatusRequest_ItemsEntry_DoNotUse::InternalGenerateClassData_() {
+constexpr auto ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::InternalGenerateClassData_() {
   return ::google::protobuf::internal::ClassDataFull{
       ::google::protobuf::internal::ClassData{
-          &_ReportJobStatusRequest_ItemsEntry_DoNotUse_default_instance_._instance,
+          &_ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_default_instance_._instance,
           &_table_.header,
           nullptr,  // OnDemandRegisterArenaDtor
           nullptr,  // IsInitialized
-          &ReportJobStatusRequest_ItemsEntry_DoNotUse::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<ReportJobStatusRequest_ItemsEntry_DoNotUse>(),
+          &ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse>(),
 #if defined(PROTOBUF_CUSTOM_VTABLE)
-          &ReportJobStatusRequest_ItemsEntry_DoNotUse::SharedDtor,
-          static_cast<void (::google::protobuf::MessageLite::*)()>(&ReportJobStatusRequest_ItemsEntry_DoNotUse::ClearImpl),
+          &ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::SharedDtor,
+          static_cast<void (::google::protobuf::MessageLite::*)()>(&ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::ClearImpl),
               ::google::protobuf::Message::ByteSizeLongImpl, ::google::protobuf::Message::_InternalSerializeImpl
               ,
 #endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ItemsEntry_DoNotUse, _impl_._cached_size_),
+          PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse, _impl_._cached_size_),
           false,
       },
-      &ReportJobStatusRequest_ItemsEntry_DoNotUse::kDescriptorMethods,
+      &ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::kDescriptorMethods,
       &descriptor_table_inventory_2eproto,
       nullptr,  // tracker
   };
 }
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull ReportJobStatusRequest_ItemsEntry_DoNotUse_class_data_ =
-        ReportJobStatusRequest_ItemsEntry_DoNotUse::InternalGenerateClassData_();
+    ::google::protobuf::internal::ClassDataFull ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_class_data_ =
+        ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::InternalGenerateClassData_();
 
 PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-ReportJobStatusRequest_ItemsEntry_DoNotUse::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&ReportJobStatusRequest_ItemsEntry_DoNotUse_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(ReportJobStatusRequest_ItemsEntry_DoNotUse_class_data_.tc_table);
-  return ReportJobStatusRequest_ItemsEntry_DoNotUse_class_data_.base();
+ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_class_data_.tc_table);
+  return ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 0, 55, 2>
-ReportJobStatusRequest_ItemsEntry_DoNotUse::_table_ = {
+const ::_pbi::TcParseTable<1, 2, 0, 64, 2>
+ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse::_table_ = {
   {
-    PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ItemsEntry_DoNotUse, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse, _impl_._has_bits_),
     0, // no _extensions_
     2, 8,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
@@ -4650,33 +5273,33 @@ ReportJobStatusRequest_ItemsEntry_DoNotUse::_table_ = {
     2,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
-    ReportJobStatusRequest_ItemsEntry_DoNotUse_class_data_.base(),
+    ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse_class_data_.base(),
     nullptr,  // post_loop_handler
     ::_pbi::TcParser::DiscardEverythingFallback,  // fallback
     #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::inventory::ReportJobStatusRequest_ItemsEntry_DoNotUse>(),  // to_prefetch
+    ::_pbi::TcParser::GetTable<::inventory::ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     // int32 value = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ReportJobStatusRequest_ItemsEntry_DoNotUse, _impl_.value_), 1>(),
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse, _impl_.value_), 1>(),
      {16, 1, 0,
-      PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ItemsEntry_DoNotUse, _impl_.value_)}},
+      PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse, _impl_.value_)}},
     // string key = 1;
     {::_pbi::TcParser::FastUS1,
      {10, 0, 0,
-      PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ItemsEntry_DoNotUse, _impl_.key_)}},
+      PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse, _impl_.key_)}},
   }}, {{
     65535, 65535
   }}, {{
     // string key = 1;
-    {PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ItemsEntry_DoNotUse, _impl_.key_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    {PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse, _impl_.key_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // int32 value = 2;
-    {PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ItemsEntry_DoNotUse, _impl_.value_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
+    {PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest_ProcessedItemsEntry_DoNotUse, _impl_.value_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
   }},
   // no aux_entries
   {{
-    "\53\3\0\0\0\0\0\0"
-    "inventory.ReportJobStatusRequest.ItemsEntry"
+    "\64\3\0\0\0\0\0\0"
+    "inventory.ReportJobStatusRequest.ProcessedItemsEntry"
     "key"
   }},
 };
@@ -4706,9 +5329,9 @@ PROTOBUF_NDEBUG_INLINE ReportJobStatusRequest::Impl_::Impl_(
       : _has_bits_{from._has_bits_},
         _cached_size_{0},
         order_id_(arena, from.order_id_),
-        robot_id_(arena, from.robot_id_),
         status_(arena, from.status_),
-        items_{visibility, arena, from.items_} {}
+        order_type_(arena, from.order_type_),
+        processed_items_{visibility, arena, from.processed_items_} {}
 
 ReportJobStatusRequest::ReportJobStatusRequest(
     ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
@@ -4731,9 +5354,9 @@ PROTOBUF_NDEBUG_INLINE ReportJobStatusRequest::Impl_::Impl_(
     [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
       : _cached_size_{0},
         order_id_(arena),
-        robot_id_(arena),
         status_(arena),
-        items_{visibility, arena} {}
+        order_type_(arena),
+        processed_items_{visibility, arena} {}
 
 inline void ReportJobStatusRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
@@ -4750,8 +5373,8 @@ inline void ReportJobStatusRequest::SharedDtor(MessageLite& self) {
   this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
   ABSL_DCHECK(this_.GetArena() == nullptr);
   this_._impl_.order_id_.Destroy();
-  this_._impl_.robot_id_.Destroy();
   this_._impl_.status_.Destroy();
+  this_._impl_.order_type_.Destroy();
   this_._impl_.~Impl_();
 }
 
@@ -4762,8 +5385,8 @@ inline void* PROTOBUF_NONNULL ReportJobStatusRequest::PlacementNew_(
 }
 constexpr auto ReportJobStatusRequest::InternalNewImpl_() {
   constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
-      PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.items_) +
-          decltype(ReportJobStatusRequest::_impl_.items_)::
+      PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.processed_items_) +
+          decltype(ReportJobStatusRequest::_impl_.processed_items_)::
               InternalGetArenaOffset(
                   ::google::protobuf::Message::internal_visibility()),
   });
@@ -4810,14 +5433,14 @@ ReportJobStatusRequest::GetClassData() const {
   return ReportJobStatusRequest_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 4, 1, 68, 2>
+const ::_pbi::TcParseTable<3, 4, 1, 80, 2>
 ReportJobStatusRequest::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_._has_bits_),
     0, // no _extensions_
-    4, 24,  // max_field_number, fast_idx_mask
+    5, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967280,  // skipmap
+    4294967266,  // skipmap
     offsetof(decltype(_table_), field_entries),
     4,  // num_field_entries
     1,  // num_aux_entries
@@ -4834,37 +5457,41 @@ ReportJobStatusRequest::_table_ = {
     {::_pbi::TcParser::FastUS1,
      {10, 0, 0,
       PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.order_id_)}},
-    // string robot_id = 2;
-    {::_pbi::TcParser::FastUS1,
-     {18, 1, 0,
-      PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.robot_id_)}},
+    {::_pbi::TcParser::MiniParse, {}},
     // string status = 3;
     {::_pbi::TcParser::FastUS1,
-     {26, 2, 0,
+     {26, 1, 0,
       PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.status_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    // string order_type = 5;
+    {::_pbi::TcParser::FastUS1,
+     {42, 2, 0,
+      PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.order_type_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
     // string order_id = 1;
     {PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.order_id_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // string robot_id = 2;
-    {PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.robot_id_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // string status = 3;
-    {PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.status_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // map<string, int32> items = 4;
-    {PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.items_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMap)},
+    {PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.status_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // map<string, int32> processed_items = 4;
+    {PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.processed_items_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMap)},
+    // string order_type = 5;
+    {PROTOBUF_FIELD_OFFSET(ReportJobStatusRequest, _impl_.order_type_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   {{
       {::_pbi::TcParser::GetMapAuxInfo(
           1, 0, 9, 5, 0)},
   }},
   {{
-    "\40\10\10\6\5\0\0\0"
+    "\40\10\6\17\12\0\0\0"
     "inventory.ReportJobStatusRequest"
     "order_id"
-    "robot_id"
     "status"
-    "items"
+    "processed_items"
+    "order_type"
   }},
 };
 PROTOBUF_NOINLINE void ReportJobStatusRequest::Clear() {
@@ -4880,13 +5507,13 @@ PROTOBUF_NOINLINE void ReportJobStatusRequest::Clear() {
       _impl_.order_id_.ClearNonDefaultToEmpty();
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      _impl_.robot_id_.ClearNonDefaultToEmpty();
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       _impl_.status_.ClearNonDefaultToEmpty();
     }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      _impl_.order_type_.ClearNonDefaultToEmpty();
+    }
     if (CheckHasBitForRepeated(cached_has_bits, 0x00000008U)) {
-      _impl_.items_.Clear();
+      _impl_.processed_items_.Clear();
     }
   }
   _impl_._has_bits_.Clear();
@@ -4922,18 +5549,8 @@ PROTOBUF_NOINLINE void ReportJobStatusRequest::Clear() {
     }
   }
 
-  // string robot_id = 2;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-    if (!this_._internal_robot_id().empty()) {
-      const ::std::string& _s = this_._internal_robot_id();
-      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ReportJobStatusRequest.robot_id");
-      target = stream->WriteStringMaybeAliased(2, _s, target);
-    }
-  }
-
   // string status = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
     if (!this_._internal_status().empty()) {
       const ::std::string& _s = this_._internal_status();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -4942,14 +5559,14 @@ PROTOBUF_NOINLINE void ReportJobStatusRequest::Clear() {
     }
   }
 
-  // map<string, int32> items = 4;
+  // map<string, int32> processed_items = 4;
   if (CheckHasBitForRepeated(cached_has_bits, 0x00000008U)) {
-    if (!this_._internal_items().empty()) {
+    if (!this_._internal_processed_items().empty()) {
       using MapType = ::google::protobuf::Map<::std::string, ::int32_t>;
       using WireHelper = _pbi::MapEntryFuncs<::std::string, ::int32_t,
                                      _pbi::WireFormatLite::TYPE_STRING,
                                      _pbi::WireFormatLite::TYPE_INT32>;
-      const auto& field = this_._internal_items();
+      const auto& field = this_._internal_processed_items();
 
       if (stream->IsSerializationDeterministic() && field.size() > 1) {
         for (const auto& entry : ::google::protobuf::internal::MapSorterPtr<MapType>(field)) {
@@ -4957,7 +5574,7 @@ PROTOBUF_NOINLINE void ReportJobStatusRequest::Clear() {
               4, entry.first, entry.second, target, stream);
           ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
               entry.first.data(), static_cast<int>(entry.first.length()),
- ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ReportJobStatusRequest.items");
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ReportJobStatusRequest.processed_items");
         }
       } else {
         for (const auto& entry : field) {
@@ -4965,9 +5582,19 @@ PROTOBUF_NOINLINE void ReportJobStatusRequest::Clear() {
               4, entry.first, entry.second, target, stream);
           ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
               entry.first.data(), static_cast<int>(entry.first.length()),
- ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ReportJobStatusRequest.items");
+ ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ReportJobStatusRequest.processed_items");
         }
       }
+    }
+  }
+
+  // string order_type = 5;
+  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (!this_._internal_order_type().empty()) {
+      const ::std::string& _s = this_._internal_order_type();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.ReportJobStatusRequest.order_type");
+      target = stream->WriteStringMaybeAliased(5, _s, target);
     }
   }
 
@@ -5004,25 +5631,25 @@ PROTOBUF_NOINLINE void ReportJobStatusRequest::Clear() {
                                         this_._internal_order_id());
       }
     }
-    // string robot_id = 2;
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (!this_._internal_robot_id().empty()) {
-        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_robot_id());
-      }
-    }
     // string status = 3;
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
       if (!this_._internal_status().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_status());
       }
     }
-    // map<string, int32> items = 4;
+    // string order_type = 5;
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!this_._internal_order_type().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_order_type());
+      }
+    }
+    // map<string, int32> processed_items = 4;
     if (CheckHasBitForRepeated(cached_has_bits, 0x00000008U)) {
       total_size +=
-          1 * ::google::protobuf::internal::FromIntSize(this_._internal_items_size());
-      for (const auto& entry : this_._internal_items()) {
+          1 * ::google::protobuf::internal::FromIntSize(this_._internal_processed_items_size());
+      for (const auto& entry : this_._internal_processed_items()) {
         total_size += _pbi::MapEntryFuncs<::std::string, ::int32_t,
                                        _pbi::WireFormatLite::TYPE_STRING,
                                        _pbi::WireFormatLite::TYPE_INT32>::ByteSizeLong(entry.first, entry.second);
@@ -5058,15 +5685,6 @@ void ReportJobStatusRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
       }
     }
     if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (!from._internal_robot_id().empty()) {
-        _this->_internal_set_robot_id(from._internal_robot_id());
-      } else {
-        if (_this->_impl_.robot_id_.IsDefault()) {
-          _this->_internal_set_robot_id("");
-        }
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
       if (!from._internal_status().empty()) {
         _this->_internal_set_status(from._internal_status());
       } else {
@@ -5075,8 +5693,17 @@ void ReportJobStatusRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
         }
       }
     }
+    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
+      if (!from._internal_order_type().empty()) {
+        _this->_internal_set_order_type(from._internal_order_type());
+      } else {
+        if (_this->_impl_.order_type_.IsDefault()) {
+          _this->_internal_set_order_type("");
+        }
+      }
+    }
     if (CheckHasBitForRepeated(cached_has_bits, 0x00000008U)) {
-      _this->_impl_.items_.MergeFrom(from._impl_.items_);
+      _this->_impl_.processed_items_.MergeFrom(from._impl_.processed_items_);
     }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
@@ -5099,9 +5726,9 @@ void ReportJobStatusRequest::InternalSwap(ReportJobStatusRequest* PROTOBUF_RESTR
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.order_id_, &other->_impl_.order_id_, arena);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.robot_id_, &other->_impl_.robot_id_, arena);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.status_, &other->_impl_.status_, arena);
-  _impl_.items_.InternalSwap(&other->_impl_.items_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.order_type_, &other->_impl_.order_type_, arena);
+  _impl_.processed_items_.InternalSwap(&other->_impl_.processed_items_);
 }
 
 ::google::protobuf::Metadata ReportJobStatusRequest::GetMetadata() const {
@@ -5352,967 +5979,6 @@ void ReportJobStatusResponse::InternalSwap(ReportJobStatusResponse* PROTOBUF_RES
 }
 
 ::google::protobuf::Metadata ReportJobStatusResponse::GetMetadata() const {
-  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
-}
-// ===================================================================
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-CheckoutRequest_ItemsEntry_DoNotUse::CheckoutRequest_ItemsEntry_DoNotUse()
-    : SuperType(CheckoutRequest_ItemsEntry_DoNotUse_class_data_.base()) {}
-CheckoutRequest_ItemsEntry_DoNotUse::CheckoutRequest_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-    : SuperType(arena, CheckoutRequest_ItemsEntry_DoNotUse_class_data_.base()) {}
-#else   // PROTOBUF_CUSTOM_VTABLE
-CheckoutRequest_ItemsEntry_DoNotUse::CheckoutRequest_ItemsEntry_DoNotUse() : SuperType() {}
-CheckoutRequest_ItemsEntry_DoNotUse::CheckoutRequest_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena) : SuperType(arena) {}
-#endif  // PROTOBUF_CUSTOM_VTABLE
-inline void* PROTOBUF_NONNULL CheckoutRequest_ItemsEntry_DoNotUse::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) CheckoutRequest_ItemsEntry_DoNotUse(arena);
-}
-constexpr auto CheckoutRequest_ItemsEntry_DoNotUse::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(CheckoutRequest_ItemsEntry_DoNotUse),
-                                            alignof(CheckoutRequest_ItemsEntry_DoNotUse));
-}
-constexpr auto CheckoutRequest_ItemsEntry_DoNotUse::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_CheckoutRequest_ItemsEntry_DoNotUse_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &CheckoutRequest_ItemsEntry_DoNotUse::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<CheckoutRequest_ItemsEntry_DoNotUse>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &CheckoutRequest_ItemsEntry_DoNotUse::SharedDtor,
-          static_cast<void (::google::protobuf::MessageLite::*)()>(&CheckoutRequest_ItemsEntry_DoNotUse::ClearImpl),
-              ::google::protobuf::Message::ByteSizeLongImpl, ::google::protobuf::Message::_InternalSerializeImpl
-              ,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(CheckoutRequest_ItemsEntry_DoNotUse, _impl_._cached_size_),
-          false,
-      },
-      &CheckoutRequest_ItemsEntry_DoNotUse::kDescriptorMethods,
-      &descriptor_table_inventory_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull CheckoutRequest_ItemsEntry_DoNotUse_class_data_ =
-        CheckoutRequest_ItemsEntry_DoNotUse::InternalGenerateClassData_();
-
-PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-CheckoutRequest_ItemsEntry_DoNotUse::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&CheckoutRequest_ItemsEntry_DoNotUse_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(CheckoutRequest_ItemsEntry_DoNotUse_class_data_.tc_table);
-  return CheckoutRequest_ItemsEntry_DoNotUse_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 0, 48, 2>
-CheckoutRequest_ItemsEntry_DoNotUse::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(CheckoutRequest_ItemsEntry_DoNotUse, _impl_._has_bits_),
-    0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    CheckoutRequest_ItemsEntry_DoNotUse_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::DiscardEverythingFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::inventory::CheckoutRequest_ItemsEntry_DoNotUse>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    // int32 value = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CheckoutRequest_ItemsEntry_DoNotUse, _impl_.value_), 1>(),
-     {16, 1, 0,
-      PROTOBUF_FIELD_OFFSET(CheckoutRequest_ItemsEntry_DoNotUse, _impl_.value_)}},
-    // string key = 1;
-    {::_pbi::TcParser::FastUS1,
-     {10, 0, 0,
-      PROTOBUF_FIELD_OFFSET(CheckoutRequest_ItemsEntry_DoNotUse, _impl_.key_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // string key = 1;
-    {PROTOBUF_FIELD_OFFSET(CheckoutRequest_ItemsEntry_DoNotUse, _impl_.key_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // int32 value = 2;
-    {PROTOBUF_FIELD_OFFSET(CheckoutRequest_ItemsEntry_DoNotUse, _impl_.value_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
-  }},
-  // no aux_entries
-  {{
-    "\44\3\0\0\0\0\0\0"
-    "inventory.CheckoutRequest.ItemsEntry"
-    "key"
-  }},
-};
-// ===================================================================
-
-class CheckoutRequest::_Internal {
- public:
-  using HasBits =
-      decltype(::std::declval<CheckoutRequest>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(CheckoutRequest, _impl_._has_bits_);
-};
-
-CheckoutRequest::CheckoutRequest(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, CheckoutRequest_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:inventory.CheckoutRequest)
-}
-PROTOBUF_NDEBUG_INLINE CheckoutRequest::Impl_::Impl_(
-    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
-    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    [[maybe_unused]] const ::inventory::CheckoutRequest& from_msg)
-      : _has_bits_{from._has_bits_},
-        _cached_size_{0},
-        order_id_(arena, from.order_id_),
-        items_{visibility, arena, from.items_} {}
-
-CheckoutRequest::CheckoutRequest(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const CheckoutRequest& from)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, CheckoutRequest_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  CheckoutRequest* const _this = this;
-  (void)_this;
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
-
-  // @@protoc_insertion_point(copy_constructor:inventory.CheckoutRequest)
-}
-PROTOBUF_NDEBUG_INLINE CheckoutRequest::Impl_::Impl_(
-    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
-    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0},
-        order_id_(arena),
-        items_{visibility, arena} {}
-
-inline void CheckoutRequest::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
-  new (&_impl_) Impl_(internal_visibility(), arena);
-}
-CheckoutRequest::~CheckoutRequest() {
-  // @@protoc_insertion_point(destructor:inventory.CheckoutRequest)
-  SharedDtor(*this);
-}
-inline void CheckoutRequest::SharedDtor(MessageLite& self) {
-  CheckoutRequest& this_ = static_cast<CheckoutRequest&>(self);
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    this_.CheckHasBitConsistency();
-  }
-  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  ABSL_DCHECK(this_.GetArena() == nullptr);
-  this_._impl_.order_id_.Destroy();
-  this_._impl_.~Impl_();
-}
-
-inline void* PROTOBUF_NONNULL CheckoutRequest::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) CheckoutRequest(arena);
-}
-constexpr auto CheckoutRequest::InternalNewImpl_() {
-  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
-      PROTOBUF_FIELD_OFFSET(CheckoutRequest, _impl_.items_) +
-          decltype(CheckoutRequest::_impl_.items_)::
-              InternalGetArenaOffset(
-                  ::google::protobuf::Message::internal_visibility()),
-  });
-  if (arena_bits.has_value()) {
-    return ::google::protobuf::internal::MessageCreator::CopyInit(
-        sizeof(CheckoutRequest), alignof(CheckoutRequest), *arena_bits);
-  } else {
-    return ::google::protobuf::internal::MessageCreator(&CheckoutRequest::PlacementNew_,
-                                 sizeof(CheckoutRequest),
-                                 alignof(CheckoutRequest));
-  }
-}
-constexpr auto CheckoutRequest::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_CheckoutRequest_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &CheckoutRequest::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<CheckoutRequest>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &CheckoutRequest::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<CheckoutRequest>(), &CheckoutRequest::ByteSizeLong,
-              &CheckoutRequest::_InternalSerialize,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(CheckoutRequest, _impl_._cached_size_),
-          false,
-      },
-      &CheckoutRequest::kDescriptorMethods,
-      &descriptor_table_inventory_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull CheckoutRequest_class_data_ =
-        CheckoutRequest::InternalGenerateClassData_();
-
-PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-CheckoutRequest::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&CheckoutRequest_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(CheckoutRequest_class_data_.tc_table);
-  return CheckoutRequest_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 2, 1, 47, 2>
-CheckoutRequest::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(CheckoutRequest, _impl_._has_bits_),
-    0, // no _extensions_
-    2, 0,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
-    1,  // num_aux_entries
-    offsetof(decltype(_table_), aux_entries),
-    CheckoutRequest_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::GenericFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::inventory::CheckoutRequest>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    // string order_id = 1;
-    {::_pbi::TcParser::FastUS1,
-     {10, 0, 0,
-      PROTOBUF_FIELD_OFFSET(CheckoutRequest, _impl_.order_id_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // string order_id = 1;
-    {PROTOBUF_FIELD_OFFSET(CheckoutRequest, _impl_.order_id_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // map<string, int32> items = 2;
-    {PROTOBUF_FIELD_OFFSET(CheckoutRequest, _impl_.items_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMap)},
-  }},
-  {{
-      {::_pbi::TcParser::GetMapAuxInfo(
-          1, 0, 9, 5, 0)},
-  }},
-  {{
-    "\31\10\5\0\0\0\0\0"
-    "inventory.CheckoutRequest"
-    "order_id"
-    "items"
-  }},
-};
-PROTOBUF_NOINLINE void CheckoutRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:inventory.CheckoutRequest)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  cached_has_bits = _impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      _impl_.order_id_.ClearNonDefaultToEmpty();
-    }
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
-      _impl_.items_.Clear();
-    }
-  }
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL CheckoutRequest::_InternalSerialize(
-    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const CheckoutRequest& this_ = static_cast<const CheckoutRequest&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL CheckoutRequest::_InternalSerialize(
-    ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const CheckoutRequest& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    this_.CheckHasBitConsistency();
-  }
-  // @@protoc_insertion_point(serialize_to_array_start:inventory.CheckoutRequest)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  cached_has_bits = this_._impl_._has_bits_[0];
-  // string order_id = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    if (!this_._internal_order_id().empty()) {
-      const ::std::string& _s = this_._internal_order_id();
-      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.CheckoutRequest.order_id");
-      target = stream->WriteStringMaybeAliased(1, _s, target);
-    }
-  }
-
-  // map<string, int32> items = 2;
-  if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
-    if (!this_._internal_items().empty()) {
-      using MapType = ::google::protobuf::Map<::std::string, ::int32_t>;
-      using WireHelper = _pbi::MapEntryFuncs<::std::string, ::int32_t,
-                                     _pbi::WireFormatLite::TYPE_STRING,
-                                     _pbi::WireFormatLite::TYPE_INT32>;
-      const auto& field = this_._internal_items();
-
-      if (stream->IsSerializationDeterministic() && field.size() > 1) {
-        for (const auto& entry : ::google::protobuf::internal::MapSorterPtr<MapType>(field)) {
-          target = WireHelper::InternalSerialize(
-              2, entry.first, entry.second, target, stream);
-          ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-              entry.first.data(), static_cast<int>(entry.first.length()),
- ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.CheckoutRequest.items");
-        }
-      } else {
-        for (const auto& entry : field) {
-          target = WireHelper::InternalSerialize(
-              2, entry.first, entry.second, target, stream);
-          ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-              entry.first.data(), static_cast<int>(entry.first.length()),
- ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.CheckoutRequest.items");
-        }
-      }
-    }
-  }
-
-  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:inventory.CheckoutRequest)
-  return target;
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t CheckoutRequest::ByteSizeLong(const MessageLite& base) {
-  const CheckoutRequest& this_ = static_cast<const CheckoutRequest&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::size_t CheckoutRequest::ByteSizeLong() const {
-  const CheckoutRequest& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:inventory.CheckoutRequest)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void)cached_has_bits;
-
-  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
-  cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
-    // string order_id = 1;
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      if (!this_._internal_order_id().empty()) {
-        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_order_id());
-      }
-    }
-    // map<string, int32> items = 2;
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
-      total_size +=
-          1 * ::google::protobuf::internal::FromIntSize(this_._internal_items_size());
-      for (const auto& entry : this_._internal_items()) {
-        total_size += _pbi::MapEntryFuncs<::std::string, ::int32_t,
-                                       _pbi::WireFormatLite::TYPE_STRING,
-                                       _pbi::WireFormatLite::TYPE_INT32>::ByteSizeLong(entry.first, entry.second);
-      }
-    }
-  }
-  return this_.MaybeComputeUnknownFieldsSize(total_size,
-                                             &this_._impl_._cached_size_);
-}
-
-void CheckoutRequest::MergeImpl(::google::protobuf::MessageLite& to_msg,
-                            const ::google::protobuf::MessageLite& from_msg) {
-   auto* const _this =
-      static_cast<CheckoutRequest*>(&to_msg);
-  auto& from = static_cast<const CheckoutRequest&>(from_msg);
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    from.CheckHasBitConsistency();
-  }
-  // @@protoc_insertion_point(class_specific_merge_from_start:inventory.CheckoutRequest)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x00000003U)) {
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      if (!from._internal_order_id().empty()) {
-        _this->_internal_set_order_id(from._internal_order_id());
-      } else {
-        if (_this->_impl_.order_id_.IsDefault()) {
-          _this->_internal_set_order_id("");
-        }
-      }
-    }
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000002U)) {
-      _this->_impl_.items_.MergeFrom(from._impl_.items_);
-    }
-  }
-  _this->_impl_._has_bits_[0] |= cached_has_bits;
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-}
-
-void CheckoutRequest::CopyFrom(const CheckoutRequest& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:inventory.CheckoutRequest)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-
-void CheckoutRequest::InternalSwap(CheckoutRequest* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
-  using ::std::swap;
-  auto* arena = GetArena();
-  ABSL_DCHECK_EQ(arena, other->GetArena());
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.order_id_, &other->_impl_.order_id_, arena);
-  _impl_.items_.InternalSwap(&other->_impl_.items_);
-}
-
-::google::protobuf::Metadata CheckoutRequest::GetMetadata() const {
-  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
-}
-// ===================================================================
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-CheckoutResponse_ItemsEntry_DoNotUse::CheckoutResponse_ItemsEntry_DoNotUse()
-    : SuperType(CheckoutResponse_ItemsEntry_DoNotUse_class_data_.base()) {}
-CheckoutResponse_ItemsEntry_DoNotUse::CheckoutResponse_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-    : SuperType(arena, CheckoutResponse_ItemsEntry_DoNotUse_class_data_.base()) {}
-#else   // PROTOBUF_CUSTOM_VTABLE
-CheckoutResponse_ItemsEntry_DoNotUse::CheckoutResponse_ItemsEntry_DoNotUse() : SuperType() {}
-CheckoutResponse_ItemsEntry_DoNotUse::CheckoutResponse_ItemsEntry_DoNotUse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena) : SuperType(arena) {}
-#endif  // PROTOBUF_CUSTOM_VTABLE
-inline void* PROTOBUF_NONNULL CheckoutResponse_ItemsEntry_DoNotUse::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) CheckoutResponse_ItemsEntry_DoNotUse(arena);
-}
-constexpr auto CheckoutResponse_ItemsEntry_DoNotUse::InternalNewImpl_() {
-  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(CheckoutResponse_ItemsEntry_DoNotUse),
-                                            alignof(CheckoutResponse_ItemsEntry_DoNotUse));
-}
-constexpr auto CheckoutResponse_ItemsEntry_DoNotUse::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_CheckoutResponse_ItemsEntry_DoNotUse_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &CheckoutResponse_ItemsEntry_DoNotUse::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<CheckoutResponse_ItemsEntry_DoNotUse>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &CheckoutResponse_ItemsEntry_DoNotUse::SharedDtor,
-          static_cast<void (::google::protobuf::MessageLite::*)()>(&CheckoutResponse_ItemsEntry_DoNotUse::ClearImpl),
-              ::google::protobuf::Message::ByteSizeLongImpl, ::google::protobuf::Message::_InternalSerializeImpl
-              ,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(CheckoutResponse_ItemsEntry_DoNotUse, _impl_._cached_size_),
-          false,
-      },
-      &CheckoutResponse_ItemsEntry_DoNotUse::kDescriptorMethods,
-      &descriptor_table_inventory_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull CheckoutResponse_ItemsEntry_DoNotUse_class_data_ =
-        CheckoutResponse_ItemsEntry_DoNotUse::InternalGenerateClassData_();
-
-PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-CheckoutResponse_ItemsEntry_DoNotUse::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&CheckoutResponse_ItemsEntry_DoNotUse_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(CheckoutResponse_ItemsEntry_DoNotUse_class_data_.tc_table);
-  return CheckoutResponse_ItemsEntry_DoNotUse_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 0, 49, 2>
-CheckoutResponse_ItemsEntry_DoNotUse::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(CheckoutResponse_ItemsEntry_DoNotUse, _impl_._has_bits_),
-    0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
-    0,  // num_aux_entries
-    offsetof(decltype(_table_), field_names),  // no aux_entries
-    CheckoutResponse_ItemsEntry_DoNotUse_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::DiscardEverythingFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::inventory::CheckoutResponse_ItemsEntry_DoNotUse>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    // int32 value = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(CheckoutResponse_ItemsEntry_DoNotUse, _impl_.value_), 1>(),
-     {16, 1, 0,
-      PROTOBUF_FIELD_OFFSET(CheckoutResponse_ItemsEntry_DoNotUse, _impl_.value_)}},
-    // string key = 1;
-    {::_pbi::TcParser::FastUS1,
-     {10, 0, 0,
-      PROTOBUF_FIELD_OFFSET(CheckoutResponse_ItemsEntry_DoNotUse, _impl_.key_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // string key = 1;
-    {PROTOBUF_FIELD_OFFSET(CheckoutResponse_ItemsEntry_DoNotUse, _impl_.key_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // int32 value = 2;
-    {PROTOBUF_FIELD_OFFSET(CheckoutResponse_ItemsEntry_DoNotUse, _impl_.value_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kInt32)},
-  }},
-  // no aux_entries
-  {{
-    "\45\3\0\0\0\0\0\0"
-    "inventory.CheckoutResponse.ItemsEntry"
-    "key"
-  }},
-};
-// ===================================================================
-
-class CheckoutResponse::_Internal {
- public:
-  using HasBits =
-      decltype(::std::declval<CheckoutResponse>()._impl_._has_bits_);
-  static constexpr ::int32_t kHasBitsOffset =
-      8 * PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_._has_bits_);
-};
-
-CheckoutResponse::CheckoutResponse(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, CheckoutResponse_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  SharedCtor(arena);
-  // @@protoc_insertion_point(arena_constructor:inventory.CheckoutResponse)
-}
-PROTOBUF_NDEBUG_INLINE CheckoutResponse::Impl_::Impl_(
-    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
-    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
-    [[maybe_unused]] const ::inventory::CheckoutResponse& from_msg)
-      : _has_bits_{from._has_bits_},
-        _cached_size_{0},
-        order_id_(arena, from.order_id_),
-        items_{visibility, arena, from.items_} {}
-
-CheckoutResponse::CheckoutResponse(
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
-    const CheckoutResponse& from)
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-    : ::google::protobuf::Message(arena, CheckoutResponse_class_data_.base()) {
-#else   // PROTOBUF_CUSTOM_VTABLE
-    : ::google::protobuf::Message(arena) {
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  CheckoutResponse* const _this = this;
-  (void)_this;
-  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
-  ::memcpy(reinterpret_cast<char*>(&_impl_) +
-               offsetof(Impl_, total_price_),
-           reinterpret_cast<const char*>(&from._impl_) +
-               offsetof(Impl_, total_price_),
-           offsetof(Impl_, success_) -
-               offsetof(Impl_, total_price_) +
-               sizeof(Impl_::success_));
-
-  // @@protoc_insertion_point(copy_constructor:inventory.CheckoutResponse)
-}
-PROTOBUF_NDEBUG_INLINE CheckoutResponse::Impl_::Impl_(
-    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
-    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
-      : _cached_size_{0},
-        order_id_(arena),
-        items_{visibility, arena} {}
-
-inline void CheckoutResponse::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
-  new (&_impl_) Impl_(internal_visibility(), arena);
-  ::memset(reinterpret_cast<char*>(&_impl_) +
-               offsetof(Impl_, total_price_),
-           0,
-           offsetof(Impl_, success_) -
-               offsetof(Impl_, total_price_) +
-               sizeof(Impl_::success_));
-}
-CheckoutResponse::~CheckoutResponse() {
-  // @@protoc_insertion_point(destructor:inventory.CheckoutResponse)
-  SharedDtor(*this);
-}
-inline void CheckoutResponse::SharedDtor(MessageLite& self) {
-  CheckoutResponse& this_ = static_cast<CheckoutResponse&>(self);
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    this_.CheckHasBitConsistency();
-  }
-  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
-  ABSL_DCHECK(this_.GetArena() == nullptr);
-  this_._impl_.order_id_.Destroy();
-  this_._impl_.~Impl_();
-}
-
-inline void* PROTOBUF_NONNULL CheckoutResponse::PlacementNew_(
-    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
-    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
-  return ::new (mem) CheckoutResponse(arena);
-}
-constexpr auto CheckoutResponse::InternalNewImpl_() {
-  constexpr auto arena_bits = ::google::protobuf::internal::EncodePlacementArenaOffsets({
-      PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_.items_) +
-          decltype(CheckoutResponse::_impl_.items_)::
-              InternalGetArenaOffset(
-                  ::google::protobuf::Message::internal_visibility()),
-  });
-  if (arena_bits.has_value()) {
-    return ::google::protobuf::internal::MessageCreator::CopyInit(
-        sizeof(CheckoutResponse), alignof(CheckoutResponse), *arena_bits);
-  } else {
-    return ::google::protobuf::internal::MessageCreator(&CheckoutResponse::PlacementNew_,
-                                 sizeof(CheckoutResponse),
-                                 alignof(CheckoutResponse));
-  }
-}
-constexpr auto CheckoutResponse::InternalGenerateClassData_() {
-  return ::google::protobuf::internal::ClassDataFull{
-      ::google::protobuf::internal::ClassData{
-          &_CheckoutResponse_default_instance_._instance,
-          &_table_.header,
-          nullptr,  // OnDemandRegisterArenaDtor
-          nullptr,  // IsInitialized
-          &CheckoutResponse::MergeImpl,
-          ::google::protobuf::Message::GetNewImpl<CheckoutResponse>(),
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-          &CheckoutResponse::SharedDtor,
-          ::google::protobuf::Message::GetClearImpl<CheckoutResponse>(), &CheckoutResponse::ByteSizeLong,
-              &CheckoutResponse::_InternalSerialize,
-#endif  // PROTOBUF_CUSTOM_VTABLE
-          PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_._cached_size_),
-          false,
-      },
-      &CheckoutResponse::kDescriptorMethods,
-      &descriptor_table_inventory_2eproto,
-      nullptr,  // tracker
-  };
-}
-
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
-    ::google::protobuf::internal::ClassDataFull CheckoutResponse_class_data_ =
-        CheckoutResponse::InternalGenerateClassData_();
-
-PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
-CheckoutResponse::GetClassData() const {
-  ::google::protobuf::internal::PrefetchToLocalCache(&CheckoutResponse_class_data_);
-  ::google::protobuf::internal::PrefetchToLocalCache(CheckoutResponse_class_data_.tc_table);
-  return CheckoutResponse_class_data_.base();
-}
-PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 4, 1, 48, 2>
-CheckoutResponse::_table_ = {
-  {
-    PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_._has_bits_),
-    0, // no _extensions_
-    4, 24,  // max_field_number, fast_idx_mask
-    offsetof(decltype(_table_), field_lookup_table),
-    4294967280,  // skipmap
-    offsetof(decltype(_table_), field_entries),
-    4,  // num_field_entries
-    1,  // num_aux_entries
-    offsetof(decltype(_table_), aux_entries),
-    CheckoutResponse_class_data_.base(),
-    nullptr,  // post_loop_handler
-    ::_pbi::TcParser::GenericFallback,  // fallback
-    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
-    ::_pbi::TcParser::GetTable<::inventory::CheckoutResponse>(),  // to_prefetch
-    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
-  }, {{
-    // double total_price = 4;
-    {::_pbi::TcParser::FastF64S1,
-     {33, 1, 0,
-      PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_.total_price_)}},
-    // string order_id = 1;
-    {::_pbi::TcParser::FastUS1,
-     {10, 0, 0,
-      PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_.order_id_)}},
-    {::_pbi::TcParser::MiniParse, {}},
-    // bool success = 3;
-    {::_pbi::TcParser::SingularVarintNoZag1<bool, offsetof(CheckoutResponse, _impl_.success_), 2>(),
-     {24, 2, 0,
-      PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_.success_)}},
-  }}, {{
-    65535, 65535
-  }}, {{
-    // string order_id = 1;
-    {PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_.order_id_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // map<string, int32> items = 2;
-    {PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_.items_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcRepeated | ::_fl::kMap)},
-    // bool success = 3;
-    {PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_.success_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kBool)},
-    // double total_price = 4;
-    {PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_.total_price_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
-  }},
-  {{
-      {::_pbi::TcParser::GetMapAuxInfo(
-          1, 0, 9, 5, 0)},
-  }},
-  {{
-    "\32\10\5\0\0\0\0\0"
-    "inventory.CheckoutResponse"
-    "order_id"
-    "items"
-  }},
-};
-PROTOBUF_NOINLINE void CheckoutResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:inventory.CheckoutResponse)
-  ::google::protobuf::internal::TSanWrite(&_impl_);
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  cached_has_bits = _impl_._has_bits_[0];
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    _impl_.order_id_.ClearNonDefaultToEmpty();
-  }
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000eU)) {
-    ::memset(&_impl_.total_price_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.success_) -
-        reinterpret_cast<char*>(&_impl_.total_price_)) + sizeof(_impl_.success_));
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000008U)) {
-      _impl_.items_.Clear();
-    }
-  }
-  _impl_._has_bits_.Clear();
-  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::uint8_t* PROTOBUF_NONNULL CheckoutResponse::_InternalSerialize(
-    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
-  const CheckoutResponse& this_ = static_cast<const CheckoutResponse&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::uint8_t* PROTOBUF_NONNULL CheckoutResponse::_InternalSerialize(
-    ::uint8_t* PROTOBUF_NONNULL target,
-    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
-  const CheckoutResponse& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    this_.CheckHasBitConsistency();
-  }
-  // @@protoc_insertion_point(serialize_to_array_start:inventory.CheckoutResponse)
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  cached_has_bits = this_._impl_._has_bits_[0];
-  // string order_id = 1;
-  if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-    if (!this_._internal_order_id().empty()) {
-      const ::std::string& _s = this_._internal_order_id();
-      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.CheckoutResponse.order_id");
-      target = stream->WriteStringMaybeAliased(1, _s, target);
-    }
-  }
-
-  // map<string, int32> items = 2;
-  if (CheckHasBitForRepeated(cached_has_bits, 0x00000008U)) {
-    if (!this_._internal_items().empty()) {
-      using MapType = ::google::protobuf::Map<::std::string, ::int32_t>;
-      using WireHelper = _pbi::MapEntryFuncs<::std::string, ::int32_t,
-                                     _pbi::WireFormatLite::TYPE_STRING,
-                                     _pbi::WireFormatLite::TYPE_INT32>;
-      const auto& field = this_._internal_items();
-
-      if (stream->IsSerializationDeterministic() && field.size() > 1) {
-        for (const auto& entry : ::google::protobuf::internal::MapSorterPtr<MapType>(field)) {
-          target = WireHelper::InternalSerialize(
-              2, entry.first, entry.second, target, stream);
-          ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-              entry.first.data(), static_cast<int>(entry.first.length()),
- ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.CheckoutResponse.items");
-        }
-      } else {
-        for (const auto& entry : field) {
-          target = WireHelper::InternalSerialize(
-              2, entry.first, entry.second, target, stream);
-          ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-              entry.first.data(), static_cast<int>(entry.first.length()),
- ::google::protobuf::internal::WireFormatLite::SERIALIZE, "inventory.CheckoutResponse.items");
-        }
-      }
-    }
-  }
-
-  // bool success = 3;
-  if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-    if (this_._internal_success() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteBoolToArray(
-          3, this_._internal_success(), target);
-    }
-  }
-
-  // double total_price = 4;
-  if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-    if (::absl::bit_cast<::uint64_t>(this_._internal_total_price()) != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteDoubleToArray(
-          4, this_._internal_total_price(), target);
-    }
-  }
-
-  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
-    target =
-        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:inventory.CheckoutResponse)
-  return target;
-}
-
-#if defined(PROTOBUF_CUSTOM_VTABLE)
-::size_t CheckoutResponse::ByteSizeLong(const MessageLite& base) {
-  const CheckoutResponse& this_ = static_cast<const CheckoutResponse&>(base);
-#else   // PROTOBUF_CUSTOM_VTABLE
-::size_t CheckoutResponse::ByteSizeLong() const {
-  const CheckoutResponse& this_ = *this;
-#endif  // PROTOBUF_CUSTOM_VTABLE
-  // @@protoc_insertion_point(message_byte_size_start:inventory.CheckoutResponse)
-  ::size_t total_size = 0;
-
-  ::uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void)cached_has_bits;
-
-  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
-  cached_has_bits = this_._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
-    // string order_id = 1;
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      if (!this_._internal_order_id().empty()) {
-        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                        this_._internal_order_id());
-      }
-    }
-    // double total_price = 4;
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (::absl::bit_cast<::uint64_t>(this_._internal_total_price()) != 0) {
-        total_size += 9;
-      }
-    }
-    // bool success = 3;
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      if (this_._internal_success() != 0) {
-        total_size += 2;
-      }
-    }
-    // map<string, int32> items = 2;
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000008U)) {
-      total_size +=
-          1 * ::google::protobuf::internal::FromIntSize(this_._internal_items_size());
-      for (const auto& entry : this_._internal_items()) {
-        total_size += _pbi::MapEntryFuncs<::std::string, ::int32_t,
-                                       _pbi::WireFormatLite::TYPE_STRING,
-                                       _pbi::WireFormatLite::TYPE_INT32>::ByteSizeLong(entry.first, entry.second);
-      }
-    }
-  }
-  return this_.MaybeComputeUnknownFieldsSize(total_size,
-                                             &this_._impl_._cached_size_);
-}
-
-void CheckoutResponse::MergeImpl(::google::protobuf::MessageLite& to_msg,
-                            const ::google::protobuf::MessageLite& from_msg) {
-   auto* const _this =
-      static_cast<CheckoutResponse*>(&to_msg);
-  auto& from = static_cast<const CheckoutResponse&>(from_msg);
-  if constexpr (::_pbi::DebugHardenCheckHasBitConsistency()) {
-    from.CheckHasBitConsistency();
-  }
-  // @@protoc_insertion_point(class_specific_merge_from_start:inventory.CheckoutResponse)
-  ABSL_DCHECK_NE(&from, _this);
-  ::uint32_t cached_has_bits = 0;
-  (void)cached_has_bits;
-
-  cached_has_bits = from._impl_._has_bits_[0];
-  if (BatchCheckHasBit(cached_has_bits, 0x0000000fU)) {
-    if (CheckHasBit(cached_has_bits, 0x00000001U)) {
-      if (!from._internal_order_id().empty()) {
-        _this->_internal_set_order_id(from._internal_order_id());
-      } else {
-        if (_this->_impl_.order_id_.IsDefault()) {
-          _this->_internal_set_order_id("");
-        }
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000002U)) {
-      if (::absl::bit_cast<::uint64_t>(from._internal_total_price()) != 0) {
-        _this->_impl_.total_price_ = from._impl_.total_price_;
-      }
-    }
-    if (CheckHasBit(cached_has_bits, 0x00000004U)) {
-      if (from._internal_success() != 0) {
-        _this->_impl_.success_ = from._impl_.success_;
-      }
-    }
-    if (CheckHasBitForRepeated(cached_has_bits, 0x00000008U)) {
-      _this->_impl_.items_.MergeFrom(from._impl_.items_);
-    }
-  }
-  _this->_impl_._has_bits_[0] |= cached_has_bits;
-  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
-      from._internal_metadata_);
-}
-
-void CheckoutResponse::CopyFrom(const CheckoutResponse& from) {
-  // @@protoc_insertion_point(class_specific_copy_from_start:inventory.CheckoutResponse)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-
-void CheckoutResponse::InternalSwap(CheckoutResponse* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
-  using ::std::swap;
-  auto* arena = GetArena();
-  ABSL_DCHECK_EQ(arena, other->GetArena());
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.order_id_, &other->_impl_.order_id_, arena);
-  ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_.success_)
-      + sizeof(CheckoutResponse::_impl_.success_)
-      - PROTOBUF_FIELD_OFFSET(CheckoutResponse, _impl_.total_price_)>(
-          reinterpret_cast<char*>(&_impl_.total_price_),
-          reinterpret_cast<char*>(&other->_impl_.total_price_));
-  _impl_.items_.InternalSwap(&other->_impl_.items_);
-}
-
-::google::protobuf::Metadata CheckoutResponse::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // @@protoc_insertion_point(namespace_scope)

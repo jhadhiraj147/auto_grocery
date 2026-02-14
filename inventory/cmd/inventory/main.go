@@ -1,12 +1,11 @@
 package main
 
 import (
+	"context"
 	"database/sql"
-	"fmt"
 	"log"
 	"net"
 	"os"
-	"strconv"
 
 	"auto_grocery/inventory/internal/handler"
 	"auto_grocery/inventory/internal/mq"
@@ -19,70 +18,63 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-func main() {
-	
-	if err := godotenv.Load("inventory/.env"); err != nil {
-		log.Println("Note: No inventory/.env file found, using system environment variables")
+func getenv(key, fallback string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		return fallback
 	}
+	return value
+}
 
-	
-	dbURL := os.Getenv("DATABASE_URL")
-	db, err := sql.Open("postgres", dbURL)
+// main wires inventory dependencies and starts the gRPC server.
+func main() {
+	_ = godotenv.Load("inventory/.env")
+
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
-		log.Fatalf("Failed to open database connection: %v", err)
-	}
-	if err := db.Ping(); err != nil {
-		log.Fatalf("Failed to connect to Postgres: %v", err)
+		log.Fatal(err)
 	}
 	defer db.Close()
+
 	stockStore := store.NewStore(db)
-	fmt.Println("Connected to Inventory Database (Postgres)")
+	// Dual-DB: Database 0 for Clients, Database 1 for Restocks
+	redisAddr := getenv("REDIS_ADDR", "localhost:6379")
+	redisPassword := os.Getenv("REDIS_PW")
+	memoryStore := store.NewMemoryStore(redisAddr, redisPassword)
+	if err := memoryStore.Ping(context.Background()); err != nil {
+		log.Fatalf("failed to connect/authenticate to Redis at %s: %v", redisAddr, err)
+	}
 
-	
-	redisAddr := os.Getenv("REDIS_ADDR")
-	redisPw := os.Getenv("REDIS_PW")
-	redisDB, _ := strconv.Atoi(os.Getenv("REDIS_DB"))
-
-	memoryStore := store.NewMemoryStore(redisAddr, redisPw, redisDB)
-	fmt.Println("Connected to Redis Memory Store")
-
-	
-	publisher, err := mq.NewPublisher("5556")
+	robotZMQBindAddr := getenv("ROBOT_ZMQ_BIND_ADDR", "tcp://*:5556")
+	publisher, err := mq.NewPublisher(robotZMQBindAddr)
 	if err != nil {
-		log.Fatalf("Failed to start ZMQ Publisher: %v", err)
+		log.Fatal(err)
 	}
 	defer publisher.Close()
-	fmt.Println("ZMQ Publisher active on port 5556")
 
-	
-	pricingAddr := "localhost:50052"
-	conn, err := grpc.Dial(pricingAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	pricingGRPCAddr := getenv("PRICING_GRPC_ADDR", "localhost:50052")
+	pricingConn, err := grpc.NewClient(pricingGRPCAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("Could not connect to Pricing Service: %v", err)
+		log.Fatal(err)
 	}
-	defer conn.Close()
-	pricingClient := pb.NewPricingServiceClient(conn)
-	fmt.Println("Connected to Pricing Service")
+	defer pricingConn.Close()
+	pricingClient := pb.NewPricingServiceClient(pricingConn)
 
-	
-	lis, err := net.Listen("tcp", ":50051")
+	orderWebhookURL := getenv("ORDERING_ORDER_WEBHOOK_URL", "http://localhost:5050/internal/webhook/update-order")
+	restockWebhookURL := getenv("ORDERING_RESTOCK_WEBHOOK_URL", "http://localhost:5050/internal/webhook/update-restock")
+
+	inventoryHandler := handler.NewInventoryHandler(stockStore, memoryStore, publisher, pricingClient, orderWebhookURL, restockWebhookURL)
+
+	inventoryGRPCAddr := getenv("INVENTORY_GRPC_ADDR", ":50051")
+	lis, err := net.Listen("tcp", inventoryGRPCAddr)
 	if err != nil {
-		log.Fatalf("Failed to listen on port 50051: %v", err)
+		log.Fatal(err)
 	}
-
-	inventoryHandler := handler.NewInventoryHandler(
-		stockStore,
-		memoryStore,
-		publisher,
-		pricingClient,
-	)
-
 	grpcServer := grpc.NewServer()
 	pb.RegisterInventoryServiceServer(grpcServer, inventoryHandler)
 
-	
-	fmt.Println("Inventory Service running on gRPC port 50051")
+	log.Printf("[inventory] INFO service listening on %s (redis=%s pricing_grpc=%s robot_bind=%s)", inventoryGRPCAddr, redisAddr, pricingGRPCAddr, robotZMQBindAddr)
 	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("gRPC Server crashed: %v", err)
+		log.Fatal(err)
 	}
 }

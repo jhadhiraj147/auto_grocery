@@ -8,6 +8,7 @@ table Item {
 
 table OrderBroadcast {
   order_id:string;
+  order_type:string;  // Added order_type
   items:[Item];
 }
 

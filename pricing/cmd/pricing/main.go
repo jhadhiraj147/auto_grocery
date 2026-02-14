@@ -1,32 +1,41 @@
 package main
 
 import (
-	"context"
 	"database/sql"
-	"fmt"
 	"log"
 	"net"
 	"os"
-	"time"
 
 	"auto_grocery/pricing/internal/handler"
-	"auto_grocery/pricing/internal/logic"
 	"auto_grocery/pricing/internal/store"
 	pb "auto_grocery/pricing/proto"
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
-func main() {
-	_ = godotenv.Load("pricing/.env")
+func getenv(key, fallback string) string {
+	value := os.Getenv(key)
+	if value == "" {
+		return fallback
+	}
+	return value
+}
 
+// main initializes dependencies and starts the pricing gRPC service.
+func main() {
+	// 1. Load Config
+	_ = godotenv.Load("pricing/.env")
+	log.Printf("[pricing] loading configuration")
+
+	// 2. Connect to Database
 	dbConnString := os.Getenv("DATABASE_URL")
 	if dbConnString == "" {
 		dbConnString = "postgres://user:password@localhost:5432/pricing_db?sslmode=disable"
+		log.Printf("[pricing] DATABASE_URL not set, using fallback connection string")
 	}
+	log.Printf("[pricing] connecting to postgres")
 
 	db, err := sql.Open("postgres", dbConnString)
 	if err != nil {
@@ -37,69 +46,29 @@ func main() {
 	if err := db.Ping(); err != nil {
 		log.Fatalf("failed to ping database: %v", err)
 	}
+	log.Printf("[pricing] postgres connection established")
 
+	// 3. Initialize Store and Handler
 	catalogStore := store.NewCatalogStore(db)
+
+	// Create the handler (Logic is now triggered via gRPC call from Inventory)
 	pricingHandler := handler.NewPricingHandler(catalogStore)
 
-	go startInventoryPriceRefresher(catalogStore)
-
-	lis, err := net.Listen("tcp", ":50052")
+	// 4. Start gRPC Server
+	pricingGRPCAddr := getenv("PRICING_GRPC_ADDR", ":50052")
+	lis, err := net.Listen("tcp", pricingGRPCAddr)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
+	log.Printf("[pricing] gRPC listening on %s", pricingGRPCAddr)
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterPricingServiceServer(grpcServer, pricingHandler)
 
-	fmt.Println("Pricing Service running on :50052...")
+	log.Printf("[pricing] INFO service listening on %s (event-driven mode)", pricingGRPCAddr)
+	log.Printf("[pricing] server ready")
+
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
-	}
-}
-
-func startInventoryPriceRefresher(catalogStore *store.CatalogStore) {
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Printf("Could not setup Inventory client: %v", err)
-		return
-	}
-	defer conn.Close()
-
-	inventoryClient := pb.NewInventoryServiceClient(conn)
-	ticker := time.NewTicker(1 * time.Hour)
-	defer ticker.Stop()
-
-	fmt.Println("Hourly Background Re-Pricer is active")
-
-	updatePrices := func() {
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
-		defer cancel()
-
-		resp, err := inventoryClient.GetInventoryMetrics(ctx, &pb.GetInventoryMetricsRequest{})
-		if err != nil {
-			log.Printf("Metrics fetch failed: %v", err)
-			return
-		}
-
-		for _, metric := range resp.GetMetrics() {
-			newPrice := logic.CalculatePrice(metric.UnitCost, int(metric.Quantity))
-
-			_, err := catalogStore.UpsertItem(ctx, store.Item{
-				Sku:       metric.Sku,
-				UnitPrice: newPrice,
-			})
-			if err != nil {
-				log.Printf("Update failed for %s: %v", metric.Sku, err)
-			} else {
-				fmt.Printf("Re-Priced %s: %.2f (Cost: %.2f, Stock: %d)\n",
-					metric.Sku, newPrice, metric.UnitCost, metric.Quantity)
-			}
-		}
-	}
-
-	updatePrices()
-
-	for range ticker.C {
-		updatePrices()
 	}
 }

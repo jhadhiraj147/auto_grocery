@@ -1,0 +1,348 @@
+AUTO GROCERY — HOW TO INSTANTIATE SERVICES (PROFESSOR GUIDE)
+=============================================================
+
+Purpose
+-------
+This guide explains how to set up and run the full Auto Grocery microservices system
+from scratch on a new machine.
+
+It includes:
+1) Tool/language installation checklist
+2) Database and Redis setup
+3) Migration execution
+4) Service build/start order
+5) Verification commands (ports + connections)
+6) Troubleshooting
+
+
+--------------------------------------------------------------------------------
+0) HIGH-LEVEL ARCHITECTURE
+--------------------------------------------------------------------------------
+Services:
+- ordering  (Go, HTTP API on 5050)
+- inventory (Go, gRPC on 50051)
+- pricing   (Go, gRPC on 50052)
+- robots    (C++, ZMQ subscriber workers)
+- analytics (C++, ZMQ subscriber service)
+- frontend/client (Python Streamlit)
+- frontend/truck  (Python Streamlit)
+
+Stateful dependencies:
+- PostgreSQL (3 DBs: ordering, inventory, pricing)
+- Redis (password-enabled)
+
+Message channels:
+- ZMQ robot bus:     tcp://localhost:5556
+- ZMQ analytics bus: tcp://localhost:5557
+
+
+--------------------------------------------------------------------------------
+1) PREREQUISITE INSTALL CHECKLIST
+--------------------------------------------------------------------------------
+On macOS (recommended with Homebrew):
+
+A) Core toolchain
+- Xcode Command Line Tools
+  xcode-select --install
+
+- Homebrew (if missing)
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+B) Languages and runtimes
+- Go (matching project go.mod constraints)
+  brew install go
+  go version
+
+- Python 3
+  brew install python
+  python3 --version
+
+C) Datastores
+- PostgreSQL
+  brew install postgresql@16
+  brew services start postgresql@16
+  psql --version
+
+- Redis
+  brew install redis
+  # Start with password (recommended for this project):
+  redis-server --requirepass auto_grocery_cache --port 6379
+  # Keep this terminal running OR run as a custom launch process
+
+D) C++ build/runtime deps (for robots + analytics)
+- cmake pkg-config protobuf grpc zeromq
+  brew install cmake pkg-config protobuf grpc zeromq
+
+
+--------------------------------------------------------------------------------
+2) CLONE / OPEN PROJECT
+--------------------------------------------------------------------------------
+- Open repository root:
+  /Users/<your-user>/Projects/auto_grocery
+
+- Ensure these env files exist:
+  ordering/.env
+  inventory/.env
+  pricing/.env
+  robots/.env
+  analytics/.env
+
+
+--------------------------------------------------------------------------------
+3) POSTGRESQL: CREATE USERS + DATABASES
+--------------------------------------------------------------------------------
+Run these commands with psql superuser access.
+
+A) Open postgres shell (example):
+  psql postgres
+
+B) Create users and databases (idempotent style shown; skip if already exists)
+
+-- ORDERING
+CREATE USER user_ordering_service_team WITH PASSWORD 'ordering_secure_v1';
+CREATE DATABASE db_ordering OWNER user_ordering_service_team;
+
+-- INVENTORY
+CREATE USER user_inventory_service_team WITH PASSWORD 'inventory_secure_v1';
+CREATE DATABASE db_inventory OWNER user_inventory_service_team;
+
+-- PRICING
+CREATE USER user_pricing_service_team WITH PASSWORD 'pricing_secure_v1';
+CREATE DATABASE db_pricing OWNER user_pricing_service_team;
+
+\q
+
+Note:
+- If a user/database already exists, PostgreSQL will error for duplicates; that is fine.
+
+
+--------------------------------------------------------------------------------
+4) VERIFY ENV CONFIGURATION
+--------------------------------------------------------------------------------
+Current project defaults assume local machine:
+
+- ordering/.env
+  ORDERING_HTTP_ADDR=:5050
+  INVENTORY_GRPC_ADDR=localhost:50051
+  ANALYTICS_ZMQ_BIND_ADDR=tcp://*:5557
+
+- inventory/.env
+  INVENTORY_GRPC_ADDR=:50051
+  PRICING_GRPC_ADDR=localhost:50052
+  ROBOT_ZMQ_BIND_ADDR=tcp://*:5556
+  ORDERING_ORDER_WEBHOOK_URL=http://localhost:5050/internal/webhook/update-order
+  ORDERING_RESTOCK_WEBHOOK_URL=http://localhost:5050/internal/webhook/update-restock
+  REDIS_ADDR=localhost:6379
+  REDIS_PW=auto_grocery_cache
+
+- pricing/.env
+  PRICING_GRPC_ADDR=:50052
+
+- robots/.env
+  INVENTORY_GRPC_ADDR=localhost:50051
+  ROBOT_ZMQ_SUB_ADDR=tcp://localhost:5556
+
+- analytics/.env
+  ANALYTICS_ZMQ_SUB_ADDR=tcp://127.0.0.1:5557
+  ANALYTICS_OUTPUT_CSV=latency_data.csv
+
+IMPORTANT:
+- INTERNAL_SECRET must match between ordering/.env and inventory/.env.
+- JWT_SECRET in ordering/.env must be non-empty.
+
+
+--------------------------------------------------------------------------------
+5) RUN DATABASE MIGRATIONS
+--------------------------------------------------------------------------------
+Run all .up.sql files in filename order per service.
+
+A) ORDERING DB migrations
+  for f in ordering/db/migrations/*.up.sql; do
+    echo "Applying $f"
+    psql "postgres://user_ordering_service_team:ordering_secure_v1@localhost:5432/db_ordering?sslmode=disable" -f "$f"
+  done
+
+B) INVENTORY DB migrations
+  for f in inventory/db/migrations/*.up.sql; do
+    echo "Applying $f"
+    psql "postgres://user_inventory_service_team:inventory_secure_v1@localhost:5432/db_inventory?sslmode=disable" -f "$f"
+  done
+
+C) PRICING DB migrations
+  for f in pricing/db/migrations/*.up.sql; do
+    echo "Applying $f"
+    psql "postgres://user_pricing_service_team:pricing_secure_v1@localhost:5432/db_pricing?sslmode=disable" -f "$f"
+  done
+
+Notes:
+- If migration was already applied manually, you may see "relation exists" errors.
+- For clean demo setup, start with fresh databases.
+
+
+--------------------------------------------------------------------------------
+6) BUILD SERVICES
+--------------------------------------------------------------------------------
+From project root:
+
+A) Go services
+  go mod tidy
+  go build ./ordering/... ./inventory/... ./pricing/...
+
+B) Robots (C++)
+  cd robots
+  mkdir -p build
+  cd build
+  cmake ..
+  cmake --build .
+
+C) Analytics (C++)
+  cd ../../analytics
+  mkdir -p build
+  cd build
+  cmake ..
+  cmake --build .
+
+
+--------------------------------------------------------------------------------
+7) START SERVICES (RECOMMENDED ORDER)
+--------------------------------------------------------------------------------
+Use separate terminals.
+
+Terminal 1: pricing
+  cd <repo-root>
+  go run ./pricing/cmd/pricing
+
+Terminal 2: inventory
+  cd <repo-root>
+  go run ./inventory/cmd/inventory
+
+Terminal 3: ordering
+  cd <repo-root>
+  go run ./ordering/cmd/ordering
+
+Terminal 4: analytics
+  cd <repo-root>/analytics/build
+  ./analytics_service
+
+Terminals 5-9: robot workers (5 aisles)
+  cd <repo-root>/robots/build
+  ./robot_worker bread
+  ./robot_worker meat
+  ./robot_worker produce
+  ./robot_worker dairy
+  ./robot_worker party
+
+Optional frontends:
+
+Terminal 10: client frontend
+  cd <repo-root>/frontend/client
+  python3 -m venv .venv
+  source .venv/bin/activate
+  pip install -r requirements.txt
+  streamlit run app.py
+
+Terminal 11: truck frontend
+  cd <repo-root>/frontend/truck
+  python3 -m venv .venv
+  source .venv/bin/activate
+  pip install -r requirements.txt
+  streamlit run app.py
+
+
+--------------------------------------------------------------------------------
+8) VERIFY EVERYTHING IS CONNECTED
+--------------------------------------------------------------------------------
+A) Verify listeners
+  lsof -nP -iTCP:5050 -iTCP:50051 -iTCP:50052 -iTCP:5556 -iTCP:5557 -sTCP:LISTEN
+
+Expected:
+- ordering  on 5050
+- inventory on 50051 + 5556
+- pricing   on 50052
+- ordering analytics publisher bind on 5557
+
+B) Verify stateful established connections
+  lsof -nP -iTCP:5432 -iTCP:6379 -sTCP:ESTABLISHED
+
+Expected:
+- pricing -> postgres
+- ordering -> postgres (after client register/login flow)
+- inventory -> postgres (after order preview/restock flow)
+- inventory -> redis
+
+C) Verify message bus established connections
+  lsof -nP -iTCP:5556 -iTCP:5557 -sTCP:ESTABLISHED
+
+Expected:
+- robot_worker(s) <-> inventory on 5556
+- analytics <-> ordering on 5557
+
+
+--------------------------------------------------------------------------------
+9) QUICK API SMOKE TEST (WITHOUT UI)
+--------------------------------------------------------------------------------
+A) Register + Login
+  DEVICE_ID="demo-$(date +%s)"
+  curl -s -X POST http://localhost:5050/api/client/register \
+    -H 'Content-Type: application/json' \
+    -d "{\"device_id\":\"$DEVICE_ID\",\"password\":\"pass123\",\"email\":\"$DEVICE_ID@example.com\",\"phone\":\"1234567890\"}"
+
+  LOGIN_JSON=$(curl -s -X POST http://localhost:5050/api/client/login \
+    -H 'Content-Type: application/json' \
+    -d "{\"device_id\":\"$DEVICE_ID\",\"password\":\"pass123\"}")
+
+  ACCESS_TOKEN=$(LOGIN="$LOGIN_JSON" python3 -c 'import os,json; print(json.loads(os.environ["LOGIN"])["access_token"])')
+
+B) Preview order (uses ordering -> inventory)
+  curl -s -X POST http://localhost:5050/api/client/order/preview \
+    -H "Authorization: Bearer $ACCESS_TOKEN" \
+    -H 'Content-Type: application/json' \
+    -d '{"items":[{"sku":"SKU_TEST_001","quantity":1}]}'
+
+Note:
+- If stock for SKU does not exist, preview can fail with "Reservation failed" — connectivity still proven.
+
+
+--------------------------------------------------------------------------------
+10) COMMON TROUBLESHOOTING
+--------------------------------------------------------------------------------
+1) inventory fails at startup with Redis auth error
+- Ensure Redis started with requirepass matching REDIS_PW.
+- Test:
+  redis-cli -a auto_grocery_cache ping
+
+2) gRPC connection refused
+- Check service order: pricing first, then inventory, then ordering.
+- Check env addresses in .env files.
+
+2) robot_worker exits with usage error
+- Must pass aisle argument that matches order `aisle_type`, e.g.:
+  ./robot_worker bread
+
+4) C++ build fails due to missing libs
+- Reinstall dependencies:
+  brew install cmake pkg-config protobuf grpc zeromq
+
+5) Port already in use
+- Find process:
+  lsof -nP -iTCP:<port> -sTCP:LISTEN
+- Kill if needed:
+  kill -9 <pid>
+
+6) JWT / internal webhook failures
+- Ensure ordering and inventory INTERNAL_SECRET are identical.
+- Ensure ordering JWT_SECRET is set.
+
+
+--------------------------------------------------------------------------------
+11) OPTIONAL: SUBMISSION PACKING CHECKLIST
+--------------------------------------------------------------------------------
+Before sharing with professor:
+- Include this file: HowToInstantiateServices.txt
+- Keep all service .env files with sane local defaults
+- Ensure migrations exist and are current
+- Ensure binaries are NOT required in repo (build from source)
+- Mention tested platform (macOS) and expected ports
+
+
+END OF GUIDE

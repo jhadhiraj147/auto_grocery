@@ -1,0 +1,212 @@
+ORDERING MICROSERVICE — THOROUGH HIGH-LEVEL GUIDE
+==================================================
+
+1) SERVICE PURPOSE
+------------------
+Ordering is the user-facing orchestration service for both:
+- Client grocery orders (fridge/customer flow)
+- Truck restock orders (supplier flow)
+
+It exposes HTTP APIs, validates auth, persists order state in PostgreSQL,
+invokes Inventory over gRPC, receives internal webhook callbacks from Inventory,
+and publishes analytics events over ZeroMQ.
+
+
+2) PROCESS + ENTRYPOINT
+-----------------------
+Entrypoint:
+- ordering/cmd/ordering/main.go
+
+Main startup flow:
+1. Load ordering/.env
+2. Initialize JWT secret (JWT_SECRET)
+3. Connect PostgreSQL using DATABASE_URL
+4. Create gRPC client to Inventory (INVENTORY_GRPC_ADDR)
+5. Create ZMQ analytics publisher (ANALYTICS_ZMQ_BIND_ADDR)
+6. Build HTTP router and start server (ORDERING_HTTP_ADDR)
+
+Default local network:
+- HTTP listen: :5050
+- Inventory gRPC target: localhost:50051
+- Analytics ZMQ bind: tcp://*:5557
+
+
+3) EXPOSED HTTP API (ROUTES)
+----------------------------
+Defined in ordering/internal/handlers/router.go
+
+Public client auth routes:
+- POST /api/client/register
+- POST /api/client/login
+- POST /api/client/refresh
+
+Protected client routes (Bearer access token required):
+- POST /api/client/order/preview
+- POST /api/client/order/confirm
+- POST /api/client/order/cancel
+- GET  /api/client/orders
+- GET  /api/client/orders/last
+
+Truck routes:
+- POST /api/truck/restock
+- GET  /api/truck/restock/status?order_id=...
+
+Internal webhook routes (secret protected):
+- POST /internal/webhook/update-order
+- POST /internal/webhook/update-restock
+
+
+4) SECURITY MODEL
+-----------------
+Auth middleware:
+- Validates Authorization: Bearer <token>
+- Verifies JWT signature + expiry
+- Enforces token_type == ACCESS for protected routes
+- Injects userID and role in request context
+
+JWT behavior:
+- Access token lifetime: 15 minutes
+- Refresh token lifetime: 7 days
+- Refresh endpoint accepts REFRESH token and returns new ACCESS token
+
+Internal trust boundary:
+- /internal/webhook/* must include X-Internal-Secret header
+- Value must match INTERNAL_SECRET in env
+
+Password handling:
+- Register hashes passwords with bcrypt
+- Login verifies using bcrypt compare
+
+
+5) DATABASE MODEL (POSTGRES)
+----------------------------
+Primary tables (from ordering migrations):
+- smart_clients
+- grocery_orders
+- grocery_order_items
+- suppliers
+- restock_orders
+- restock_order_items
+
+Core store responsibilities:
+- ClientStore:
+  - create/get client
+  - save refresh token
+- OrderStore:
+  - create order header/items transactionally
+  - status transitions and totals
+  - order history / latest order
+  - delete on cancel
+- RestockStore:
+  - supplier upsert
+  - create restock order/items
+  - update restock completion and total cost
+
+
+6) EXTERNAL CONNECTIVITY
+------------------------
+Depends on:
+- Inventory gRPC service (for reserve/release/process/restock)
+- Inventory webhook callbacks (internal endpoints)
+- Analytics subscriber via ZMQ publisher socket
+
+Outgoing calls:
+- gRPC to Inventory methods:
+  - ReserveItems
+  - ReleaseItems
+  - ProcessCustomerOrder
+  - RestockItemsOrder
+
+Outgoing message bus:
+- Publish analytics metric on order/restock completion webhook handling
+
+
+7) END-TO-END FLOW: CLIENT ORDER
+--------------------------------
+A) Preview (reserve)
+- Client sends items
+- Ordering calls Inventory ReserveItems(order_id, map[sku]qty)
+- If success:
+  - persist grocery_orders + grocery_order_items with PENDING
+  - return order_id
+- If failure:
+  - return 409 Reservation failed
+
+B) Confirm (dispatch)
+- Validate ownership + status == PENDING
+- Read trusted items from DB
+- Set status PROCESSING
+- Call Inventory ProcessCustomerOrder(order_id, items)
+- If dispatch fails:
+  - status -> FAILED_DISPATCH
+
+C) Completion callback
+- Inventory POSTs /internal/webhook/update-order
+- Ordering sets status and total_price
+- Ordering publishes analytics metric (duration from created_at)
+
+
+8) END-TO-END FLOW: TRUCK RESTOCK
+---------------------------------
+A) Truck POST /api/truck/restock
+- Upsert supplier metadata
+- Persist restock order + line items as PROCESSING
+- Call Inventory RestockItemsOrder
+
+B) Completion callback
+- Inventory POSTs /internal/webhook/update-restock
+- Ordering updates restock status + total_cost
+- Ordering publishes analytics metric
+
+C) Polling
+- Frontend checks /api/truck/restock/status?order_id=...
+
+
+9) DRY RUN EXAMPLES
+-------------------
+Example: register
+POST /api/client/register
+Body:
+{
+  "device_id": "FRIDGE-1",
+  "password": "pass123",
+  "email": "f1@example.com",
+  "phone": "1234567890"
+}
+Expected:
+- 201 + {"status":"success"}
+- smart_clients row inserted
+
+Example: login
+POST /api/client/login
+-> returns access_token + refresh_token
+
+Example: preview
+POST /api/client/order/preview (Bearer ACCESS)
+Body: {"items":[{"sku":"SKU_TEST_001","quantity":1}]}
+Expected:
+- success => order persisted as PENDING
+- failure => reservation conflict / 409
+
+Example: confirm
+POST /api/client/order/confirm (Bearer ACCESS)
+Body: {"order_id":"<uuid>"}
+Expected:
+- status PROCESSING + dispatch to inventory
+
+
+10) OPERATIONAL NOTES
+---------------------
+- If Inventory is down, preview/confirm/restock calls fail.
+- INTERNAL_SECRET mismatch breaks webhook completion updates.
+- Missing JWT_SECRET prevents startup.
+- Ordering opens PostgreSQL connections lazily for some paths; connection checks should include actual traffic.
+
+
+11) WHAT TO CHECK DURING DEMO
+-----------------------------
+- Ordering listening on :5050
+- Established gRPC socket ordering -> inventory (:50051)
+- Established DB socket ordering -> postgres (:5432)
+- Established ZMQ socket ordering -> analytics (:5557)
+- Order transitions: PENDING -> PROCESSING -> COMPLETED

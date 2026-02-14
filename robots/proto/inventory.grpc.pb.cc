@@ -26,9 +26,9 @@ static const char* InventoryService_method_names[] = {
   "/inventory.InventoryService/CheckAvailability",
   "/inventory.InventoryService/ReserveItems",
   "/inventory.InventoryService/ReleaseItems",
-  "/inventory.InventoryService/RestockItems",
+  "/inventory.InventoryService/RestockItemsOrder",
+  "/inventory.InventoryService/ProcessCustomerOrder",
   "/inventory.InventoryService/ReportJobStatus",
-  "/inventory.InventoryService/Checkout",
 };
 
 std::unique_ptr< InventoryService::Stub> InventoryService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -41,9 +41,9 @@ InventoryService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& c
   : channel_(channel), rpcmethod_CheckAvailability_(InventoryService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ReserveItems_(InventoryService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ReleaseItems_(InventoryService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RestockItems_(InventoryService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ReportJobStatus_(InventoryService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_Checkout_(InventoryService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RestockItemsOrder_(InventoryService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ProcessCustomerOrder_(InventoryService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ReportJobStatus_(InventoryService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status InventoryService::Stub::CheckAvailability(::grpc::ClientContext* context, const ::inventory::CheckAvailabilityRequest& request, ::inventory::CheckAvailabilityResponse* response) {
@@ -115,25 +115,48 @@ void InventoryService::Stub::async::ReleaseItems(::grpc::ClientContext* context,
   return result;
 }
 
-::grpc::Status InventoryService::Stub::RestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::inventory::RestockItemsResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::inventory::RestockItemsRequest, ::inventory::RestockItemsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RestockItems_, context, request, response);
+::grpc::Status InventoryService::Stub::RestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::inventory::RestockItemsOrderResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::inventory::RestockItemsOrderRequest, ::inventory::RestockItemsOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RestockItemsOrder_, context, request, response);
 }
 
-void InventoryService::Stub::async::RestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest* request, ::inventory::RestockItemsResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::inventory::RestockItemsRequest, ::inventory::RestockItemsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RestockItems_, context, request, response, std::move(f));
+void InventoryService::Stub::async::RestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest* request, ::inventory::RestockItemsOrderResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::inventory::RestockItemsOrderRequest, ::inventory::RestockItemsOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RestockItemsOrder_, context, request, response, std::move(f));
 }
 
-void InventoryService::Stub::async::RestockItems(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest* request, ::inventory::RestockItemsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RestockItems_, context, request, response, reactor);
+void InventoryService::Stub::async::RestockItemsOrder(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest* request, ::inventory::RestockItemsOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RestockItemsOrder_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsResponse>* InventoryService::Stub::PrepareAsyncRestockItemsRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::inventory::RestockItemsResponse, ::inventory::RestockItemsRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RestockItems_, context, request);
+::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsOrderResponse>* InventoryService::Stub::PrepareAsyncRestockItemsOrderRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::inventory::RestockItemsOrderResponse, ::inventory::RestockItemsOrderRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_RestockItemsOrder_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsResponse>* InventoryService::Stub::AsyncRestockItemsRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::inventory::RestockItemsOrderResponse>* InventoryService::Stub::AsyncRestockItemsOrderRaw(::grpc::ClientContext* context, const ::inventory::RestockItemsOrderRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncRestockItemsRaw(context, request, cq);
+    this->PrepareAsyncRestockItemsOrderRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status InventoryService::Stub::ProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::inventory::ProcessCustomerOrderResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::inventory::ProcessCustomerOrderRequest, ::inventory::ProcessCustomerOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ProcessCustomerOrder_, context, request, response);
+}
+
+void InventoryService::Stub::async::ProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest* request, ::inventory::ProcessCustomerOrderResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::inventory::ProcessCustomerOrderRequest, ::inventory::ProcessCustomerOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProcessCustomerOrder_, context, request, response, std::move(f));
+}
+
+void InventoryService::Stub::async::ProcessCustomerOrder(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest* request, ::inventory::ProcessCustomerOrderResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProcessCustomerOrder_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::inventory::ProcessCustomerOrderResponse>* InventoryService::Stub::PrepareAsyncProcessCustomerOrderRaw(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::inventory::ProcessCustomerOrderResponse, ::inventory::ProcessCustomerOrderRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ProcessCustomerOrder_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::inventory::ProcessCustomerOrderResponse>* InventoryService::Stub::AsyncProcessCustomerOrderRaw(::grpc::ClientContext* context, const ::inventory::ProcessCustomerOrderRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncProcessCustomerOrderRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -157,29 +180,6 @@ void InventoryService::Stub::async::ReportJobStatus(::grpc::ClientContext* conte
 ::grpc::ClientAsyncResponseReader< ::inventory::ReportJobStatusResponse>* InventoryService::Stub::AsyncReportJobStatusRaw(::grpc::ClientContext* context, const ::inventory::ReportJobStatusRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncReportJobStatusRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status InventoryService::Stub::Checkout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::inventory::CheckoutResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::inventory::CheckoutRequest, ::inventory::CheckoutResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_Checkout_, context, request, response);
-}
-
-void InventoryService::Stub::async::Checkout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest* request, ::inventory::CheckoutResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::inventory::CheckoutRequest, ::inventory::CheckoutResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Checkout_, context, request, response, std::move(f));
-}
-
-void InventoryService::Stub::async::Checkout(::grpc::ClientContext* context, const ::inventory::CheckoutRequest* request, ::inventory::CheckoutResponse* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Checkout_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::inventory::CheckoutResponse>* InventoryService::Stub::PrepareAsyncCheckoutRaw(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::inventory::CheckoutResponse, ::inventory::CheckoutRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_Checkout_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::inventory::CheckoutResponse>* InventoryService::Stub::AsyncCheckoutRaw(::grpc::ClientContext* context, const ::inventory::CheckoutRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncCheckoutRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -218,15 +218,25 @@ InventoryService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InventoryService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< InventoryService::Service, ::inventory::RestockItemsRequest, ::inventory::RestockItemsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< InventoryService::Service, ::inventory::RestockItemsOrderRequest, ::inventory::RestockItemsOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InventoryService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::inventory::RestockItemsRequest* req,
-             ::inventory::RestockItemsResponse* resp) {
-               return service->RestockItems(ctx, req, resp);
+             const ::inventory::RestockItemsOrderRequest* req,
+             ::inventory::RestockItemsOrderResponse* resp) {
+               return service->RestockItemsOrder(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InventoryService_method_names[4],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InventoryService::Service, ::inventory::ProcessCustomerOrderRequest, ::inventory::ProcessCustomerOrderResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InventoryService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::inventory::ProcessCustomerOrderRequest* req,
+             ::inventory::ProcessCustomerOrderResponse* resp) {
+               return service->ProcessCustomerOrder(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InventoryService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InventoryService::Service, ::inventory::ReportJobStatusRequest, ::inventory::ReportJobStatusResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InventoryService::Service* service,
@@ -234,16 +244,6 @@ InventoryService::Service::Service() {
              const ::inventory::ReportJobStatusRequest* req,
              ::inventory::ReportJobStatusResponse* resp) {
                return service->ReportJobStatus(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InventoryService_method_names[5],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< InventoryService::Service, ::inventory::CheckoutRequest, ::inventory::CheckoutResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](InventoryService::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::inventory::CheckoutRequest* req,
-             ::inventory::CheckoutResponse* resp) {
-               return service->Checkout(ctx, req, resp);
              }, this)));
 }
 
@@ -271,7 +271,14 @@ InventoryService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status InventoryService::Service::RestockItems(::grpc::ServerContext* context, const ::inventory::RestockItemsRequest* request, ::inventory::RestockItemsResponse* response) {
+::grpc::Status InventoryService::Service::RestockItemsOrder(::grpc::ServerContext* context, const ::inventory::RestockItemsOrderRequest* request, ::inventory::RestockItemsOrderResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InventoryService::Service::ProcessCustomerOrder(::grpc::ServerContext* context, const ::inventory::ProcessCustomerOrderRequest* request, ::inventory::ProcessCustomerOrderResponse* response) {
   (void) context;
   (void) request;
   (void) response;
@@ -279,13 +286,6 @@ InventoryService::Service::~Service() {
 }
 
 ::grpc::Status InventoryService::Service::ReportJobStatus(::grpc::ServerContext* context, const ::inventory::ReportJobStatusRequest* request, ::inventory::ReportJobStatusResponse* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status InventoryService::Service::Checkout(::grpc::ServerContext* context, const ::inventory::CheckoutRequest* request, ::inventory::CheckoutResponse* response) {
   (void) context;
   (void) request;
   (void) response;
