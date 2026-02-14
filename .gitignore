@@ -1,10 +1,12 @@
 # Ignore all .env files in every subdirectory
 **/.env
 
-# Specific service secrets (if any)
-ordering/.env
-inventory/.env
-pricing/.env
+# Keeping checked-in local defaults for course/demo setup
+!ordering/.env
+!inventory/.env
+!pricing/.env
+!robots/.env
+!analytics/.env
 
 # Ignore compiled binaries (the "Ignition" builds)
 /ordering/cmd/ordering/ordering/exe

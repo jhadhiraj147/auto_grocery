@@ -156,6 +156,8 @@ Env files:
 - `robots/.env`
 - `analytics/.env`
 
+These `.env` files are intentionally committed with local/demo defaults (no external API keys required).
+
 ---
 
 ## 7) Documentation Artifacts
