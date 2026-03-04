@@ -3,18 +3,15 @@ package client
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	"auto_grocery/ordering/internal/store"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
-type RegisterHandler struct {
-	Store *store.ClientStore
-}
-
-// ServeHTTP registers a new smart client device account.
-func (h *RegisterHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+// Register registers a new smart client device account.
+func (h *Handler) Register(w http.ResponseWriter, r *http.Request) {
 	var req struct {
 		DeviceID string `json:"device_id"`
 		Password string `json:"password"`
@@ -27,21 +24,27 @@ func (h *RegisterHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if strings.TrimSpace(req.DeviceID) == "" || strings.TrimSpace(req.Email) == "" || len(req.Password) < 6 {
+		http.Error(w, "device_id, email are required and password must be at least 6 characters", http.StatusBadRequest)
+		return
+	}
+
 	hashedPwd, _ := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
 
 	client := store.SmartClient{
-		DeviceID:     req.DeviceID,
-		Email:        req.Email,
+		DeviceID:     strings.TrimSpace(req.DeviceID),
+		Email:        strings.TrimSpace(req.Email),
 		Phone:        req.Phone,
 		PasswordHash: string(hashedPwd),
 	}
 
-	err := h.Store.CreateSmartClient(r.Context(), client)
+	err := h.clientStore.CreateSmartClient(r.Context(), client)
 	if err != nil {
-		http.Error(w, "Registration failed", http.StatusConflict)
+		http.Error(w, "Registration failed: device_id or email already exists", http.StatusConflict)
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(map[string]string{"status": "success"})
 }

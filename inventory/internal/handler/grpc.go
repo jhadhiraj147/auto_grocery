@@ -12,6 +12,9 @@ import (
 	"auto_grocery/inventory/internal/mq"
 	"auto_grocery/inventory/internal/store"
 	pb "auto_grocery/inventory/proto"
+
+	"google.golang.org/grpc/codes"
+	grpcstatus "google.golang.org/grpc/status"
 )
 
 type InventoryHandler struct {
@@ -88,28 +91,40 @@ func (h *InventoryHandler) ReserveItems(ctx context.Context, req *pb.ReserveItem
 	}
 	log.Printf("[inventory] reserve result order=%s reserved=%v", req.GetOrderId(), reserved)
 
-	allReserved := true
+	// Reject only if nothing at all could be reserved.
+	if len(reserved) == 0 {
+		log.Printf("[inventory] reserve rejected order=%s reason=no_stock_available", req.GetOrderId())
+		return &pb.ReserveItemsResponse{
+			OrderId:      req.GetOrderId(),
+			Success:      false,
+			ErrorMessage: "no items available in stock",
+		}, nil
+	}
+
+	// Detect partial fill: some items missing or under-filled.
+	isPartial := false
 	for sku, wanted := range req.GetItems() {
 		if reserved[sku] < wanted {
-			allReserved = false
+			isPartial = true
 			break
 		}
 	}
 
-	if !allReserved {
-		if len(reserved) > 0 {
-			_ = h.store.ReleaseStock(ctx, reserved)
-		}
-		log.Printf("[inventory] reserve rejected order=%s reason=insufficient_stock", req.GetOrderId())
-		return &pb.ReserveItemsResponse{
-			OrderId:      req.GetOrderId(),
-			Success:      false,
-			ErrorMessage: "insufficient stock",
-		}, nil
+	// Encode actually-reserved map as JSON in error_message for partial fills.
+	var errMsg string
+	if isPartial {
+		js, _ := json.Marshal(reserved)
+		errMsg = string(js)
+		log.Printf("[inventory] reserve partial order=%s actual=%v", req.GetOrderId(), reserved)
+	} else {
+		log.Printf("[inventory] reserve success (full) order=%s", req.GetOrderId())
 	}
-	log.Printf("[inventory] reserve success order=%s", req.GetOrderId())
 
-	return &pb.ReserveItemsResponse{OrderId: req.GetOrderId(), Success: true}, nil
+	return &pb.ReserveItemsResponse{
+		OrderId:      req.GetOrderId(),
+		Success:      true,
+		ErrorMessage: errMsg,
+	}, nil
 }
 
 // ReleaseItems restores previously reserved stock quantities.
@@ -144,8 +159,16 @@ func (h *InventoryHandler) ProcessCustomerOrder(ctx context.Context, req *pb.Pro
 	robotItems := h.prepareRobotItems(ctx, req.GetItems())
 
 	// 3. Dispatch Robots
-	h.assignRobots(orderID, "CUSTOMER", robotItems)
+	if err := h.assignRobots(orderID, "CUSTOMER", robotItems); err != nil {
+		log.Printf("[inventory] ERROR robot dispatch failed order=%s — sending FAILED webhook", orderID)
+		go h.callWebhook(orderID, 0, h.orderWebhookURL, "total_price", "FAILED")
+		h.memoryStore.DeleteOrderData(context.Background(), orderID, false)
+		return nil, grpcstatus.Errorf(codes.Internal, "robot dispatch failed: %v", err)
+	}
 	log.Printf("[inventory] process-customer dispatched order=%s", orderID)
+
+	// 4. Watchdog: fire FAILED if robots never report back within 10 minutes.
+	go h.scheduleOrderTimeout(orderID, false)
 
 	return &pb.ProcessCustomerOrderResponse{
 		Success: true,
@@ -173,18 +196,57 @@ func (h *InventoryHandler) RestockItemsOrder(ctx context.Context, req *pb.Restoc
 	}
 
 	// 3. Dispatch Robots
-	h.assignRobots(orderID, "RESTOCK", robotItems)
+	if err := h.assignRobots(orderID, "RESTOCK", robotItems); err != nil {
+		log.Printf("[inventory] ERROR restock robot dispatch failed order=%s — sending FAILED webhook", orderID)
+		go h.callWebhook(orderID, 0, h.restockWebhookURL, "total_cost", "FAILED")
+		h.memoryStore.DeleteOrderData(context.Background(), orderID, true)
+		return nil, grpcstatus.Errorf(codes.Internal, "robot dispatch failed: %v", err)
+	}
+
+	// 4. Watchdog: fire FAILED if robots never report back within 10 minutes.
+	go h.scheduleOrderTimeout(orderID, true)
 
 	return &pb.RestockItemsOrderResponse{Success: true}, nil
 }
 
 // assignRobots broadcasts robot work assignments for an order.
-func (h *InventoryHandler) assignRobots(orderID string, orderType string, items map[string]mq.ItemDetails) {
+// Returns an error if the ZMQ publish fails so callers can fire a FAILED webhook.
+func (h *InventoryHandler) assignRobots(orderID string, orderType string, items map[string]mq.ItemDetails) error {
 	log.Printf("[inventory] INFO dispatching robots type=%s order=%s", orderType, orderID)
 	log.Printf("[inventory] dispatch order=%s type=%s items=%v", orderID, orderType, items)
 	if err := h.publisher.SendRobotCommand(orderID, orderType, items); err != nil {
 		log.Printf("[inventory] ERROR zmq broadcast failed order=%s err=%v", orderID, err)
+		return err
 	}
+	return nil
+}
+
+// scheduleOrderTimeout fires a FAILED webhook if the order is not finalized within 10 minutes.
+// This guards against robot crashes or lost ZMQ messages leaving orders stuck in PROCESSING.
+const orderFinalizeTimeout = 10 * time.Minute
+
+func (h *InventoryHandler) scheduleOrderTimeout(orderID string, isRestock bool) {
+	timer := time.NewTimer(orderFinalizeTimeout)
+	defer timer.Stop()
+	<-timer.C
+
+	ctx := context.Background()
+	marked, err := h.memoryStore.TryMarkOrderFinalized(ctx, orderID, isRestock)
+	if err != nil {
+		log.Printf("[inventory] WARN watchdog TryMarkOrderFinalized failed order=%s err=%v", orderID, err)
+		return
+	}
+	if marked {
+		// Order still not finalized after timeout — robots likely crashed or message was lost.
+		log.Printf("[inventory] ERROR watchdog triggered order=%s isRestock=%v — marking FAILED", orderID, isRestock)
+		if isRestock {
+			h.callWebhook(orderID, 0, h.restockWebhookURL, "total_cost", "FAILED")
+		} else {
+			h.callWebhook(orderID, 0, h.orderWebhookURL, "total_price", "FAILED")
+		}
+		h.memoryStore.DeleteOrderData(ctx, orderID, isRestock)
+	}
+	// else: already finalized normally — nothing to do.
 }
 
 // ReportJobStatus records robot progress and triggers order finalization once complete.
@@ -237,7 +299,8 @@ func (h *InventoryHandler) finalizeOrder(orderID string, isRestock bool) {
 
 // finalizeRestock updates stock, pricing metrics, ordering status, and cache cleanup.
 func (h *InventoryHandler) finalizeRestock(orderID string) {
-	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
 	items, err := h.memoryStore.GetRestockItems(ctx, orderID)
 	if err != nil {
 		log.Printf("Finalize Restock Error: Could not find items for %s: %v", orderID, err)
@@ -312,14 +375,15 @@ func (h *InventoryHandler) finalizeRestock(orderID string) {
 		}
 	}(pricingUpdates)
 
-	h.callWebhook(orderID, totalCost, h.restockWebhookURL, "total_cost")
+	h.callWebhook(orderID, totalCost, h.restockWebhookURL, "total_cost", "COMPLETED")
 	h.memoryStore.DeleteOrderData(ctx, orderID, true)
 }
 
 // finalizeClientOrder computes final bill, updates ordering status, and clears cache state.
 func (h *InventoryHandler) finalizeClientOrder(orderID string) {
 	log.Printf("[inventory] finalize-client start order=%s", orderID)
-	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
 	items, err := h.memoryStore.GetOrderItems(ctx, orderID)
 	if err != nil {
 		log.Printf("Finalize Client Order Error: %v", err)
@@ -338,19 +402,23 @@ func (h *InventoryHandler) finalizeClientOrder(orderID string) {
 		finalPrice = resp.GetGrandTotal()
 		log.Printf("[inventory] pricing bill success order=%s total=%.2f", orderID, finalPrice)
 	} else {
-		log.Printf("[inventory] pricing bill failed order=%s err=%v", orderID, err)
+		log.Printf("[inventory] pricing bill failed order=%s err=%v — marking FAILED", orderID, err)
+		h.callWebhook(orderID, 0, h.orderWebhookURL, "total_price", "FAILED")
+		h.memoryStore.DeleteOrderData(ctx, orderID, false)
+		log.Printf("[inventory] finalize-client cleanup complete order=%s", orderID)
+		return
 	}
 
-	h.callWebhook(orderID, finalPrice, h.orderWebhookURL, "total_price")
+	h.callWebhook(orderID, finalPrice, h.orderWebhookURL, "total_price", "COMPLETED")
 	h.memoryStore.DeleteOrderData(ctx, orderID, false)
 	log.Printf("[inventory] finalize-client cleanup complete order=%s", orderID)
 }
 
-// callWebhook posts completion updates to ordering internal endpoints.
-func (h *InventoryHandler) callWebhook(orderID string, price float64, url string, priceKey string) {
+// callWebhook posts completion or failure updates to ordering internal endpoints.
+func (h *InventoryHandler) callWebhook(orderID string, price float64, url string, priceKey string, status string) {
 	payload := map[string]interface{}{
 		"order_id": orderID,
-		"status":   "COMPLETED",
+		"status":   status,
 		priceKey:   price,
 	}
 	jsonBytes, _ := json.Marshal(payload)
@@ -367,6 +435,10 @@ func (h *InventoryHandler) callWebhook(orderID string, price float64, url string
 		return
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		log.Printf("[inventory] webhook non-2xx order=%s url=%s status=%d", orderID, url, resp.StatusCode)
+		return
+	}
 	log.Printf("[inventory] webhook response order=%s url=%s status=%d", orderID, url, resp.StatusCode)
 }
 
@@ -377,7 +449,11 @@ func (h *InventoryHandler) prepareRobotItems(ctx context.Context, items map[stri
 		skus = append(skus, sku)
 	}
 
-	dbItems, _ := h.store.GetBatchItems(ctx, skus)
+	dbItems, err := h.store.GetBatchItems(ctx, skus)
+	if err != nil {
+		log.Printf("[inventory] WARN GetBatchItems failed skus=%v err=%v — robot routing may default to Unknown aisle", skus, err)
+		dbItems = map[string]*store.StockItem{}
+	}
 	robotItems := make(map[string]mq.ItemDetails)
 	for sku, qty := range items {
 		aisle := "Unknown"

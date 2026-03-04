@@ -7,11 +7,11 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/Users/jhadhiraj147/Projects/auto_grocery/analytics/CMakeLists.txt"
+  "/Users/jhadhiraj147/Developments/auto_grocery/analytics/CMakeLists.txt"
   "CMakeFiles/4.2.0/CMakeCCompiler.cmake"
   "CMakeFiles/4.2.0/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.2.0/CMakeSystem.cmake"
-  "/Users/jhadhiraj147/Projects/auto_grocery/analytics/include/cppzmq/libzmq-pkg-config/FindZeroMQ.cmake"
+  "/Users/jhadhiraj147/Developments/auto_grocery/analytics/include/cppzmq/libzmq-pkg-config/FindZeroMQ.cmake"
   "/opt/homebrew/share/cmake/Modules/CMakeCCompiler.cmake.in"
   "/opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c"
   "/opt/homebrew/share/cmake/Modules/CMakeCInformation.cmake"

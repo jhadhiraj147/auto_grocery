@@ -1,28 +1,16 @@
 package client
 
 import (
-	"context"
 	"encoding/json"
 	"log"
 	"net/http"
 
 	"auto_grocery/ordering/internal/auth"
-	"auto_grocery/ordering/internal/store"
 	pb "auto_grocery/ordering/proto"
 )
 
-type ConfirmOrderHandler struct {
-	OrderStore      *store.OrderStore
-	InventoryClient pb.InventoryServiceClient
-}
-
-// ConfirmRequest carries the business order id to confirm from a trusted client session.
-type ConfirmRequest struct {
-	OrderID string `json:"order_id"`
-}
-
-// ServeHTTP confirms a pending client order and triggers robot dispatch through inventory.
-func (h *ConfirmOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+// ConfirmOrder confirms a pending client order and triggers robot dispatch through inventory.
+func (h *Handler) ConfirmOrder(w http.ResponseWriter, r *http.Request) {
 	// Authenticate and validate request payload.
 	userID, ok := r.Context().Value(auth.UserKey).(int)
 	if !ok {
@@ -31,7 +19,9 @@ func (h *ConfirmOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	var reqBody ConfirmRequest
+	var reqBody struct {
+		OrderID string `json:"order_id"`
+	}
 	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
 		log.Printf("[confirm] invalid json for user=%d: %v", userID, err)
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
@@ -46,9 +36,14 @@ func (h *ConfirmOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	log.Printf("[confirm] request user=%d order=%s", userID, reqBody.OrderID)
 
 	// Verify order ownership and state before dispatch.
-	order, err := h.OrderStore.GetOrderByID(r.Context(), reqBody.OrderID)
+	order, err := h.orderStore.GetOrderByID(r.Context(), reqBody.OrderID)
 	if err != nil {
-		log.Printf("[confirm] order not found order=%s user=%d err=%v", reqBody.OrderID, userID, err)
+		log.Printf("[confirm] db error order=%s user=%d err=%v", reqBody.OrderID, userID, err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+	if order == nil {
+		log.Printf("[confirm] order not found order=%s user=%d", reqBody.OrderID, userID)
 		http.Error(w, "Order not found", http.StatusNotFound)
 		return
 	}
@@ -64,10 +59,16 @@ func (h *ConfirmOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	}
 
 	// Fetch trusted order items from storage.
-	dbItems, err := h.OrderStore.GetOrderItems(r.Context(), reqBody.OrderID)
+	dbItems, err := h.orderStore.GetOrderItems(r.Context(), reqBody.OrderID)
 	if err != nil {
 		log.Printf("[confirm] failed to load order items order=%s err=%v", reqBody.OrderID, err)
 		http.Error(w, "Failed to retrieve order items", http.StatusInternalServerError)
+		return
+	}
+	if len(dbItems) == 0 {
+		// Shouldn't happen outside of data corruption, but prevents dispatching robots with nothing.
+		log.Printf("[confirm] order has no items order=%s user=%d", reqBody.OrderID, userID)
+		http.Error(w, "Order has no items", http.StatusConflict)
 		return
 	}
 
@@ -77,24 +78,31 @@ func (h *ConfirmOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		protoItems[item.Sku] = int32(item.Quantity)
 	}
 
-	// Update status and dispatch robots.
-	err = h.OrderStore.UpdateStatus(r.Context(), reqBody.OrderID, "PROCESSING")
+	// Atomically transition PENDING → PROCESSING. If another request (e.g. a concurrent cancel)
+	// already changed the status, this returns false and we abort — eliminating the TOCTOU race.
+	claimed, err := h.orderStore.TransitionOrderStatus(r.Context(), reqBody.OrderID, userID, "PENDING", "PROCESSING")
 	if err != nil {
-		log.Printf("[confirm] failed to set PROCESSING order=%s err=%v", reqBody.OrderID, err)
+		log.Printf("[confirm] db error during status transition order=%s err=%v", reqBody.OrderID, err)
 		http.Error(w, "Database update failed", http.StatusInternalServerError)
 		return
 	}
-	log.Printf("[confirm] status PROCESSING set order=%s items=%v", reqBody.OrderID, protoItems)
+	if !claimed {
+		log.Printf("[confirm] status transition failed (race or wrong state) order=%s", reqBody.OrderID)
+		http.Error(w, "Order is no longer in PENDING state", http.StatusConflict)
+		return
+	}
+	log.Printf("[confirm] status PROCESSING set atomically order=%s items=%v", reqBody.OrderID, protoItems)
 
 	grpcReq := &pb.ProcessCustomerOrderRequest{
 		OrderId: reqBody.OrderID,
 		Items:   protoItems,
 	}
 
-	resp, err := h.InventoryClient.ProcessCustomerOrder(context.Background(), grpcReq)
+	// Use the request context so the operation is cancelled if the client disconnects.
+	resp, err := h.inventoryClient.ProcessCustomerOrder(r.Context(), grpcReq)
 	if err != nil {
 		// Roll back order status if dispatch fails.
-		h.OrderStore.UpdateStatus(r.Context(), reqBody.OrderID, "FAILED_DISPATCH")
+		h.orderStore.UpdateStatus(r.Context(), reqBody.OrderID, "FAILED_DISPATCH")
 		log.Printf("[confirm] dispatch failed order=%s err=%v", reqBody.OrderID, err)
 		http.Error(w, "Failed to assign robots: "+err.Error(), http.StatusInternalServerError)
 		return

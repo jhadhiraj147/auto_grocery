@@ -3,6 +3,7 @@ package store
 import (
 	"context"
 	"encoding/json"
+	"log"
 	"time"
 
 	pb "auto_grocery/inventory/proto"
@@ -68,7 +69,17 @@ func (m *MemoryStore) GetOrderItems(ctx context.Context, orderID string) (map[st
 // IncrementClientRobotCount increments completed robot callbacks for client orders.
 func (m *MemoryStore) IncrementClientRobotCount(ctx context.Context, orderID string) (int64, error) {
 	key := orderID + ":count"
-	return m.clientClient.Incr(ctx, key).Result()
+	count, err := m.clientClient.Incr(ctx, key).Result()
+	if err != nil {
+		return 0, err
+	}
+	// Set TTL on first increment to prevent orphaned keys if cleanup is skipped.
+	if count == 1 {
+		if err := m.clientClient.Expire(ctx, key, 2*time.Hour).Err(); err != nil {
+			log.Printf("[memory] WARN failed to set TTL on client count key=%s err=%v", key, err)
+		}
+	}
+	return count, nil
 }
 
 // --- Restock Methods (DB 1) ---
@@ -97,7 +108,17 @@ func (m *MemoryStore) GetRestockItems(ctx context.Context, orderID string) ([]*p
 // IncrementRestockRobotCount increments completed robot callbacks for restock orders.
 func (m *MemoryStore) IncrementRestockRobotCount(ctx context.Context, orderID string) (int64, error) {
 	key := orderID + ":count"
-	return m.restockClient.Incr(ctx, key).Result()
+	count, err := m.restockClient.Incr(ctx, key).Result()
+	if err != nil {
+		return 0, err
+	}
+	// Set TTL on first increment to prevent orphaned keys if cleanup is skipped.
+	if count == 1 {
+		if err := m.restockClient.Expire(ctx, key, 2*time.Hour).Err(); err != nil {
+			log.Printf("[memory] WARN failed to set TTL on restock count key=%s err=%v", key, err)
+		}
+	}
+	return count, nil
 }
 
 // --- Lifecycle Management ---

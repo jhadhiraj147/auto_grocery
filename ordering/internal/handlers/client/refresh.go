@@ -6,21 +6,21 @@ import (
 	"strings"
 
 	"auto_grocery/ordering/internal/auth"
-	"auto_grocery/ordering/internal/store"
 )
 
-type RefreshHandler struct {
-	Store *store.ClientStore
-}
-
-// ServeHTTP validates a refresh token and issues a new access token.
-func (h *RefreshHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+// Refresh validates a refresh token and issues a new access token.
+func (h *Handler) Refresh(w http.ResponseWriter, r *http.Request) {
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
 		http.Error(w, "Missing Token", http.StatusUnauthorized)
 		return
 	}
-	tokenString := strings.Split(authHeader, " ")[1]
+	parts := strings.Split(authHeader, " ")
+	if len(parts) != 2 || parts[0] != "Bearer" {
+		http.Error(w, "Invalid Authorization header format", http.StatusUnauthorized)
+		return
+	}
+	tokenString := parts[1]
 
 	claims, err := auth.ValidateToken(tokenString)
 	if err != nil {
@@ -33,8 +33,13 @@ func (h *RefreshHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	newAccessToken, _ := auth.GenerateAccessToken(claims.UserID, claims.Role)
+	newAccessToken, err := auth.GenerateAccessToken(claims.UserID, claims.Role)
+	if err != nil {
+		http.Error(w, "Failed to generate token", http.StatusInternalServerError)
+		return
+	}
 
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(map[string]string{
 		"access_token": newAccessToken,
 	})

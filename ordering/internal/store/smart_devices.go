@@ -64,8 +64,10 @@ func (s *ClientStore) GetSmartClient(ctx context.Context, deviceID string) (*Sma
 		&c.ID, &c.DeviceID, &c.Email, &c.PasswordHash, &c.CardInfoEnc, &token, &expiry,
 	)
 
-	if err != nil {
-		return nil, fmt.Errorf("client not found: %w", err)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		return nil, fmt.Errorf("failed to fetch smart client: %w", err)
 	}
 
 	if token.Valid {

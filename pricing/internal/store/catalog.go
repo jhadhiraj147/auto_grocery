@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+
+	"github.com/lib/pq"
 )
 
 type Item struct {
@@ -78,7 +80,8 @@ func (s *CatalogStore) GetItemsBySKUs(ctx context.Context, skus []string) (map[s
         FROM catalog
         WHERE sku = ANY($1)
     `
-	rows, err := s.db.QueryContext(ctx, query, skus)
+	// pq.Array is required for PostgreSQL ANY($1) — plain []string is not understood by the driver.
+	rows, err := s.db.QueryContext(ctx, query, pq.Array(skus))
 	if err != nil {
 		log.Printf("[pricing-store] GetItemsBySKUs query failed err=%v", err)
 		return nil, err
@@ -88,12 +91,15 @@ func (s *CatalogStore) GetItemsBySKUs(ctx context.Context, skus []string) (map[s
 	items := make(map[string]Item)
 	for rows.Next() {
 		var i Item
-		err := rows.Scan(&i.ID, &i.Sku, &i.UnitPrice)
-		if err != nil {
+		if err := rows.Scan(&i.ID, &i.Sku, &i.UnitPrice); err != nil {
 			log.Printf("[pricing-store] GetItemsBySKUs scan failed err=%v", err)
 			return nil, err
 		}
 		items[i.Sku] = i
+	}
+	if err := rows.Err(); err != nil {
+		log.Printf("[pricing-store] GetItemsBySKUs rows error err=%v", err)
+		return nil, fmt.Errorf("rows error: %w", err)
 	}
 	log.Printf("[pricing-store] GetItemsBySKUs success found=%d", len(items))
 	return items, nil

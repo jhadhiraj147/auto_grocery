@@ -6,33 +6,39 @@ import (
 	"log"
 	"net/http"
 	"time"
-
-	"auto_grocery/ordering/internal/mq"
-	"auto_grocery/ordering/internal/store"
 )
 
-type WebhookHandler struct {
-	OrderStore *store.OrderStore
-	Analytics  *mq.AnalyticsPublisher
-}
-
-type WebhookPayload struct {
-	OrderID    string  `json:"order_id"`
-	Status     string  `json:"status"`
-	TotalPrice float64 `json:"total_price"`
-}
-
-// ServeHTTP processes inventory completion webhooks and updates client order status.
-func (h *WebhookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+// Webhook processes inventory completion webhooks and updates client order status.
+func (h *Handler) Webhook(w http.ResponseWriter, r *http.Request) {
 	// Decode webhook payload.
-	var payload WebhookPayload
+	var payload struct {
+		OrderID    string  `json:"order_id"`
+		Status     string  `json:"status"`
+		TotalPrice float64 `json:"total_price"`
+	}
 	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
 
+	// Validate required fields.
+	if payload.OrderID == "" {
+		http.Error(w, "order_id is required", http.StatusBadRequest)
+		return
+	}
+	// Status machine: only COMPLETED and FAILED are valid terminal states from inventory.
+	if payload.Status != "COMPLETED" && payload.Status != "FAILED" {
+		log.Printf("[client-webhook] rejected invalid status order_id=%s status=%s", payload.OrderID, payload.Status)
+		http.Error(w, "Invalid status: must be COMPLETED or FAILED", http.StatusBadRequest)
+		return
+	}
+	if payload.TotalPrice < 0 {
+		http.Error(w, "total_price must not be negative", http.StatusBadRequest)
+		return
+	}
+
 	// Persist final order status.
-	err := h.OrderStore.UpdateOrderStatus(r.Context(), payload.OrderID, payload.Status, payload.TotalPrice)
+	err := h.orderStore.UpdateOrderStatus(r.Context(), payload.OrderID, payload.Status, payload.TotalPrice)
 	if err != nil {
 		log.Printf("[client-webhook] ERROR failed to update order order_id=%s err=%v", payload.OrderID, err)
 		http.Error(w, "Database update failed", http.StatusInternalServerError)
@@ -44,15 +50,15 @@ func (h *WebhookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
-		order, err := h.OrderStore.GetOrderByID(ctx, payload.OrderID)
+		order, err := h.orderStore.GetOrderByID(ctx, payload.OrderID)
 		if err != nil {
 			log.Printf("[client-webhook] WARN analytics fetch order details failed order_id=%s err=%v", payload.OrderID, err)
 			return
 		}
 
-		if h.Analytics != nil {
+		if h.analytics != nil {
 			duration := time.Since(order.CreatedAt).Seconds()
-			h.Analytics.Publish(payload.OrderID, payload.Status, duration)
+			h.analytics.Publish(payload.OrderID, payload.Status, duration)
 		}
 	}()
 

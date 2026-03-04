@@ -2,18 +2,13 @@ package client
 
 import (
 	"auto_grocery/ordering/internal/auth"
-	"auto_grocery/ordering/internal/store"
 	"encoding/json"
 	"log"
 	"net/http"
 )
 
-type LastOrderHandler struct {
-	OrderStore *store.OrderStore
-}
-
-// ServeHTTP returns the most recent order for polling current fulfillment state.
-func (h *LastOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+// LastOrder returns the most recent order for polling current fulfillment state.
+func (h *Handler) LastOrder(w http.ResponseWriter, r *http.Request) {
 	// Resolve authenticated user id from request context.
 	userID, ok := r.Context().Value(auth.UserKey).(int)
 	if !ok {
@@ -23,9 +18,14 @@ func (h *LastOrderHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Fetch most recent order for this user.
-	lastOrder, err := h.OrderStore.GetLastOrderByClientID(r.Context(), userID)
+	lastOrder, err := h.orderStore.GetLastOrderByClientID(r.Context(), userID)
 	if err != nil {
-		log.Printf("[last-order] no order for user=%d err=%v", userID, err)
+		log.Printf("[last-order] store error for user=%d err=%v", userID, err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		return
+	}
+	if lastOrder == nil {
+		log.Printf("[last-order] no orders for user=%d", userID)
 		// Return 404 when no recent order exists for polling clients.
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusNotFound)

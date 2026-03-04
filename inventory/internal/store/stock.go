@@ -55,6 +55,9 @@ func (s *Store) GetBatchItems(ctx context.Context, skus []string) (map[string]*S
 		}
 		items[i.SKU] = &i
 	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("rows error: %w", err)
+	}
 	return items, nil
 }
 
@@ -187,6 +190,9 @@ func (s *Store) GetAllStock(ctx context.Context) ([]StockItem, error) {
 			return nil, err
 		}
 		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("rows error: %w", err)
 	}
 	return items, nil
 }

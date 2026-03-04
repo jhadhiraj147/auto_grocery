@@ -17,12 +17,12 @@ func NewRestockStore(db *sql.DB) *RestockStore {
 }
 
 type RestockOrder struct {
-	ID         int
-	OrderID    string
-	SupplierID int // Internal DB ID from suppliers table
-	Status     string
-	TotalCost  float64
-	CreatedAt  time.Time
+	ID         int       `json:"-"`
+	OrderID    string    `json:"OrderID"`
+	SupplierID int       `json:"-"`
+	Status     string    `json:"Status"`
+	TotalCost  float64   `json:"TotalCost"`
+	CreatedAt  time.Time `json:"CreatedAt"`
 }
 
 type RestockOrderItem struct {
@@ -105,25 +105,21 @@ func (s *RestockStore) CreateRestockOrder(ctx context.Context, order *RestockOrd
 }
 
 // UpdateOrderStatus updates restock order status and finalized total cost.
+// Only transitions from PROCESSING state to prevent invalid webhook-driven transitions.
 func (s *RestockStore) UpdateOrderStatus(ctx context.Context, businessOrderID string, status string, totalCost float64) error {
 	query := `
         UPDATE restock_orders
         SET status = $1, total_cost = $2
-        WHERE order_id = $3
+        WHERE order_id = $3 AND status = 'PROCESSING'
     `
 	res, err := s.db.ExecContext(ctx, query, status, totalCost, businessOrderID)
 	if err != nil {
 		return fmt.Errorf("failed to update restock order %s: %w", businessOrderID, err)
 	}
-
-	rows, err := res.RowsAffected()
-	if err != nil {
-		return err
-	}
+	rows, _ := res.RowsAffected()
 	if rows == 0 {
-		return fmt.Errorf("no restock order found with order_id %s", businessOrderID)
+		return fmt.Errorf("restock order not found or not in PROCESSING state: %s", businessOrderID)
 	}
-
 	return nil
 }
 
@@ -138,15 +134,11 @@ func (s *RestockStore) GetRestockOrder(ctx context.Context, orderID string) (*Re
 	err := s.db.QueryRowContext(ctx, query, orderID).Scan(
 		&o.ID, &o.OrderID, &o.SupplierID, &o.Status, &o.TotalCost, &o.CreatedAt,
 	)
-	if err != nil {
-		return nil, fmt.Errorf("restock order not found: %w", err)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		return nil, fmt.Errorf("failed to fetch restock order: %w", err)
 	}
-
-	o.CreatedAt = time.Date(
-		o.CreatedAt.Year(), o.CreatedAt.Month(), o.CreatedAt.Day(),
-		o.CreatedAt.Hour(), o.CreatedAt.Minute(), o.CreatedAt.Second(),
-		o.CreatedAt.Nanosecond(), time.Local,
-	)
 
 	return &o, nil
 }

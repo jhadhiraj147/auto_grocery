@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"auto_grocery/ordering/internal/store"
@@ -13,13 +14,8 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-type RestockHandler struct {
-	RestockStore    *store.RestockStore
-	InventoryClient pb.InventoryServiceClient
-}
-
-// ServeHTTP accepts truck manifest payload, stores restock order, and dispatches robots.
-func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+// Restock accepts truck manifest payload, stores restock order, and dispatches robots.
+func (h *Handler) Restock(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[truck-restock] request received")
 	// 1. Decode Frontend Payload
 	var req struct {
@@ -41,10 +37,20 @@ func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
+
+	// Server-side validation — cannot rely solely on frontend guards.
+	if strings.TrimSpace(req.SupplierID) == "" || strings.TrimSpace(req.SupplierName) == "" {
+		http.Error(w, "supplier_id and supplier_name are required", http.StatusBadRequest)
+		return
+	}
+	if len(req.Items) == 0 {
+		http.Error(w, "at least one item is required", http.StatusBadRequest)
+		return
+	}
 	log.Printf("[truck-restock] supplier_id=%s supplier_name=%s items=%d", req.SupplierID, req.SupplierName, len(req.Items))
 
 	// 2. Upsert Supplier in DB
-	internalSupplierID, err := h.RestockStore.GetSupplierInternalID(r.Context(), req.SupplierID, req.SupplierName)
+	internalSupplierID, err := h.restockStore.GetSupplierInternalID(r.Context(), req.SupplierID, req.SupplierName)
 	if err != nil {
 		log.Printf("[truck-restock] failed to resolve supplier supplier_id=%s err=%v", req.SupplierID, err)
 		http.Error(w, "Failed to resolve supplier", http.StatusInternalServerError)
@@ -60,11 +66,38 @@ func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	for _, item := range req.Items {
 		log.Printf("[truck-restock] item sku=%s aisle=%s qty=%d unit_cost=%.2f", item.Sku, item.AisleType, item.Quantity, item.UnitCost)
+
+		if strings.TrimSpace(item.Sku) == "" {
+			http.Error(w, "all items must have a non-empty sku", http.StatusBadRequest)
+			return
+		}
+		if item.Quantity <= 0 {
+			http.Error(w, "quantity must be greater than zero for sku "+item.Sku, http.StatusBadRequest)
+			return
+		}
+		if item.UnitCost <= 0 {
+			http.Error(w, "unit_cost must be greater than zero for sku "+item.Sku, http.StatusBadRequest)
+			return
+		}
+
 		estimatedCost += item.UnitCost * float64(item.Quantity)
 
-		// Parse times for DB and Proto
-		mfdTime, _ := time.Parse(time.RFC3339, item.MfdDate)
-		expTime, _ := time.Parse(time.RFC3339, item.ExpiryDate)
+		mfdTime, err := time.Parse(time.RFC3339, item.MfdDate)
+		if err != nil {
+			log.Printf("[truck-restock] invalid mfd_date sku=%s err=%v", item.Sku, err)
+			http.Error(w, "invalid mfd_date for sku "+item.Sku, http.StatusBadRequest)
+			return
+		}
+		expTime, err := time.Parse(time.RFC3339, item.ExpiryDate)
+		if err != nil {
+			log.Printf("[truck-restock] invalid expiry_date sku=%s err=%v", item.Sku, err)
+			http.Error(w, "invalid expiry_date for sku "+item.Sku, http.StatusBadRequest)
+			return
+		}
+		if !expTime.After(mfdTime) {
+			http.Error(w, "expiry_date must be after mfd_date for sku "+item.Sku, http.StatusBadRequest)
+			return
+		}
 
 		// For Ordering Database (Local Store)
 		dbItems = append(dbItems, store.RestockOrderItem{
@@ -97,15 +130,15 @@ func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		TotalCost:  estimatedCost,
 	}
 
-	if err := h.RestockStore.CreateRestockOrder(r.Context(), order, dbItems); err != nil {
+	if err := h.restockStore.CreateRestockOrder(r.Context(), order, dbItems); err != nil {
 		log.Printf("[truck-restock] failed to persist restock order order_id=%s err=%v", restockUUID, err)
 		http.Error(w, "Failed to create restock order", http.StatusInternalServerError)
 		return
 	}
 	log.Printf("[truck-restock] order persisted order_id=%s estimated_cost=%.2f", restockUUID, estimatedCost)
 
-	// 5. Trigger Inventory Service (CHANGING TO RestockItemsOrder)
-	grpcResp, err := h.InventoryClient.RestockItemsOrder(r.Context(), &pb.RestockItemsOrderRequest{
+	// 5. Trigger Inventory Service
+	grpcResp, err := h.inventoryClient.RestockItemsOrder(r.Context(), &pb.RestockItemsOrderRequest{
 		OrderId: restockUUID,
 		Items:   protoItems,
 	})
@@ -122,6 +155,7 @@ func (h *RestockHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[truck-restock] inventory dispatch accepted order_id=%s", restockUUID)
 
 	// 6. Respond immediately to Frontend
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(map[string]interface{}{
 		"status":   "success",

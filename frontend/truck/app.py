@@ -4,7 +4,7 @@ import time as time_module
 from datetime import datetime, time, timedelta, timezone
 
 # --- CONFIGURATION ---
-BASE_URL = "http://localhost:5050"
+BASE_URL = "http://127.0.0.1:5050"
 
 st.set_page_config(page_title="Truck Terminal", page_icon="🚛", layout="wide")
 
@@ -30,12 +30,14 @@ if 'restock_order_id' not in st.session_state:
 
 st.title("🚛 TRUCK OFFLOAD TERMINAL")
 
-# --- SIDEBAR: SUPPLIER DATA ---
-with st.sidebar:
-    st.header("Supplier Identity")
-    st.caption("Required: enter supplier business id and readable supplier name before offloading.")
-    supplier_id = st.text_input("Supplier ID", placeholder="e.g. SUPP-NESTLE-01")
-    supplier_name = st.text_input("Supplier Name", placeholder="e.g. Nestle Waters")
+# --- SUPPLIER DATA ---
+st.header("Supplier Identity")
+st.caption("Required: enter supplier business id and readable supplier name before offloading.")
+sup_col1, sup_col2 = st.columns(2)
+supplier_id = sup_col1.text_input("Supplier ID", placeholder="e.g. SUPP-NESTLE-01")
+supplier_name = sup_col2.text_input("Supplier Name", placeholder="e.g. Nestle Waters")
+
+st.markdown("---")
 
 # --- MAIN: DYNAMIC TABLE ---
 st.header("Inventory Manifest")

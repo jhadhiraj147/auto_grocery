@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/jhadhiraj147/Projects/auto_grocery/analytics/include -I/Users/jhadhiraj147/Projects/auto_grocery/analytics/include/cppzmq -I/Users/jhadhiraj147/Projects/auto_grocery/analytics/fbs -I/opt/homebrew/include
+CXX_INCLUDES = -I/Users/jhadhiraj147/Developments/auto_grocery/analytics/include -I/Users/jhadhiraj147/Developments/auto_grocery/analytics/include/cppzmq -I/Users/jhadhiraj147/Developments/auto_grocery/analytics/fbs -I/opt/homebrew/include
 
 CXX_FLAGSarm64 = -std=gnu++17 -arch arm64
 
