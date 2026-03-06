@@ -58,8 +58,7 @@ services:
       INVENTORY_GRPC_ADDR: :50051
       PRICING_GRPC_ADDR: pricing:50052
       ROBOT_ZMQ_BIND_ADDR: tcp://*:5556
-      ORDERING_ORDER_WEBHOOK_URL: http://ordering:5050/internal/webhook/update-order
-      ORDERING_RESTOCK_WEBHOOK_URL: http://ordering:5050/internal/webhook/update-restock
+      ORDERING_BASE_URL: http://ordering:5050
     depends_on:
       postgres:
         condition: service_healthy

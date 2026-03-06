@@ -60,8 +60,9 @@ func main() {
 	defer pricingConn.Close()
 	pricingClient := pb.NewPricingServiceClient(pricingConn)
 
-	orderWebhookURL := getenv("ORDERING_ORDER_WEBHOOK_URL", "http://localhost:5050/internal/webhook/update-order")
-	restockWebhookURL := getenv("ORDERING_RESTOCK_WEBHOOK_URL", "http://localhost:5050/internal/webhook/update-restock")
+	orderingBaseURL := getenv("ORDERING_BASE_URL", "http://localhost:5050")
+	orderWebhookURL := orderingBaseURL + "/internal/webhook/update-order"
+	restockWebhookURL := orderingBaseURL + "/internal/webhook/update-restock"
 
 	inventoryHandler := handler.NewInventoryHandler(stockStore, memoryStore, publisher, pricingClient, orderWebhookURL, restockWebhookURL)
 
