@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import requests
 import time
@@ -11,7 +12,7 @@ except Exception:
     st_autorefresh = None
 
 # ── CONFIGURATION ─────────────────────────────────────────────────────────────
-BASE_URL                   = "http://127.0.0.1:5050"
+BASE_URL                   = os.environ.get("ORDERING_BASE_URL", "http://127.0.0.1:5050")
 AUTH_CACHE_FILE            = Path(__file__).parent / ".client_auth_cache.json"
 AUTO_RERUN_MS              = 60_000
 TOKEN_REFRESH_INTERVAL_SEC = 720   # access token lifetime 15 min → refresh at 12 min
@@ -627,6 +628,9 @@ else:
                 st.session_state.cart_items[_i]["qty"] = _new_qty
 
             if st.button("＋ Add Item", key="add_row"):
+                _last = st.session_state.cart_items[-1] if st.session_state.cart_items else None
+                if _last and _last["sku"].strip() == "":
+                    st.stop()  # last row is already blank — don't add another
                 st.session_state.cart_items.append({"sku": "", "qty": 1})
                 if st.session_state.order_id:
                     st.session_state.order_id        = None

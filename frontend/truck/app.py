@@ -1,10 +1,11 @@
+import os
 import streamlit as st
 import requests
 import time as time_module
 from datetime import datetime, time, timedelta, timezone
 
 # --- CONFIGURATION ---
-BASE_URL = "http://127.0.0.1:5050"
+BASE_URL = os.environ.get("ORDERING_BASE_URL", "http://127.0.0.1:5050")
 
 st.set_page_config(page_title="Truck Terminal", page_icon="🚛", layout="wide")
 

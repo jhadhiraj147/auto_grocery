@@ -1,6 +1,8 @@
 services:
   postgres:
-    image: postgres:16-alpine
+    build:
+      context: .
+      dockerfile: postgres/Dockerfile
     container_name: auto-grocery-postgres
     environment:
       POSTGRES_USER: postgres
@@ -10,7 +12,6 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./docker/postgres-init:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -18,9 +19,10 @@ services:
       retries: 20
 
   redis:
-    image: redis:7-alpine
+    build:
+      context: .
+      dockerfile: redis/Dockerfile
     container_name: auto-grocery-redis
-    command: ["redis-server", "--requirepass", "auto_grocery_cache"]
     ports:
       - "6379:6379"
     healthcheck:
@@ -32,7 +34,7 @@ services:
   pricing:
     build:
       context: .
-      dockerfile: docker/pricing.Dockerfile
+      dockerfile: pricing/Dockerfile
     container_name: auto-grocery-pricing
     environment:
       DATABASE_URL: postgres://user_pricing_service_team:pricing_secure_v1@postgres:5432/db_pricing?sslmode=disable
@@ -46,7 +48,7 @@ services:
   inventory:
     build:
       context: .
-      dockerfile: docker/inventory.Dockerfile
+      dockerfile: inventory/Dockerfile
     container_name: auto-grocery-inventory
     environment:
       DATABASE_URL: postgres://user_inventory_service_team:inventory_secure_v1@postgres:5432/db_inventory?sslmode=disable
@@ -71,7 +73,7 @@ services:
   ordering:
     build:
       context: .
-      dockerfile: docker/ordering.Dockerfile
+      dockerfile: ordering/Dockerfile
     container_name: auto-grocery-ordering
     environment:
       DATABASE_URL: postgres://user_ordering_service_team:ordering_secure_v1@postgres:5432/db_ordering?sslmode=disable
@@ -91,7 +93,7 @@ services:
   analytics:
     build:
       context: .
-      dockerfile: docker/analytics.Dockerfile
+      dockerfile: analytics/Dockerfile
     container_name: auto-grocery-analytics
     environment:
       ANALYTICS_ZMQ_SUB_ADDR: tcp://ordering:5557
@@ -105,7 +107,7 @@ services:
   robot-bread:
     build:
       context: .
-      dockerfile: docker/robots.Dockerfile
+      dockerfile: robots/Dockerfile
     image: auto-grocery-robots:local
     container_name: auto-grocery-robot-bread
     environment:
@@ -163,6 +165,32 @@ services:
     depends_on:
       inventory:
         condition: service_started
+
+  frontend-client:
+    build:
+      context: .
+      dockerfile: frontend/client/Dockerfile
+    container_name: auto-grocery-frontend-client
+    environment:
+      ORDERING_BASE_URL: http://ordering:5050
+    depends_on:
+      ordering:
+        condition: service_started
+    ports:
+      - "8501:8501"
+
+  frontend-truck:
+    build:
+      context: .
+      dockerfile: frontend/truck/Dockerfile
+    container_name: auto-grocery-frontend-truck
+    environment:
+      ORDERING_BASE_URL: http://ordering:5050
+    depends_on:
+      ordering:
+        condition: service_started
+    ports:
+      - "8502:8502"
 
 volumes:
   pgdata:

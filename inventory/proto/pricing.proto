@@ -8,9 +8,6 @@ service PricingService {
   rpc GetPrice (GetPriceRequest) returns (GetPriceResponse);
   rpc CreateItem (CreateItemRequest) returns (CreateItemResponse);
   
-  rpc offerDiscou
-
-
   rpc CalculateBill (CalculateBillRequest) returns (CalculateBillResponse);
   rpc UpdateStockMetrics (UpdateStockMetricsRequest) returns (UpdateStockMetricsResponse);
 }

@@ -16,4 +16,4 @@
 /analytics/cmd/analytics/analytics_exe
 
 # OS files
-.DS_Store
+.DS_Storefrontend/client/.client_auth_cache.json

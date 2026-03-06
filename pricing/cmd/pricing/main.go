@@ -32,8 +32,7 @@ func main() {
 	// 2. Connect to Database
 	dbConnString := os.Getenv("DATABASE_URL")
 	if dbConnString == "" {
-		dbConnString = "postgres://user:password@localhost:5432/pricing_db?sslmode=disable"
-		log.Printf("[pricing] DATABASE_URL not set, using fallback connection string")
+		log.Fatalf("[pricing] DATABASE_URL environment variable is required but not set")
 	}
 	log.Printf("[pricing] connecting to postgres")
 

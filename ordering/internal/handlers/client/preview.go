@@ -66,7 +66,7 @@ func (h *Handler) PreviewOrder(w http.ResponseWriter, r *http.Request) {
 	orderUUID := uuid.New().String()
 	protoItems := make(map[string]int32)
 	for _, item := range req.Items {
-		protoItems[item.Sku] = item.Quantity
+		protoItems[item.Sku] += item.Quantity
 	}
 	log.Printf("[preview] user=%d items=%v", userID, protoItems)
 
