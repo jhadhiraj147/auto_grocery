@@ -33,44 +33,6 @@ CREATE INDEX idx_clients_device ON smart_clients(device_id);
 CREATE INDEX idx_clients_token ON smart_clients(refresh_token);
 CREATE INDEX idx_grocery_client ON grocery_orders(client_id);
 
-CREATE TABLE smart_trucks (
-    id SERIAL PRIMARY KEY,
-    truck_id TEXT UNIQUE NOT NULL,
-    plate_number TEXT,
-    driver_name TEXT,
-    contact_info TEXT,
-    location TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE restock_orders (
-    id SERIAL PRIMARY KEY,
-    order_id TEXT UNIQUE NOT NULL,
-    truck_id INT REFERENCES smart_trucks(id),
-    status TEXT NOT NULL DEFAULT 'PENDING',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE restock_order_items (
-    id SERIAL PRIMARY KEY,
-    order_id INT REFERENCES restock_orders(id) ON DELETE CASCADE,
-    sku TEXT NOT NULL,
-    quantity INT NOT NULL
-);
-
-CREATE INDEX idx_trucks_id ON smart_trucks(truck_id);
-CREATE INDEX idx_restock_truck ON restock_orders(truck_id);
-
-ALTER TABLE grocery_orders
-ALTER COLUMN total_price TYPE NUMERIC(10,2);
-
-ALTER TABLE restock_orders ADD COLUMN total_cost NUMERIC(10,2) DEFAULT 0.00;
-
-DROP TABLE IF EXISTS restock_order_items;
-DROP TABLE IF EXISTS restock_orders;
-DROP TABLE IF EXISTS smart_trucks;
-DROP TABLE IF EXISTS suppliers;
-
 CREATE TABLE suppliers (
     id SERIAL PRIMARY KEY,
     supplier_id TEXT UNIQUE NOT NULL,
@@ -98,5 +60,7 @@ CREATE TABLE restock_order_items (
     expiry_date TEXT,
     unit_cost NUMERIC(10,2) NOT NULL
 );
+
+CREATE INDEX idx_restock_supplier ON restock_orders(supplier_id);
 
 RESET ROLE;
