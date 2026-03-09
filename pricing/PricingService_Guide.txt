@@ -1,5 +1,5 @@
-PRICING MICROSERVICE — THOROUGH HIGH-LEVEL GUIDE
-=================================================
+PRICING MICROSERVICE — OVERVIEW
+==============================
 
 1) SERVICE PURPOSE
 ------------------
@@ -57,7 +57,7 @@ CalculatePrice(costPrice, currentStock):
 - if high stock (>100): -0.10
 - rounded to 2 decimal places
 
-Interpretation:
+The idea:
 - scarce stock increases margin
 - abundant stock decreases margin
 
@@ -93,9 +93,9 @@ Outgoing calls:
 - None (Pricing is primarily a data+compute endpoint)
 
 
-8) DRY RUNS
------------
-A) UpdateStockMetrics dry run
+8) WORKED EXAMPLES
+------------------
+A) UpdateStockMetrics
 Input update row:
 - sku="MILK-1L", quantity=3, unit_cost=20.00
 Computation:
@@ -104,7 +104,7 @@ Computation:
 Effect:
 - catalog upsert sku MILK-1L -> unit_price 27.00
 
-B) CalculateBill dry run
+B) CalculateBill
 Input cart:
 - [{sku:"MILK-1L", quantity:2}, {sku:"BREAD", quantity:1}]
 Behavior:
@@ -114,7 +114,7 @@ Output:
 - line_items[] with unit_price and total_price
 - grand_total
 
-C) Missing SKU dry run
+C) Missing SKU
 - any missing SKU returns gRPC NOT_FOUND
 
 
@@ -125,8 +125,8 @@ C) Missing SKU dry run
 - Partial update batch failures: method continues, updated_count < input size
 
 
-10) DEMO CHECKS
----------------
+10) HEALTH CHECKS
+-----------------
 - Listener active on :50052
 - Established DB connection to :5432
 - Established gRPC connection from Inventory after finalize events

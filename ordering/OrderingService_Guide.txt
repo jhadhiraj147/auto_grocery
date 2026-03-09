@@ -1,9 +1,9 @@
-ORDERING MICROSERVICE — THOROUGH HIGH-LEVEL GUIDE
-==================================================
+ORDERING MICROSERVICE — HIGH-LEVEL GUIDE
+========================================
 
 1) SERVICE PURPOSE
 ------------------
-Ordering is the user-facing orchestration service for both:
+Ordering is my user-facing orchestration service for both:
 - Client grocery orders (fridge/customer flow)
 - Truck restock orders (supplier flow)
 
@@ -203,8 +203,8 @@ Expected:
 - Ordering opens PostgreSQL connections lazily for some paths; connection checks should include actual traffic.
 
 
-11) WHAT TO CHECK DURING DEMO
------------------------------
+11) HEALTH CHECKLIST
+--------------------
 - Ordering listening on :5050
 - Established gRPC socket ordering -> inventory (:50051)
 - Established DB socket ordering -> postgres (:5432)

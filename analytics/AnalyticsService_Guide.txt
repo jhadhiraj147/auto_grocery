@@ -1,12 +1,12 @@
-ANALYTICS MICROSERVICE — THOROUGH HIGH-LEVEL GUIDE
-===================================================
+ANALYTICS MICROSERVICE — HIGH-LEVEL GUIDE
+=========================================
 
 1) SERVICE PURPOSE
 ------------------
-Analytics is a passive subscriber service (C++) that listens for order lifecycle
-metrics from Ordering and persists latency records into a CSV dataset.
+I built Analytics as a passive subscriber service (C++) that listens for order
+lifecycle metrics from Ordering and persists latency records into a CSV dataset.
 
-It is intended for observability/reporting, not request/response business logic.
+I intend it for observability/reporting, not request/response business logic.
 
 
 2) PROCESS + ENTRYPOINT
@@ -103,12 +103,12 @@ Analytics behavior:
 3. Print console log: Logged Order ... | Latency ...
 
 
-9) OPERATIONS CHECKLIST
------------------------
+9) OPERATIONS
+-------------
 - Build with cmake in analytics/build
 - Start binary:
   ./analytics_service
-- Ensure ordering service is also running and bound to analytics ZMQ publisher address
+- Make sure the ordering service is also running and bound to the analytics ZMQ publisher address
 - Verify connectivity:
   lsof -nP -iTCP:5557 -sTCP:ESTABLISHED
 - Verify output:

@@ -1,5 +1,5 @@
-INVENTORY MICROSERVICE — THOROUGH HIGH-LEVEL GUIDE
-===================================================
+INVENTORY MICROSERVICE — DESIGN NOTES
+=====================================
 
 1) SERVICE PURPOSE
 ------------------
@@ -155,8 +155,8 @@ ReportJobStatus dry run:
 - Missing stock SKUs: reserve returns insufficient stock
 
 
-10) DEMO CHECKLIST
-------------------
+10) RUNTIME HEALTH CHECK
+------------------------
 - Listener: :50051 active
 - ZMQ PUB bind: :5556 active
 - Established sockets:

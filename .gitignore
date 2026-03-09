@@ -1,19 +1,33 @@
-# Ignore all .env files in every subdirectory
+# Environment files
+# (demo defaults are intentionally checked in so `docker compose up` works out of the box)
 **/.env
-
-# Keeping checked-in local defaults for course/demo setup
 !ordering/.env
 !inventory/.env
 !pricing/.env
 !robots/.env
 !analytics/.env
 
-# Ignore compiled binaries (the "Ignition" builds)
+# Compiled Go service binaries
 /ordering/cmd/ordering/ordering/exe
 /inventory/cmd/inventory/inventory_exe
 /robots/cmd/robots
 /pricing/cmd/pricing/pricing_exe
 /analytics/cmd/analytics/analytics_exe
 
-# OS files
-.DS_Storefrontend/client/.client_auth_cache.json
+# C++ CMake build output
+analytics/build/
+robots/build/
+**/build/
+
+# Python
+venv/
+.venv/
+**/__pycache__/
+*.pyc
+
+# Frontend runtime cache
+frontend/client/.client_auth_cache.json
+
+# OS / editor cruft
+.DS_Store
+**/.DS_Store

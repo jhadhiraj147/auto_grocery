@@ -1,255 +1,226 @@
-# Auto Grocery — Distributed Smart Store Platform
+# 🛒 Auto Grocery — Distributed Smart-Store Platform
 
-Auto Grocery is a multi-service system that automates customer order fulfillment and truck restock operations using microservices, gRPC, HTTP, ZeroMQ, PostgreSQL, Redis, and Streamlit-based UIs.
+A distributed, event-driven backend that runs an **automated grocery store**: customers place orders and suppliers restock shelves, and both flows are fulfilled by a **fleet of aisle-scoped warehouse robots**. Five microservices coordinate over **gRPC, ZeroMQ, and HTTP webhooks**, with **FlatBuffers** on the wire, backed by **PostgreSQL** and **Redis**, and driven by two **Streamlit** dashboards — the whole stack boots with a single `docker compose up`.
 
----
-
-## 1) System Architecture (High Level)
-
-Core backend services:
-- `ordering` (Go, HTTP) — API gateway/orchestrator for client + truck flows
-- `inventory` (Go, gRPC) — stock reservation, robot dispatch, and completion orchestration
-- `pricing` (Go, gRPC) — price updates and bill calculation
-- `robots` (C++) — worker processes subscribed by aisle to robot tasks
-- `analytics` (C++) — subscriber service that logs completion latency metrics
-
-Frontends:
-- `frontend/client` (Streamlit)
-- `frontend/truck` (Streamlit)
-
-Stateful infrastructure:
-- PostgreSQL (service-owned DBs for ordering/inventory/pricing)
-- Redis (inventory runtime state: in-flight orders, counters, finalize guard)
+<p>
+  <img alt="Go" src="https://img.shields.io/badge/Go-1.25-00ADD8?logo=go&logoColor=white">
+  <img alt="C++" src="https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus&logoColor=white">
+  <img alt="Python" src="https://img.shields.io/badge/Python-Streamlit-FF4B4B?logo=streamlit&logoColor=white">
+  <img alt="gRPC" src="https://img.shields.io/badge/gRPC-Protobuf-244c5a?logo=grpc&logoColor=white">
+  <img alt="ZeroMQ" src="https://img.shields.io/badge/ZeroMQ-PUB%2FSUB-DF0000">
+  <img alt="FlatBuffers" src="https://img.shields.io/badge/FlatBuffers-wire%20format-5C6BC0">
+  <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-per--service%20DBs-4169E1?logo=postgresql&logoColor=white">
+  <img alt="Redis" src="https://img.shields.io/badge/Redis-ephemeral%20state-DC382D?logo=redis&logoColor=white">
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white">
+</p>
 
 ---
 
-## 2) Runtime Communication Topology
+## What it does
 
-### APIs and Message Buses
-- Client UI -> `ordering` via HTTP (`:5050`)
-- Truck UI -> `ordering` via HTTP (`:5050`)
-- `ordering` -> `inventory` via gRPC (`:50051`)
-- `inventory` -> `pricing` via gRPC (`:50052`)
-- `inventory` -> `robots` via ZeroMQ PUB/SUB (`:5556`)
-- `robots` -> `inventory` via gRPC status callback (`ReportJobStatus`)
-- `inventory` -> `ordering` via internal webhook HTTP callbacks:
-  - `/internal/webhook/update-order`
-  - `/internal/webhook/update-restock`
-- `ordering` -> `analytics` via ZeroMQ PUB/SUB (`:5557`)
+Auto Grocery models a small automated warehouse:
 
-### Security on Internal HTTP
-- Internal webhook endpoints are protected with `X-Internal-Secret`.
-- Secret must match between `ordering/.env` and `inventory/.env`.
+- **Customers** (Client UI) authenticate, build a cart, scan live stock availability, and dispatch robots to pick their order. They watch the order move `PENDING → PROCESSING → COMPLETED` in real time and get an itemized receipt.
+- **Suppliers** (Truck UI) submit a restock manifest; robots offload the truck, inventory is upserted, and prices are re-computed from the new stock levels.
+- **Robots** are independent workers, one per aisle (`bread`, `meat`, `produce`, `dairy`, `party`). Each subscribes to a task bus, picks only the items in its aisle, and reports completion back.
+- **Analytics** passively records per-order completion latency to a metrics log.
+
+The interesting part is the coordination: a single order fans out to a robot fleet over a message bus, results are aggregated, billing runs exactly once (guarded against duplicates), and the customer-facing status updates flow back through internal webhooks — all decoupled, all asynchronous.
 
 ---
 
-## 3) End-to-End Business Flows
+## Architecture
 
-### A. Customer Order Flow
-1. Client authenticates with `ordering` (`register/login/refresh`).
-2. `preview` call reserves stock through `inventory.ReserveItems`.
-3. `ordering` stores order as `PENDING` in PostgreSQL.
-4. `confirm` call triggers `inventory.ProcessCustomerOrder`.
-5. `inventory` publishes robot tasks over ZMQ (`order_type=CUSTOMER`).
-6. Robot workers process aisle-matching items and report via `ReportJobStatus`.
-7. On completion threshold, `inventory` finalizes:
-	- Computes bill through `pricing.CalculateBill`
-	- Webhooks `ordering` with final status + total price
-8. `ordering` updates DB and publishes analytics latency metric.
+```mermaid
+flowchart LR
+    subgraph UI[User Interfaces]
+        C["Client UI<br/>Streamlit · :8501"]
+        T["Truck UI<br/>Streamlit · :8502"]
+    end
 
-### B. Truck Restock Flow
-1. Truck UI submits manifest to `ordering`.
-2. `ordering` saves restock order and calls `inventory.RestockItemsOrder`.
-3. `inventory` publishes robot tasks (`order_type=RESTOCK`).
-4. Robot workers report status back to `inventory`.
-5. On completion, `inventory`:
-	- Upserts inventory stock in PostgreSQL
-	- Sends stock metrics to `pricing.UpdateStockMetrics`
-	- Webhooks `ordering` with final status + total cost
-6. `ordering` updates restock status and publishes analytics metric.
+    subgraph Core[Backend Microservices]
+        O["ordering<br/>Go · HTTP :5050"]
+        I["inventory<br/>Go · gRPC :50051"]
+        P["pricing<br/>Go · gRPC :50052"]
+        R["robot fleet ×5<br/>C++ · ZMQ SUB"]
+        A["analytics<br/>C++ · ZMQ SUB"]
+    end
 
----
+    subgraph Data[State]
+        PG[("PostgreSQL")]
+        RD[("Redis")]
+    end
 
-## 4) Service Responsibilities
+    C -->|HTTP / JWT| O
+    T -->|HTTP / JWT| O
+    O -->|gRPC| I
+    I -->|gRPC| P
+    I -->|"ZeroMQ PUB/SUB · FlatBuffers"| R
+    R -->|"gRPC: ReportJobStatus"| I
+    I -.->|internal webhook| O
+    O -->|"ZeroMQ PUB/SUB · FlatBuffers"| A
+    O --- PG
+    I --- PG
+    P --- PG
+    I --- RD
+    A -->|appends| CSV["latency metrics CSV"]
+```
 
-### `ordering`
-- Public HTTP API for client and truck operations
-- JWT auth and refresh-token lifecycle
-- Internal webhook receiver for completion updates
-- Persists customer/truck order state in PostgreSQL
-- Publishes analytics events via ZMQ
+The system deliberately uses **four** communication mechanisms, each where it fits best:
 
-### `inventory`
-- Authoritative stock reservation/release logic
-- Robot dispatch producer and progress aggregator
-- Redis-backed ephemeral workflow state
-- Finalization coordinator (client billing + restock stock sync)
-
-### `pricing`
-- Maintains SKU price catalog
-- Calculates order bills
-- Recalculates prices from stock/cost metrics
-
-### `robots`
-- Aisle-scoped workers; argument must match item `aisle_type` values (e.g., `bread`, `meat`, `produce`, `dairy`, `party`)
-- Consumes task broadcasts and reports per-order status
-
-### `analytics`
-- Subscribes to completion metrics
-- Persists latency rows to CSV
+| Mechanism | Used for |
+| --- | --- |
+| **gRPC** (Protobuf) | Typed request/response between services (`ordering→inventory`, `inventory→pricing`, robot callbacks) |
+| **ZeroMQ PUB/SUB** | One-to-many fan-out of robot tasks and analytics events |
+| **FlatBuffers** | Zero-copy message wire format carried over ZeroMQ |
+| **HTTP** | Public JWT-authenticated API + secret-protected internal webhooks |
 
 ---
 
-## 5) Why This Tech Stack
+## Services at a glance
 
-### Go for Core Services (`ordering`, `inventory`, `pricing`)
-- Strong fit for networked microservices
-- Efficient concurrency model
-- Good gRPC + PostgreSQL + Redis ecosystem support
-- Fast compile/build and operational simplicity
+| Service | Language | Role | Exposes |
+| --- | --- | --- | --- |
+| **ordering** | Go | User-facing API gateway / orchestrator for both order flows; JWT auth; webhook receiver; analytics publisher | HTTP `:5050` |
+| **inventory** | Go | Execution backbone: atomic stock reserve/release, robot dispatch, progress aggregation, one-time finalization | gRPC `:50051`, ZMQ PUB `:5556` |
+| **pricing** | Go | SKU price catalog, bill calculation, dynamic margin pricing from stock metrics | gRPC `:50052` |
+| **robots** | C++ | Aisle-scoped worker processes (×5); pick/offload simulation; status callbacks | ZMQ SUB → gRPC client |
+| **analytics** | C++ | Passive subscriber; appends order-latency rows to CSV | ZMQ SUB → CSV |
+| **frontend/client** | Python · Streamlit | Customer "Smart Cart" dashboard | UI `:8501` |
+| **frontend/truck** | Python · Streamlit | Supplier "Truck Offload Terminal" | UI `:8502` |
 
-### C++ for `robots` and `analytics`
-- Suitable for low-latency worker-style components
-- Fine-grained control for message parsing and runtime behavior
-- Natural pairing with existing CMake + protobuf/grpc/zmq toolchain
-
-### gRPC for Service-to-Service RPC
-- Strongly typed contracts via `.proto`
-- Efficient binary protocol and stable interface evolution
-- Clear separation of service boundaries
-
-### ZeroMQ for Event/Broadcast Channels
-- Lightweight, high-throughput PUB/SUB pattern
-- Excellent fit for one-to-many robot task dispatch
-- Decouples producer/consumer lifecycle
-
-### PostgreSQL for Persistent Domain State
-- ACID transactions for order + inventory correctness
-- Relational model suits order headers/items and catalog data
-- Mature tooling and portability
-
-### Redis for Ephemeral Workflow State
-- Fast counters and transient order progress tracking
-- One-time finalization guard (`SETNX`) to avoid duplicate completion actions
-
-### Streamlit for UI Prototypes
-- Fast iteration for demonstration-grade operational dashboards
-- Minimal frontend overhead while integrating live APIs
+Stateful infrastructure: **PostgreSQL** (three service-owned databases — `db_ordering`, `db_inventory`, `db_pricing`) and **Redis** (ephemeral in-flight order state, progress counters, and a `SETNX` finalization guard).
 
 ---
 
-## 6) Configuration and Ports
+## End-to-end flows
 
-Endpoints are env-driven (no hardcoded host/port requirements).
+### Customer order
+1. Client authenticates with `ordering` (`register` / `login` / `refresh`, JWT).
+2. **Preview** reserves stock through `inventory.ReserveItems` (atomic, all-or-nothing); the order is persisted as `PENDING`.
+3. **Confirm** triggers `inventory.ProcessCustomerOrder`, which publishes per-item robot tasks over ZeroMQ (`order_type = CUSTOMER`).
+4. Aisle robots pick matching items and call back `inventory.ReportJobStatus`.
+5. On completion, `inventory` **finalizes exactly once** (Redis `SETNX` guard): computes the bill via `pricing.CalculateBill` and webhooks `ordering` with the final total.
+6. `ordering` updates the DB and publishes a latency metric to `analytics`. Status reaches `COMPLETED`.
 
-Default local bindings/targets:
-- Ordering HTTP: `:5050`
-- Inventory gRPC: `:50051`
-- Pricing gRPC: `:50052`
-- Robot ZMQ bus: `tcp://*:5556`
-- Analytics ZMQ bus: `tcp://*:5557`
-
-Env files:
-- `ordering/.env`
-- `inventory/.env`
-- `pricing/.env`
-- `robots/.env`
-- `analytics/.env`
-
-These `.env` files are intentionally committed with local/demo defaults (no external API keys required).
+### Truck restock
+1. Truck UI submits a manifest; `ordering` saves the restock order and calls `inventory.RestockItemsOrder`.
+2. `inventory` publishes robot tasks (`order_type = RESTOCK`); robots offload and report back.
+3. On completion, `inventory` upserts `available_stock`, calls `pricing.UpdateStockMetrics` (dynamic margin: base `1.20×`, `+0.15` when stock is scarce (1–4), `−0.10` when overstocked (>100)), and webhooks `ordering` with the total cost.
 
 ---
 
-## 7) Docker Quick Start
+## Tech stack & why
 
-One-command stack (PostgreSQL, Redis, pricing, inventory, ordering, analytics, and 5 robot workers):
+- **Go** for the networked core (`ordering`, `inventory`, `pricing`) — first-class gRPC/Postgres/Redis ecosystem, cheap concurrency, fast builds.
+- **C++** for `robots` and `analytics` — low-latency worker components that pair naturally with the CMake + protobuf/ZeroMQ toolchain.
+- **gRPC + Protocol Buffers** — strongly typed service contracts that evolve safely.
+- **ZeroMQ PUB/SUB** — lightweight, high-throughput fan-out that decouples the dispatcher from the robot fleet.
+- **FlatBuffers** — compact, zero-copy message format on the bus.
+- **PostgreSQL** — ACID guarantees for order and inventory correctness, one database per service.
+- **Redis** — fast ephemeral workflow state and a one-time finalization guard (`SETNX`) that prevents double-billing.
+- **Streamlit** — quick, live operational UIs over the HTTP API.
+
+---
+
+## Quick start
+
+Requires Docker + Docker Compose. From the repo root:
 
 ```bash
 docker compose up --build -d
 ```
 
-View logs:
+This brings up the full stack — **13 containers**: PostgreSQL, Redis, `pricing`, `inventory`, `ordering`, `analytics`, five robot workers, and both Streamlit UIs.
+
+Open:
+
+| URL | What |
+| --- | --- |
+| http://localhost:8501 | **Client UI** — place customer orders |
+| http://localhost:8502 | **Truck UI** — submit restock manifests |
+| http://localhost:5050 | Ordering HTTP API |
+
+Follow the action:
 
 ```bash
 docker compose logs -f ordering inventory pricing analytics
 docker compose logs -f robot-bread robot-meat robot-produce robot-dairy robot-party
 ```
 
-Per-service logs (examples):
+Tear down (add `-v` to also wipe the database and metrics volumes):
 
 ```bash
-docker compose logs -f ordering
-docker compose logs -f inventory
-docker compose logs -f pricing
-docker compose logs -f analytics
-docker compose logs -f robot-bread
-docker compose logs -f robot-meat
-docker compose logs -f robot-produce
-docker compose logs -f robot-dairy
-docker compose logs -f robot-party
+docker compose down        # stop
+docker compose down -v     # stop + reset all data
 ```
 
-Stop and remove containers:
-
-```bash
-docker compose down
-```
-
-Reset data volumes (fresh DB + analytics CSV):
-
-```bash
-docker compose down -v
-```
-
-Notes:
-- HTTP API remains available at `http://localhost:5050`.
-- PostgreSQL and Redis are exposed on `localhost:5432` and `localhost:6379`.
-- Frontend Streamlit apps are still run locally (outside compose).
-- Frontend run order for demo: start Truck UI first to load stock, then start Client UI.
-
-Frontend sequence after Docker:
-1. Run `frontend/truck` and submit at least one restock order.
-2. Run `frontend/client` and place customer orders.
-
-Recommended for professor/grading:
-- Use Docker Compose for the fastest and most reproducible setup.
-- Use manual per-service startup only if step-by-step debugging is required.
-
-Manual mode remains fully supported in `HowToInstantiateServices.txt` (build + run each service one by one).
+> Manual, per-service startup (native Go/C++ binaries) is fully documented in [`HowToInstantiateServices.txt`](HowToInstantiateServices.txt) for step-by-step debugging.
 
 ---
 
-## 8) Documentation Artifacts
+## Try it
 
-Instantiation guide:
-- `HowToInstantiateServices.txt`
-
-Per-service deep-dive guides:
-- `ordering/OrderingService_Guide.txt`
-- `inventory/InventoryService_Guide.txt`
-- `pricing/PricingService_Guide.txt`
-- `robots/RobotsService_Guide.txt`
-- `analytics/AnalyticsService_Guide.txt`
+1. Open the **Truck UI** at http://localhost:8502 and submit a restock manifest so the shelves have stock.
+2. Open the **Client UI** at http://localhost:8501, register/login, and build a cart.
+3. Hit **Scan Stock Availability** — `ordering` reserves stock through `inventory`.
+4. Hit **Dispatch Robots** — watch the order move `PENDING → PROCESSING → COMPLETED` as the aisle robots report in.
+5. Read the itemized receipt with the computed total; check `robot-*` logs to see each aisle pick its items.
 
 ---
 
-## 9) Quick Verification (Runtime)
+## Security model
 
-Example listener check:
-```bash
-lsof -nP -iTCP:5050 -iTCP:50051 -iTCP:50052 -iTCP:5556 -iTCP:5557 -sTCP:LISTEN
+- **JWT** access tokens (short-lived) + refresh tokens, with **bcrypt**-hashed passwords.
+- **Internal webhooks** (`/internal/webhook/update-order`, `/internal/webhook/update-restock`) are gated by a shared `X-Internal-Secret` header that must match between `ordering` and `inventory`.
+- **Redis** is password-protected with a fail-fast startup ping.
+- gRPC/ZeroMQ run on a trusted internal network by design (the services share a private Docker network).
+
+---
+
+## Configuration & ports
+
+All endpoints are environment-driven; the committed `.env` files hold **local demo defaults** (no external API keys required) so the stack runs out of the box.
+
+| Component | Address |
+| --- | --- |
+| Ordering HTTP API | `:5050` |
+| Inventory gRPC | `:50051` |
+| Pricing gRPC | `:50052` |
+| Robot ZMQ bus | `tcp://*:5556` (internal) |
+| Analytics ZMQ bus | `tcp://*:5557` (internal) |
+| PostgreSQL | `:5432` |
+| Redis | `:6379` |
+| Client / Truck UI | `:8501` / `:8502` |
+
+---
+
+## Repository layout
+
 ```
-
-Example established dependency check:
-```bash
-lsof -nP -iTCP:5432 -iTCP:6379 -sTCP:ESTABLISHED
+auto_grocery/
+├── ordering/      # Go — HTTP API gateway / orchestrator
+├── inventory/     # Go — stock, robot dispatch, finalization
+├── pricing/       # Go — catalog, billing, dynamic pricing
+├── robots/        # C++ — aisle-scoped robot workers
+├── analytics/     # C++ — latency metrics subscriber
+├── frontend/
+│   ├── client/    # Streamlit — customer Smart Cart
+│   └── truck/     # Streamlit — supplier Offload Terminal
+├── postgres/      # Dockerfile + init SQL (per-service schemas)
+├── redis/         # Dockerfile + redis.conf
+└── docker-compose.yml
 ```
 
 ---
 
-## 10) Contributors
+## Documentation
 
-- **Dhiraj Jha** — Inventory, DB (PostgreSQL + Redis), Pricing, Ordering
-- **Saugat Lamichhane** — Robot, Analytics, Debugging
-- **Diamond GC** — Truck UI, Client UI, Testing
+- [`HowToInstantiateServices.txt`](HowToInstantiateServices.txt) — full setup guide (Docker + manual modes).
+- Per-service deep dives: [`ordering/OrderingService_Guide.txt`](ordering/OrderingService_Guide.txt), [`inventory/InventoryService_Guide.txt`](inventory/InventoryService_Guide.txt), [`pricing/PricingService_Guide.txt`](pricing/PricingService_Guide.txt), [`robots/RobotsService_Guide.txt`](robots/RobotsService_Guide.txt), [`analytics/AnalyticsService_Guide.txt`](analytics/AnalyticsService_Guide.txt).
 
+---
+
+## Author
+
+**Dhiraj Jha** — [@jhadhiraj147](https://github.com/jhadhiraj147)

@@ -1,14 +1,14 @@
-AUTO GROCERY — HOW TO INSTANTIATE SERVICES (PROFESSOR GUIDE)
+AUTO GROCERY — HOW TO INSTANTIATE SERVICES
 =============================================================
 
 Purpose
 -------
-This guide explains how to set up and run the full Auto Grocery microservices system
-from scratch on a new machine.
+These are my notes for setting up and running the full Auto Grocery microservices
+system from scratch on a new machine.
 
 START HERE (DOCKER-FIRST, RECOMMENDED)
 --------------------------------------
-If you only need to run the project quickly and reliably:
+To run the project quickly and reliably:
 
   cd <repo-root>
   docker compose up --build -d
@@ -21,8 +21,8 @@ Check status/logs:
 Stop:
   docker compose down
 
-It includes:
-1) Tool/language installation checklist
+What these notes cover:
+1) Tool/language installation
 2) Database and Redis setup
 3) Migration execution
 4) Service build/start order
@@ -31,7 +31,7 @@ It includes:
 
 RUN MODES (WHICH ONE TO USE)
 -----------------------------
-Mode A (recommended for professor/grading): Docker Compose
+Mode A (recommended): Docker Compose
 - One command to bring up backend + infra + workers
 - Consistent and reproducible environment across machines
 
@@ -43,7 +43,7 @@ Mode B (optional fallback): Manual startup
 --------------------------------------------------------------------------------
 QUICKEST PATH (DOCKER)
 --------------------------------------------------------------------------------
-If Docker Desktop is installed, you can run the full backend/worker stack with one command:
+With Docker Desktop installed, the full backend/worker stack comes up with one command:
 
   cd <repo-root>
   docker compose up --build -d
@@ -60,7 +60,7 @@ Verify:
   docker compose logs -f ordering inventory pricing analytics
   docker compose logs -f robot-bread robot-meat robot-produce robot-dairy robot-party
 
-See logs per service (examples):
+Logs per service (examples):
   docker compose logs -f ordering
   docker compose logs -f inventory
   docker compose logs -f pricing
@@ -77,14 +77,15 @@ Stop:
 Hard reset (recreate DB and analytics data):
   docker compose down -v
 
-Note:
-- Frontend Streamlit apps are not part of compose and should still be run locally.
+Both Streamlit frontends are already included in compose (Client UI on
+http://localhost:8501, Truck UI on http://localhost:8502). The steps below are
+only needed if I want to run the UIs locally instead of in compose.
 
-AFTER DOCKER: RUN FRONTEND UIs (SEPARATE TERMINALS)
+OPTIONAL: RUN FRONTEND UIs LOCALLY (SEPARATE TERMINALS)
 ----------------------------------------------------
-IMPORTANT ORDER FOR DEMO:
-1) Open Truck UI first and create at least one restock order (this loads inventory).
-2) Then open Client UI and place customer orders.
+Order matters here:
+1) Open the Truck UI first and create at least one restock order (this loads inventory).
+2) Then open the Client UI and place customer orders.
 
 Terminal A (Truck UI — run first):
   cd <repo-root>/frontend/truck
@@ -109,7 +110,7 @@ UI URLs:
 --------------------------------------------------------------------------------
 0) HIGH-LEVEL ARCHITECTURE
 --------------------------------------------------------------------------------
-Services:
+I split the system into these services:
 - ordering  (Go, HTTP API on 5050)
 - inventory (Go, gRPC on 50051)
 - pricing   (Go, gRPC on 50052)
@@ -128,9 +129,9 @@ Message channels:
 
 
 --------------------------------------------------------------------------------
-1) PREREQUISITE INSTALL CHECKLIST
+1) PREREQUISITE INSTALL
 --------------------------------------------------------------------------------
-On macOS (recommended with Homebrew):
+On macOS (I use Homebrew):
 
 A) Core toolchain
 - Xcode Command Line Tools
@@ -156,7 +157,7 @@ C) Datastores
 
 - Redis
   brew install redis
-  # Start with password (recommended for this project):
+  # Start with password (this is what the project expects):
   redis-server --requirepass auto_grocery_cache --port 6379
   # Keep this terminal running OR run as a custom launch process
 
@@ -171,21 +172,22 @@ D) C++ build/runtime deps (for robots + analytics)
 - Open repository root:
   /Users/<your-user>/Projects/auto_grocery
 
-- Ensure these env files exist:
+- These env files must exist:
   ordering/.env
   inventory/.env
   pricing/.env
   robots/.env
   analytics/.env
 
-Note: these `.env` files are committed in this repository with local/demo-safe defaults.
-You can run directly after clone, then edit values only if your machine uses different ports/hosts.
+These `.env` files are committed in the repository with local-safe defaults, so
+it runs directly after clone. Edit values only if the machine uses different
+ports/hosts.
 
 
 --------------------------------------------------------------------------------
 3) POSTGRESQL: CREATE USERS + DATABASES
 --------------------------------------------------------------------------------
-Run these commands with psql superuser access.
+Run these with psql superuser access.
 
 A) Open postgres shell (example):
   psql postgres
@@ -206,14 +208,13 @@ CREATE DATABASE db_pricing OWNER user_pricing_service_team;
 
 \q
 
-Note:
-- If a user/database already exists, PostgreSQL will error for duplicates; that is fine.
+If a user/database already exists, PostgreSQL errors on the duplicate; that is fine.
 
 
 --------------------------------------------------------------------------------
 4) VERIFY ENV CONFIGURATION
 --------------------------------------------------------------------------------
-Current project defaults assume local machine:
+The project defaults assume a local machine:
 
 - ordering/.env
   ORDERING_HTTP_ADDR=:5050
@@ -224,8 +225,7 @@ Current project defaults assume local machine:
   INVENTORY_GRPC_ADDR=:50051
   PRICING_GRPC_ADDR=localhost:50052
   ROBOT_ZMQ_BIND_ADDR=tcp://*:5556
-  ORDERING_ORDER_WEBHOOK_URL=http://localhost:5050/internal/webhook/update-order
-  ORDERING_RESTOCK_WEBHOOK_URL=http://localhost:5050/internal/webhook/update-restock
+  ORDERING_BASE_URL=http://localhost:5050
   REDIS_ADDR=localhost:6379
   REDIS_PW=auto_grocery_cache
 
@@ -269,8 +269,8 @@ C) PRICING DB migrations
   done
 
 Notes:
-- If migration was already applied manually, you may see "relation exists" errors.
-- For clean demo setup, start with fresh databases.
+- If a migration was already applied manually, "relation exists" errors may show up.
+- For a clean setup, start with fresh databases.
 
 
 --------------------------------------------------------------------------------
@@ -393,8 +393,8 @@ B) Preview order (uses ordering -> inventory)
     -H 'Content-Type: application/json' \
     -d '{"items":[{"sku":"SKU_TEST_001","quantity":1}]}'
 
-Note:
-- If stock for SKU does not exist, preview can fail with "Reservation failed" — connectivity still proven.
+If stock for the SKU does not exist, preview can fail with "Reservation failed" —
+connectivity is still proven.
 
 
 --------------------------------------------------------------------------------
@@ -429,14 +429,12 @@ Note:
 
 
 --------------------------------------------------------------------------------
-11) OPTIONAL: SUBMISSION PACKING CHECKLIST
+11) REPO HYGIENE
 --------------------------------------------------------------------------------
-Before sharing with professor:
-- Include this file: HowToInstantiateServices.txt
 - Keep all service .env files with sane local defaults
-- Ensure migrations exist and are current
-- Ensure binaries are NOT required in repo (build from source)
-- Mention tested platform (macOS) and expected ports
+- Keep migrations current
+- Build binaries from source (they are not committed to the repo)
+- Tested platform: macOS; see above for expected ports
 
 
 END OF GUIDE

@@ -1,12 +1,12 @@
-ROBOTS MICROSERVICE — THOROUGH HIGH-LEVEL GUIDE
-================================================
+ROBOTS MICROSERVICE — HIGH-LEVEL GUIDE
+======================================
 
 1) SERVICE PURPOSE
 ------------------
-Robots is a worker service (C++) that consumes robot task broadcasts from Inventory,
-filters tasks by aisle, simulates work, and reports status back to Inventory via gRPC.
+Robots is a worker service (C++) I built to consume robot task broadcasts from Inventory,
+filter tasks by aisle, simulate work, and report status back to Inventory via gRPC.
 
-This service scales horizontally by starting multiple worker processes,
+I scale this service horizontally by starting multiple worker processes,
 one per aisle label (e.g., bread, meat, produce, dairy, party).
 
 
@@ -21,9 +21,8 @@ Startup contract:
 - required argv[1] = aisle name
   Example: ./robot_worker bread
 
-Important:
-- The worker argument must exactly match the `aisle_type` values sent in robot tasks.
-- Filtering is a direct string comparison (case-sensitive).
+The worker argument must exactly match the `aisle_type` values sent in robot tasks.
+Filtering is a direct string comparison (case-sensitive).
 
 Environment loading:
 - attempts ../.env and robots/.env
@@ -126,7 +125,7 @@ Inventory aggregates callbacks and finalizes when threshold is reached.
 9) OPERATIONS CHECKLIST
 -----------------------
 - Build in robots/build with cmake --build .
-- Start one process per aisle used in the scenario.
+- Start one process per aisle in use.
 - Verify established sockets via:
   lsof -nP -iTCP:5556 -sTCP:ESTABLISHED
 - Verify gRPC reporting indirectly via Inventory logs/counters.
